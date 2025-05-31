@@ -77,8 +77,8 @@
                             @{
                                 var hasManageDatPhong = quyen.Contains("ManageDatPhong") || quyen.Contains("BookRoom") || quyen.Contains("CreateBooking");
                             }
-                            <a class="nav-link" href="@(hasManageDatPhong ? Url.Action("Index", "DatPhong") : "#")" onclick="@(!hasManageDatPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý đặt phòng</span>
+                            <a class="nav-link" href="@(hasManageDatPhong ? Url.Action("Index", "PhieuDatPhong") : "#")" onclick="@(!hasManageDatPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý phiếu đặt phòng</span>
                                 <i class="mdi mdi-bookmark-check menu-icon"></i>
                             </a>
                         </li>
@@ -235,7 +235,9 @@
 
     <!-- Kaiadmin JS -->
     <script src="~/assets/js/kaiadmin.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script>
         // Đảm bảo toastr được tải nếu chưa có
         if (typeof toastr === 'undefined') {

@@ -21,7 +21,7 @@ builder.Services.AddHttpClient<IMoMoService, MoMoService>();
 // Thêm Services
 builder.Services.AddScoped<IVNPayService, VNPayService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IMoMoService, MoMoService>();
+
 
 
 var app = builder.Build();

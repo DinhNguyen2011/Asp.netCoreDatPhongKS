@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Asp.netCoreDatPhongKS.Models
 {
@@ -12,9 +13,14 @@ namespace Asp.netCoreDatPhongKS.Models
         }
 
         public int PhongId { get; set; }
+        [Required(ErrorMessage = "Số phòng là bắt buộc")]
+        [StringLength(50, ErrorMessage = "Số phòng không được vượt quá 50 ký tự")]
         public string? SoPhong { get; set; }
+        [Required(ErrorMessage = "Loại phòng là bắt buộc")]
         public int? LoaiPhongId { get; set; }
+        [StringLength(500, ErrorMessage = "Mô tả không được vượt quá 500 ký tự")]
         public string? MoTa { get; set; }
+        [Required(ErrorMessage = "Trạng thái là bắt buộc")]
         public string? TinhTrang { get; set; }
         public string? HinhAnh { get; set; }
         public decimal? GiaPhong1Dem { get; set; }

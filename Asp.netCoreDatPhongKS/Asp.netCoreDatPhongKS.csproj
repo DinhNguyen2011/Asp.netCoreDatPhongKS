@@ -8,13 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="Views\ThanhToan\**" />
+    <Compile Remove="wwwroot\LayoutAdmin\**" />
     <Content Remove="Views\ThanhToan\**" />
+    <Content Remove="wwwroot\LayoutAdmin\**" />
     <EmbeddedResource Remove="Views\ThanhToan\**" />
+    <EmbeddedResource Remove="wwwroot\LayoutAdmin\**" />
     <None Remove="Views\ThanhToan\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\LayoutAdmin\.DS_Store" />
+    <None Remove="wwwroot\LayoutAdmin\**" />
   </ItemGroup>
 
   <ItemGroup>

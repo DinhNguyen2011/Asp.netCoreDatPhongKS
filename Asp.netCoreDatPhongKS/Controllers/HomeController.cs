@@ -44,40 +44,60 @@ namespace Asp.netCoreDatPhongKS.Controllers
             if (soDem <= 0)
             {
                 TempData["ThongBao"] = "Ngày trả phải lớn hơn ngày nhận. Vui lòng kiểm tra lại!";
-                return View(new List<PhongViewModel>());
+                return View("TimKiemPhong", new List<PhongViewModel>());
             }
 
-            // Tìm kiếm phòng trống
-            var rooms = _context.Phongs
+            // Tìm kiếm phòng khả dụng
+            var allRooms = _context.Phongs
                 .Include(p => p.LoaiPhong)
-                .Where(p =>
-                    (p.SoLuongKhach ?? 0) >= soKhach && // Đủ sức chứa số khách
-                    p.TinhTrang == "Trống" && // Chỉ lấy phòng trống
-                    !_context.ChiTietPhieuPhongs.Any(c =>
-                        c.PhongId == p.PhongId &&
-                        c.PhieuDatPhong != null &&
-                        c.PhieuDatPhong.TrangThai != "Đã hủy" && // Bỏ qua phiếu đã hủy
-                        (c.PhieuDatPhong.TinhTrangSuDung == null || c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out") && // Bỏ qua phiếu đã check-out
-                        ((checkinDate < c.PhieuDatPhong.NgayTra) && (checkoutDate > c.PhieuDatPhong.NgayNhan)) // Không giao với khoảng thời gian đã đặt
-                    )
-                )
-                .Select(p => new PhongViewModel
-                {
-                    Phong = p,
-                    Checkin = checkinDate,
-                    Checkout = checkoutDate,
-                    SoDem = soDem,
-                    SoKhach = soKhach
-                })
+                .Where(p => (p.SoLuongKhach ?? 0) >= soKhach) // Đủ sức chứa số khách
                 .ToList();
 
-            // Thông báo nếu không tìm thấy phòng
-            if (!rooms.Any())
+            var bookedRooms = _context.PhieuDatPhongs
+                .Include(p => p.ChiTietPhieuPhongs)
+                .ThenInclude(c => c.Phong)
+                .Where(p => p.NgayNhan != null && p.NgayTra != null)
+                .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
+                .ToList();
+
+            var availableRooms = new List<PhongViewModel>();
+            foreach (var room in allRooms)
             {
-                TempData["ThongBao"] = "Không tìm thấy phòng trống phù hợp với yêu cầu của bạn. Vui lòng thử lại với khoảng thời gian hoặc số khách khác!";
+                bool isAvailable = true;
+                foreach (var booking in bookedRooms)
+                {
+                    if (booking.PhongId == room.PhongId)
+                    {
+                        DateTime bookingStart = (DateTime)booking.NgayNhan;
+                        DateTime bookingEnd = (DateTime)booking.NgayTra;
+
+                        if (!(checkoutDate < bookingStart || checkinDate > bookingEnd))
+                        {
+                            isAvailable = false;
+                            break;
+                        }
+                    }
+                }
+                if (isAvailable)
+                {
+                    availableRooms.Add(new PhongViewModel
+                    {
+                        Phong = room,
+                        Checkin = checkinDate,
+                        Checkout = checkoutDate,
+                        SoDem = soDem,
+                        SoKhach = soKhach
+                    });
+                }
             }
 
-            return View("TimKiemPhong", rooms);
+            // Thông báo nếu không tìm thấy phòng
+            if (!availableRooms.Any())
+            {
+                TempData["ThongBao"] = "Không tìm thấy phòng khả dụng phù hợp với yêu cầu của bạn. Vui lòng thử lại với khoảng thời gian hoặc số khách khác!";
+            }
+
+            return View("TimKiemPhong", availableRooms);
         }
         [HttpGet]
         public IActionResult DatPhong(int phongId, DateTime checkin, DateTime checkout)

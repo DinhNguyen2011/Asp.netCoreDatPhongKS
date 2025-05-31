@@ -1,1 +1,48 @@
-﻿
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.PhieuDatPhong>
+@{
+    ViewData["Title"] = "Danh sách phiếu đặt phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Danh sách phiếu đặt phòng</h2>
+    <a href="@Url.Action("Create", "PhieuDatPhong")" class="btn btn-primary mb-3">Tạo phiếu mới</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã phiếu</th>
+                <th>Khách hàng</th>
+                <th>Ngày nhận</th>
+                <th>Ngày trả</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Tình trạng sử dụng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaPhieu</td>
+                    <td>@(item.KhachHang?.HoTen ?? "Không xác định")</td>
+                    <td>@item.NgayNhan?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.NgayTra?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.TongTien?.ToString("N0") VNĐ</td>
+                    <td>@item.TrangThai</td>
+                    <td>@item.TinhTrangSuDung</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    @if (TempData["Success"] != null)
+    {
+        @:toastr.success('@TempData["Success"]');
+    }
+    @if (TempData["Error"] != null)
+    {
+        @:toastr.error('@TempData["Error"]');
+    }
+</script>

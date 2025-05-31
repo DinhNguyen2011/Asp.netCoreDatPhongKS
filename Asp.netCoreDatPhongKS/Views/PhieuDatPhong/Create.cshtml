@@ -1,0 +1,193 @@
+﻿@model Asp.netCoreDatPhongKS.Models.PhieuDatPhong
+@{
+    ViewData["Title"] = "Tạo phiếu đặt phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Tạo phiếu đặt phòng</h2>
+    <form asp-action="Create" asp-controller="PhieuDatPhong" method="post" id="phieuDatPhongForm">
+        <div class="form-group">
+            <label>Khách hàng</label>
+            <div class="d-flex">
+                <select asp-for="KhachHangId" class="form-control" id="khachHangSelect" required>
+                    <option value="">Chọn khách hàng</option>
+                    @foreach (var khachHang in ViewBag.KhachHangs)
+                    {
+                        <option value="@khachHang.KhachHangId">@khachHang.HoTen (@khachHang.Email)</option>
+                    }
+                </select>
+                <button type="button" class="btn btn-primary ml-2" onclick="showAddKhachHangForm()">Thêm khách hàng mới</button>
+            </div>
+            <span asp-validation-for="KhachHangId" class="text-danger"></span>
+        </div>
+
+        <!-- Form ẩn để thêm khách hàng mới -->
+        <!-- Form ẩn để thêm khách hàng mới -->
+        <div id="addKhachHangForm" style="display:none;" class="mt-3">
+            <h4>Thêm khách hàng mới</h4>
+            <div class="form-group">
+                <label>Họ tên <span class="text-danger">*</span></label>
+                <input type="text" id="newKhachHangHoTen" class="form-control" name="newKhachHangHoTen" />
+            </div>
+            <div class="form-group">
+                <label>Email <span class="text-danger">*</span></label>
+                <input type="email" id="newKhachHangEmail" class="form-control" name="newKhachHangEmail" />
+            </div>
+            <div class="form-group">
+                <label>Số điện thoại <span class="text-danger">*</span></label>
+                <input type="text" id="newKhachHangSoDienThoai" class="form-control" name="newKhachHangSoDienThoai" />
+            </div>
+            <div class="form-group">
+                <label>Địa chỉ <span class="text-danger">*</span></label>
+                <input type="text" id="newKhachHangDiaChi" class="form-control" name="newKhachHangDiaChi" />
+            </div>
+            <div class="form-group">
+                <label>CCCD <span class="text-danger">*</span></label>
+                <input type="text" id="newKhachHangCccd" class="form-control" name="newKhachHangCccd" />
+            </div>
+            <div class="form-group">
+                <label>Ghi chú</label>
+                <textarea id="newKhachHangGhiChu" class="form-control" name="newKhachHangGhiChu"></textarea>
+            </div>
+            <button type="button" class="btn btn-success" onclick="addKhachHang()">Lưu khách hàng</button>
+            <button type="button" class="btn btn-secondary" onclick="hideAddKhachHangForm()">Hủy</button>
+        </div>
+
+        <div class="form-group">
+            <label>Ngày nhận phòng</label>
+            <input asp-for="NgayNhan" type="date" class="form-control" required id="ngayNhan" />
+            <span asp-validation-for="NgayNhan" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Ngày trả phòng</label>
+            <input asp-for="NgayTra" type="date" class="form-control" required id="ngayTra" />
+            <span asp-validation-for="NgayTra" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Chọn phòng</label>
+            <select name="phongIds" multiple class="form-control" required id="phongSelect">
+                @foreach (var phong in ViewBag.Phongs)
+                {
+                    <option value="@phong.PhongId">Phòng @phong.SoPhong - Giá: @phong.GiaPhong1Dem VNĐ/ngày (@phong.TinhTrang) - Số lượng người ở: @phong.SoLuongKhach/Phòng</option>
+                }
+            </select>
+            <button type="button" class="btn btn-info mt-2" onclick="filterAvailableRooms()">Lọc phòng khả dụng</button>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Tạo phiếu</button>
+        <a href="@Url.Action("Index", "PhieuDatPhong")" class="btn btn-secondary mt-3">Quay lại</a>
+    </form>
+</div>
+
+<script>
+    function showAddKhachHangForm() {
+        document.getElementById('addKhachHangForm').style.display = 'block';
+    }
+
+    function hideAddKhachHangForm() {
+        document.getElementById('addKhachHangForm').style.display = 'none';
+    }
+
+    function addKhachHang() {
+        var hoTen = document.getElementById('newKhachHangHoTen').value;
+        var email = document.getElementById('newKhachHangEmail').value;
+        var soDienThoai = document.getElementById('newKhachHangSoDienThoai').value;
+        var diaChi = document.getElementById('newKhachHangDiaChi').value;
+        var cccd = document.getElementById('newKhachHangCccd').value;
+        var ghiChu = document.getElementById('newKhachHangGhiChu').value;
+
+        if (!hoTen || !email || !soDienThoai || !diaChi || !cccd) {
+            toastr.error('Vui lòng nhập đầy đủ họ tên, email, số điện thoại, địa chỉ và CCCD.');
+            return;
+        }
+
+        fetch('/PhieuDatPhong/AddKhachHang', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+            },
+            body: JSON.stringify({
+                HoTen: hoTen,
+                Email: email,
+                SoDienThoai: soDienThoai,
+                DiaChi: diaChi,
+                Cccd: cccd,
+                GhiChu: ghiChu
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                var select = document.getElementById('khachHangSelect');
+                var option = new Option(`${data.khachHang.hoTen} (${data.khachHang.email})`, data.khachHang.khachHangId);
+                select.add(option);
+                select.value = data.khachHang.khachHangId;
+
+                toastr.success('Thêm khách hàng thành công.');
+                if (data.clearForm) {
+                    document.getElementById('newKhachHangHoTen').value = '';
+                    document.getElementById('newKhachHangEmail').value = '';
+                    document.getElementById('newKhachHangSoDienThoai').value = '';
+                    document.getElementById('newKhachHangDiaChi').value = '';
+                    document.getElementById('newKhachHangCccd').value = '';
+                    document.getElementById('newKhachHangGhiChu').value = '';
+                    hideAddKhachHangForm();
+                }
+            } else {
+                toastr.error(data.message || 'Có lỗi xảy ra khi thêm khách hàng.');
+            }
+        })
+        .catch(error => {
+            toastr.error('Có lỗi xảy ra: ' + error.message);
+        });
+    }
+
+    function filterAvailableRooms() {
+        var ngayNhan = document.getElementById('ngayNhan').value;
+        var ngayTra = document.getElementById('ngayTra').value;
+
+        if (!ngayNhan || !ngayTra) {
+            toastr.error('Vui lòng nhập ngày nhận và ngày trả.');
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('ngayNhan', ngayNhan);
+        formData.append('ngayTra', ngayTra);
+
+        fetch('/PhieuDatPhong/FilterEmptyRooms', {
+            method: 'POST',
+            headers: {
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                var select = document.getElementById('phongSelect');
+                select.innerHTML = ''; // Xóa các option hiện tại
+                data.rooms.forEach(room => {
+                    var option = new Option(`Phòng ${room.soPhong} - Giá: ${room.giaPhong1Dem} VNĐ/ngày (${room.tinhTrang})`, room.phongId);
+                    select.add(option);
+                });
+                toastr.success('Lọc phòng khả dụng thành công.');
+            } else {
+                toastr.error(data.message || 'Có lỗi xảy ra khi lọc phòng.');
+            }
+        })
+        .catch(error => {
+            toastr.error('Có lỗi xảy ra: ' + error.message);
+        });
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        @:toastr.success('@TempData["Success"]');
+    }
+    @if (TempData["Error"] != null)
+    {
+        @:toastr.error('@TempData["Error"]');
+    }
+</script>
