@@ -1,0 +1,16 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "Xóa tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Xóa tài khoản</h2>
+    <div class="alert alert-warning">
+        Bạn có chắc muốn xóa tài khoản <strong>@Model.TaiKhoan.Hoten (@Model.TaiKhoan.Email)</strong>? Hành động này không thể hoàn tác.
+    </div>
+    <form asp-action="DeleteConfirmed" asp-controller="QuanLyTaiKhoan" asp-route-taiKhoanId="@Model.TaiKhoan.TaiKhoanId" method="post">
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a href="@Url.Action("Index", "QuanLyTaiKhoan")" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

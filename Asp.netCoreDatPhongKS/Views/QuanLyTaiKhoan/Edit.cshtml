@@ -1,0 +1,60 @@
+﻿@model Asp.netCoreDatPhongKS.Models.ViewModels.TaiKhoanViewModel
+@{
+    ViewData["Title"] = "Sửa thông tin tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Sửa thông tin tài khoản: @Model.TaiKhoan.Hoten</h2>
+    <form asp-action="Edit" asp-controller="QuanLyTaiKhoan" asp-route-taiKhoanId="@Model.TaiKhoan.TaiKhoanId" method="post">
+        <input type="hidden" asp-for="VaiTroId" />
+        <h4>Thông tin tài khoản</h4>
+        <div class="form-group">
+            <label asp-for="TaiKhoan.Email">Email</label>
+            <input asp-for="TaiKhoan.Email" class="form-control" required />
+            <span asp-validation-for="TaiKhoan.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Mật khẩu mới (để trống nếu không đổi)</label>
+            <input name="NewMatKhau" type="password" class="form-control" />
+            <span class="text-danger" data-valmsg-for="NewMatKhau" data-valmsg-replace="true"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TaiKhoan.Hoten">Họ tên</label>
+            <input asp-for="TaiKhoan.Hoten" class="form-control" required />
+            <span asp-validation-for="TaiKhoan.Hoten" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TaiKhoan.TrangThai">Trạng thái</label>
+            <select asp-for="TaiKhoan.TrangThai" class="form-control">
+                <option value="true">Kích hoạt</option>
+                <option value="false">Vô hiệu</option>
+            </select>
+            <span asp-validation-for="TaiKhoan.TrangThai" class="text-danger"></span>
+        </div>
+
+        @if (Model.VaiTroId == 2)
+        {
+            <h4>Thông tin nhân viên</h4>
+            <div class="form-group">
+                <label asp-for="NhanVien.Cccd">CCCD</label>
+                <input asp-for="NhanVien.Cccd" class="form-control" required />
+                <span asp-validation-for="NhanVien.Cccd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NhanVien.SoDienThoai">Số điện thoại</label>
+                <input asp-for="NhanVien.SoDienThoai" class="form-control" required />
+                <span asp-validation-for="NhanVien.SoDienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NhanVien.DiaChi">Địa chỉ</label>
+                <input asp-for="NhanVien.DiaChi" class="form-control" />
+                <span asp-validation-for="NhanVien.DiaChi" class="text-danger"></span>
+            </div>
+        }
+
+        <button type="submit" class="btn btn-success mt-3">Lưu</button>
+        <a href="@Url.Action("Index", "QuanLyTaiKhoan")" class="btn btn-secondary mt-3">Quay lại</a>
+    </form>
+</div>
+

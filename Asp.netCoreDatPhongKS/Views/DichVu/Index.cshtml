@@ -1,0 +1,73 @@
+﻿@model Asp.netCoreDatPhongKS.Models.ViewModels.DichVuViewModel
+
+@{
+    ViewData["Title"] = "Danh sách dịch vụ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Liên kết đến dichvu.css -->
+<link rel="stylesheet" href="~/css/dichvu.css" />
+
+<!-- Nội dung view -->
+<h2 class="text-center mb-4">Danh sách dịch vụ</h2>
+
+<!-- Hotline -->
+<div class="text-center mb-4">
+    <p>Liên hệ đặt dịch vụ qua hotline: <strong>0909 123 456</strong></p>
+</div>
+
+<!-- Bộ lọc -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <form asp-action="Index" method="get">
+            <div class="input-group">
+                <select name="loaiDichVu" class="form-select" onchange="this.form.submit()">
+                    @foreach (var loai in Model.LoaiDichVus)
+                    {
+                        if (loai == Model.LoaiDichVuHienTai)
+                        {
+                            <option value="@loai" selected>@(loai == "TatCa" ? "Tất cả" : loai)</option>
+                        }
+                        else
+                        {
+                            <option value="@loai">@(loai == "TatCa" ? "Tất cả" : loai)</option>
+                        }
+                    }
+                </select>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Danh sách dịch vụ -->
+<div class="row">
+    @if (Model.DichVus != null && Model.DichVus.Any())
+    {
+        @foreach (var dichVu in Model.DichVus)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card service-card">
+                    @if (!string.IsNullOrEmpty(dichVu.HinhAnh))
+                    {
+                        <img src="@Url.Content(dichVu.HinhAnh)" class="card-img-top service-image" alt="@dichVu.TenDichVu" />
+                    }
+                    <div class="card-body">
+                        <strong class="card-title">@dichVu.TenDichVu</strong>
+                        <strong class="card-text">@dichVu.MoTa</strong>
+                        <p class="card-text"><strong>Giá:</strong> @(dichVu.DonGia == 0 ? "Miễn phí" : dichVu.DonGia.ToString("N0") + " VNĐ")</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted text-center">Không có dịch vụ nào để hiển thị.</p>
+    }
+</div>
+
+
+
+
+
+<div 

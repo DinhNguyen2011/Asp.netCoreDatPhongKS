@@ -1,0 +1,38 @@
+﻿@model Asp.netCoreDatPhongKS.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "Phân quyền tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var danhSachQuyen = ViewBag.Quyen as List<Asp.netCoreDatPhongKS.Models.Quyen>;
+    var quyenDaGan = Model.QuyenTaiKhoans.Select(q => q.QuyenId).ToList();
+}
+
+<div class="container mt-4">
+    <h2>Phân quyền cho tài khoản: @Model.Hoten</h2>
+    <form asp-action="Edit" asp-route-taiKhoanId="@Model.TaiKhoanId" method="post">
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input class="form-control" value="@Model.Email" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Vai trò</label>
+            <input class="form-control" value="@Model.VaiTro?.TenVaiTro" disabled />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Chọn quyền:</label>
+            @foreach (var quyen in danhSachQuyen)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="selectedQuyenIds" value="@quyen.QuyenId"
+                    @(quyenDaGan.Contains(quyen.QuyenId) ? "checked" : "") />
+                    <label class="form-check-label">@quyen.TenQuyen</label>
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+        <a href="@Url.Action("Index", "PhanQuyen")" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

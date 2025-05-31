@@ -1,0 +1,36 @@
+﻿@model Asp.netCoreDatPhongKS.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card p-4 shadow" style="width: 400px; border-radius: 20px;">
+        <h3 class="text-center mb-4">ĐĂNG KÝ</h3>
+
+        <form asp-action="Register" method="post">
+            <div class="form-group mb-3">
+                <input asp-for="Email" class="form-control rounded-pill" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <input asp-for="MatKhau" type="password" class="form-control rounded-pill" placeholder="Mật khẩu" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group mb-3">
+                <input asp-for="HinhAnh" class="form-control rounded-pill" placeholder="Link ảnh đại diện (không bắt buộc)" />
+            </div>
+
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-primary rounded-pill">ĐĂNG KÝ</button>
+            </div>
+
+            <div class="text-center">
+                <span>Đã có tài khoản?</span>
+                <a href="/TaiKhoan/Login" class="text-primary fw-bold">Đăng nhập</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,107 @@
+﻿@model Asp.netCoreDatPhongKS.Models.ViewModels.TaiKhoanViewModel
+@{
+    ViewData["Title"] = "Thêm tài khoản mới";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Thêm tài khoản mới</h2>
+    <form asp-action="Create" asp-controller="QuanLyTaiKhoan" method="post">
+        <div class="form-group">
+            <label asp-for="VaiTroId">Vai trò</label>
+            <select asp-for="VaiTroId" class="form-control" onchange="toggleNhanVienFields(this)" required>
+                <option value="">-- Chọn vai trò --</option>
+                <option value="3">Khách hàng</option>
+                <option value="2">Nhân viên/Lễ tân</option>
+            </select>
+            <span asp-validation-for="VaiTroId" class="text-danger"></span>
+        </div>
+        <h4>Thông tin tài khoản</h4>
+        <div class="form-group">
+            <label asp-for="TaiKhoan.Email">Email</label>
+            <input asp-for="TaiKhoan.Email" class="form-control" required />
+            <span asp-validation-for="TaiKhoan.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MatKhau">Mật khẩu</label>
+            <input asp-for="MatKhau" type="password" class="form-control" required />
+            <span asp-validation-for="MatKhau" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TaiKhoan.Hoten">Họ tên</label>
+            <input asp-for="TaiKhoan.Hoten" class="form-control" required />
+            <span asp-validation-for="TaiKhoan.Hoten" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TaiKhoan.TrangThai">Trạng thái</label>
+            <select asp-for="TaiKhoan.TrangThai" class="form-control">
+                <option value="true">Kích hoạt</option>
+                <option value="false">Vô hiệu</option>
+            </select>
+            <span asp-validation-for="TaiKhoan.TrangThai" class="text-danger"></span>
+        </div>
+
+        <div id="nhanVienFields" style="@(Model.VaiTroId == 2 ? "" : "display:none;")">
+            <h4>Thông tin nhân viên</h4>
+            <div class="form-group">
+                <label asp-for="NhanVien.Cccd">CCCD</label>
+                <input asp-for="NhanVien.Cccd" class="form-control" data-val-nhanvien="true" />
+                <span asp-validation-for="NhanVien.Cccd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NhanVien.SoDienThoai">Số điện thoại</label>
+                <input asp-for="NhanVien.SoDienThoai" class="form-control" data-val-nhanvien="true" />
+                <span asp-validation-for="NhanVien.SoDienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NhanVien.DiaChi">Địa chỉ</label>
+                <input asp-for="NhanVien.DiaChi" class="form-control" />
+                <span asp-validation-for="NhanVien.DiaChi" class="text-danger"></span>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success mt-3">Thêm</button>
+        <a href="@Url.Action("Index", "QuanLyTaiKhoan")" class="btn btn-secondary mt-3">Quay lại</a>
+    </form>
+</div>
+
+<script>
+    function toggleNhanVienFields(select) {
+        var nhanVienFields = document.getElementById('nhanVienFields');
+        nhanVienFields.style.display = select.value == '2' ? 'block' : 'none';
+
+        // Enable/disable validation for NhanVien fields
+        var nhanVienInputs = nhanVienFields.querySelectorAll('input[data-val-nhanvien]');
+        nhanVienInputs.forEach(input => {
+            input.required = select.value == '2';
+        });
+    }
+</script>
+
+
+    <script>
+        // Client-side validation for NhanVien fields
+        $(document).ready(function () {
+            $.validator.addMethod("nhanVienRequired", function (value, element) {
+                var vaiTroId = $('#VaiTroId').val();
+                return vaiTroId != '2' || (vaiTroId == '2' && value && value.trim() != '');
+            }, "Trường này là bắt buộc khi chọn vai trò Nhân viên/Lễ tân.");
+
+            $.validator.unobtrusive.adapters.addBool("nhanVienRequired");
+
+            // Revalidate form when VaiTroId changes
+            $('#VaiTroId').change(function () {
+                $('form').validate().element('#NhanVien_Cccd');
+                $('form').validate().element('#NhanVien_SoDienThoai');
+            });
+        });
+
+        @if (TempData["Success"] != null)
+        {
+            @:toastr.success('@TempData["Success"]');
+        }
+        @if (TempData["Error"] != null)
+        {
+            @:toastr.error('@TempData["Error"]');
+        }
+    </script>

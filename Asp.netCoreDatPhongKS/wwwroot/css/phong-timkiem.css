@@ -1,0 +1,24 @@
+﻿/* phong-timkiem.css */
+/* Sử dụng prefix .phongtk- để tránh đụng CSS khác */
+.phongtk-wrapper {
+    padding-bottom: 30px;
+}
+
+.phongtk-summary p {
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+}
+
+.phongtk-room-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.phongtk-room-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.phongtk-img {
+    object-fit: cover;
+    height: 200px;
+}

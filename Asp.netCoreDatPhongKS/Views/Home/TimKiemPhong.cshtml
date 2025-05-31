@@ -1,0 +1,76 @@
+﻿@model List<Asp.netCoreDatPhongKS.Models.ViewModels.PhongViewModel>
+
+
+@{
+    Layout = null;
+    var checkin = Model.FirstOrDefault()?.Checkin ?? DateTime.Today;
+    var checkout = Model.FirstOrDefault()?.Checkout ?? DateTime.Today.AddDays(1);
+    int soDem = (checkout - checkin).Days;
+    int soKhach = Model.FirstOrDefault()?.SoKhach ?? 1;
+}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/phong-timkiem.css" />
+
+<div class="container phongtk-wrapper mt-4">
+
+    <div class="card mb-4 phongtk-summary">
+        <div class="card-header bg-primary text-white ">
+            <h5 class="mb-0">Thông tin tìm kiếm</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Ngày nhận:</strong> @checkin.ToString("dd/MM/yyyy")</p>
+            <p><strong>Ngày trả:</strong> @checkout.ToString("dd/MM/yyyy")</p>
+            <p><strong>Số đêm:</strong> @soDem</p>
+            <p><strong>Số khách:</strong> @soKhach</p>
+            <a class="btn btn-outline-primary mt-2" href="@Url.Action("Index","Home")">🔄 Thay đổi tìm kiếm</a>
+        </div>
+    </div>
+
+    <h3 class="mb-4 text-center text-secondary">Danh sách phòng khả dụng</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning">Không có phòng phù hợp với yêu cầu.</div>
+    }
+    else
+    {
+        <div class="row g-4 phongtk-room-list">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm phongtk-room-item">
+                        @if (!string.IsNullOrEmpty(item.Phong.HinhAnh))
+                        {
+                            <img src="@Url.Content(item.Phong.HinhAnh)" class="card-img-top phongtk-img" alt="Ảnh phòng @item.Phong.SoPhong" />
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">Phòng @item.Phong.SoPhong</h5>
+                            <p class="card-text">
+                                <strong>Loại phòng:</strong> @item.Phong.LoaiPhong?.TenLoai <br />
+                                <strong>Sức chứa:</strong> @item.Phong.SoLuongKhach người <br />
+                                <strong>Giá/đêm:</strong> @String.Format("{0:N0}", item.Phong.GiaPhong1Dem) VNĐ <br />
+                                <strong>Tổng giá:</strong> <span class="text-success">@String.Format("{0:N0}", item.TongGia) VNĐ</span>
+                            </p>
+                            <p class="card-text text-muted">@item.Phong.MoTa</p>
+                            <div class="d-flex justify-content-between mt-auto">
+                                <a href="@Url.Action("ChiTiet", "ChiTietPhong", new { phongId = item.Phong.PhongId })"
+                                   class="btn btn-outline-primary">
+                                    Xem chi tiết
+                                </a>
+                                <a href="@Url.Action("DatPhong", "Home", new { phongId = item.Phong.PhongId, checkin = item.Checkin.ToString("yyyy-MM-dd"), checkout = item.Checkout.ToString("yyyy-MM-dd") })"
+                                   class="btn btn-success">
+                                    Đặt ngay
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<!-- Optional: Bootstrap JS for future interactivity -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

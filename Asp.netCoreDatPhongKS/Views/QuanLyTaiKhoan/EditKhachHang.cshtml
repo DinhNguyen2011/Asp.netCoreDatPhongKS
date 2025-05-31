@@ -1,0 +1,42 @@
+﻿@model Asp.netCoreDatPhongKS.Models.TaiKhoan
+@{
+    ViewData["Title"] = "Sửa thông tin khách hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Sửa thông tin khách hàng: @Model.Hoten</h2>
+    <form asp-action="EditKhachHang" asp-controller="QuanLyTaiKhoan" asp-route-taiKhoanId="@Model.TaiKhoanId" method="post">
+        <div class="form-group">
+            <label>Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Mật khẩu mới (để trống nếu không đổi)</label>
+            <input name="NewMatKhau" type="password" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Họ tên</label>
+            <input asp-for="Hoten" class="form-control" />
+            <span asp-validation-for="Hoten" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label>Trạng thái</label>
+            <select asp-for="TrangThai" class="form-control">
+                @* <option value="true" @(Model.TrangThai == true ? "selected" : "")>Kích hoạt</option> *@
+                @* <option value="false" @(Model.TrangThai == false ? "selected" : "")>Vô hiệu</option> *@
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Lưu</button>
+        <a href="@Url.Action("ManageKhachHang", "QuanLyTaiKhoan")" class="btn btn-secondary mt-3">Quay lại</a>
+    </form>
+</div>
+
+@* @section Scripts { *@
+@*     <partial name="_ValidationScriptsPartial" /> *@
+@*     @if (TempData["Error"] != null) *@
+@*     { *@
+@*         <script>toastr.error('@TempData["Error"]');</script> *@
+@*     } *@
+@* } *@

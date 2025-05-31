@@ -1,0 +1,29 @@
+﻿@model Asp.netCoreDatPhongKS.Models.Quyen
+@{
+    ViewData["Title"] = "Sửa quyền";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Sửa quyền</h2>
+    <form asp-action="EditQuyen" asp-route-quyenId="@Model.QuyenId" method="post">
+        <div class="form-group">
+            <label asp-for="MaQuyen">Mã quyền</label>
+            <input asp-for="MaQuyen" class="form-control" />
+            <span asp-validation-for="MaQuyen" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="TenQuyen">Tên quyền</label>
+            <input asp-for="TenQuyen" class="form-control" />
+            <span asp-validation-for="TenQuyen" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MoTa">Mô tả</label>
+            <textarea asp-for="MoTa" class="form-control"></textarea>
+            <span asp-validation-for="MoTa" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Lưu</button>
+        <a href="@Url.Action("QuyenIndex", "PhanQuyen")" class="btn btn-secondary mt-3">Quay lại</a>
+    </form>
+</div>
+

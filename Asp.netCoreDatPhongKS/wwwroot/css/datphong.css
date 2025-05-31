@@ -1,0 +1,72 @@
+﻿/* datphong.css */
+
+/* Tổng thể container */
+.datphong-container {
+    padding:0px 50px;
+    margin:20px 0px 100px 0px;
+}
+
+/* Thông tin đặt phòng */
+.datphong-card {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.datphong-card-body {
+    padding: 20px;
+    background-color: #fdfdfd;
+    text-align: center !important;
+}
+.datphongz-title {
+    text-align: center !important;
+}
+.datphong-title {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+    color: #333;
+    font-family: 'Bodoni MT';
+}
+
+/* Form */
+.datphong-form__label {
+    font-weight: 500;
+}
+
+.datphong-form__input {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 8px 12px;
+}
+
+    .datphong-form__input:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 4px rgba(40, 167, 69, 0.25);
+    }
+
+/* Buttons */
+.datphong-button-submit {
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+}
+
+    .datphong-button-submit:hover {
+        background-color: #218838;
+    }
+
+.datphong-button-cancel {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    margin-left: 10px;
+}
+
+    .datphong-button-cancel:hover {
+        background-color: #5a6268;
+    }

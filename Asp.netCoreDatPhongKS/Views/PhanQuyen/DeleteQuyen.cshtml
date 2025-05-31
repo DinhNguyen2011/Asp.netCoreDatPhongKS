@@ -1,0 +1,17 @@
+﻿@model Asp.netCoreDatPhongKS.Models.Quyen
+@{
+    ViewData["Title"] = "Xóa quyền";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2>Xóa quyền</h2>
+    <div class="alert alert-warning">
+        Bạn có chắc muốn xóa quyền <strong>@Model.TenQuyen (@Model.MaQuyen)</strong>? Hành động này không thể hoàn tác.
+    </div>
+    <form asp-action="DeleteQuyenConfirmed" asp-route-quyenId="@Model.QuyenId" method="post">
+        <input type="hidden" asp-for="QuyenId" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a href="@Url.Action("QuyenIndex", "PhanQuyen")" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

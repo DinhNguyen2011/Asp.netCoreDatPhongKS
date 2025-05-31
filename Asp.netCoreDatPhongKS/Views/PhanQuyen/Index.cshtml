@@ -1,0 +1,38 @@
+﻿@model List<Asp.netCoreDatPhongKS.Models.TaiKhoan>
+@{
+    ViewData["Title"] = "Quản lý phân quyền";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var quyen = ViewBag.Quyen as List<Asp.netCoreDatPhongKS.Models.Quyen>;
+}
+
+<div class="container mt-4">
+    <h2>Quản lý phân quyền</h2>
+    <a href="@Url.Action("QuyenIndex", "PhanQuyen")" class="btn btn-primary mb-3">Quản lý quyền</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Vai trò</th>
+                <th>Quyền</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var taiKhoan in Model)
+            {
+                <tr>
+                    <td>@taiKhoan.Hoten</td>
+                    <td>@taiKhoan.Email</td>
+                    <td>@taiKhoan.VaiTro?.TenVaiTro</td>
+                    <td>
+                        @string.Join(", ", taiKhoan.QuyenTaiKhoans.Select(tq => tq.Quyen.TenQuyen))
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "PhanQuyen", new { taiKhoanId = taiKhoan.TaiKhoanId })" class="btn btn-primary">Sửa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

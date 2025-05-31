@@ -1,0 +1,172 @@
+﻿/* Styles for GioiThieu/About view */
+#hero {
+    background: url('/images/hero-bg.jpg') no-repeat center center;
+    background-size: cover;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Lớp phủ tối để chữ dễ đọc */
+}
+
+#hero h1 {
+    font-family: 'Cormorant Upright', serif;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#hero p {
+    font-family: 'Sora', sans-serif;
+    color: #fff;
+}
+
+#about-details img {
+    max-width: 100%;
+    height: auto;
+}
+
+#about-details p.lead {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+#about-details .btn-primary {
+    background-color: #ff85a2;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    #about-details .btn-primary:hover {
+        background-color: #ff6b89;
+    }
+
+#facilities {
+    background-color: #f8f9fa;
+}
+
+.facility-card {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+    .facility-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .facility-card i {
+        color: #ff85a2;
+    }
+
+    .facility-card h4 {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    .facility-card p {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+#team .team-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #ff85a2;
+}
+
+.team-card {
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+    .team-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .team-card h5 {
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+    }
+
+    .team-card p {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #hero {
+        height: 400px;
+    }
+
+        #hero h1 {
+            font-size: 2.5rem;
+        }
+
+        #hero p {
+            font-size: 1rem;
+        }
+
+    #about-details h2,
+    #facilities h2,
+    #team h2 {
+        font-size: 2rem;
+    }
+
+    .facility-card,
+    .team-card {
+        padding: 15px;
+    }
+
+        .team-card img {
+            width: 120px;
+            height: 120px;
+        }
+}
+
+@media (max-width: 576px) {
+    #hero {
+        height: 350px;
+    }
+
+        #hero h1 {
+            font-size: 2rem;
+        }
+
+        #hero p {
+            font-size: 0.9rem;
+        }
+
+    #about-details h2,
+    #facilities h2,
+    #team h2 {
+        font-size: 1.75rem;
+    }
+
+    .facility-card h4,
+    .team-card h5 {
+        font-size: 1rem;
+    }
+
+    .facility-card p,
+    .team-card p {
+        font-size: 0.85rem;
+    }
+}

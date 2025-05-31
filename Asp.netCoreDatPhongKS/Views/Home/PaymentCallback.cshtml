@@ -1,0 +1,94 @@
+﻿@model Asp.netCoreDatPhongKS.Models.Payment.PaymentResponse
+
+@{
+    ViewData["Title"] = "Kết quả thanh toán";
+   
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <style>
+        .payment-container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .payment-title {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        .payment-success {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .payment-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .payment-success h4,
+        .payment-error h4 {
+            margin-top: 0;
+        }
+
+        .payment-button {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            padding: 10px 25px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .payment-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h3 class="payment-title">Kết quả thanh toán</h3>
+
+        @if (Model.Success)
+        {
+            <div class="payment-success">
+                <h4>✅ Thanh toán thành công!</h4>
+                <p><strong>Mã đơn hàng:</strong> @Model.OrderId</p>
+                <p><strong>Mã giao dịch:</strong> @Model.TransactionId</p>
+                <p><strong>Mô tả:</strong> @Model.OrderDescription</p>
+                <p><strong>Mã phản hồi:</strong> @Model.VnPayResponseCode</p>
+                <p>@TempData["ThongBao"]</p>
+            </div>
+        }
+        else
+        {
+            <div class="payment-error">
+                <h4>❌ Thanh toán thất bại!</h4>
+                <p><strong hidden>Mã phản hồi:</strong> @Model.VnPayResponseCode</p>
+                <p>@TempData["ThongBao"]</p>
+            </div>
+        }
+
+        <a href="@Url.Action("Index", "Home")" class="payment-button">Về trang chủ</a>
+    </div>
+</body>
+</html>
