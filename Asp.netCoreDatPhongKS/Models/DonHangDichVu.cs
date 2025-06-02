@@ -7,19 +7,18 @@ namespace Asp.netCoreDatPhongKS.Models
     {
         public DonHangDichVu()
         {
-            ChiTietDichVus = new HashSet<ChiTietDichVu>();
+            ChiTietDonHangDichVus = new HashSet<ChiTietDonHangDichVu>();
+            HoaDonDichVus = new HashSet<HoaDonDichVu>();
         }
 
-        public int DonHangId { get; set; }
+        public int MaDonHangDv { get; set; }
         public int? KhachHangId { get; set; }
-        public DateTime NgayDat { get; set; }
-        public decimal TongTien { get; set; }
-        public string TrangThai { get; set; } = null!;
+        public DateTime? NgayDat { get; set; }
+        public string? TrangThai { get; set; }
         public string? GhiChu { get; set; }
-        public int? HoaDonId { get; set; }
 
-        public virtual HoaDon? HoaDon { get; set; }
         public virtual KhachHang? KhachHang { get; set; }
-        public virtual ICollection<ChiTietDichVu> ChiTietDichVus { get; set; }
+        public virtual ICollection<ChiTietDonHangDichVu> ChiTietDonHangDichVus { get; set; }
+        public virtual ICollection<HoaDonDichVu> HoaDonDichVus { get; set; }
     }
 }

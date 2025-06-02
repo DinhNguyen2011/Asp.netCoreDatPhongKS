@@ -25,6 +25,22 @@
       "PackagePath": "staticwebassets\\assets\\css\\fonts.min.css"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\hoadondichvu.css",
+      "PackagePath": "staticwebassets\\assets\\css\\hoadondichvu.css"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\hoadondichvu.css.map",
+      "PackagePath": "staticwebassets\\assets\\css\\hoadondichvu.css.map"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\hoadontong.css",
+      "PackagePath": "staticwebassets\\assets\\css\\hoadontong.css"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\hoadontong.css.map",
+      "PackagePath": "staticwebassets\\assets\\css\\hoadontong.css.map"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\kaiadmin.css",
       "PackagePath": "staticwebassets\\assets\\css\\kaiadmin.css"
     },

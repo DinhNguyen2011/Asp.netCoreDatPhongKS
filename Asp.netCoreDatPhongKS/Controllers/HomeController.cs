@@ -276,17 +276,29 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 // Tạo HoaDon
                 var hoaDon = new HoaDon
                 {
-                    TongTienPhong = pendingBooking.TongTien,
-                    TongTienDichVu = 0,
-                    GiamGia = 0,
-                    TongTien = pendingBooking.TongTien,
                     NgayLap = DateTime.Now,
+                    KhachHangId = khach.KhachHangId,
+                    NhanVienId =null ,
+                    TongTienPhong = pendingBooking.TongTien,
+                    TongTienDichVu = 0, // Chưa có dịch vụ
+                    TongTien = pendingBooking.TongTien,
+                    HinhThucThanhToan = "VNPay",
                     TrangThai = "Đã thanh toán",
-                    PhuongThucThanhToan = "VNPay",
-                    SoTienConThieu = 0
+                    IsKhachVangLai = khach.HoTen == "Khách vãng lai",
+                    GhiChu = "Hóa đơn phòng đặt qua website"
+
                 };
                 _context.HoaDons.Add(hoaDon);
-                phieu.HoaDon = hoaDon; // Liên kết HoaDon với PhieuDatPhong
+
+                // Liên kết HoaDon với PhieuDatPhong qua HoaDonPdp
+                await _context.SaveChangesAsync(); // Lưu để có MaHoaDon và PhieuDatPhongId
+
+                var hoaDonPdp = new HoaDonPdp
+                {
+                    MaHoaDon = hoaDon.MaHoaDon,
+                    PhieuDatPhongId = phieu.PhieuDatPhongId
+                };
+                _context.HoaDonPdps.Add(hoaDonPdp);
 
                 // Kiểm tra và tạo TaiKhoan
                 var taiKhoan = _context.TaiKhoans.FirstOrDefault(t => t.Email == khach.Email);

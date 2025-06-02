@@ -1,169 +1,180 @@
-﻿//using Asp.netCoreDatPhongKS.Models;
-//using Asp.netCoreDatPhongKS.Models.ViewModels; // Thêm dòng này để import namespace
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.EntityFrameworkCore;
-//using System.Linq;
-//using System.Threading.Tasks;
+﻿using Asp.netCoreDatPhongKS.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-//namespace Asp.netCoreDatPhongKS.Controllers
-//{
-//    public class DichVuController : Controller
-//    {
-//        //đặt dịch vụ, hd liên kết vs pđp lấy tt tổng hợp,
-//        //pđp liên kết khách hàng lấy tt KH
-//        //kl với chi tiet phieuphong và chitietdichvu để lấy chi tiết phòng và dịch vụ
-//        //ctpp lấy số phòng 
-//        // ct dịch vụ lấy dịch vụ và giá
-//        private readonly HotelPlaceVipContext _context;
+namespace Asp.netCoreDatPhongKS.Controllers
+{
+    public class DichVuController : Controller
+    {
+        private readonly HotelPlaceVipContext _context;
 
-//        public DichVuController(HotelPlaceVipContext context)
-//        {
-//            _context = context;
-//        }
+        public DichVuController(HotelPlaceVipContext context)
+        {
+            _context = context;
+        }
 
-//        public async Task<IActionResult> Index(string loaiDichVu)
-//        {
-//            string userName = HttpContext.Session.GetString("Hoten");
-//            if (!string.IsNullOrEmpty(userName))
-//            {
-//                ViewData["Hoten"] = userName;
-//            }
-//            var dichVus = from dv in _context.DichVus
-//                          where dv.TrangThai == true // Chỉ lấy dịch vụ đang hoạt động
-//                          select dv;
+        // Action Index: Hiển thị danh sách dịch vụ với checkbox
+        public async Task<IActionResult> Index(string searchString, string trangThai)
+        {
+            var userName = HttpContext.Session.GetString("Hoten");
+            ViewData["Hoten"] = !string.IsNullOrEmpty(userName) ? userName : "Chưa đăng nhập";
 
-          
-//            if (!string.IsNullOrEmpty(loaiDichVu) && loaiDichVu != "TatCa")
-//            {
-//                dichVus = dichVus.Where(dv => dv.MoTa != null && dv.MoTa.Contains(loaiDichVu));
-//            }
+            ViewBag.KhachHangId = new SelectList(
+                await _context.KhachHangs
+                    .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TinhTrangSuDung == "Đã check-in"))
+                    .ToListAsync(),
+                "KhachHangId", "HoTen");
 
-//            // Lấy danh sách loại dịch vụ (dựa trên MoTa)
-//            var loaiDichVus = new List<string> { "TatCa", "Thể thao", "Đồ ăn", "Hậu cần","Thức uống" };
+            var dichVus = from d in _context.DichVus select d;
 
-//            // Tạo ViewModel
-//            var viewModel = new DichVuViewModel
-//            {
-//                DichVus = await dichVus.ToListAsync(),
-//                LoaiDichVus = loaiDichVus,
-//                LoaiDichVuHienTai = loaiDichVu ?? "TatCa"
-//            };
+            if (!string.IsNullOrEmpty(searchString))
+                dichVus = dichVus.Where(d => d.TenDichVu.Contains(searchString));
 
-//            return View(viewModel);
-//        }
-//        [HttpPost]
-//        public async Task<IActionResult> DatDichVu(int DichVuId, int SoLuong)
-//        {
-//            string userName = HttpContext.Session.GetString("Hoten");
-//            if (!string.IsNullOrEmpty(userName))
-//            {
-//                ViewData["Hoten"] = userName;
-//            }
-//            // Giả định khách đã đăng nhập, lấy PhieuDatPhong từ Session
-//            var phieuDatPhongId = HttpContext.Session.GetInt32("PhieuDatPhongId");
-//            if (phieuDatPhongId == null)
-//            {
-//                return RedirectToAction("Login", "TaiKhoan");
-//            }
+            if (!string.IsNullOrEmpty(trangThai))
+            {
+                bool status = trangThai == "Hoạt động";
+                dichVus = dichVus.Where(d => d.TrangThai == status);
+            }
 
-//            var phieuDatPhong = await _context.PhieuDatPhongs
-//                .Include(p => p.ChiTietPhieuPhongs)
-//                .ThenInclude(ctp => ctp.Phong)
-//                .Include(p => p.ChiTietDichVus)
-//                .ThenInclude(ctdv => ctdv.DichVu)
-//                .Include(p => p.KhachHang)
-//                .FirstOrDefaultAsync(p => p.PhieuDatPhongId == phieuDatPhongId);
+            return View(await dichVus.ToListAsync());
+        }
 
-//            if (phieuDatPhong == null)
-//            {
-//                return NotFound("Không tìm thấy phiếu đặt phòng.");
-//            }
+        // Action CreateDonHangDichVu: Tạo đơn hàng dịch vụ và hóa đơn dịch vụ
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateDonHangDichVu(int? khachHangId, bool isKhachVangLai, int[] dichVuIds, int[] soLuongs, bool thanhToanNgay, string hinhThucThanhToan)
+        {
+            // Kiểm tra dữ liệu đầu vào
+            if (dichVuIds == null || dichVuIds.Length == 0 || soLuongs == null || soLuongs.Length != dichVuIds.Length)
+            {
+                ModelState.AddModelError("", "Vui lòng chọn ít nhất một dịch vụ và số lượng hợp lệ.");
+                ViewBag.KhachHangId = new SelectList(
+                    await _context.KhachHangs
+                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
+                        .ToListAsync(),
+                    "KhachHangId", "HoTen", khachHangId);
+                return View("Index", await _context.DichVus.ToListAsync());
+            }
 
-//            // Thêm chi tiết dịch vụ
-//            var dichVu = await _context.DichVus.FindAsync(DichVuId);
-//            if (dichVu == null)
-//            {
-//                return NotFound("Không tìm thấy dịch vụ.");
-//            }
+            if (!isKhachVangLai && !khachHangId.HasValue)
+            {
+                ModelState.AddModelError("", "Vui lòng chọn khách hàng hoặc chọn khách vãng lai.");
+                ViewBag.KhachHangId = new SelectList(
+                    await _context.KhachHangs
+                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
+                        .ToListAsync(),
+                    "KhachHangId", "HoTen", khachHangId);
+                return View("Index", await _context.DichVus.ToListAsync());
+            }
 
-//            var chiTietDichVu = new ChiTietDichVu
-//            {
-//                PhieuDatPhongId = phieuDatPhong.PhieuDatPhongId,
-//                DichVuId = DichVuId,
-//                SoLuong = SoLuong,
-//                DonGia = dichVu.DonGia
-//            };
-//            _context.ChiTietDichVus.Add(chiTietDichVu);
-//            await _context.SaveChangesAsync();
+            if (thanhToanNgay && string.IsNullOrEmpty(hinhThucThanhToan))
+            {
+                ModelState.AddModelError("", "Vui lòng chọn hình thức thanh toán.");
+                ViewBag.KhachHangId = new SelectList(
+                    await _context.KhachHangs
+                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
+                        .ToListAsync(),
+                    "KhachHangId", "HoTen", khachHangId);
+                return View("Index", await _context.DichVus.ToListAsync());
+            }
 
-//            // Cập nhật TongTien trong PhieuDatPhong (chỉ tính chi phí dịch vụ)
-//            var tongTienDichVu = phieuDatPhong.ChiTietDichVus?.Sum(ctdv => ctdv.SoLuong * ctdv.DonGia) ?? 0m; // Bỏ ?? trong phép tính vì DonGia là decimal
-//            phieuDatPhong.TongTien = tongTienDichVu; // Chỉ cập nhật chi phí dịch vụ
-//            await _context.SaveChangesAsync();
+            var userName = HttpContext.Session.GetString("Hoten");
+            if (string.IsNullOrEmpty(userName))
+            {
+                ModelState.AddModelError("", "Vui lòng đăng nhập để tạo đơn hàng.");
+                ViewBag.KhachHangId = new SelectList(
+                    await _context.KhachHangs
+                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
+                        .ToListAsync(),
+                    "KhachHangId", "HoTen", khachHangId);
+                return View("Index", await _context.DichVus.ToListAsync());
+            }
 
-//            // Tạo hoặc cập nhật HoaDon
-//            var hoaDon = await _context.HoaDons
-//                .FirstOrDefaultAsync(hd => hd.DonHangDichVus == phieuDatPhong.PhieuDatPhongId);
-//            var tongTienPhong = phieuDatPhong.ChiTietPhieuPhongs?.Sum(ctp => ctp.DonGia) ?? 0m; // Bỏ ?? trong phép tính vì DonGia là decimal
-//            if (hoaDon == null)
-//            {
-//                hoaDon = new HoaDon
-//                {
-//                   // PhieuDatPhongId = phieuDatPhong.PhieuDatPhongId,
-//                    TongTienPhong = tongTienPhong,
-//                    TongTienDichVu = tongTienDichVu,
-//                    GiamGia = 0m,
-//                    TongTien = tongTienPhong + tongTienDichVu,
-//                    NgayLap = DateTime.Now,
-//                    TrangThai = "Chưa thanh toán",
-//                    PhuongThucThanhToan = "Tiền mặt"
-//                };
-//                _context.HoaDons.Add(hoaDon);
-//            }
-//            else
-//            {
-//                hoaDon.TongTienPhong = tongTienPhong;
-//                hoaDon.TongTienDichVu = tongTienDichVu;
-//                hoaDon.TongTien = tongTienPhong + tongTienDichVu;
-//            }
-//            await _context.SaveChangesAsync();
+            // Tạo đơn hàng dịch vụ
+            var donHang = new DonHangDichVu
+            {
+                KhachHangId = isKhachVangLai ? null : khachHangId,
+                NgayDat = DateTime.Now,
+                TrangThai = thanhToanNgay || isKhachVangLai ? "Hoàn thành" : "Chờ thanh toán",
+                GhiChu = isKhachVangLai ? "Khách vãng lai" : $"Nhân viên lập: {userName}"
+            };
 
-//            return RedirectToAction("XemHoaDon", new { hoaDonId = hoaDon.HoaDonId });
-//        }
+            _context.DonHangDichVus.Add(donHang);
+            await _context.SaveChangesAsync();
 
-//        public async Task<IActionResult> XemHoaDon(int hoaDonId)
-//        {
-//            var hoaDon = await (from hd in _context.HoaDons
-//                                join pdp in _context.PhieuDatPhongs on hd.PhieuDatPhongId equals pdp.PhieuDatPhongId
-//                                join kh in _context.KhachHangs on pdp.KhachHangId equals kh.KhachHangId
-//                                join ctp in _context.ChiTietPhieuPhongs on pdp.PhieuDatPhongId equals ctp.PhieuDatPhongId
-//                                join p in _context.Phongs on ctp.PhongId equals p.PhongId
-//                                join ctdv in _context.ChiTietDichVus on pdp.PhieuDatPhongId equals ctdv.PhieuDatPhongId
-//                                join dv in _context.DichVus on ctdv.DichVuId equals dv.DichVuId
-//                                where hd.HoaDonId == hoaDonId
-//                                select new
-//                                {
-//                                    TenKhachHang = kh.HoTen,
-//                                    SoPhong = p.SoPhong,
-//                                    SoDienThoai = kh.SoDienThoai,
-//                                    TenDichVu = dv.TenDichVu,
-//                                    SoLuong = ctdv.SoLuong,
-//                                    DonGiaDichVu = ctdv.DonGia, // Bỏ ?? vì DonGia là decimal
-//                                    TongTienPhong = hd.TongTienPhong,
-//                                    TongTienDichVu = hd.TongTienDichVu,
-//                                    GiamGia = hd.GiamGia,
-//                                    TongTien = hd.TongTien,
-//                                    NgayLap = hd.NgayLap,
-//                                    PhuongThucThanhToan = hd.PhuongThucThanhToan
-//                                }).ToListAsync();
+            // Thêm chi tiết dịch vụ
+            decimal tongTien = 0;
+            for (int i = 0; i < dichVuIds.Length; i++)
+            {
+                if (soLuongs[i] > 0)
+                {
+                    var dichVu = await _context.DichVus.FindAsync(dichVuIds[i]);
+                    if (dichVu != null)
+                    {
+                        var chiTiet = new ChiTietDonHangDichVu
+                        {
+                            MaDonHangDv = donHang.MaDonHangDv,
+                            DichVuId = dichVuIds[i],
+                            SoLuong = soLuongs[i],
+                            DonGia = dichVu.DonGia,
+                            ThanhTien = soLuongs[i] * dichVu.DonGia
+                        };
+                        tongTien += chiTiet.ThanhTien ?? 0;
+                        _context.ChiTietDonHangDichVus.Add(chiTiet);
+                    }
+                }
+            }
 
-//            if (hoaDon == null || !hoaDon.Any())
-//            {
-//                return NotFound("Không tìm thấy hóa đơn.");
-//            }
+            if (tongTien == 0)
+            {
+                ModelState.AddModelError("", "Không có dịch vụ hợp lệ được chọn.");
+                ViewBag.KhachHangId = new SelectList(
+                    await _context.KhachHangs
+                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
+                        .ToListAsync(),
+                    "KhachHangId", "HoTen", khachHangId);
+                return View("Index", await _context.DichVus.ToListAsync());
+            }
 
-//            ViewBag.HoaDon = hoaDon;
-//            return View();
-//        }
-//    }
-//}
+            await _context.SaveChangesAsync();
+
+            // Tạo hóa đơn dịch vụ
+            var hoaDonDichVu = new HoaDonDichVu
+            {
+                MaDonHangDv = donHang.MaDonHangDv,
+                TrangThaiThanhToan = thanhToanNgay || isKhachVangLai ? "Đã thanh toán" : "Chưa thanh toán",
+                NgayThanhToan = thanhToanNgay || isKhachVangLai ? DateTime.Now : null,
+                HinhThucThanhToan = thanhToanNgay || isKhachVangLai ? hinhThucThanhToan : null
+            };
+            _context.HoaDonDichVus.Add(hoaDonDichVu);
+            await _context.SaveChangesAsync();
+
+            // Luôn in hóa đơn dịch vụ
+            return RedirectToAction("PrintHoaDonDichVu", new { id = hoaDonDichVu.Id });
+        }
+
+        // Action PrintHoaDonDichVu: In hóa đơn dịch vụ
+        public async Task<IActionResult> PrintHoaDonDichVu(int id)
+        {
+            var hoaDonDichVu = await _context.HoaDonDichVus
+                .Include(h => h.MaDonHangDvNavigation)
+                .ThenInclude(d => d.ChiTietDonHangDichVus)
+                .ThenInclude(c => c.DichVu)
+                .Include(h => h.MaDonHangDvNavigation.KhachHang)
+                .FirstOrDefaultAsync(h => h.Id == id);
+
+            if (hoaDonDichVu == null)
+                return NotFound();
+
+            var userName = HttpContext.Session.GetString("Hoten");
+            ViewData["Hoten"] = !string.IsNullOrEmpty(userName) ? userName : "Chưa đăng nhập";
+
+            return View(hoaDonDichVu);
+        }
+    }
+}

@@ -7,22 +7,28 @@ namespace Asp.netCoreDatPhongKS.Models
     {
         public HoaDon()
         {
-            DonHangDichVus = new HashSet<DonHangDichVu>();
-            PhieuDatPhongs = new HashSet<PhieuDatPhong>();
+            ChiTietHoaDons = new HashSet<ChiTietHoaDon>();
+            HoaDonDichVus = new HashSet<HoaDonDichVu>();
+            HoaDonPdps = new HashSet<HoaDonPdp>();
         }
 
-        public int HoaDonId { get; set; }
-        public decimal TongTienPhong { get; set; }
-        public decimal TongTienDichVu { get; set; }
-        public decimal GiamGia { get; set; }
-        public decimal TongTien { get; set; }
-        public DateTime NgayLap { get; set; }
-        public string TrangThai { get; set; } = null!;
-        public string? PhuongThucThanhToan { get; set; }
+        public int MaHoaDon { get; set; }
+        public DateTime? NgayLap { get; set; }
+        public int? KhachHangId { get; set; }
+        public int? NhanVienId { get; set; }
+        public decimal? TongTienPhong { get; set; }
+        public decimal? TongTienDichVu { get; set; }
+        public decimal? TongTien { get; set; }
+        public string? HinhThucThanhToan { get; set; }
+        public string? TrangThai { get; set; }
+        public bool? IsKhachVangLai { get; set; }
         public string? GhiChu { get; set; }
-        public decimal? SoTienConThieu { get; set; }
+        public decimal? SoTienConNo { get; set; }
 
-        public virtual ICollection<DonHangDichVu> DonHangDichVus { get; set; }
-        public virtual ICollection<PhieuDatPhong> PhieuDatPhongs { get; set; }
+        public virtual KhachHang? KhachHang { get; set; }
+        public virtual NhanVien? NhanVien { get; set; }
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
+        public virtual ICollection<HoaDonDichVu> HoaDonDichVus { get; set; }
+        public virtual ICollection<HoaDonPdp> HoaDonPdps { get; set; }
     }
 }

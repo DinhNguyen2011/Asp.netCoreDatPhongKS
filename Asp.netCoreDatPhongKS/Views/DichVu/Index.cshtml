@@ -1,73 +1,143 @@
-﻿@model Asp.netCoreDatPhongKS.Models.ViewModels.DichVuViewModel
-
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.DichVu>
 @{
     ViewData["Title"] = "Danh sách dịch vụ";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<!-- Liên kết đến dichvu.css -->
-<link rel="stylesheet" href="~/css/dichvu.css" />
+<h2>Danh sách dịch vụ</h2>
 
-<!-- Nội dung view -->
-<h2 class="text-center mb-4">Danh sách dịch vụ</h2>
+<!-- Form tìm kiếm và lọc -->
+<form asp-action="Index" method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" name="searchString" class="form-control" placeholder="Tìm theo tên dịch vụ" value="@ViewBag.SearchString" />
+        </div>
+        <div class="col-md-3">
+            <select name="trangThai" class="form-select">
+                <option value="">Tất cả trạng thái</option>
+                <option value="Hoạt động">Hoạt động</option>
+                <option value="Không hoạt động">Không hoạt động</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+    </div>
+</form>
 
-<!-- Hotline -->
-<div class="text-center mb-4">
-    <p>Liên hệ đặt dịch vụ qua hotline: <strong>0909 123 456</strong></p>
-</div>
+<!-- Form tạo đơn hàng dịch vụ -->
+<form asp-action="CreateDonHangDichVu" method="post">
+    <!-- Khách vãng lai -->
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="isKhachVangLai" name="isKhachVangLai" />
+        <label class="form-check-label" for="isKhachVangLai">Khách vãng lai</label>
+    </div>
 
-<!-- Bộ lọc -->
-<div class="row mb-4">
-    <div class="col-md-4">
-        <form asp-action="Index" method="get">
-            <div class="input-group">
-                <select name="loaiDichVu" class="form-select" onchange="this.form.submit()">
-                    @foreach (var loai in Model.LoaiDichVus)
-                    {
-                        if (loai == Model.LoaiDichVuHienTai)
+    <!-- Chọn khách hàng -->
+    <div class="mb-3" id="khachHangGroup">
+        <label class="form-label">Khách hàng</label>
+        <select name="khachHangId" class="form-select" id="khachHangId">
+            <option value="">Chọn khách hàng</option>
+            @foreach (var khach in ViewBag.KhachHangId)
+            {
+                <option value="@khach.Value">@khach.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Thanh toán ngay -->
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="thanhToanNgay" name="thanhToanNgay" />
+        <label class="form-check-label" for="thanhToanNgay">Thanh toán ngay</label>
+    </div>
+
+    <!-- Hình thức thanh toán -->
+    <div class="mb-3" id="hinhThucThanhToanGroup" style="display:none;">
+        <label class="form-label">Hình thức thanh toán</label>
+        <select name="hinhThucThanhToan" class="form-select">
+            <option value="">Chọn hình thức</option>
+            <option value="Tiền mặt">Tiền mặt</option>
+            <option value="Chuyển khoản">Chuyển khoản</option>
+            <option value="VNPay">VNPay</option>
+        </select>
+    </div>
+
+    <!-- Bảng danh sách dịch vụ với checkbox và số lượng -->
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Chọn</th>
+                <th>Tên dịch vụ</th>
+                <th>Mô tả</th>
+                <th>Đơn giá</th>
+                <th>Trạng thái</th>
+                <th>Hình ảnh</th>
+                <th>Số lượng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dichVu in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" class="form-check-input dich-vu-checkbox" name="dichVuIds" value="@dichVu.DichVuId" id="dichVu_@dichVu.DichVuId" />
+                    </td>
+                    <td>@dichVu.TenDichVu</td>
+                    <td>@dichVu.MoTa</td>
+                    <td>@dichVu.DonGia.ToString("N0") VNĐ</td>
+                    <td>@(dichVu.TrangThai == true ? "Hoạt động" : "Không hoạt động")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(dichVu.HinhAnh))
                         {
-                            <option value="@loai" selected>@(loai == "TatCa" ? "Tất cả" : loai)</option>
+                            <img src="@dichVu.HinhAnh" alt="@dichVu.TenDichVu" style="max-width: 100px;" />
                         }
                         else
                         {
-                            <option value="@loai">@(loai == "TatCa" ? "Tất cả" : loai)</option>
+                            <span>Không có</span>
                         }
-                    }
-                </select>
-            </div>
-        </form>
-    </div>
-</div>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control so-luong" name="soLuongs" min="1" style="display:none;" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-<!-- Danh sách dịch vụ -->
-<div class="row">
-    @if (Model.DichVus != null && Model.DichVus.Any())
-    {
-        @foreach (var dichVu in Model.DichVus)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card service-card">
-                    @if (!string.IsNullOrEmpty(dichVu.HinhAnh))
-                    {
-                        <img src="@Url.Content(dichVu.HinhAnh)" class="card-img-top service-image" alt="@dichVu.TenDichVu" />
-                    }
-                    <div class="card-body">
-                        <strong class="card-title">@dichVu.TenDichVu</strong>
-                        <strong class="card-text">@dichVu.MoTa</strong>
-                        <p class="card-text"><strong>Giá:</strong> @(dichVu.DonGia == 0 ? "Miễn phí" : dichVu.DonGia.ToString("N0") + " VNĐ")</p>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    else
-    {
-        <p class="text-muted text-center">Không có dịch vụ nào để hiển thị.</p>
-    }
-</div>
+    <!-- Nút tạo đơn hàng dịch vụ -->
+    <button type="submit" class="btn btn-success">Tạo đơn hàng dịch vụ</button>
+</form>
 
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Ẩn/hiện khách hàng khi chọn vãng lai
+            $('#isKhachVangLai').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#khachHangGroup').hide();
+                    $('#khachHangId').val('');
+                    $('#thanhToanNgay').prop('checked', true).prop('disabled', true);
+                    $('#hinhThucThanhToanGroup').show();
+                } else {
+                    $('#khachHangGroup').show();
+                    $('#thanhToanNgay').prop('disabled', false);
+                    $('#hinhThucThanhToanGroup').toggle($('#thanhToanNgay').is(':checked'));
+                }
+            });
 
+            // Ẩn/hiện hình thức thanh toán
+            $('#thanhToanNgay').change(function () {
+                $('#hinhThucThanhToanGroup').toggle($(this).is(':checked'));
+            });
 
-
-<div 
+            // Hiển thị ô số lượng khi checkbox được chọn
+            $('.dich-vu-checkbox').change(function () {
+                var soLuongInput = $(this).closest('tr').find('.so-luong');
+                soLuongInput.toggle(this.checked);
+                if (!this.checked) {
+                    soLuongInput.val('');
+                }
+            });
+        });
+    </script>

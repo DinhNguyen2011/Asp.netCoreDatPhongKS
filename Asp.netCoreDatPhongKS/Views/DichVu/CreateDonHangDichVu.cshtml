@@ -1,0 +1,116 @@
+﻿@model Asp.netCoreDatPhongKS.Models.DonHangDichVu
+@{
+    ViewData["Title"] = "Đặt dịch vụ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Đặt dịch vụ</h2>
+
+<form asp-action="CreateDonHangDichVu" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <!-- Khách vãng lai -->
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="isKhachVangLai" name="isKhachVangLai" />
+        <label class="form-check-label" for="isKhachVangLai">Khách vãng lai</label>
+    </div>
+
+    <!-- Chọn khách hàng -->
+    <div class="mb-3" id="khachHangGroup">
+        <label class="form-label">Khách hàng</label>
+        <select name="khachHangId" class="form-select" id="khachHangId">
+            <option value="">Chọn khách hàng</option>
+            @foreach (var khach in ViewBag.KhachHangId)
+            {
+                <option value="@khach.Value">@khach.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Nhân viên lập -->
+    <div class="mb-3">
+        <label class="form-label">Nhân viên lập</label>
+        <select name="nhanVienId" class="form-select" required>
+            <option value="">Chọn nhân viên</option>
+            @foreach (var nhanVien in ViewBag.NhanVienId)
+            {
+                <option value="@nhanVien.Value">@nhanVien.Text</option>
+            }
+        </select>
+    </div>
+
+    <!-- Danh sách dịch vụ -->
+    <div class="mb-3">
+        <label class="form-label">Dịch vụ</label>
+        <div id="dichVuList">
+            <div class="dich-vu-item mb-2">
+                <select name="dichVuIds" class="form-select d-inline-block w-50">
+                    @foreach (var dichVu in ViewBag.DichVuId)
+                    {
+                        <option value="@dichVu.Value">@dichVu.Text</option>
+                    }
+                </select>
+                <input type="number" name="soLuongs" class="form-control d-inline-block w-25" placeholder="Số lượng" min="1" />
+                <button type="button" class="btn btn-danger btn-sm remove-dich-vu">Xóa</button>
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary mt-2" id="addDichVu">Thêm dịch vụ</button>
+    </div>
+
+    <!-- Thanh toán ngay -->
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="thanhToanNgay" name="thanhToanNgay" />
+        <label class="form-check-label" for="thanhToanNgay">Thanh toán ngay</label>
+    </div>
+
+    <!-- Hình thức thanh toán -->
+    <div class="mb-3" id="hinhThucThanhToanGroup" style="display:none;">
+        <label class="form-label">Hình thức thanh toán</label>
+        <select name="hinhThucThanhToan" class="form-select">
+            <option value="">Chọn hình thức</option>
+            <option value="Tiền mặt">Tiền mặt</option>
+            <option value="Chuyển khoản">Chuyển khoản</option>
+            <option value="VNPay">VNPay</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Tạo đơn hàng</button>
+    <a asp-action="Index" asp-controller="HoaDon" class="btn btn-secondary">Quay lại</a>
+</form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Ẩn/hiện khách hàng khi chọn vãng lai
+            $('#isKhachVangLai').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#khachHangGroup').hide();
+                    $('#khachHangId').val('');
+                    $('#thanhToanNgay').prop('checked', true).prop('disabled', true);
+                    $('#hinhThucThanhToanGroup').show();
+                } else {
+                    $('#khachHangGroup').show();
+                    $('#thanhToanNgay').prop('disabled', false);
+                }
+            });
+
+            // Ẩn/hiện hình thức thanh toán
+            $('#thanhToanNgay').change(function () {
+                $('#hinhThucThanhToanGroup').toggle($(this).is(':checked'));
+            });
+
+            // Thêm dịch vụ
+            $('#addDichVu').click(function () {
+                var newItem = $('.dich-vu-item:first').clone();
+                newItem.find('input').val('');
+                $('#dichVuList').append(newItem);
+            });
+
+            // Xóa dịch vụ
+            $(document).on('click', '.remove-dich-vu', function () {
+                if ($('.dich-vu-item').length > 1) {
+                    $(this).closest('.dich-vu-item').remove();
+                }
+            });
+        });
+    </script>

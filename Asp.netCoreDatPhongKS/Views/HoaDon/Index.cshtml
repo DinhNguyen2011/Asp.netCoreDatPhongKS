@@ -1,0 +1,187 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.ViewModels.HoaDonViewModel>
+@{
+    ViewData["Title"] = "Quản lý hóa đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<style>
+    .hoa-don-details {
+        display: none;
+        margin-left: 20px;
+    }
+</style>
+
+<h2>Quản lý hóa đơn</h2>
+<p>Nhân viên: @ViewData["Hoten"]</p>
+
+<!-- Form tìm kiếm và bộ lọc -->
+<form asp-action="asp-action" method="get" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="searchString" class="form-control" placeholder="Tìm kiếm tên hoặc CCCD khách hàng..." value="@ViewData["CurrentFilter"]" />
+        <select name="trangThai" class="form-select">
+            <option value="value" selected="@(ViewData["CurrentTrangThai"] == "Tất cả")">Tất cả</option>
+            <option value="Chưa thanh toán" selected="@(ViewData["CurrentTrangThai"] == "Chưa thanh toán")">Chưa thanh toán</option>
+            <option value="Đã thanh toán" selected="@(ViewData["CurrentTrangThai"] == "Đã thanh toán")">Đã thanh toán</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </div>
+</form>
+
+<a asp-action="CreateHoaDonTong" class="btn btn-success mb-3">Tạo hóa đơn tổng (Check-out)</a>
+
+<!-- Danh sách hóa đơn -->
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Loại</th>
+            <th>Khách hàng</th>
+            <th>CCCD</th>
+            <th>Nhân viên</th>
+            <th>Ngày lập</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+            <th>Chi tiết</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="9">Không có hóa đơn nào.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>#@item.Id</td>
+                    <td>@item.Loai</td>
+                    <td>@item.KhachHangTen</td>
+                    <td>@item.KhachHangCCCD</td>
+                    <td>@item.NhanVienTen</td>
+                    <td>@(item.NgayLap?.ToString("dd/MM/yyyy HH:mm") ?? "")</td>
+                    <td>@item.TongTien.ToString("N0") VNĐ</td>
+                    <td>@item.TrangThai</td>
+                    <td>
+                        <button class="btn btn-info btn-sm toggle-details" data-id="@item.Id">Xem chi tiết</button>
+                    </td>
+                </tr>
+                <tr class="hoa-don-details" id="details_@item.Id">
+                    <td colspan="9">
+                        @if (item.HoaDon != null && item.HoaDon.HoaDonDichVus.Any())
+                        {
+                            <h6>Dịch vụ</h6>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên dịch vụ</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int stt = 1;
+                                        foreach (var hdv in item.HoaDon.HoaDonDichVus)
+                                        {
+                                            foreach (var chiTiet in hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus)
+                                            {
+                                                <tr>
+                                                    <td>@stt</td>
+                                                    <td>@chiTiet.DichVu.TenDichVu</td>
+                                                    <td>@chiTiet.SoLuong</td>
+                                                    <td>@chiTiet.DonGia.ToString("N0") VNĐ</td>
+                                                    <td>@chiTiet.ThanhTien?.ToString("N0") VNĐ</td>
+                                                </tr>
+                                                stt++;
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        @if (item.HoaDon != null && item.HoaDon.HoaDonPdps.Any())
+                        {
+                            <h6>Phòng</h6>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã phiếu</th>
+                                        <th>Phòng</th>
+                                        <th>Đơn giá</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int sttP = 1;
+                                        foreach (var hdp in item.HoaDon.HoaDonPdps)
+                                        {
+                                            var chiTietP = hdp.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault();
+                                            if (chiTietP != null)
+                                            {
+                                                <tr>
+                                                    <td>@sttP</td>
+                                                    <td>@hdp.PhieuDatPhongId</td>
+                                                    <td>@chiTietP.Phong.SoPhong</td>
+                                                    <td>@chiTietP.DonGia?.ToString("N0") VNĐ</td>
+                                                </tr>
+                                                sttP++;
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        @if (item.HoaDonDichVu != null)
+                        {
+                            <h6>Dịch vụ (vãng lai)</h6>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên dịch vụ</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int stt = 1;
+                                        foreach (var chiTiet in item.HoaDonDichVu.MaDonHangDvNavigation.ChiTietDonHangDichVus)
+                                        {
+                                            <tr>
+                                                <td>@stt</td>
+                                                <td>@chiTiet.DichVu.TenDichVu</td>
+                                                <td>@chiTiet.SoLuong</td>
+                                                <td>@chiTiet.DonGia.ToString("N0") VNĐ</td>
+                                                <td>@chiTiet.ThanhTien?.ToString("N0") VNĐ</td>
+                                            </tr>
+                                            stt++;
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.toggle-details').click(function () {
+                var id = $(this).data('id');
+                $('#details_' + id).toggle();
+            });
+        });
+    </script>
+

@@ -74,6 +74,24 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            @* @{ *@
+                            @*     var hasManageDichVu = quyen.Contains("ManageDichVu"); *@
+                            @* } *@
+                            <a class="nav-link" href="@(hasManageDichVu ? Url.Action("DatDichVu", "DonHangDVChoKHPDP") : "#")" onclick="@(!hasManageDichVu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý datdv</span>
+                                <i class="mdi mdi-television menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @* @{ *@
+                            @*     var hasManageDichVu = quyen.Contains("ManageDichVu"); *@
+                            @* } *@
+                            <a class="nav-link" href="@(hasManageDichVu ? Url.Action("Index", "CheckOut") : "#")" onclick="@(!hasManageDichVu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý checkout</span>
+                                <i class="mdi mdi-television menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             @{
                                 var hasManageDatPhong = quyen.Contains("ManageDatPhong") || quyen.Contains("BookRoom") || quyen.Contains("CreateBooking");
                             }

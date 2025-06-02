@@ -8,6 +8,7 @@ namespace Asp.netCoreDatPhongKS.Models
         public KhachHang()
         {
             DonHangDichVus = new HashSet<DonHangDichVu>();
+            HoaDons = new HashSet<HoaDon>();
             LienHeVoiCtois = new HashSet<LienHeVoiCtoi>();
             PhieuDatPhongs = new HashSet<PhieuDatPhong>();
         }
@@ -24,6 +25,7 @@ namespace Asp.netCoreDatPhongKS.Models
 
         public virtual TaiKhoan? TaiKhoan { get; set; }
         public virtual ICollection<DonHangDichVu> DonHangDichVus { get; set; }
+        public virtual ICollection<HoaDon> HoaDons { get; set; }
         public virtual ICollection<LienHeVoiCtoi> LienHeVoiCtois { get; set; }
         public virtual ICollection<PhieuDatPhong> PhieuDatPhongs { get; set; }
     }

@@ -1,0 +1,73 @@
+﻿@model Asp.netCoreDatPhongKS.Models.HoaDonDichVu
+@{
+    ViewData["Title"] = "Hóa đơn dịch vụ";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var donHang = Model.MaDonHangDvNavigation;
+    var khachHang = donHang.KhachHang;
+    decimal tongTien = donHang.ChiTietDonHangDichVus?.Sum(c => c.ThanhTien ?? 0) ?? 0;
+}
+
+<link rel="stylesheet" href="~/assets/css/hoadondichvu.css" />
+
+<div class="invoice">
+    <div class="invoice-header">
+        <h2>HÓA ĐƠN DỊCH VỤ</h2>
+        <p>Khách sạn THIỀM ĐỊNH</p>
+        <p>Ngày lập: @(Model.NgayThanhToan?.ToString("dd/MM/yyyy HH:mm") ?? DateTime.Now.ToString("dd/MM/yyyy HH:mm"))</p>
+    </div>
+
+    <div class="invoice-details">
+        <p><strong>Khách hàng:</strong> @(khachHang != null ? khachHang.HoTen : "Khách vãng lai")</p>
+        <p><strong>Nhân viên lập:</strong> @ViewData["Hoten"]</p>
+        <p><strong>Hình thức thanh toán:</strong> @(Model.HinhThucThanhToan ?? "______________")</p>
+        <p><strong>Trạng thái:</strong> @Model.TrangThaiThanhToan</p>
+    </div>
+
+    <table class="invoice-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tên dịch vụ</th>
+                <th>Số lượng</th>
+                <th>Đơn giá</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int stt = 1;
+                foreach (var chiTiet in donHang.ChiTietDonHangDichVus)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@chiTiet.DichVu.TenDichVu</td>
+                        <td>@chiTiet.SoLuong</td>
+                        <td>@chiTiet.DonGia.ToString("N0") VNĐ</td>
+                        <td>@chiTiet.ThanhTien?.ToString("N0") VNĐ</td>
+                    </tr>
+                    stt++;
+                }
+            }
+            <tr>
+                <td colspan="4" class="text-end"><strong>Tổng cộng:</strong></td>
+                <td><strong>@tongTien.ToString("N0") VNĐ</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="signature-section">
+        <div class="signature-box">
+            <p>Khách hàng</p>
+            <p>(Ký và ghi rõ họ tên)</p>
+        </div>
+        <div class="signature-box">
+            <p>Nhân viên lập hóa đơn</p>
+            <p>(Ký và ghi rõ họ tên)</p>
+        </div>
+    </div>
+
+    <div class="invoice-footer no-print">
+        <button onclick="window.print()" class="btn btn-primary">In hóa đơn</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
+</div>

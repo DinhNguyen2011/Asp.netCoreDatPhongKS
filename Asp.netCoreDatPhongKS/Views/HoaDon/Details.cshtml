@@ -1,0 +1,70 @@
+﻿@model Asp.netCoreDatPhongKS.Models.HoaDon
+@{
+    ViewData["Title"] = "Chi tiết hóa đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chi tiết hóa đơn #@Model.MaHoaDon</h2>
+<div class="card">
+    <div class="card-body">
+        <p><strong>Khách hàng:</strong> @Model.KhachHang?.HoTen</p>
+        <p><strong>Ngày lập:</strong> @Model.NgayLap?.ToString("dd/MM/yyyy")</p>
+        <p><strong>Tổng tiền phòng:</strong> @Model.TongTienPhong?.ToString("N0") VNĐ</p>
+        <p><strong>Tổng tiền dịch vụ:</strong> @Model.TongTienDichVu?.ToString("N0") VNĐ</p>
+        <p><strong>Tổng tiền:</strong> @Model.TongTien?.ToString("N0") VNĐ</p>
+        <p><strong>Còn nợ:</strong> @Model.SoTienConNo?.ToString("N0") VNĐ</p>
+        <p><strong>Trạng thái:</strong> @Model.TrangThai</p>
+    </div>
+</div>
+
+<h3>Phòng đã đặt</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Phiếu đặt</th>
+            <th>Phòng</th>
+            <th>Giá</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pdp in Model.HoaDonPdps)
+        {
+            foreach (var chiTiet in pdp.PhieuDatPhong.ChiTietPhieuPhongs)
+            {
+                <tr>
+                    <td>@pdp.PhieuDatPhong.MaPhieu</td>
+                    <td>@chiTiet.Phong.SoPhong</td>
+                    <td>@chiTiet.DonGia?.ToString("N0") VNĐ</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<h3>Dịch vụ đã sử dụng</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Đơn hàng</th>
+            <th>Dịch vụ</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dv in Model.HoaDonDichVus)
+        {
+            foreach (var chiTiet in dv.MaDonHangDvNavigation.ChiTietDonHangDichVus)
+            {
+                <tr>
+                    <td>@dv.MaDonHangDv</td>
+                    <td>@chiTiet.DichVu.TenDichVu</td>
+                    <td>@chiTiet.SoLuong</td>
+                    <td>@chiTiet.ThanhTien?.ToString("N0") VNĐ</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Quay lại</a>

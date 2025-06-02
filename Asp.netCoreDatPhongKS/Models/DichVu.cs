@@ -7,7 +7,8 @@ namespace Asp.netCoreDatPhongKS.Models
     {
         public DichVu()
         {
-            ChiTietDichVus = new HashSet<ChiTietDichVu>();
+            ChiTietDonHangDichVus = new HashSet<ChiTietDonHangDichVu>();
+            ChiTietHoaDons = new HashSet<ChiTietHoaDon>();
             DanhGia = new HashSet<DanhGium>();
         }
 
@@ -20,7 +21,8 @@ namespace Asp.netCoreDatPhongKS.Models
         public DateTime? NgayTao { get; set; }
         public DateTime? NgayCapNhat { get; set; }
 
-        public virtual ICollection<ChiTietDichVu> ChiTietDichVus { get; set; }
+        public virtual ICollection<ChiTietDonHangDichVu> ChiTietDonHangDichVus { get; set; }
+        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public virtual ICollection<DanhGium> DanhGia { get; set; }
     }
 }

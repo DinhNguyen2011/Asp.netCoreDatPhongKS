@@ -3,6 +3,10 @@ wwwroot\assets\css\demo.css
 wwwroot\assets\css\demo.css.map
 wwwroot\assets\css\fonts.css
 wwwroot\assets\css\fonts.min.css
+wwwroot\assets\css\hoadondichvu.css
+wwwroot\assets\css\hoadondichvu.css.map
+wwwroot\assets\css\hoadontong.css
+wwwroot\assets\css\hoadontong.css.map
 wwwroot\assets\css\kaiadmin.css
 wwwroot\assets\css\kaiadmin.css.map
 wwwroot\assets\css\kaiadmin.min.css

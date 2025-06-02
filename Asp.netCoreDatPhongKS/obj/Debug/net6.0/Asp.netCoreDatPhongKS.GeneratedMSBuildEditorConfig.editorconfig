@@ -24,12 +24,36 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpVGlldFBob25nXENoaVRpZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DichVu/CreateDonHangDichVu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljaFZ1XENyZWF0ZURvbkhhbmdEaWNoVnUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DichVu/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljaFZ1XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DichVu/PrintHoaDonDichVu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljaFZ1XFByaW50SG9hRG9uRGljaFZ1LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/GioiThieu/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2lvaVRoaWV1XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDon/CreateHoaDonTong.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uXENyZWF0ZUhvYURvblRvbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDon/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDon/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDon/XemHoaDonTong.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uXFhlbUhvYURvblRvbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HomeAdmin/Index.cshtml]

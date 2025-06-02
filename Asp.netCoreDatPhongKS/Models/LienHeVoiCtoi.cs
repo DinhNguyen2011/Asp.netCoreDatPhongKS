@@ -13,7 +13,7 @@ namespace Asp.netCoreDatPhongKS.Models
         public string? SoDienThoai { get; set; }
         public string NoiDung { get; set; } = null!;
         public DateTime NgayGui { get; set; }
-        public string TrangThai { get; set; } = "Chờ xử lý";
+        public string TrangThai { get; set; } = null!;
         public string? GhiChu { get; set; }
 
         public virtual KhachHang? KhachHang { get; set; }

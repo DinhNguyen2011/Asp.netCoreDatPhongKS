@@ -495,6 +495,334 @@
       ]
     },
     {
+      "Route": "assets/css/hoadondichvu.css",
+      "AssetFile": "assets/css/hoadondichvu.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "828"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 02 Jun 2025 16:39:07 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/hoadondichvu.css.map",
+      "AssetFile": "assets/css/hoadondichvu.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/hoadondichvu.css.ytkzst8lei.map",
+      "AssetFile": "assets/css/hoadondichvu.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ytkzst8lei"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/hoadondichvu.css.map"
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/hoadondichvu.dtkx3u5wk5.css",
+      "AssetFile": "assets/css/hoadondichvu.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "828"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 02 Jun 2025 16:39:07 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dtkx3u5wk5"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/hoadondichvu.css"
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/hoadontong.css",
+      "AssetFile": "assets/css/hoadontong.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "828"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 02 Jun 2025 16:43:33 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/hoadontong.css.map",
+      "AssetFile": "assets/css/hoadontong.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/hoadontong.css.ytkzst8lei.map",
+      "AssetFile": "assets/css/hoadontong.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ytkzst8lei"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/hoadontong.css.map"
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/hoadontong.dtkx3u5wk5.css",
+      "AssetFile": "assets/css/hoadontong.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "828"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 02 Jun 2025 16:43:33 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dtkx3u5wk5"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/hoadontong.css"
+        }
+      ]
+    },
+    {
       "Route": "assets/css/kaiadmin.06dr3qsvgn.css",
       "AssetFile": "assets/css/kaiadmin.css",
       "Selectors": [],

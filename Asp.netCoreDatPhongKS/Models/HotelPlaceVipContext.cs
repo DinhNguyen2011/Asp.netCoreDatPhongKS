@@ -16,12 +16,15 @@ namespace Asp.netCoreDatPhongKS.Models
         {
         }
 
-        public virtual DbSet<ChiTietDichVu> ChiTietDichVus { get; set; } = null!;
+        public virtual DbSet<ChiTietDonHangDichVu> ChiTietDonHangDichVus { get; set; } = null!;
+        public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; } = null!;
         public virtual DbSet<ChiTietPhieuPhong> ChiTietPhieuPhongs { get; set; } = null!;
         public virtual DbSet<DanhGium> DanhGia { get; set; } = null!;
         public virtual DbSet<DichVu> DichVus { get; set; } = null!;
         public virtual DbSet<DonHangDichVu> DonHangDichVus { get; set; } = null!;
         public virtual DbSet<HoaDon> HoaDons { get; set; } = null!;
+        public virtual DbSet<HoaDonDichVu> HoaDonDichVus { get; set; } = null!;
+        public virtual DbSet<HoaDonPdp> HoaDonPdps { get; set; } = null!;
         public virtual DbSet<KhachHang> KhachHangs { get; set; } = null!;
         public virtual DbSet<KhuyenMai> KhuyenMais { get; set; } = null!;
         public virtual DbSet<LienHeVoiCtoi> LienHeVoiCtois { get; set; } = null!;
@@ -45,32 +48,62 @@ namespace Asp.netCoreDatPhongKS.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ChiTietDichVu>(entity =>
+            modelBuilder.Entity<ChiTietDonHangDichVu>(entity =>
             {
-                entity.ToTable("ChiTietDichVu");
+                entity.ToTable("ChiTietDonHangDichVu");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DonGia).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.NgayDatDichVu).HasColumnType("datetime");
+                entity.Property(e => e.MaDonHangDv).HasColumnName("MaDonHangDV");
 
-                entity.Property(e => e.TrangThaiSuDung).HasMaxLength(50);
+                entity.Property(e => e.ThanhTien)
+                    .HasColumnType("decimal(29, 2)")
+                    .HasComputedColumnSql("([SoLuong]*[DonGia])", true);
 
                 entity.HasOne(d => d.DichVu)
-                    .WithMany(p => p.ChiTietDichVus)
+                    .WithMany(p => p.ChiTietDonHangDichVus)
                     .HasForeignKey(d => d.DichVuId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ChiTietDi__DichV__3493CFA7");
+                    .HasConstraintName("FK__ChiTietDo__DichV__3EDC53F0");
 
-                entity.HasOne(d => d.DonHang)
-                    .WithMany(p => p.ChiTietDichVus)
-                    .HasForeignKey(d => d.DonHangId)
-                    .HasConstraintName("FK_ChiTietDichVu_DonHangDichVu");
-
-                entity.HasOne(d => d.PhieuDatPhong)
-                    .WithMany(p => p.ChiTietDichVus)
-                    .HasForeignKey(d => d.PhieuDatPhongId)
+                entity.HasOne(d => d.MaDonHangDvNavigation)
+                    .WithMany(p => p.ChiTietDonHangDichVus)
+                    .HasForeignKey(d => d.MaDonHangDv)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ChiTietDi__Phieu__339FAB6E");
+                    .HasConstraintName("FK__ChiTietDo__MDHDV__3DE82FB7");
+            });
+
+            modelBuilder.Entity<ChiTietHoaDon>(entity =>
+            {
+                entity.ToTable("ChiTietHoaDon");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.DonGia).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.MoTa).HasMaxLength(255);
+
+                entity.Property(e => e.PhongId).HasColumnName("PhongID");
+
+                entity.Property(e => e.ThanhTien).HasColumnType("decimal(18, 2)");
+
+                entity.HasOne(d => d.DichVu)
+                    .WithMany(p => p.ChiTietHoaDons)
+                    .HasForeignKey(d => d.DichVuId)
+                    .HasConstraintName("FK__ChiTietHo__DichV__3B0BC30C");
+
+                entity.HasOne(d => d.MaHoaDonNavigation)
+                    .WithMany(p => p.ChiTietHoaDons)
+                    .HasForeignKey(d => d.MaHoaDon)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__ChiTietHo__MaHoa__39237A9A");
+
+                entity.HasOne(d => d.Phong)
+                    .WithMany(p => p.ChiTietHoaDons)
+                    .HasForeignKey(d => d.PhongId)
+                    .HasConstraintName("FK__ChiTietHo__Phong__3A179ED3");
             });
 
             modelBuilder.Entity<ChiTietPhieuPhong>(entity =>
@@ -150,49 +183,120 @@ namespace Asp.netCoreDatPhongKS.Models
 
             modelBuilder.Entity<DonHangDichVu>(entity =>
             {
-                entity.HasKey(e => e.DonHangId)
-                    .HasName("PK__DonHangD__D159F4BE95A96822");
+                entity.HasKey(e => e.MaDonHangDv)
+                    .HasName("PK__DonHangD__A906C724482980CC");
 
                 entity.ToTable("DonHangDichVu");
 
                 entity.Property(e => e.NgayDat).HasColumnType("datetime");
 
-                entity.Property(e => e.TongTien).HasColumnType("decimal(18, 2)");
-
                 entity.Property(e => e.TrangThai).HasMaxLength(50);
-
-                entity.HasOne(d => d.HoaDon)
-                    .WithMany(p => p.DonHangDichVus)
-                    .HasForeignKey(d => d.HoaDonId)
-                    .HasConstraintName("FK_DonHangDichVu_HoaDon");
 
                 entity.HasOne(d => d.KhachHang)
                     .WithMany(p => p.DonHangDichVus)
                     .HasForeignKey(d => d.KhachHangId)
-                    .HasConstraintName("FK__DonHangDi__Khach__40058253");
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_DonHangDichVu_KhachHang");
             });
 
             modelBuilder.Entity<HoaDon>(entity =>
             {
+                entity.HasKey(e => e.MaHoaDon)
+                    .HasName("PK__HoaDon__835ED13BD5B92EFA");
+
                 entity.ToTable("HoaDon");
 
-                entity.Property(e => e.GiamGia).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.HinhThucThanhToan).HasMaxLength(50);
+
+                entity.Property(e => e.IsKhachVangLai).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.KhachHangId).HasColumnName("KhachHangID");
 
                 entity.Property(e => e.NgayLap)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.PhuongThucThanhToan).HasMaxLength(50);
+                entity.Property(e => e.NhanVienId).HasColumnName("NhanVienID");
 
-                entity.Property(e => e.SoTienConThieu).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.SoTienConNo).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.TongTien).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.TongTien)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.TongTienDichVu).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.TongTienDichVu)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.TongTienPhong).HasColumnType("decimal(18, 2)");
+                entity.Property(e => e.TongTienPhong)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasDefaultValueSql("((0))");
 
-                entity.Property(e => e.TrangThai).HasMaxLength(50);
+                entity.Property(e => e.TrangThai)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("(N'Chưa thanh toán')");
+
+                entity.HasOne(d => d.KhachHang)
+                    .WithMany(p => p.HoaDons)
+                    .HasForeignKey(d => d.KhachHangId)
+                    .HasConstraintName("FK__HoaDon__KhachHan__2610A626");
+
+                entity.HasOne(d => d.NhanVien)
+                    .WithMany(p => p.HoaDons)
+                    .HasForeignKey(d => d.NhanVienId)
+                    .HasConstraintName("FK__HoaDon__NhanVien__2704CA5F");
+            });
+
+            modelBuilder.Entity<HoaDonDichVu>(entity =>
+            {
+                entity.ToTable("HoaDonDichVu");
+
+                entity.HasIndex(e => e.MaDonHangDv, "IX_HoaDonDichVu_MaDonHangDv");
+
+                entity.HasIndex(e => e.MaHoaDonTong, "IX_HoaDonDichVu_MaHoaDonTong");
+
+                entity.Property(e => e.HinhThucThanhToan).HasMaxLength(100);
+
+                entity.Property(e => e.NgayThanhToan).HasColumnType("datetime");
+
+                entity.Property(e => e.TrangThaiThanhToan)
+                    .HasMaxLength(50)
+                    .HasDefaultValueSql("('Chua thanh toán')");
+
+                entity.HasOne(d => d.MaDonHangDvNavigation)
+                    .WithMany(p => p.HoaDonDichVus)
+                    .HasForeignKey(d => d.MaDonHangDv)
+                    .HasConstraintName("FK_HoaDonDichVu_DonHangDichVu");
+
+                entity.HasOne(d => d.MaHoaDonTongNavigation)
+                    .WithMany(p => p.HoaDonDichVus)
+                    .HasForeignKey(d => d.MaHoaDonTong)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_HoaDonDichVu_HoaDon");
+            });
+
+            modelBuilder.Entity<HoaDonPdp>(entity =>
+            {
+                entity.ToTable("HoaDonPDP");
+
+                entity.HasIndex(e => e.PhieuDatPhongId, "UQ__HoaDonPD__53A722211B13E276")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.PhieuDatPhongId).HasColumnName("PhieuDatPhongID");
+
+                entity.HasOne(d => d.MaHoaDonNavigation)
+                    .WithMany(p => p.HoaDonPdps)
+                    .HasForeignKey(d => d.MaHoaDon)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HoaDonPDP__MaHoa__2AD55B43");
+
+                entity.HasOne(d => d.PhieuDatPhong)
+                    .WithOne(p => p.HoaDonPdp)
+                    .HasForeignKey<HoaDonPdp>(d => d.PhieuDatPhongId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HoaDonPDP__Phieu__2BC97F7C");
             });
 
             modelBuilder.Entity<KhachHang>(entity =>
@@ -352,11 +456,6 @@ namespace Asp.netCoreDatPhongKS.Models
                 entity.Property(e => e.TongTien).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.TrangThai).HasMaxLength(50);
-
-                entity.HasOne(d => d.HoaDon)
-                    .WithMany(p => p.PhieuDatPhongs)
-                    .HasForeignKey(d => d.HoaDonId)
-                    .HasConstraintName("FK_PhieuDatPhong_HoaDon");
 
                 entity.HasOne(d => d.KhachHang)
                     .WithMany(p => p.PhieuDatPhongs)
