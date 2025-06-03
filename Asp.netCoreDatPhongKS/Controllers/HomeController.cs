@@ -258,6 +258,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     NgayTra = pendingBooking.Checkout,
                     KhachHangId = khach.KhachHangId,
                     TrangThai = "Đã thanh toán",
+                    TinhTrangSuDung = "Chờ xử lý",
                     TongTien = pendingBooking.TongTien,
                     VnpTransactionId = response.TransactionId,
                     SoTienDaThanhToan = pendingBooking.TongTien
@@ -290,8 +291,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 };
                 _context.HoaDons.Add(hoaDon);
 
-                // Liên kết HoaDon với PhieuDatPhong qua HoaDonPdp
-                await _context.SaveChangesAsync(); // Lưu để có MaHoaDon và PhieuDatPhongId
+               
+                await _context.SaveChangesAsync();
 
                 var hoaDonPdp = new HoaDonPdp
                 {
@@ -300,28 +301,28 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 };
                 _context.HoaDonPdps.Add(hoaDonPdp);
 
-                // Kiểm tra và tạo TaiKhoan
+               
                 var taiKhoan = _context.TaiKhoans.FirstOrDefault(t => t.Email == khach.Email);
                 if (taiKhoan == null)
                 {
-                    // Tạo mới tài khoản nếu chưa tồn tại
+              
                     taiKhoan = new TaiKhoan
                     {
                         Email = khach.Email,
-                        MatKhau = "1", // Mật khẩu mặc định
-                        VaiTroId = 3, // Giả sử VaiTroId = 3 là khách hàng
+                        MatKhau = "1",
+                        VaiTroId = 3,
                         TrangThai = true,
                         Hoten = khach.HoTen,
                         NgayTao = DateTime.Now
                     };
                     _context.TaiKhoans.Add(taiKhoan);
                 }
-                // Nếu tài khoản đã tồn tại, taiKhoan đã được gán từ FirstOrDefault
+                
 
-                _context.SaveChanges(); // Lưu tất cả cùng lúc
+                _context.SaveChanges(); 
 
-                // Cập nhật TaiKhoanId cho KhachHang
-                if (khach.TaiKhoanId == null) // Chỉ cập nhật nếu chưa có TaiKhoanId
+              
+                if (khach.TaiKhoanId == null)
                 {
                     khach.TaiKhoanId = taiKhoan.TaiKhoanId;
                     _context.SaveChanges(); 

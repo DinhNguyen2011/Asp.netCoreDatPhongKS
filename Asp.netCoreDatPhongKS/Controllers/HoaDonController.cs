@@ -55,7 +55,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 hoaDonDichVusQuery = hoaDonDichVusQuery.Where(h => h.TrangThaiThanhToan == trangThai);
             }
 
-            // Tìm kiếm theo tên hoặc CCCD khách hàng
+          
             if (!string.IsNullOrEmpty(searchString))
             {
                 hoaDonsQuery = hoaDonsQuery.Where(h => h.KhachHang.HoTen.Contains(searchString) || h.KhachHang.Cccd.Contains(searchString));
@@ -63,7 +63,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     (h.MaDonHangDvNavigation.KhachHang.HoTen.Contains(searchString) || h.MaDonHangDvNavigation.KhachHang.Cccd.Contains(searchString)));
             }
 
-            // Kết hợp dữ liệu thành HoaDonViewModel
+           
             var hoaDons = await hoaDonsQuery.ToListAsync();
             var hoaDonDichVus = await hoaDonDichVusQuery.ToListAsync();
 
@@ -190,6 +190,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     hdv.TrangThaiThanhToan = "Đã thanh toán";
                     hdv.NgayThanhToan = DateTime.Now;
                     hdv.HinhThucThanhToan = hinhThucThanhToan;
+                    hdv.MaDonHangDvNavigation.TrangThai = "Đã thanh toán";
 
                     var tongTienDichVu = hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0);
                     hoaDon.TongTienDichVu += tongTienDichVu;
