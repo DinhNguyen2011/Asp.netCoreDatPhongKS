@@ -1,0 +1,137 @@
+﻿@model Asp.netCoreDatPhongKS.Models.HoaDon
+@{
+    ViewData["Title"] = "In hóa đơn tổng";
+    decimal tongTienDichVu = Model.HoaDonDichVus?.Sum(h => h.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0)) ?? 0;
+    decimal tongTienPhong = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault()?.DonGia ?? 0);
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>In hóa đơn #@Model.MaHoaDon</title>
+    <link rel="stylesheet" href="~/assets/css/hoadontong.css" />
+
+</head>
+<body onload="window.print()">
+    <div class="invoice">
+        <div class="invoice-header">
+            <h2>HÓA ĐƠN TỔNG HỢP</h2>
+            <p>@ViewData["HotelName"]</p>
+            <p>@ViewData["HotelAddress"]</p>
+            <p>Mã hóa đơn: #@Model.MaHoaDon</p>
+            <p>Ngày lập: @Model.NgayLap?.ToString("dd/MM/yyyy HH:mm")</p>
+        </div>
+
+        <div class="invoice-details">
+            <p><strong>Khách hàng:</strong> @Model.KhachHang?.HoTen</p>
+            <p><strong>SĐT:</strong> @Model.KhachHang?.SoDienThoai</p>
+            <p><strong>Nhân viên lập:</strong> @Model.NguoiLapDh</p>
+            <p><strong>Hình thức thanh toán:</strong> @Model.HinhThucThanhToan</p>
+            <p><strong>Trạng thái:</strong> @Model.TrangThai</p>
+        </div>
+
+        @if (Model.HoaDonDichVus.Any())
+        {
+            <h5>Chi tiết dịch vụ</h5>
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên dịch vụ</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int stt = 1;
+                        foreach (var hdv in Model.HoaDonDichVus)
+                        {
+                            foreach (var chiTiet in hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus)
+                            {
+                                <tr>
+                                    <td>@stt</td>
+                                    <td>@chiTiet.DichVu.TenDichVu</td>
+                                    <td>@chiTiet.SoLuong</td>
+                                    <td>@chiTiet.DonGia.ToString("N0") VNĐ</td>
+                                    <td>@chiTiet.ThanhTien?.ToString("N0") VNĐ</td>
+                                </tr>
+                                stt++;
+                            }
+                        }
+                    }
+                    <tr>
+                        <td colspan="4" class="text-end"><strong>Tổng tiền dịch vụ:</strong></td>
+                        <td><strong>@tongTienDichVu.ToString("N0") VNĐ</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+
+        @if (Model.HoaDonPdps.Any())
+        {
+            <h5>Chi tiết phòng</h5>
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã phiếu</th>
+                        <th>Phòng</th>
+                        <th>Đơn giá</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int sttP = 1;
+                        foreach (var hdp in Model.HoaDonPdps)
+                        {
+                            var chiTiet = hdp.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault();
+                            if (chiTiet != null)
+                            {
+                                <tr>
+                                    <td>@sttP</td>
+                                    <td>@hdp.PhieuDatPhong.MaPhieu</td>
+                                    <td>@chiTiet.Phong.SoPhong</td>
+                                    <td>@chiTiet.DonGia?.ToString("N0") VNĐ</td>
+                                </tr>
+                                sttP++;
+                            }
+                        }
+                    }
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Tổng tiền phòng:</strong></td>
+                        <td><strong>@tongTienPhong.ToString("N0") VNĐ</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+
+        <div class="invoice-total">
+            <p><strong>Tổng cộng:</strong> @Model.TongTien?.ToString("N0") VNĐ</p>
+            @if (Model.SoTienConNo > 0)
+            {
+                <p><strong>Số tiền còn nợ:</strong> @Model.SoTienConNo?.ToString("N0") VNĐ</p>
+            }
+        </div>
+
+        <div class="signature-section">
+            <div class="signature-box">
+                <p>Khách hàng</p>
+                <p>(Ký và ghi rõ họ tên)</p>
+            </div>
+            <div class="signature-box">
+                <p>Nhân viên lập hóa đơn</p>
+                <p>(Ký và ghi rõ họ tên)</p>
+            </div>
+        </div>
+
+        <div class="no-print">
+            <button onclick="window.print()" class="btn-primary">In lại</button>
+            <a href="@Url.Action("Index", "HoaDon")" class="btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -99,8 +99,8 @@
     <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/assets/css/hoadontong.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\css\hoadontong.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm\u002BRbTDT9C0="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"828"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm\u002BRbTDT9C0=\u0022"},{"Name":"Last-Modified","Value":"Mon, 02 Jun 2025 16:43:33 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-S9QW4C68zbwACom94AZZ6iHGPVp14A5leaUKYVrKfpA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1861"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022S9QW4C68zbwACom94AZZ6iHGPVp14A5leaUKYVrKfpA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 03 Jun 2025 06:31:23 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/assets/css/hoadontong.css.map">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\css\hoadontong.css.map'))</AssetFile>
@@ -114,11 +114,11 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ytkzst8lei"},{"Name":"integrity","Value":"sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/assets/css/hoadontong.css.map"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5559"},{"Name":"Content-Type","Value":"text/plain"},{"Name":"ETag","Value":"\u0022NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 31 May 2025 01:14:02 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/assets/css/hoadontong.dtkx3u5wk5.css">
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/assets/css/hoadontong.nt6fsm9ro1.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\css\hoadontong.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"dtkx3u5wk5"},{"Name":"integrity","Value":"sha256-oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm\u002BRbTDT9C0="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/assets/css/hoadontong.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"828"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm\u002BRbTDT9C0=\u0022"},{"Name":"Last-Modified","Value":"Mon, 02 Jun 2025 16:43:33 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"nt6fsm9ro1"},{"Name":"integrity","Value":"sha256-S9QW4C68zbwACom94AZZ6iHGPVp14A5leaUKYVrKfpA="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/assets/css/hoadontong.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1861"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022S9QW4C68zbwACom94AZZ6iHGPVp14A5leaUKYVrKfpA=\u0022"},{"Name":"Last-Modified","Value":"Tue, 03 Jun 2025 06:31:23 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/assets/css/kaiadmin.06dr3qsvgn.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\css\kaiadmin.css'))</AssetFile>

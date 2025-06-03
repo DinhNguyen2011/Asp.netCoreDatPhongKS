@@ -15,7 +15,6 @@ namespace Asp.netCoreDatPhongKS.Models
         public int MaHoaDon { get; set; }
         public DateTime? NgayLap { get; set; }
         public int? KhachHangId { get; set; }
-        public int? NhanVienId { get; set; }
         public decimal? TongTienPhong { get; set; }
         public decimal? TongTienDichVu { get; set; }
         public decimal? TongTien { get; set; }
@@ -24,9 +23,9 @@ namespace Asp.netCoreDatPhongKS.Models
         public bool? IsKhachVangLai { get; set; }
         public string? GhiChu { get; set; }
         public decimal? SoTienConNo { get; set; }
+        public string? NguoiLapDh { get; set; }
 
         public virtual KhachHang? KhachHang { get; set; }
-        public virtual NhanVien? NhanVien { get; set; }
         public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public virtual ICollection<HoaDonDichVu> HoaDonDichVus { get; set; }
         public virtual ICollection<HoaDonPdp> HoaDonPdps { get; set; }

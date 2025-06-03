@@ -156,8 +156,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>dtkx3u5wk5</Fingerprint>
-      <Integrity>oVKviURbGvlrB4sR4I8Idpa6aVlVWzCqAm+RbTDT9C0=</Integrity>
+      <Fingerprint>nt6fsm9ro1</Fingerprint>
+      <Integrity>S9QW4C68zbwACom94AZZ6iHGPVp14A5leaUKYVrKfpA=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\css\hoadontong.css'))</OriginalItemSpec>

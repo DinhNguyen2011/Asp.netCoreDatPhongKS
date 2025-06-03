@@ -257,7 +257,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     NgayNhan = pendingBooking.Checkin,
                     NgayTra = pendingBooking.Checkout,
                     KhachHangId = khach.KhachHangId,
-                    TrangThai = "Đã đặt",
+                    TrangThai = "Đã thanh toán",
                     TongTien = pendingBooking.TongTien,
                     VnpTransactionId = response.TransactionId,
                     SoTienDaThanhToan = pendingBooking.TongTien
@@ -278,7 +278,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 {
                     NgayLap = DateTime.Now,
                     KhachHangId = khach.KhachHangId,
-                    NhanVienId =null ,
+                    NguoiLapDh = "WEBSITE là người lập HĐ",
                     TongTienPhong = pendingBooking.TongTien,
                     TongTienDichVu = 0, // Chưa có dịch vụ
                     TongTien = pendingBooking.TongTien,

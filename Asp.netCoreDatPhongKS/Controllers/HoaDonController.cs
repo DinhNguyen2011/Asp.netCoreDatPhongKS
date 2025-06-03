@@ -28,7 +28,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
             // Lấy danh sách hóa đơn tổng
             var hoaDonsQuery = _context.HoaDons
                 .Include(h => h.KhachHang)
-                .Include(h => h.NhanVien)
                 .Include(h => h.HoaDonDichVus)
                 .ThenInclude(hdv => hdv.MaDonHangDvNavigation)
                 .ThenInclude(d => d.ChiTietDonHangDichVus)
@@ -80,7 +79,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     NgayLap = hoaDon.NgayLap,
                     KhachHangTen = hoaDon.KhachHang?.HoTen ?? "Không xác định",
                     KhachHangCCCD = hoaDon.KhachHang?.Cccd ?? "Không có",
-                    NhanVienTen = hoaDon.NhanVien?.HoTen ?? "Không xác định",
+                    NhanVienTen = hoaDon.NguoiLapDh ?? "Không xác định",
                     TongTien = hoaDon.TongTien ?? 0,
                     TrangThai = hoaDon.TrangThai,
                     HoaDon = hoaDon,
@@ -162,7 +161,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 KhachHangId = khachHangId,
                 NgayLap = DateTime.Now,
-                NhanVienId = HttpContext.Session.GetInt32("TaiKhoanId"),
+                NguoiLapDh = $"Tên: {userName}",
                 TongTienPhong = 0,
                 TongTienDichVu = 0,
                 TongTien = 0,
@@ -218,7 +217,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                             PhieuDatPhongId = phieu.PhieuDatPhongId
                         };
                         _context.HoaDonPdps.Add(hoaDonPdp);
-                        phieu.TrangThai = "Hoàn thành";
+                        phieu.TinhTrangSuDung = "Đã check-out";
+                        phieu.TrangThai = "Đã thanh toán";
                     }
                 }
             }
@@ -226,12 +226,19 @@ namespace Asp.netCoreDatPhongKS.Controllers
             hoaDon.TongTien = hoaDon.TongTienPhong + hoaDon.TongTienDichVu;
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("XemHoaDonTong", new { id = hoaDon.MaHoaDon });
+            return RedirectToAction("PrintHoaDonTong", new { id = hoaDon.MaHoaDon });
         }
 
-        // Action XemHoaDonTong: In hóa đơn tổng
-        public async Task<IActionResult> XemHoaDonTong(int id)
+        // Action PrintHoaDonTong: In hóa đơn tổng
+        public async Task<IActionResult> PrintHoaDonTong(int id)
         {
+            var taiKhoanId = HttpContext.Session.GetInt32("TaiKhoanId");
+            var userName = HttpContext.Session.GetString("Hoten");
+            
+            ViewData["Hoten"] = !string.IsNullOrEmpty(userName) ? userName : "Chưa đăng nhập";
+            ViewData["HotelName"] = "Khách sạn THIỀM ĐỊNH";
+            ViewData["HotelAddress"] = "180 Cao Lỗ, Quận 8, TP. Hồ Chí Minh";
+
             var hoaDon = await _context.HoaDons
                 .Include(h => h.KhachHang)
                 .Include(h => h.HoaDonDichVus)
@@ -247,11 +254,114 @@ namespace Asp.netCoreDatPhongKS.Controllers
             if (hoaDon == null)
                 return NotFound();
 
+            return View(hoaDon);
+        }
+        public async Task<IActionResult> Edit(int id)
+        {
+          
             var userName = HttpContext.Session.GetString("Hoten");
             ViewData["Hoten"] = !string.IsNullOrEmpty(userName) ? userName : "Chưa đăng nhập";
 
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.KhachHang)
+               
+                .FirstOrDefaultAsync(h => h.MaHoaDon == id);
+
+            if (hoaDon == null)
+            {
+                return NotFound();
+            }
+
+            if (hoaDon.TrangThai == "Hủy")
+            {
+                ModelState.AddModelError("", "Không thể sửa hóa đơn đã hủy.");
+                return View(hoaDon);
+            }
+
+            ViewBag.KhachHangs = await _context.KhachHangs.ToListAsync();
+        
+            ViewBag.HinhThucThanhToans = new List<string> { "Tiền mặt", "Chuyển khoản", "Thẻ tín dụng" }; // Tùy chỉnh theo nghiệp vụ
+
             return View(hoaDon);
         }
+
+        // Action Edit: Lưu thay đổi hóa đơn tổng (POST)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, HoaDon hoaDon)
+        {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
+
+            if (id != hoaDon.MaHoaDon)
+            {
+                return BadRequest();
+            }
+
+            var existingHoaDon = await _context.HoaDons
+                .Include(h => h.HoaDonDichVus)
+                .Include(h => h.HoaDonPdps)
+                .FirstOrDefaultAsync(h => h.MaHoaDon == id);
+
+            if (existingHoaDon == null)
+            {
+                return NotFound();
+            }
+
+            if (existingHoaDon.TrangThai == "Hủy")
+            {
+                ModelState.AddModelError("", "Không thể sửa hóa đơn đã hủy.");
+                ViewBag.KhachHangs = await _context.KhachHangs.ToListAsync();
+             
+                ViewBag.HinhThucThanhToans = new List<string> { "Tiền mặt", "Chuyển khoản", "Thẻ tín dụng" };
+                return View(hoaDon);
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // Chỉ cập nhật các trường được phép sửa
+                    existingHoaDon.KhachHangId = hoaDon.KhachHangId;
+                  //  existingHoaDon.NguoiLapDh = hoaDon.NguoiLapDh;
+                    existingHoaDon.HinhThucThanhToan = hoaDon.HinhThucThanhToan;
+                    existingHoaDon.TrangThai = hoaDon.TrangThai;
+                    existingHoaDon.GhiChu = hoaDon.GhiChu;
+                    existingHoaDon.SoTienConNo = hoaDon.SoTienConNo;
+
+                    // Không sửa TongTien, TongTienPhong, TongTienDichVu (tính lại nếu cần)
+                    // existingHoaDon.TongTien = existingHoaDon.HoaDonDichVus.Sum(hdv => 
+                    //     hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0)) +
+                    //     existingHoaDon.HoaDonPdps.Sum(hdp => 
+                    //     hdp.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault()?.DonGia ?? 0);
+
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!HoaDonExists(hoaDon.MaHoaDon))
+                    {
+                        return NotFound();
+                    }
+                    throw;
+                }
+            }
+
+            ViewBag.KhachHangs = await _context.KhachHangs.ToListAsync();
+            ViewBag.NhanViens = await _context.NhanViens.ToListAsync();
+            ViewBag.HinhThucThanhToans = new List<string> { "Tiền mặt", "Chuyển khoản", "Thẻ tín dụng" };
+            return View(hoaDon);
+        }
+
+        private bool HoaDonExists(int id)
+        {
+            return _context.HoaDons.Any(e => e.MaHoaDon == id);
+        }
+
         // Action GetHoaDonDichVu: Lấy hóa đơn dịch vụ chưa thanh toán theo khách hàng
         [HttpGet]
         public async Task<IActionResult> GetHoaDonDichVu(int khachHangId)
@@ -278,7 +388,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var phieuDatPhongs = await _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(c => c.Phong)
-                .Where(p => p.KhachHangId == khachHangId && p.TrangThai == "Đang sử dụng")
+                .Where(p => p.KhachHangId == khachHangId && p.TrangThai == "Chưa thanh toán" && p.TinhTrangSuDung == "Đã check-in")
                 .Select(p => new
                 {
                     phieuDatPhongId = p.PhieuDatPhongId,

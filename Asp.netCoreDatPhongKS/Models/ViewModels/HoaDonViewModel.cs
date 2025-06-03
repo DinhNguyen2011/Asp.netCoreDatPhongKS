@@ -9,6 +9,7 @@
         public string KhachHangCCCD { get; set; }
         public string NhanVienTen { get; set; }
         public decimal TongTien { get; set; }
+    
         public string TrangThai { get; set; }
         public HoaDon HoaDon { get; set; } // Cho hóa đơn tổng
         public HoaDonDichVu HoaDonDichVu { get; set; } // Cho hóa đơn dịch vụ vãng lai

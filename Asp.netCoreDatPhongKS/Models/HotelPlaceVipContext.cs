@@ -216,7 +216,7 @@ namespace Asp.netCoreDatPhongKS.Models
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.NhanVienId).HasColumnName("NhanVienID");
+                entity.Property(e => e.NguoiLapDh).HasColumnName("NguoiLapDH");
 
                 entity.Property(e => e.SoTienConNo).HasColumnType("decimal(18, 2)");
 
@@ -240,11 +240,6 @@ namespace Asp.netCoreDatPhongKS.Models
                     .WithMany(p => p.HoaDons)
                     .HasForeignKey(d => d.KhachHangId)
                     .HasConstraintName("FK__HoaDon__KhachHan__2610A626");
-
-                entity.HasOne(d => d.NhanVien)
-                    .WithMany(p => p.HoaDons)
-                    .HasForeignKey(d => d.NhanVienId)
-                    .HasConstraintName("FK__HoaDon__NhanVien__2704CA5F");
             });
 
             modelBuilder.Entity<HoaDonDichVu>(entity =>

@@ -109,7 +109,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 {
                     model.MaPhieu = $"PDP-{DateTime.Now:yyyyMMddHHmmss}";
                     model.NgayDat = DateTime.Now;
-                    model.TrangThai = "Đã đặt";
+                    model.TrangThai = "Chưa thanh toán";
                     model.TinhTrangSuDung = "Chưa sử dụng";
                     model.SoTienCoc = 0;
                     model.SoTienDaThanhToan = 0;
@@ -151,7 +151,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                             return View(model);
                         }
 
-                        phong.TinhTrang = "Đã đặt";
+                        phong.TinhTrang = "Chưa thanh toán";
                         _context.Phongs.Update(phong);
 
                         var soNgay = (model.NgayTra - model.NgayNhan)?.Days ?? 1;
