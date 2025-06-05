@@ -9,6 +9,18 @@
         display: none;
         margin-left: 20px;
     }
+
+    .table-sm th, .table-sm td {
+        vertical-align: middle;
+        text-align: right;
+    }
+
+        .table-sm th:first-child, .table-sm td:first-child,
+        .table-sm th:nth-child(2), .table-sm td:nth-child(2),
+        .table-sm th:nth-child(3), .table-sm td:nth-child(3),
+        .table-sm th:nth-child(4), .table-sm td:nth-child(4) {
+            text-align: left;
+        }
 </style>
 
 <h2>Quản lý hóa đơn</h2>
@@ -40,6 +52,8 @@
             <th>Người lập HĐ</th>
             <th>Ngày lập</th>
             <th>Tổng tiền</th>
+            <th>Tiền cọc</th>
+            <th>Đã thanh toán</th>
             <th>Hình thức thanh toán</th>
             <th>Trạng thái</th>
             <th>Tác vụ</th>
@@ -49,7 +63,7 @@
         @if (!Model.Any())
         {
             <tr>
-                <td colspan="9">Không có hóa đơn nào.</td>
+                <td colspan="12">Không có hóa đơn nào.</td>
             </tr>
         }
         else
@@ -64,19 +78,21 @@
                     <td>@item.NhanVienTen</td>
                     <td>@(item.NgayLap?.ToString("dd/MM/yyyy HH:mm") ?? "")</td>
                     <td>@item.TongTien.ToString("N0") VNĐ</td>
+                    <td>@(item.HoaDon?.HoaDonPdps.Sum(hdp => hdp.PhieuDatPhong?.SoTienCoc ?? 0).ToString("N0") ?? "0") VNĐ</td>
+                    <td>@(item.HoaDon?.HoaDonPdps.Sum(hdp => hdp.PhieuDatPhong?.SoTienDaThanhToan ?? 0).ToString("N0") ?? "0") VNĐ</td>
                     <td>@item.HoaDon?.HinhThucThanhToan</td>
                     <td>@item.TrangThai</td>
                     <td>
                         <button class="btn btn-info btn-sm toggle-details" data-id="@item.Id">Xem chi tiết</button>
-                    
                         @if (item.HoaDon != null)
                         {
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Sửa</a>
+                            <a asp-action="PrintHoaDonTong" asp-route-id="@item.Id" class="btn btn-success btn-sm" target="_blank">In</a>
                         }
                     </td>
                 </tr>
                 <tr class="hoa-don-details" id="details_@item.Id">
-                    <td colspan="9">
+                    <td colspan="12">
                         @if (item.HoaDon != null && item.HoaDon.HoaDonDichVus.Any())
                         {
                             <h6>Dịch vụ</h6>
@@ -120,7 +136,12 @@
                                         <th>STT</th>
                                         <th>Mã phiếu</th>
                                         <th>Phòng</th>
-                                        <th>Đơn giá</th>
+                                        <th>Loại phòng</th>
+                                        <th>Số ngày ở</th>
+                                        <th>Tiền/Ngày</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Tiền cọc</th>
+                                        <th>Đã thanh toán</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -131,11 +152,19 @@
                                             var chiTietP = hdp.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault();
                                             if (chiTietP != null)
                                             {
+                                                var soNgayO = ((hdp.PhieuDatPhong.NgayTra ?? DateTime.Now) - (hdp.PhieuDatPhong.NgayNhan ?? DateTime.Now)).Days;
+                                                soNgayO = soNgayO < 1 ? 1 : soNgayO;
+
                                                 <tr>
                                                     <td>@sttP</td>
-                                                    <td>@hdp.PhieuDatPhongId</td>
+                                                    <td>@hdp.PhieuDatPhong.MaPhieu</td>
                                                     <td>@chiTietP.Phong.SoPhong</td>
+                                                    <td>@(chiTietP.Phong.LoaiPhong?.TenLoai ?? "Không xác định")</td>
+                                                    <td>@soNgayO ngày</td>
                                                     <td>@chiTietP.DonGia?.ToString("N0") VNĐ</td>
+                                                    <td>@hdp.PhieuDatPhong.TongTien?.ToString("N0") VNĐ</td>
+                                                    <td>@hdp.PhieuDatPhong.SoTienCoc?.ToString("N0") VNĐ</td>
+                                                    <td>@hdp.PhieuDatPhong.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
                                                 </tr>
                                                 sttP++;
                                             }
@@ -182,12 +211,12 @@
     </tbody>
 </table>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('.toggle-details').click(function () {
-                var id = $(this).data('id');
-                $('#details_' + id).toggle();
-            });
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.toggle-details').click(function () {
+            var id = $(this).data('id');
+            $('#details_' + id).toggle();
         });
-    </script>
+    });
+</script>

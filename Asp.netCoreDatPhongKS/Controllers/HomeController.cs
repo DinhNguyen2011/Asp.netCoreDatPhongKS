@@ -297,7 +297,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 var hoaDonPdp = new HoaDonPdp
                 {
                     MaHoaDon = hoaDon.MaHoaDon,
-                    PhieuDatPhongId = phieu.PhieuDatPhongId
+                    PhieuDatPhongId = phieu.PhieuDatPhongId,
+                    TrangThai = "Đã thanh toán",
+                    ThanhTien = phieu.TongTien ?? 0
                 };
                 _context.HoaDonPdps.Add(hoaDonPdp);
 

@@ -2,8 +2,10 @@
 @{
     ViewData["Title"] = "In hóa đơn tổng";
     decimal tongTienDichVu = Model.HoaDonDichVus?.Sum(h => h.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0)) ?? 0;
-    decimal tongTienPhong = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault()?.DonGia ?? 0);
-    Layout = null; 
+    decimal tongTienPhong = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.TongTien ?? 0);
+    decimal tongTienCoc = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienCoc ?? 0);
+    decimal tongTienDaThanhToan = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienDaThanhToan ?? 0);
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -11,8 +13,7 @@
 <head>
     <meta charset="utf-8" />
     <title>In hóa đơn #@Model.MaHoaDon</title>
-    <link rel="stylesheet" href="~/assets/css/hoadontong.css" />
-
+    <link rel="stylesheet" href="/assets/css/hoadontong.css" />
 </head>
 <body onload="window.print()">
     <div class="invoice">
@@ -80,7 +81,12 @@
                         <th>STT</th>
                         <th>Mã phiếu</th>
                         <th>Phòng</th>
-                        <th>Đơn giá</th>
+                        <th>Loại phòng</th>
+                        <th>Số ngày ở</th>
+                        <th>Tiền/Ngày</th>
+                        <th>Tổng tiền</th>
+                        <th>Tiền cọc</th>
+                        <th>Đã thanh toán</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,19 +97,38 @@
                             var chiTiet = hdp.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault();
                             if (chiTiet != null)
                             {
+                                var soNgayO = ((hdp.PhieuDatPhong.NgayTra ?? DateTime.Now) - (hdp.PhieuDatPhong.NgayNhan ?? DateTime.Now)).Days;
+                                soNgayO = soNgayO < 1 ? 1 : soNgayO;
+
                                 <tr>
                                     <td>@sttP</td>
                                     <td>@hdp.PhieuDatPhong.MaPhieu</td>
                                     <td>@chiTiet.Phong.SoPhong</td>
+                                    <td>@(chiTiet.Phong.LoaiPhong?.TenLoai ?? "Không xác định")</td>
+                                    <td>@soNgayO ngày</td>
                                     <td>@chiTiet.DonGia?.ToString("N0") VNĐ</td>
+                                    <td>@hdp.PhieuDatPhong.TongTien?.ToString("N0") VNĐ</td>
+                                    <td>@hdp.PhieuDatPhong.SoTienCoc?.ToString("N0") VNĐ</td>
+                                    <td>@hdp.PhieuDatPhong.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
                                 </tr>
                                 sttP++;
                             }
                         }
                     }
                     <tr>
-                        <td colspan="3" class="text-end"><strong>Tổng tiền phòng:</strong></td>
+                        <td colspan="6" class="text-end"><strong>Tổng tiền phòng:</strong></td>
                         <td><strong>@tongTienPhong.ToString("N0") VNĐ</strong></td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-end"><strong>Tổng tiền cọc:</strong></td>
+                        <td><strong>@tongTienCoc.ToString("N0") VNĐ</strong></td>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-end"><strong>Tổng đã thanh toán:</strong></td>
+                        <td><strong>@tongTienDaThanhToan.ToString("N0") VNĐ</strong></td>
+                        <td colspan="2"></td>
                     </tr>
                 </tbody>
             </table>

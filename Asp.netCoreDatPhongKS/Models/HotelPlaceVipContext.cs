@@ -274,24 +274,27 @@ namespace Asp.netCoreDatPhongKS.Models
             {
                 entity.ToTable("HoaDonPDP");
 
-                entity.HasIndex(e => e.PhieuDatPhongId, "UQ__HoaDonPD__53A722211B13E276")
+                entity.HasIndex(e => e.PhieuDatPhongId, "UQ__HoaDonPD__53A722215C43A14A")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.PhieuDatPhongId).HasColumnName("PhieuDatPhongID");
 
+                entity.Property(e => e.ThanhTien).HasColumnType("decimal(18, 2)");
+
+                entity.Property(e => e.TrangThai).HasMaxLength(50);
+
                 entity.HasOne(d => d.MaHoaDonNavigation)
                     .WithMany(p => p.HoaDonPdps)
                     .HasForeignKey(d => d.MaHoaDon)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HoaDonPDP__MaHoa__2AD55B43");
+                    .HasConstraintName("FK__HoaDonPDP__MaHoa__55BFB948");
 
                 entity.HasOne(d => d.PhieuDatPhong)
                     .WithOne(p => p.HoaDonPdp)
                     .HasForeignKey<HoaDonPdp>(d => d.PhieuDatPhongId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HoaDonPDP__Phieu__2BC97F7C");
+                    .HasConstraintName("FK__HoaDonPDP__Phieu__56B3DD81");
             });
 
             modelBuilder.Entity<KhachHang>(entity =>

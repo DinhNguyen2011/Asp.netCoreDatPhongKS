@@ -12,11 +12,16 @@
             <tr>
                 <th>Mã phiếu</th>
                 <th>Khách hàng</th>
+                <th>Phòng</th>
+                <th>Loại phòng</th>
                 <th>Ngày nhận</th>
                 <th>Ngày trả</th>
                 <th>Tổng tiền</th>
+                <th>Tiền cọc</th>
+                <th>Số tiền đã thanh toán</th>
                 <th>Trạng thái</th>
                 <th>Tình trạng sử dụng</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -25,15 +30,36 @@
                 <tr>
                     <td>@item.MaPhieu</td>
                     <td>@(item.KhachHang?.HoTen ?? "Không xác định")</td>
+                    <td>@item.ChiTietPhieuPhongs.FirstOrDefault()?.Phong?.SoPhong</td>
+                    <td>@item.ChiTietPhieuPhongs.FirstOrDefault()?.Phong?.LoaiPhong?.TenLoai</td>
                     <td>@item.NgayNhan?.ToString("dd/MM/yyyy")</td>
                     <td>@item.NgayTra?.ToString("dd/MM/yyyy")</td>
                     <td>@item.TongTien?.ToString("N0") VNĐ</td>
+                    <td>@item.SoTienCoc?.ToString("N0") VNĐ</td>
+                    <td>@item.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
                     <td>@item.TrangThai</td>
                     <td>@item.TinhTrangSuDung</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick="showPhieuDatPhongDetails(@item.PhieuDatPhongId)">Chi tiết</button>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+</div>
+
+<div id="phieuDatPhongDetailsModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Chi tiết phiếu đặt phòng</h5>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="phieuDatPhongDetailsContent"></div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -44,5 +70,34 @@
     @if (TempData["Error"] != null)
     {
         @:toastr.error('@TempData["Error"]');
+    }
+
+    function showPhieuDatPhongDetails(phieuDatPhongId) {
+        fetch(`/PhieuDatPhong/GetPhieuDatPhongDetails?phieuDatPhongId=${phieuDatPhongId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const phieu = data.phieu;
+                    const content = `
+                        <h4>Phiếu đặt phòng: ${phieu.maPhieu}</h4>
+                        <p><strong>Khách hàng:</strong> ${phieu.khachHang.hoTen} (${phieu.khachHang.email})</p>
+                        <p><strong>Phòng:</strong> ${phieu.chiTiet.soPhong} (${phieu.chiTiet.loaiPhong})</p>
+                        <p><strong>Giá/đêm:</strong> ${phieu.chiTiet.donGia.toLocaleString()} VNĐ</p>
+                        <p><strong>Ngày nhận:</strong> ${new Date(phieu.ngayNhan).toLocaleDateString('vi-VN')}</p>
+                        <p><strong>Ngày trả:</strong> ${new Date(phieu.ngayTra).toLocaleDateString('vi-VN')}</p>
+                        <p><strong>Số ngày:</strong> ${phieu.soNgay}</p>
+                        <p><strong>Tổng tiền:</strong> ${phieu.tongTien.toLocaleString()} VNĐ</p>
+                        <p><strong>Tiền cọc:</strong> ${phieu.soTienCoc.toLocaleString()} VNĐ</p>
+                        <p><strong>Tiền đã thanh toán:</strong> ${phieu.soTienDaThanhToan.toLocaleString()} VNĐ</p>
+                        <p><strong>Trạng thái:</strong> ${phieu.trangThai}</p>
+                        <p><strong>Tình trạng sử dụng:</strong> ${phieu.tinhTrangSuDung}</p>
+                    `;
+                    document.getElementById('phieuDatPhongDetailsContent').innerHTML = content;
+                    $('#phieuDatPhongDetailsModal').modal('show');
+                } else {
+                    toastr.error(data.message || 'Không thể tải chi tiết phiếu đặt phòng.');
+                }
+            })
+            .catch(error => toastr.error('Có lỗi xảy ra: ' + error.message));
     }
 </script>

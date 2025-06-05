@@ -36,6 +36,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .ThenInclude(hdp => hdp.PhieuDatPhong)
                 .ThenInclude(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(c => c.Phong)
+                  .ThenInclude(p => p.LoaiPhong)
                 .AsQueryable();
 
             // Lấy danh sách hóa đơn dịch vụ vãng lai
@@ -215,7 +216,10 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         var hoaDonPdp = new HoaDonPdp
                         {
                             MaHoaDon = hoaDon.MaHoaDon,
-                            PhieuDatPhongId = phieu.PhieuDatPhongId
+                            PhieuDatPhongId = phieu.PhieuDatPhongId,
+                            ThanhTien = phieu.TongTien ?? 0,
+                            TrangThai = "Đã thanh toán"
+
                         };
                         _context.HoaDonPdps.Add(hoaDonPdp);
                         phieu.TinhTrangSuDung = "Đã check-out";
@@ -250,6 +254,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .ThenInclude(hdp => hdp.PhieuDatPhong)
                 .ThenInclude(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(c => c.Phong)
+                  .ThenInclude(p => p.LoaiPhong)
                 .FirstOrDefaultAsync(h => h.MaHoaDon == id);
 
             if (hoaDon == null)
@@ -389,17 +394,21 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var phieuDatPhongs = await _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(c => c.Phong)
+                .ThenInclude(p => p.LoaiPhong)
                 .Where(p => p.KhachHangId == khachHangId && p.TrangThai == "Chưa thanh toán" && p.TinhTrangSuDung == "Đã check-in")
                 .Select(p => new
                 {
                     phieuDatPhongId = p.PhieuDatPhongId,
                     maPhieu = p.MaPhieu,
                     soPhong = p.ChiTietPhieuPhongs.FirstOrDefault().Phong.SoPhong,
-                    donGia = p.ChiTietPhieuPhongs.FirstOrDefault().DonGia ?? 0
+                    loaiPhong = p.ChiTietPhieuPhongs.FirstOrDefault().Phong.LoaiPhong.TenLoai ?? "Không xác định",
+                    tongsotien = (p.TongTien ?? 0) - ((p.SoTienCoc ?? 0) + (p.SoTienDaThanhToan ?? 0)),
+                    soTienCoc = p.SoTienCoc ?? 0,
+                    soTienDaThanhToan = p.SoTienDaThanhToan ?? 0
                 })
                 .ToListAsync();
 
             return Json(phieuDatPhongs);
         }
     }
-}
+}   

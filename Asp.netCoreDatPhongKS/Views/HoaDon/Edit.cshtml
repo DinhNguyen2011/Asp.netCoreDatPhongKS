@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Sửa hóa đơn #@Model.MaHoaDon</h2>
+<h2>Sửa hóa đơn #@Model?.MaHoaDon</h2>
 <p>Nhân viên: @ViewData["Hoten"]</p>
 
 <form asp-action="Edit" method="post">
@@ -12,14 +12,25 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="form-group">
-        <label asp-for="KhachHangId" class="control-label"></label>
-        <select asp-for="KhachHangId" class="form-control" asp-items="@(new SelectList(ViewBag.KhachHangs, "KhachHangId", "HoTen", Model.KhachHangId))">
+        <label asp-for="KhachHangId" class="control-label">Khách hàng</label>
+        <select asp-for="KhachHangId" class="form-control" asp-items="@(new SelectList(ViewBag.KhachHangs, "KhachHangId", "HoTen", Model?.KhachHangId))">
             <option value="">Chọn khách hàng</option>
         </select>
         <span asp-validation-for="KhachHangId" class="text-danger"></span>
     </div>
+
     <div class="form-group">
-        <label asp-for="HinhThucThanhToan" class="control-label"></label>
+        <label class="control-label">Tiền cọc (tổng chỉ đọc)</label>
+        <input class="form-control" value="@(Model?.HoaDonPdps?.Sum(h => h.PhieuDatPhong?.SoTienCoc ?? 0).ToString("N0") ?? "0") VNĐ" readonly />
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Đã thanh toán (tổng chỉ đọc)</label>
+        <input class="form-control" value="@(Model?.HoaDonPdps?.Sum(h => h.PhieuDatPhong?.SoTienDaThanhToan ?? 0).ToString("N0") ?? "0") VNĐ" readonly />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="HinhThucThanhToan" class="control-label">Hình thức thanh toán</label>
         <select asp-for="HinhThucThanhToan" class="form-control" asp-items="@(new SelectList(ViewBag.HinhThucThanhToans))">
             <option value="">Chọn hình thức</option>
         </select>
@@ -27,7 +38,7 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="TrangThai" class="control-label"></label>
+        <label asp-for="TrangThai" class="control-label">Trạng thái</label>
         <select asp-for="TrangThai" class="form-control">
             <option value="Chưa thanh toán">Chưa thanh toán</option>
             <option value="Đã thanh toán">Đã thanh toán</option>
@@ -37,13 +48,13 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="GhiChu" class="control-label"></label>
+        <label asp-for="GhiChu" class="control-label">Ghi chú</label>
         <textarea asp-for="GhiChu" class="form-control"></textarea>
         <span asp-validation-for="GhiChu" class="text-danger"></span>
     </div>
 
     <div class="form-group">
-        <label asp-for="SoTienConNo" class="control-label"></label>
+        <label asp-for="SoTienConNo" class="control-label">Số tiền còn nợ</label>
         <input asp-for="SoTienConNo" class="form-control" type="number" step="0.01" />
         <span asp-validation-for="SoTienConNo" class="text-danger"></span>
     </div>
@@ -53,8 +64,6 @@
         <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
     </div>
 </form>
-
-
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
