@@ -41,6 +41,14 @@
       "PackagePath": "staticwebassets\\assets\\css\\hoadontong.css.map"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css",
+      "PackagePath": "staticwebassets\\assets\\css\\inPDP.css"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css.map",
+      "PackagePath": "staticwebassets\\assets\\css\\inPDP.css.map"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\kaiadmin.css",
       "PackagePath": "staticwebassets\\assets\\css\\kaiadmin.css"
     },

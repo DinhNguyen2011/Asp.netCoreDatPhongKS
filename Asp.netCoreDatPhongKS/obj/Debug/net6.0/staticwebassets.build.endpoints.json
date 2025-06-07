@@ -823,6 +823,170 @@
       ]
     },
     {
+      "Route": "assets/css/inPDP.css",
+      "AssetFile": "assets/css/inPDP.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 07 Jun 2025 10:06:03 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/inPDP.css.map",
+      "AssetFile": "assets/css/inPDP.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/inPDP.css.ytkzst8lei.map",
+      "AssetFile": "assets/css/inPDP.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ytkzst8lei"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/inPDP.css.map"
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/inPDP.doxxzs6o3b.css",
+      "AssetFile": "assets/css/inPDP.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 07 Jun 2025 10:06:03 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "doxxzs6o3b"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/inPDP.css"
+        }
+      ]
+    },
+    {
       "Route": "assets/css/kaiadmin.06dr3qsvgn.css",
       "AssetFile": "assets/css/kaiadmin.css",
       "Selectors": [],

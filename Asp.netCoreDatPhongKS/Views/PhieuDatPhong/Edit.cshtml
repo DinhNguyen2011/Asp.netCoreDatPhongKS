@@ -1,0 +1,93 @@
+﻿@model Asp.netCoreDatPhongKS.Models.PhieuDatPhong
+@{
+    ViewData["Title"] = "Chỉnh sửa phiếu đặt phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Chỉnh sửa phiếu đặt phòng #@Model?.MaPhieu</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="PhieuDatPhongId" />
+    <input type="hidden" asp-for="MaPhieu" />
+    <input type="hidden" asp-for="NgayDat" />
+    <input type="hidden" asp-for="TongTien" />
+
+    <div class="form-group">
+        <label asp-for="KhachHangId" class="control-label"></label>
+        <select asp-for="KhachHangId" class="form-control" asp-items="@(new SelectList(ViewBag.KhachHangs, "KhachHangId", "HoTen"))">
+            <option value="">Chọn khách hàng</option>
+        </select>
+        <span asp-validation-for="KhachHangId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NgayNhan" class="control-label"></label>
+        <input asp-for="NgayNhan" class="form-control" type="date" />
+        <span asp-validation-for="NgayNhan" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="NgayTra" class="control-label"></label>
+        <input asp-for="NgayTra" class="form-control" type="date" />
+        <span asp-validation-for="NgayTra" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SoTienCoc" class="control-label"></label>
+        <input asp-for="SoTienCoc" class="form-control" type="number" step="0.01" min="0" />
+        <span asp-validation-for="SoTienCoc" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SoTienDaThanhToan" class="control-label"></label>
+        <input asp-for="SoTienDaThanhToan" class="form-control" type="number" step="0.01" min="0" max="@Model?.TongTien" />
+        <span asp-validation-for="SoTienDaThanhToan" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TrangThai" class="control-label"></label>
+        <select asp-for="TrangThai" class="form-control" asp-items="ViewBag.TrangThaiOptions"></select>
+        <span asp-validation-for="TrangThai" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="TinhTrangSuDung" class="control-label"></label>
+        <select asp-for="TinhTrangSuDung" class="form-control" asp-items="ViewBag.TinhTrangSuDungOptions"></select>
+        <span asp-validation-for="TinhTrangSuDung" class="text-danger"></span>
+    </div>
+
+    <h5>Chi tiết phòng</h5>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Số phòng</th>
+                <th>Loại phòng</th>
+                <th>Đơn giá (1 đêm)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var chiTiet in Model?.ChiTietPhieuPhongs)
+            {
+                <tr>
+                    <td>@(chiTiet.Phong?.SoPhong ?? "Không xác định")</td>
+                    <td>@(chiTiet.Phong?.LoaiPhong?.TenLoai ?? "Không xác định")</td>
+                    <td>@(chiTiet.DonGia?.ToString("N0") ?? "0") VNĐ</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </div>
+</form>

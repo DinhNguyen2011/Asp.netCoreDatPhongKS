@@ -1,0 +1,67 @@
+﻿@model Asp.netCoreDatPhongKS.Models.PhieuDatPhong
+@{
+    ViewData["Title"] = "Xóa phiếu đặt phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Xóa phiếu đặt phòng #@Model?.MaPhieu</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+<div class="alert alert-warning">
+    <strong>Cảnh báo:</strong> Bạn có chắc muốn xóa phiếu đặt phòng này? Hành động này không thể hoàn tác.
+</div>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Mã phiếu</dt>
+        <dd class="col-sm-9">@Model?.MaPhieu</dd>
+
+        <dt class="col-sm-3">Khách hàng</dt>
+        <dd class="col-sm-9">@(Model?.KhachHang?.HoTen ?? "Không xác định") (@(Model?.KhachHang?.Email ?? "Không có"))</dd>
+
+        <dt class="col-sm-3">Ngày nhận</dt>
+        <dd class="col-sm-9">@Model?.NgayNhan?.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Ngày trả</dt>
+        <dd class="col-sm-9">@Model?.NgayTra?.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Phòng</dt>
+        <dd class="col-sm-9">
+            <ul class="list-group">
+                @foreach (var chiTiet in Model?.ChiTietPhieuPhongs)
+                {
+                    <li class="list-group-item">@(chiTiet.Phong?.SoPhong ?? "Không xác định") (@(chiTiet.Phong?.LoaiPhong?.TenLoai ?? "Không xác định"))</li>
+                }
+            </ul>
+        </dd>
+
+        <dt class="col-sm-3">Tổng tiền</dt>
+        <dd class="col-sm-9">@Model?.TongTien?.ToString("N0") VNĐ</dd>
+
+        <dt class="col-sm-3">Tiền cọc</dt>
+        <dd class="col-sm-9">@Model?.SoTienCoc?.ToString("N0") VNĐ</dd>
+
+        <dt class="col-sm-3">Đã thanh toán</dt>
+        <dd class="col-sm-9">@Model?.SoTienDaThanhToan?.ToString("N0") VNĐ</dd>
+
+        <dt class="col-sm-3">Trạng thái</dt>
+        <dd class="col-sm-9">@Model?.TrangThai</dd>
+
+        <dt class="col-sm-3">Tình trạng sử dụng</dt>
+        <dd class="col-sm-9">@Model?.TinhTrangSuDung</dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="PhieuDatPhongId" />
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>

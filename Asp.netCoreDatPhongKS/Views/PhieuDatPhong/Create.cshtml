@@ -6,9 +6,17 @@
 
 <div class="container mt-4">
     <h2>Tạo phiếu đặt phòng</h2>
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
     <form asp-action="Create" asp-controller="PhieuDatPhong" method="post" id="phieuDatPhongForm">
         <div class="form-group">
-            <label>Khách hàng</label>
+            <label>Khách hàng <span class="text-danger">*</span></label>
             <div class="d-flex">
                 <select asp-for="KhachHangId" class="form-control" id="khachHangSelect" required>
                     <option value="">Chọn khách hàng</option>
@@ -53,12 +61,12 @@
         </div>
 
         <div class="form-group">
-            <label>Ngày nhận phòng</label>
+            <label>Ngày nhận phòng <span class="text-danger">*</span></label>
             <input asp-for="NgayNhan" type="date" class="form-control" required id="ngayNhan" />
             <span asp-validation-for="NgayNhan" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label>Ngày trả phòng</label>
+            <label>Ngày trả phòng <span class="text-danger">*</span></label>
             <input asp-for="NgayTra" type="date" class="form-control" required id="ngayTra" />
             <span asp-validation-for="NgayTra" class="text-danger"></span>
         </div>
@@ -67,7 +75,7 @@
             <input type="number" id="soLuongKhach" class="form-control" min="1" />
         </div>
         <div class="form-group">
-            <label>Tiền cọc</label>
+            <label>Tiền cọc <span class="text-danger">*</span></label>
             <input type="number" name="soTienCoc" class="form-control" min="0" step="0.01" required />
         </div>
         <div class="form-group">
@@ -75,7 +83,27 @@
             <input type="number" name="soTienDaThanhToan" class="form-control" min="0" step="0.01" />
         </div>
         <div class="form-group">
-            <label>Chọn phòng</label>
+            <label>Trạng thái <span class="text-danger">*</span></label>
+            <select name="trangThai" class="form-control" required>
+                <option value="">Chọn trạng thái</option>
+                @foreach (var item in ViewBag.TrangThaiOptions)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Tình trạng sử dụng <span class="text-danger">*</span></label>
+            <select name="tinhTrangSuDung" class="form-control" required>
+                <option value="">Chọn tình trạng</option>
+                @foreach (var item in ViewBag.TinhTrangSuDungOptions)
+                {
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Chọn phòng <span class="text-danger">*</span></label>
             <select name="phongIds" multiple class="form-control" required id="phongSelect">
                 @foreach (var phong in ViewBag.Phongs ?? new List<Asp.netCoreDatPhongKS.Models.Phong>())
                 {
@@ -85,18 +113,18 @@
                             data-hinhanh2="@(phong.HinhAnh2 != null ? phong.HinhAnh2.Replace("~/images/", "/images/") : "")"
                             data-hinhanh3="@(phong.HinhAnh3 != null ? phong.HinhAnh3.Replace("~/images/", "/images/") : "")"
                             data-sophong="@phong.SoPhong"
-                            data-loaiphong="@(phong.LoaiPhong?.TenLoai ?? "Không xác định")"
+                            data-loaiPhong="@(phong.LoaiPhong?.TenLoai ?? "Không xác định")"
                             data-soluongkhach="@phong.SoLuongKhach"
                             data-dongia="@phong.GiaPhong1Dem">
-                        Phòng @phong.SoPhong - @(phong.LoaiPhong?.TenLoai ?? "Không xác định") - Giá: @phong.GiaPhong1Dem?.ToString("N0") VNĐ/ngày - @phong.SoLuongKhach khách
+                        Phòng @phong.SoPhong - @(phong.LoaiPhong?.TenLoai ?? "Không") - Giá: @phong.GiaPhong1Dem?.ToString("N0") VNĐ/ngày - @phong.SoLuongKhach khách
                     </option>
                 }
             </select>
             <button type="button" class="btn btn-info mt-2" onclick="filterAvailableRooms()">Lọc phòng khả dụng</button>
         </div>
         <div id="roomPreview" class="mt-3 row"></div>
-        <button type="submit" class="btn btn-success mt-3">Tạo phiếu</button>
-        <a href="@Url.Action("Index", "PhieuDatPhong")" class="btn btn-secondary mt-3">Quay lại</a>
+        <button type="submit" class="btn btn-success mt-4">Tạo phiếu</button>
+        <a href="@Url.Action("Index", "PhieuDatPhong")" class="btn btn-secondary mt-4">Quay lại</a>
     </form>
 </div>
 
@@ -106,29 +134,24 @@
         transition: transform 0.2s;
         position: relative;
     }
-
-        #roomPreview .card:hover {
-            transform: scale(1.02);
-        }
-
+    #roomPreview .card:hover {
+        transform: scale(1.02);
+    }
     #roomPreview .card-img-top {
         height: 150px;
         object-fit: cover;
     }
-
     #roomPreview .carousel-inner img {
         height: 150px;
         object-fit: cover;
     }
-
     #roomPreview .remove-room {
         position: absolute;
         top: 10px;
         right: 10px;
         cursor: pointer;
-        z-index: 10;
+        z-index: 3;
     }
-
     #roomPreview .card-text.description {
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -136,14 +159,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
     #roomPreview .icon {
         margin-right: 5px;
     }
 </style>
 
 <script>
-    const FALLBACK_IMAGE = '/images/no-image.jpg'; // Đảm bảo file tồn tại trong wwwroot/images
+    const FALLBACK_IMAGE = '/images/no-image.jpg';
 
     function showAddKhachHangForm() { document.getElementById('addKhachHangForm').style.display = 'block'; }
     function hideAddKhachHangForm() { document.getElementById('addKhachHangForm').style.display = 'none'; }
@@ -171,19 +193,19 @@
             },
             body: JSON.stringify(khachHang)
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    var select = document.getElementById('khachHangSelect');
-                    select.add(new Option(`${data.khachHang.hoTen} (${data.khachHang.email})`, data.khachHang.khachHangId));
-                    select.value = data.khachHang.khachHangId;
-                    toastr.success('Thêm khách hàng thành công.');
-                    hideAddKhachHangForm();
-                } else {
-                    toastr.error(data.message);
-                }
-            })
-            .catch(error => toastr.error('Có lỗi xảy ra: ' + error.message));
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                var select = document.getElementById('khachHangSelect');
+                select.add(new Option(`${data.khachHang.hoTen} (${data.khachHang.email})`, data.khachHang.khachHangId));
+                select.value = data.khachHang.khachHangId;
+                toastr.success('Thêm khách hàng thành công.');
+                hideAddKhachHangForm();
+            } else {
+                toastr.error(data.message);
+            }
+        })
+        .catch(error => toastr.error('Có lỗi xảy ra: ' + error.message));
     }
 
     function filterAvailableRooms() {
@@ -208,36 +230,36 @@
             },
             body: formData
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    var select = document.getElementById('phongSelect');
-                    select.innerHTML = '';
-                    data.rooms.forEach(room => {
-                        var option = new Option(
-                            `Phòng ${room.soPhong} - ${room.loaiPhong || 'Không xác định'} - Giá: ${room.giaPhong1Dem.toLocaleString()} VNĐ/ngày - ${room.soLuongKhach} khách`,
-                            room.phongId
-                        );
-                        option.dataset.hinhanh = room.hinhAnh ? room.hinhAnh.replace('~/images/', '/images/') : FALLBACK_IMAGE;
-                        option.dataset.hinhanh1 = room.hinhAnh1 ? room.hinhAnh1.replace('~/images/', '/images/') : '';
-                        option.dataset.hinhanh2 = room.hinhAnh2 ? room.hinhAnh2.replace('~/images/', '/images/') : '';
-                        option.dataset.hinhanh3 = room.hinhAnh3 ? room.hinhAnh3.replace('~/images/', '/images/') : '';
-                        option.dataset.sophong = room.soPhong;
-                        option.dataset.loaiphong = room.loaiPhong || 'Không xác định';
-                        option.dataset.soluongkhach = room.soLuongKhach;
-                        option.dataset.dongia = room.giaPhong1Dem;
-                        select.add(option);
-                    });
-                    updateRoomPreview();
-                    toastr.success('Lọc phòng khả dụng thành công.');
-                } else {
-                    toastr.error(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Lỗi khi lọc phòng:', error);
-                toastr.error('Có lỗi xảy ra: ' + error.message);
-            });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                var select = document.getElementById('phongSelect');
+                select.innerHTML = '';
+                data.rooms.forEach(room => {
+                    var option = new Option(
+                        `Phòng ${room.soPhong} - ${room.loaiPhong || 'Không xác định'} - Giá: ${room.giaPhong1Dem?.toLocaleString() || '0'} VNĐ/ngày - ${room.soLuongKhach || '0'} khách`,
+                        room.phongId
+                    );
+                    option.dataset.hinhanh = room.hinhAnh ? room.hinhAnh.replace('~/images/', '/images/') : FALLBACK_IMAGE;
+                    option.dataset.hinhanh1 = room.hinhAnh1 ? room.hinhAnh1?.replace('~/images/', '/images/') : '';
+                    option.dataset.hinhanh2 = room.hinhAnh2? room.hinhAnh2?.replace('~/images/', '/images/') : '';
+                    option.dataset.hinhanh3 = room.hinhAnh3 ? room.hinhAnh3?.replace('~/images/', '/images/') : '';
+                    option.dataset.sophong = room.soPhong;
+                    option.dataset.loaiPhong = room.loaiPhong || 'Không xác định';
+                    option.dataset.soluongkhach = room.soLuongKhach || '0';
+                    option.dataset.dongia = room.giaPhong1Dem || '0';
+                    select.appendChild(option);
+                });
+                updateRoomPreview();
+                toastr.success('Lọc phòng khả dụng thành công.');
+            } else {
+                toastr.error(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Lỗi khi lọc phòng:', error);
+            toastr.error('Có lỗi xảy ra: ' + error.message);
+        });
     }
 
     function updateRoomPreview() {
@@ -287,7 +309,7 @@
                                     <p class="card-text"><i class="fas fa-bed icon"></i> Loại phòng: ${room.loaiPhong || 'Không xác định'}</p>
                                     <p class="card-text"><i class="fas fa-users icon"></i> Số lượng khách: ${room.soLuongKhach}</p>
                                     <p class="card-text"><i class="fas fa-money-bill icon"></i> Giá/đêm: ${Number(room.giaPhong1Dem).toLocaleString()} VNĐ</p>
-                                    <p class="card-text description"><i class="fas fa-info-circle icon"></i> Mô tả: ${room.moTa || 'Không có mô tả'}</p>
+                                    <p class="card-text description"><i class="fas fa-info-circle icon"></i> Mô tả: ${room.moTa || 'Không có'}</p>
                                 </div>
                             </div>
                         `;

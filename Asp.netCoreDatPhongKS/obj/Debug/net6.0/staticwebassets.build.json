@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qGOXf4aNs7NSOc32NynnwORDuQ8FvB9jTsl4+cGiczU=",
+  "Hash": "aKACcjDs47snN8jQkRswnVk+krckss3XwrCPEnC/kto=",
   "Source": "Asp.netCoreDatPhongKS",
   "BasePath": "_content/Asp.netCoreDatPhongKS",
   "Mode": "Default",
@@ -246,6 +246,48 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\css\\hoadontong.css.map"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "assets/css/inPDP#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "doxxzs6o3b",
+      "Integrity": "vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\css\\inPDP.css"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css.map",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "assets/css/inPDP.css#[.{fingerprint}]?.map",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ytkzst8lei",
+      "Integrity": "NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\css\\inPDP.css.map"
     },
     {
       "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\kaiadmin.css",
@@ -13034,6 +13076,170 @@
         {
           "Name": "integrity",
           "Value": "sha256-S9QW4C68zbwACom94AZZ6iHGPVp14A5leaUKYVrKfpA="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/inPDP.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 07 Jun 2025 10:06:03 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/inPDP.css.map",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/inPDP.css.ytkzst8lei.map",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ytkzst8lei"
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/inPDP.css.map"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/inPDP.doxxzs6o3b.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\inPDP.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 07 Jun 2025 10:06:03 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "doxxzs6o3b"
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/inPDP.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-vXtCHHwdlF91MfXtDcfseZ3PJKl6Qx/04txntmhqMqQ="
         }
       ]
     },
