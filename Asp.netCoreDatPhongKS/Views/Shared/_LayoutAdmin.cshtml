@@ -93,7 +93,7 @@
                         </li>
                         <li class="nav-item">
                             @{
-                                var hasManageDatPhong = quyen.Contains("ManageDatPhong") || quyen.Contains("BookRoom") || quyen.Contains("CreateBooking");
+                                var hasManageDatPhong = quyen.Contains("ManagePhieuDatPhong") || quyen.Contains("BookRoom") || quyen.Contains("CreateBooking");
                             }
                             <a class="nav-link" href="@(hasManageDatPhong ? Url.Action("Index", "PhieuDatPhong") : "#")" onclick="@(!hasManageDatPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
                                 <span class="menu-title">Quản lý phiếu đặt phòng</span>

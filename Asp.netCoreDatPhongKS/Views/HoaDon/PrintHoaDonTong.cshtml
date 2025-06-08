@@ -5,6 +5,7 @@
     decimal tongTienPhong = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.TongTien ?? 0);
     decimal tongTienCoc = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienCoc ?? 0);
     decimal tongTienDaThanhToan = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienDaThanhToan ?? 0);
+    decimal tongCong = tongTienDichVu + tongTienPhong;
     Layout = null;
 }
 
@@ -135,7 +136,7 @@
         }
 
         <div class="invoice-total">
-            <p><strong>Tổng cộng:</strong> @Model.TongTien?.ToString("N0") VNĐ</p>
+            <p><strong>Tổng cộng:</strong> @tongCong.ToString("N0") VNĐ</p>
             @if (Model.SoTienConNo > 0)
             {
                 <p><strong>Số tiền còn nợ:</strong> @Model.SoTienConNo?.ToString("N0") VNĐ</p>
