@@ -5,6 +5,9 @@
     var soNgay = ((Model?.NgayTra - Model?.NgayNhan)?.Days ?? 1);
     soNgay = soNgay < 1 ? 1 : soNgay;
     var tongTien = Model?.TongTien ?? 0;
+    var tienCoc = Model?.SoTienCoc ?? 0;
+    var tienDaThanhToan = Model?.SoTienDaThanhToan ?? 0;
+    var thanhTien = tongTien - (tienCoc + tienDaThanhToan);
     var khuyenMai = Model?.KhuyenMai?.PhanTramGiam ?? 0;
 }
 
@@ -14,7 +17,6 @@
     <meta charset="utf-8" />
     <title>In phiếu đặt phòng - @Model?.MaPhieu</title>
     <link rel="stylesheet" href="~/assets/css/inPDP.css" />
-    
 </head>
 <body>
     <h2>PHIẾU ĐẶT PHÒNG</h2>
@@ -22,16 +24,20 @@
     <p class="text-center">Mã phiếu: @Model?.MaPhieu</p>
 
     <h5>Thông tin khách hàng</h5>
-    <p><strong>Họ tên:</strong> @(Model?.KhachHang?.HoTen ?? "Không xác định")</p>
+    <p><strong>Họ tên:</strong> @(Model?.KhachHang?.HoTen ?? "Khách vãng lai")</p>
     <p><strong>Số điện thoại:</strong> @(Model?.KhachHang?.SoDienThoai ?? "Không có")</p>
     <p><strong>CCCD:</strong> @(Model?.KhachHang?.Cccd ?? "Không có")</p>
     <h4>Thông tin đăng nhập</h4>
     <p><strong>Email:</strong> @(Model?.KhachHang?.Email ?? "Không có")</p>
-    <p><strong>Mật khẩu:</strong>1 (Dùng cho khách hàng mới, XIN VUI LÒNG ĐĂNG NHẬP ĐỂ ĐỔI MẬT KHẨU)</p>
+    <p><strong>Mật khẩu:</strong> 1 (Dùng cho khách hàng mới, XIN VUI LÒNG ĐĂNG NHẬP ĐỂ ĐỔI MẬT KHẨU)</p>
     <h5>Chi tiết đặt phòng</h5>
     <p><strong>Ngày nhận:</strong> @Model?.NgayNhan?.ToString("dd/MM/yyyy")</p>
     <p><strong>Ngày trả:</strong> @Model?.NgayTra?.ToString("dd/MM/yyyy")</p>
     <p><strong>Số ngày:</strong> @soNgay</p>
+    @if (khuyenMai > 0)
+    {
+        <p><strong>Khuyến mãi:</strong> Giảm @khuyenMai%</p>
+    }
 
     <table>
         <thead>
@@ -39,7 +45,10 @@
                 <th>Phòng</th>
                 <th>Loại phòng</th>
                 <th>Đơn giá (1 đêm)</th>
-                <th>Tổng</th>
+                <th>Tổng tiền</th>
+                <th>Tiền cọc</th>
+                <th>Đã thanh toán</th>
+                <th>Thành tiền</th>
             </tr>
         </thead>
         <tbody>
@@ -50,11 +59,15 @@
                     <td>@(chiTiet.Phong?.SoPhong ?? "Không xác định")</td>
                     <td>@(chiTiet.Phong?.LoaiPhong?.TenLoai ?? "Không xác định")</td>
                     <td>@donGia.ToString("N0") VNĐ</td>
-                    <td>@(donGia * soNgay).ToString("N0") VNĐ</td>
+                    <td>@tongTien.ToString("N0") VNĐ</td>
+                    <td>@tienCoc.ToString("N0") VNĐ</td>
+                    <td>@tienDaThanhToan.ToString("N0") VNĐ</td>
+                    <td>@thanhTien.ToString("N0") VNĐ</td>
                 </tr>
             }
         </tbody>
     </table>
+
     <div class="text-center no-print">
         <button type="button" onclick="window.print()">In phiếu</button>
         <a href="@Url.Action("Index")">Quay lại</a>

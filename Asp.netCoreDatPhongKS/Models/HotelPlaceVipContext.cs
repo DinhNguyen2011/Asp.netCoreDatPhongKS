@@ -17,7 +17,6 @@ namespace Asp.netCoreDatPhongKS.Models
         }
 
         public virtual DbSet<ChiTietDonHangDichVu> ChiTietDonHangDichVus { get; set; } = null!;
-        public virtual DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; } = null!;
         public virtual DbSet<ChiTietPhieuPhong> ChiTietPhieuPhongs { get; set; } = null!;
         public virtual DbSet<DanhGium> DanhGia { get; set; } = null!;
         public virtual DbSet<DichVu> DichVus { get; set; } = null!;
@@ -73,37 +72,6 @@ namespace Asp.netCoreDatPhongKS.Models
                     .HasForeignKey(d => d.MaDonHangDv)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__ChiTietDo__MDHDV__3DE82FB7");
-            });
-
-            modelBuilder.Entity<ChiTietHoaDon>(entity =>
-            {
-                entity.ToTable("ChiTietHoaDon");
-
-                entity.Property(e => e.Id).HasColumnName("ID");
-
-                entity.Property(e => e.DonGia).HasColumnType("decimal(18, 2)");
-
-                entity.Property(e => e.MoTa).HasMaxLength(255);
-
-                entity.Property(e => e.PhongId).HasColumnName("PhongID");
-
-                entity.Property(e => e.ThanhTien).HasColumnType("decimal(18, 2)");
-
-                entity.HasOne(d => d.DichVu)
-                    .WithMany(p => p.ChiTietHoaDons)
-                    .HasForeignKey(d => d.DichVuId)
-                    .HasConstraintName("FK__ChiTietHo__DichV__3B0BC30C");
-
-                entity.HasOne(d => d.MaHoaDonNavigation)
-                    .WithMany(p => p.ChiTietHoaDons)
-                    .HasForeignKey(d => d.MaHoaDon)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ChiTietHo__MaHoa__39237A9A");
-
-                entity.HasOne(d => d.Phong)
-                    .WithMany(p => p.ChiTietHoaDons)
-                    .HasForeignKey(d => d.PhongId)
-                    .HasConstraintName("FK__ChiTietHo__Phong__3A179ED3");
             });
 
             modelBuilder.Entity<ChiTietPhieuPhong>(entity =>

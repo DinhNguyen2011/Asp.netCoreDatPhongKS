@@ -7,7 +7,6 @@ namespace Asp.netCoreDatPhongKS.Models
     {
         public Phong()
         {
-            ChiTietHoaDons = new HashSet<ChiTietHoaDon>();
             ChiTietPhieuPhongs = new HashSet<ChiTietPhieuPhong>();
             DanhGia = new HashSet<DanhGium>();
         }
@@ -26,7 +25,6 @@ namespace Asp.netCoreDatPhongKS.Models
         public string? HinhAnh3 { get; set; }
 
         public virtual LoaiPhong? LoaiPhong { get; set; }
-        public virtual ICollection<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public virtual ICollection<ChiTietPhieuPhong> ChiTietPhieuPhongs { get; set; }
         public virtual ICollection<DanhGium> DanhGia { get; set; }
     }

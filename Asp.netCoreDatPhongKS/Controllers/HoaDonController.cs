@@ -39,7 +39,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                   .ThenInclude(p => p.LoaiPhong)
                 .AsQueryable();
 
-            // Lấy danh sách hóa đơn dịch vụ vãng lai
+           
             var hoaDonDichVusQuery = _context.HoaDonDichVus
                 .Include(h => h.MaDonHangDvNavigation)
                 .ThenInclude(d => d.KhachHang)
@@ -140,6 +140,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             if (string.IsNullOrEmpty(userName))
             {
                 ModelState.AddModelError("", "Vui lòng đăng nhập để tạo hóa đơn.");
+                ViewBag.KhachHangs = await _context.KhachHangs.ToListAsync();
                 return View();
             }
 
@@ -157,81 +158,100 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View();
             }
 
-            // Tạo hóa đơn tổng
-            var hoaDon = new HoaDon
+            try
             {
-                KhachHangId = khachHangId,
-                NgayLap = DateTime.Now,
-                NguoiLapDh = $"Tên: {userName}",
-                TongTienPhong = 0,
-                TongTienDichVu = 0,
-                TongTien = 0,
-                HinhThucThanhToan = hinhThucThanhToan,
-                TrangThai = "Đã thanh toán",
-                IsKhachVangLai = false,
-                GhiChu = null,
-                SoTienConNo = 0
-            };
-
-            _context.HoaDons.Add(hoaDon);
-            await _context.SaveChangesAsync();
-
-            // Gộp hóa đơn dịch vụ
-            if (hoaDonDichVuIds.Any())
-            {
-                var hoaDonDichVus = await _context.HoaDonDichVus
-                    .Include(h => h.MaDonHangDvNavigation)
-                    .ThenInclude(d => d.ChiTietDonHangDichVus)
-                    .Where(h => hoaDonDichVuIds.Contains(h.Id) && h.TrangThaiThanhToan == "Chưa thanh toán")
-                    .ToListAsync();
-
-                foreach (var hdv in hoaDonDichVus)
+                using (var transaction = await _context.Database.BeginTransactionAsync())
                 {
-                    hdv.MaHoaDonTong = hoaDon.MaHoaDon;
-                    hdv.TrangThaiThanhToan = "Đã thanh toán";
-                    hdv.NgayThanhToan = DateTime.Now;
-                    hdv.HinhThucThanhToan = hinhThucThanhToan;
-                    hdv.MaDonHangDvNavigation.TrangThai = "Đã thanh toán";
-
-                    var tongTienDichVu = hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0);
-                    hoaDon.TongTienDichVu += tongTienDichVu;
-                }
-            }
-
-            // Gộp phiếu đặt phòng
-            if (phieuDatPhongIds.Any())
-            {
-                var phieuDatPhongs = await _context.PhieuDatPhongs
-                    .Include(p => p.ChiTietPhieuPhongs)
-                    .ThenInclude(c => c.Phong)
-                    .Where(p => phieuDatPhongIds.Contains(p.PhieuDatPhongId) && p.TinhTrangSuDung == "Đã check-in")
-                    .ToListAsync();
-
-                foreach (var phieu in phieuDatPhongs)
-                {
-                    var chiTietPhieu = phieu.ChiTietPhieuPhongs.FirstOrDefault();
-                    if (chiTietPhieu != null)
+                    // Tạo hóa đơn tổng
+                    var hoaDon = new HoaDon
                     {
-                        hoaDon.TongTienPhong += chiTietPhieu.DonGia ?? 0;
-                        var hoaDonPdp = new HoaDonPdp
-                        {
-                            MaHoaDon = hoaDon.MaHoaDon,
-                            PhieuDatPhongId = phieu.PhieuDatPhongId,
-                            ThanhTien = phieu.TongTien ?? 0,
-                            TrangThai = "Đã thanh toán"
+                        KhachHangId = khachHangId,
+                        NgayLap = DateTime.Now,
+                        NguoiLapDh = $"Tên: {userName}",
+                        TongTienPhong = 0,
+                        TongTienDichVu = 0,
+                        TongTien = 0,
+                        HinhThucThanhToan = hinhThucThanhToan,
+                        TrangThai = "Đã thanh toán",
+                        IsKhachVangLai = false,
+                        GhiChu = null,
+                        SoTienConNo = 0
+                    };
 
-                        };
-                        _context.HoaDonPdps.Add(hoaDonPdp);
-                        phieu.TinhTrangSuDung = "Đã check-out";
-                        phieu.TrangThai = "Đã thanh toán";
+                    _context.HoaDons.Add(hoaDon);
+                    await _context.SaveChangesAsync();
+
+                    // Gộp hóa đơn dịch vụ
+                    if (hoaDonDichVuIds.Any())
+                    {
+                        var hoaDonDichVus = await _context.HoaDonDichVus
+                            .Include(h => h.MaDonHangDvNavigation)
+                            .ThenInclude(d => d.ChiTietDonHangDichVus)
+                            .Where(h => hoaDonDichVuIds.Contains(h.Id) && h.TrangThaiThanhToan == "Chưa thanh toán")
+                            .ToListAsync();
+
+                        foreach (var hdv in hoaDonDichVus)
+                        {
+                            hdv.MaHoaDonTong = hoaDon.MaHoaDon;
+                            hdv.TrangThaiThanhToan = "Đã thanh toán";
+                            hdv.NgayThanhToan = DateTime.Now;
+                            hdv.HinhThucThanhToan = hinhThucThanhToan;
+                            hdv.MaDonHangDvNavigation.TrangThai = "Đã thanh toán";
+
+                            var tongTienDichVu = hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0);
+                            hoaDon.TongTienDichVu += tongTienDichVu;
+                        }
                     }
+
+                    // Gộp phiếu đặt phòng
+                    if (phieuDatPhongIds.Any())
+                    {
+                        var phieuDatPhongs = await _context.PhieuDatPhongs
+                            .Include(p => p.ChiTietPhieuPhongs)
+                            .ThenInclude(c => c.Phong)
+                            .Where(p => phieuDatPhongIds.Contains(p.PhieuDatPhongId) && p.TinhTrangSuDung == "Đã check-in")
+                            .ToListAsync();
+
+                        foreach (var phieu in phieuDatPhongs)
+                        {
+                            var chiTietPhieu = phieu.ChiTietPhieuPhongs.FirstOrDefault();
+                            if (chiTietPhieu != null)
+                            {
+                                // Tính ThanhTien = TongTien - (SoTienCoc + SoTienDaThanhToan)
+                                decimal thanhTien = (phieu.TongTien ?? 0) - ((phieu.SoTienCoc ?? 0) + (phieu.SoTienDaThanhToan ?? 0));
+                                hoaDon.TongTienPhong += thanhTien;
+
+                                var hoaDonPdp = new HoaDonPdp
+                                {
+                                    MaHoaDon = hoaDon.MaHoaDon,
+                                    PhieuDatPhongId = phieu.PhieuDatPhongId,
+                                    ThanhTien = thanhTien,
+                                    TrangThai = "Đã thanh toán"
+                                };
+                                _context.HoaDonPdps.Add(hoaDonPdp);
+
+                                phieu.TinhTrangSuDung = "Đã check-out";
+                                phieu.TrangThai = "Đã thanh toán";
+                                chiTietPhieu.Phong.TinhTrang = "Trống";
+                            }
+                        }
+                    }
+
+                    // Tính tổng tiền hóa đơn
+                    hoaDon.TongTien = hoaDon.TongTienPhong + hoaDon.TongTienDichVu;
+
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+
+                    return RedirectToAction("PrintHoaDonTong", new { id = hoaDon.MaHoaDon });
                 }
             }
-
-            hoaDon.TongTien = hoaDon.TongTienPhong + hoaDon.TongTienDichVu;
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction("PrintHoaDonTong", new { id = hoaDon.MaHoaDon });
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Có lỗi xảy ra: {ex.Message}");
+                ViewBag.KhachHangs = await _context.KhachHangs.ToListAsync();
+                return View();
+            }
         }
 
         // Action PrintHoaDonTong: In hóa đơn tổng
