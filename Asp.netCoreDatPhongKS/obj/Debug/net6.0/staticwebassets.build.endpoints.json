@@ -331,6 +331,170 @@
       ]
     },
     {
+      "Route": "assets/css/dichvu.cfurcpv703.css",
+      "AssetFile": "assets/css/dichvu.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1084"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yBLUieZP/5gH1+M08ZlZ1epSxQtn9p+lf6t5vrQMWVs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Jun 2025 01:26:03 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "cfurcpv703"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-yBLUieZP/5gH1+M08ZlZ1epSxQtn9p+lf6t5vrQMWVs="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/dichvu.css"
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/dichvu.css",
+      "AssetFile": "assets/css/dichvu.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1084"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"yBLUieZP/5gH1+M08ZlZ1epSxQtn9p+lf6t5vrQMWVs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 09 Jun 2025 01:26:03 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-yBLUieZP/5gH1+M08ZlZ1epSxQtn9p+lf6t5vrQMWVs="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/dichvu.css.map",
+      "AssetFile": "assets/css/dichvu.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        }
+      ]
+    },
+    {
+      "Route": "assets/css/dichvu.css.ytkzst8lei.map",
+      "AssetFile": "assets/css/dichvu.css.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5559"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 31 May 2025 01:14:02 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ytkzst8lei"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NkTVKNMTdpM0idIKzgiU55NESePUc4iaC8MtBW8PMiU="
+        },
+        {
+          "Name": "label",
+          "Value": "assets/css/dichvu.css.map"
+        }
+      ]
+    },
+    {
       "Route": "assets/css/fonts.css",
       "AssetFile": "assets/css/fonts.css",
       "Selectors": [],

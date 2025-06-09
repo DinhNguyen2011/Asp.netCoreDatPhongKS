@@ -17,6 +17,14 @@
       "PackagePath": "staticwebassets\\assets\\css\\demo.css.map"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\dichvu.css",
+      "PackagePath": "staticwebassets\\assets\\css\\dichvu.css"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\dichvu.css.map",
+      "PackagePath": "staticwebassets\\assets\\css\\dichvu.css.map"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\assets\\css\\fonts.css",
       "PackagePath": "staticwebassets\\assets\\css\\fonts.css"
     },

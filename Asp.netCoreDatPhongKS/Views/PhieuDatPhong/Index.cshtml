@@ -41,7 +41,7 @@
                     <td>@item.TinhTrangSuDung</td>
                     <td>
                         <button class="btn btn-info btn-sm" onclick="showPhieuDatPhongDetails(@item.PhieuDatPhongId)">Chi tiết</button>
-                        @if (!(item.TinhTrangSuDung == "Đã check-out" || item.TrangThai == "Đã thanh toán"))
+                        @if (!(item.TinhTrangSuDung == "Đã check-out"))
                         {
                             <a asp-action="Edit" asp-route-id="@item.PhieuDatPhongId" class="btn btn-warning btn-sm">Sửa</a>
                         }  <a asp-action="Delete" asp-route-id="@item.PhieuDatPhongId" class="btn btn-danger btn-sm">Xóa</a>

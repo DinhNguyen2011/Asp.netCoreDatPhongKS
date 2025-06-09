@@ -54,11 +54,12 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .ToList();
 
             var bookedRooms = _context.PhieuDatPhongs
-                .Include(p => p.ChiTietPhieuPhongs)
-                .ThenInclude(c => c.Phong)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null)
-                .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
-                .ToList();
+            .Include(p => p.ChiTietPhieuPhongs)
+            .ThenInclude(c => c.Phong)
+             .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TinhTrangSuDung != "Đã check-out")
+             .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
+              .ToList();
+
 
             var availableRooms = new List<PhongViewModel>();
             foreach (var room in allRooms)
@@ -147,8 +148,10 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
 
             var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
-                c.PhongId == model.PhongId &&
-                ((model.Checkin < c.PhieuDatPhong.NgayTra) && (model.Checkout > c.PhieuDatPhong.NgayNhan)));
+     c.PhongId == model.PhongId &&
+     c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
+     ((model.Checkin < c.PhieuDatPhong.NgayTra) && (model.Checkout > c.PhieuDatPhong.NgayNhan)));
+
 
             if (isRoomBooked)
             {
@@ -238,8 +241,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
 
             var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
-                c.PhongId == pendingBooking.PhongId &&
-                ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra) && (pendingBooking.Checkout > c.PhieuDatPhong.NgayNhan)));
+             c.PhongId == pendingBooking.PhongId &&
+             c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
+            ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra) && (pendingBooking.Checkout > c.PhieuDatPhong.NgayNhan)));
 
             if (isRoomBooked)
             {

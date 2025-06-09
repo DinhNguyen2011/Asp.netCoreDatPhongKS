@@ -76,7 +76,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành")
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung !="Đã check-out")
                 .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
                 .ToList();
 
@@ -253,7 +253,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành")
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung != "Đã check-out")
                 .SelectMany(p => p.ChiTietPhieuPhongs.Where(c => c.PhongId == phongId)
                     .Select(c => new { p.NgayNhan, p.NgayTra }))
                 .ToList();

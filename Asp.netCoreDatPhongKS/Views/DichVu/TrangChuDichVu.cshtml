@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.DichVu>
+
+@{
+    ViewData["Title"] = "Danh Sách Dịch Vụ";
+}
+
+<h1>Danh Sách Dịch Vụ</h1>
+
+<!-- Form Bộ lọc -->
+<form asp-action="TrangChuDichVu" method="get" class="mb-4">
+    <div class="form-group">
+        <label for="loaiDichVu">Lọc theo loại dịch vụ:</label>
+        <select name="loaiDichVu" class="form-control" onchange="this.form.submit()">
+            @foreach (var item in ViewBag.LoaiDichVu)
+            {
+                <option value="@item.Value" selected="@(item.Selected ? "selected" : null)">@item.Text</option>
+            }
+        </select>
+    </div>
+</form>
+
+<!-- Danh sách Dịch vụ -->
+<div class="row">
+    @if (Model.Any())
+    {
+        @foreach (var dichVu in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(dichVu.HinhAnh))
+                    {
+                        <img src="@dichVu.HinhAnh" class="card-img-top" alt="@dichVu.TenDichVu" style="height: 200px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <img src="/images/default-service.jpg" class="card-img-top" alt="Hình mặc định" style="height: 200px; object-fit: cover;" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@dichVu.TenDichVu</h5>
+                        <p class="card-text">@dichVu.MoTa</p>
+                        <p class="card-text"><strong>Giá:</strong> @dichVu.DonGia.ToString("C", new System.Globalization.CultureInfo("vi-VN"))</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Không có dịch vụ nào phù hợp với bộ lọc.</p>
+    }
+</div>
+
+
+    <script>
+        // Tự động submit form khi thay đổi dropdown
+        document.querySelector('select[name="loaiDichVu"]').addEventListener('change', function() {
+            this.form.submit();
+        });
+    </script>

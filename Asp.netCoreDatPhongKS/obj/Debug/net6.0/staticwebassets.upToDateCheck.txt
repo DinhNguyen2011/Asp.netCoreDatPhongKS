@@ -1,6 +1,8 @@
 wwwroot\assets\css\bootstrap.min.css
 wwwroot\assets\css\demo.css
 wwwroot\assets\css\demo.css.map
+wwwroot\assets\css\dichvu.css
+wwwroot\assets\css\dichvu.css.map
 wwwroot\assets\css\fonts.css
 wwwroot\assets\css\fonts.min.css
 wwwroot\assets\css\hoadondichvu.css

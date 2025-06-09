@@ -1,11 +1,9 @@
 ﻿using Asp.netCoreDatPhongKS.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
@@ -18,6 +16,34 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
         }
 
+        // GET: DichVu/TrangChuDichVu
+        public async Task<IActionResult> TrangChuDichVu(string loaiDichVu)
+        {
+            // Tạo danh sách các loại dịch vụ cho dropdown
+            var serviceTypes = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "", Text = "Tất cả" },
+                new SelectListItem { Value = "Đồ ăn", Text = "Đồ ăn" },
+                new SelectListItem { Value = "Thể thao", Text = "Thể thao" },
+                new SelectListItem { Value = "Hậu cần", Text = "Hậu cần" }
+            };
+            ViewBag.LoaiDichVu = new SelectList(serviceTypes, "Value", "Text", loaiDichVu);
+
+            // Truy vấn dịch vụ với bộ lọc dựa trên mô tả
+            var dichVus = _context.DichVus.AsQueryable();
+            if (!string.IsNullOrEmpty(loaiDichVu))
+            {
+                // Lọc các dịch vụ có MoTa bắt đầu bằng loaiDichVu
+                dichVus = dichVus.Where(d => d.MoTa != null && d.MoTa.StartsWith(loaiDichVu));
+            }
+
+            // Lấy các dịch vụ đang hoạt động
+            var result = await dichVus
+                .Where(d => d.TrangThai == true)
+                .ToListAsync();
+
+            return View(result);
+        }
         // Action Index: Hiển thị danh sách dịch vụ với checkbox
         public async Task<IActionResult> Index(string searchString, string trangThai)
         {
@@ -44,7 +70,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             return View(await dichVus.ToListAsync());
         }
 
-        // Action CreateDonHangDichVu: Tạo đơn hàng dịch vụ và hóa đơn dịch vụ
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateDonHangDichVu(int? khachHangId, bool isKhachVangLai, int[] dichVuIds, int[] soLuongs, bool thanhToanNgay, string hinhThucThanhToan)
