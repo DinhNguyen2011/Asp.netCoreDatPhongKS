@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.PhieuDatPhong>
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Phiếu đặt phòng ID</th>
+            <th>Mã phiếu</th>
+            
+            <th>Khách hàng</th>
+            <th>SĐT</th>
+            <th>Ngày nhận</th>
+            <th>Ngày trả</th>
+            <th>Tổng tiền</th>
+            <th>Tiền cọc</th>
+            <th>Số tiền đã thanh toán</th>
+            <th>Trạng thái</th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.PhieuDatPhongId</td>
+                <td>@item.MaPhieu</td>
+              
+                <td>@item.KhachHang.HoTen</td>
+                <td>@item.KhachHang.SoDienThoai</td>
+                <td>@item.NgayNhan?.ToString("dd/MM/yyyy")</td>
+                <td>@item.NgayTra?.ToString("dd/MM/yyyy")</td>
+                <td>@item.TongTien?.ToString("N0") VNĐ</td>
+                <td>@item.SoTienCoc?.ToString("N0") VNĐ</td>
+                <td>@item.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
+                <td>@item.TrangThai</td>
+              
+                <td>               
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

@@ -1,0 +1,52 @@
+﻿@model Asp.netCoreDatPhongKS.Models.LoaiPhong
+
+@{
+    ViewData["Title"] = "Sửa thông tin loại phòng";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Sửa thông tin loại phòng</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="LoaiPhongId" />
+    <div class="form-group">
+        <label asp-for="TenLoai" class="control-label"></label>
+        <input asp-for="TenLoai" class="form-control" />
+        <span asp-validation-for="TenLoai" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MoTa" class="control-label"></label>
+        <textarea asp-for="MoTa" class="form-control"></textarea>
+        <span asp-validation-for="MoTa" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GiaCoBan" class="control-label"></label>
+        <input asp-for="GiaCoBan" class="form-control" type="number" step="0.01" />
+        <span asp-validation-for="GiaCoBan" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SoluongNguoi" class="control-label"></label>
+        <input asp-for="SoluongNguoi" class="form-control" type="number" />
+        <span asp-validation-for="SoluongNguoi" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="anhDemoFile" class="control-label">Ảnh demo</label>
+        @if (!string.IsNullOrEmpty(Model.AnhDemo) && Model.AnhDemo != "/images/loaiphong/default.png")
+        {
+            <div>
+                <img src="@Url.Content(Model.AnhDemo)" alt="Ảnh demo hiện tại" style="max-width: 100px;" />
+            </div>
+        }
+        <input type="file" name="anhDemoFile" class="form-control-file" accept="image/*" />
+        <span class="text-danger">@ViewData.ModelState["anhDemoFile"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NgayTao" class="control-label"></label>
+        <input asp-for="NgayTao" class="form-control" readonly value="@Model.NgayTao?.ToString("dd/MM/yyyy")" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Lưu" class="btn btn-primary" />
+        <a asp-action="IndexChoAdmin" class="btn btn-secondary">Quay lại</a>
+    </div>
+</form>

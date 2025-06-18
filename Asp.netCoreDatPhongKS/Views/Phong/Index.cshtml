@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.Phong>
+
+@{
+    ViewData["Title"] = "Quản lý phòng";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Quản lý phòng</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm phòng mới</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Số phòng</th>
+                <th>Loại phòng</th>
+                <th class="d-none d-md-table-cell">Mô tả</th>
+                <th>Tình trạng</th>
+                <th>Giá/đêm</th>
+                <th>Số khách</th>
+                <th>Hình ảnh</th>
+                <th class="d-none d-lg-table-cell">Hình ảnh 1</th>
+                <th class="d-none d-lg-table-cell">Hình ảnh 2</th>
+                <th class="d-none d-lg-table-cell">Hình ảnh 3</th>
+                <th class="d-none d-md-table-cell">Ngày tạo</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.SoPhong</td>
+                    <td>@item.LoaiPhong?.TenLoai</td>
+                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.MoTa">@item.MoTa</td>
+                    <td>@item.TinhTrang</td>
+                    <td>@item.GiaPhong1Dem?.ToString("C")</td>
+                    <td>@item.SoLuongKhach</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.HinhAnh) && item.HinhAnh != "/images/phong/default.png")
+                        {
+                            <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh phòng" style="max-width: 50px;" />
+                        }
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @if (!string.IsNullOrEmpty(item.HinhAnh1) && item.HinhAnh1 != "/images/phong/default.png")
+                        {
+                            <img src="@Url.Content(item.HinhAnh1)" alt="Hình ảnh 1" style="max-width: 50px;" />
+                        }
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @if (!string.IsNullOrEmpty(item.HinhAnh2) && item.HinhAnh2 != "/images/phong/default.png")
+                        {
+                            <img src="@Url.Content(item.HinhAnh2)" alt="Hình ảnh 2" style="max-width: 50px;" />
+                        }
+                    </td>
+                    <td class="d-none d-lg-table-cell">
+                        @if (!string.IsNullOrEmpty(item.HinhAnh3) && item.HinhAnh3 != "/images/phong/default.png")
+                        {
+                            <img src="@Url.Content(item.HinhAnh3)" alt="Hình ảnh 3" style="max-width: 50px;" />
+                        }
+                    </td>
+                    <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table-sm th, .table-sm td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

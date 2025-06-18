@@ -7,6 +7,7 @@
 <div class="container mt-4">
     <h2>Danh sách phiếu đặt phòng</h2>
     <a href="@Url.Action("Create", "PhieuDatPhong")" class="btn btn-primary mb-3">Tạo phiếu mới</a>
+    <a href="@Url.Action("hienThiphieuHuy", "PhieuDatPhong")" class="btn btn-danger btn-sm">Xem phiếu hủy</a>
     <table class="table">
         <thead>
             <tr>
@@ -46,6 +47,7 @@
                             <a asp-action="Edit" asp-route-id="@item.PhieuDatPhongId" class="btn btn-warning btn-sm">Sửa</a>
                         }  <a asp-action="Delete" asp-route-id="@item.PhieuDatPhongId" class="btn btn-danger btn-sm">Xóa</a>
                         <a asp-action="PrintPhieuDatPhong" asp-route-id="@item.PhieuDatPhongId" class="btn btn-success btn-sm" target="_blank">In</a>
+                        
                     </td>
                 </tr>
             }

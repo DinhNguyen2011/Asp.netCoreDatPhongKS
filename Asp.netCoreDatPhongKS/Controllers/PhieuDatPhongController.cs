@@ -20,7 +20,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
         }
 
-        // GET: Hiển thị danh sách phiếu đặt phòng
         public async Task<IActionResult> Index()
         {
             try
@@ -40,7 +39,17 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
         }
 
-        // GET: Hiển thị form tạo phiếu đặt phòng
+
+        public IActionResult hienThiphieuHuy()
+        {
+            var huypdp = _context.PhieuDatPhongs
+                          .Include(p => p.KhachHang)
+                   .Where(p => p.TrangThai == "Hủy")
+                   .ToList();
+            return View(huypdp);
+        }
+        
+
         [AuthorizePermission("ManagePhieuDatPhong")]
         public IActionResult Create()
         {

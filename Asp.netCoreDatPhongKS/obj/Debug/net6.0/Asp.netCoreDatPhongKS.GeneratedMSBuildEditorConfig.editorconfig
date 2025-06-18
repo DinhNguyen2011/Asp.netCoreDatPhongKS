@@ -88,8 +88,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaW1LaWVtUGhvbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/LoaiPhong/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9haVBob25nXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/LoaiPhong/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9haVBob25nXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/LoaiPhong/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9haVBob25nXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/LoaiPhong/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9haVBob25nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/LoaiPhong/IndexChoAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9haVBob25nXEluZGV4Q2hvQWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/PhanQuyen/CreateQuyen.cshtml]
@@ -128,12 +144,32 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhpZXVEYXRQaG9uZ1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/PhieuDatPhong/hienThiphieuHuy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhpZXVEYXRQaG9uZ1xoaWVuVGhpcGhpZXVIdXkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/PhieuDatPhong/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhpZXVEYXRQaG9uZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/PhieuDatPhong/PrintPhieuDatPhong.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhpZXVEYXRQaG9uZ1xQcmludFBoaWV1RGF0UGhvbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/Phong/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhvbmdcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/Phong/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhvbmdcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/Phong/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhvbmdcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/Phong/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGhvbmdcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/QuanLyTaiKhoan/Create.cshtml]
