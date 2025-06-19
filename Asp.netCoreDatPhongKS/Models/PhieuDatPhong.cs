@@ -23,6 +23,7 @@ namespace Asp.netCoreDatPhongKS.Models
         public decimal? SoTienCoc { get; set; }
         public string? TinhTrangSuDung { get; set; }
         public decimal? SoTienDaThanhToan { get; set; }
+        public string? MoMoTransactionId { get; set; }
 
         public virtual KhachHang? KhachHang { get; set; }
         public virtual KhuyenMai? KhuyenMai { get; set; }

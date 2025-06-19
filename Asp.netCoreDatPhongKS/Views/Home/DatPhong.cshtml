@@ -6,8 +6,7 @@
     decimal tongGia = (phong?.GiaPhong1Dem ?? 0) * Model.SoDem;
 }
 
-
-    <link rel="stylesheet" href="~/css/datphong.css" />
+<link rel="stylesheet" href="~/css/datphong.css" />
 
 <div class="datphong-container mt-4">
     <h3 class="datphongz-title">Thông tin đặt phòng</h3>
@@ -23,7 +22,7 @@
         </div>
     </div>
 
-    <form asp-action="DatPhong" method="post" onsubmit="return confirm('Bạn sẽ được chuyển đến cổng thanh toán VNPay. Xác nhận đặt phòng?');">
+    <form asp-action="DatPhong" method="post" onsubmit="return confirm('Bạn sẽ được chuyển đến cổng thanh toán ' + document.querySelector('[name=paymentMethod]').value + '. Xác nhận đặt phòng?');">
         <input type="hidden" asp-for="PhongId" />
         <input type="hidden" asp-for="Checkin" />
         <input type="hidden" asp-for="Checkout" />
@@ -56,28 +55,28 @@
 
         <div class="row mb-3">
             <div class="col-md-6">
-            <label asp-for="Cccd" class="form-label datphong-form__label">CCCD</label>
-            <input asp-for="Cccd" class="form-control datphong-form__input" required />
-            <span asp-validation-for="Cccd" class="text-danger"></span>
-        </div>
+                <label asp-for="Cccd" class="form-label datphong-form__label">CCCD</label>
+                <input asp-for="Cccd" class="form-control datphong-form__input" required />
+                <span asp-validation-for="Cccd" class="text-danger"></span>
+            </div>
             <div class="col-md-6">
-            <label asp-for="GhiChu" class="form-label datphong-form__label">Ghi Chú</label>
-            <input asp-for="GhiChu" class="form-control datphong-form__input"  />
-            <span asp-validation-for="GhiChu" class="text-danger"></span>
-        </div>
+                <label asp-for="GhiChu" class="form-label datphong-form__label">Ghi Chú</label>
+                <input asp-for="GhiChu" class="form-control datphong-form__input" />
+                <span asp-validation-for="GhiChu" class="text-danger"></span>
+            </div>
         </div>
         <div class="row mb-3">
             <div class="col-md-6">
-            <label>Chọn phương thức thanh toán</label>
-            <select name="paymentMethod" class="form-control">
-                <option value="VNPay">VNPay</option>               
-            </select>
-        </div>
+                <label>Chọn phương thức thanh toán</label>
+                <select name="paymentMethod" class="form-control">
+                    <option value="VNPay">VNPay</option>
+                    <option value="MoMo">MoMo</option>
+                </select>
+            </div>
             <div class="col-md-6">
-        </div>
+            </div>
         </div>
         <button type="submit" class="datphong-button-submit">Đặt phòng và Thanh toán</button>
-     
         <a href="@Url.Action("Index")" class="datphong-button-cancel">❌ Hủy</a>
     </form>
 </div>

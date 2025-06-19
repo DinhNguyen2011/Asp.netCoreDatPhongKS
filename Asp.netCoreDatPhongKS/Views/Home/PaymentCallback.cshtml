@@ -2,7 +2,6 @@
 
 @{
     ViewData["Title"] = "Kết quả thanh toán";
-   
 }
 
 <!DOCTYPE html>
@@ -42,10 +41,10 @@
             padding: 20px;
         }
 
-        .payment-success h4,
-        .payment-error h4 {
-            margin-top: 0;
-        }
+            .payment-success h4,
+            .payment-error h4 {
+                margin-top: 0;
+            }
 
         .payment-button {
             display: block;
@@ -59,9 +58,9 @@
             transition: background 0.3s ease;
         }
 
-        .payment-button:hover {
-            background-color: #0056b3;
-        }
+            .payment-button:hover {
+                background-color: #0056b3;
+            }
     </style>
 </head>
 <body>
@@ -72,19 +71,36 @@
         {
             <div class="payment-success">
                 <h4>✅ Thanh toán thành công!</h4>
+                <p><strong>Phương thức thanh toán:</strong> @Model.PaymentMethod</p>
                 <p><strong>Mã đơn hàng:</strong> @Model.OrderId</p>
                 <p><strong>Mã giao dịch:</strong> @Model.TransactionId</p>
+                <p><strong>Số tiền:</strong> @String.Format("{0:N0}", Model.Amount) VNĐ</p>
                 <p><strong>Mô tả:</strong> @Model.OrderDescription</p>
-                <p><strong>Mã phản hồi:</strong> @Model.VnPayResponseCode</p>
-                <p>@TempData["ThongBao"]</p>
+                @if (Model.PaymentMethod == "VNPay")
+                {
+                    <p><strong>Mã phản hồi:</strong> @Model.VnPayResponseCode</p>
+                }
+                else if (Model.PaymentMethod == "MoMo")
+                {
+                    <p><strong>Mã phản hồi:</strong> @Model.MoMoResponseCode</p>
+                }
+                <p><strong>Thông báo:</strong> @TempData["ThongBao"]</p>
             </div>
         }
         else
         {
             <div class="payment-error">
                 <h4>❌ Thanh toán thất bại!</h4>
-                <p><strong hidden>Mã phản hồi:</strong> @Model.VnPayResponseCode</p>
-                <p>@TempData["ThongBao"]</p>
+                <p><strong>Phương thức thanh toán:</strong> @Model.PaymentMethod</p>
+                @if (Model.PaymentMethod == "VNPay")
+                {
+                    <p hidden><strong>Mã phản hồi:</strong> @Model.VnPayResponseCode</p>
+                }
+                else if (Model.PaymentMethod == "MoMo")
+                {
+                    <p hidden><strong>Mã phản hồi:</strong> @Model.MoMoResponseCode</p>
+                }
+                <p><strong>Thông báo:</strong> @TempData["ThongBao"]</p>
             </div>
         }
 

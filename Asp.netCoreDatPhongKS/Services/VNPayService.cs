@@ -68,7 +68,7 @@ namespace Asp.netCoreDatPhongKS.Services
             var vnpSecureHash = collections["vnp_SecureHash"];
             var vnpHashSecret = _configuration["Vnpay:HashSecret"];
             var checkSignature = pay.ValidateSignature(vnpSecureHash, vnpHashSecret);
-
+            var vnpAmount = pay.GetResponseData("vnp_Amount"); 
             return new PaymentResponse
             {
                 Success = checkSignature && vnpResponseCode == "00",
@@ -77,7 +77,8 @@ namespace Asp.netCoreDatPhongKS.Services
                 OrderId = vnpOrderId.ToString(),
                 TransactionId = vnpTransactionId.ToString(),
                 Token = pay.GetResponseData("vnp_SecureHash"),
-                VnPayResponseCode = vnpResponseCode
+                VnPayResponseCode = vnpResponseCode,
+                Amount = decimal.TryParse(vnpAmount, out var amt) ? amt / 100 : 0, // Chia 100 để lấy giá trị thực
             };
         }
     }

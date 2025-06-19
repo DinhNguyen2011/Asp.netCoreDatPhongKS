@@ -6,6 +6,6 @@
         public decimal Amount { get; set; }
         public string OrderDescription { get; set; }
         public string Name { get; set; }
-        public int PhieuDatPhongId { get; set; } // Liên kết với phiếu đặt phòng
+        public int PhieuDatPhongId { get; set; }
     }
 }

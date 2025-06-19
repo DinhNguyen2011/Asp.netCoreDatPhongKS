@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Text.Json;
 using Asp.netCoreDatPhongKS.Models;
 using Asp.netCoreDatPhongKS.Models.Payment;
@@ -14,12 +13,14 @@ namespace Asp.netCoreDatPhongKS.Controllers
     {
         private readonly HotelPlaceVipContext _context;
         private readonly IVNPayService _vnPayService;
+        private readonly IMoMoService _moMoService;
         private readonly IEmailService _emailService;
 
-        public HomeController(HotelPlaceVipContext context, IVNPayService vnPayService, IEmailService emailService)
+        public HomeController(HotelPlaceVipContext context, IVNPayService vnPayService, IMoMoService moMoService, IEmailService emailService)
         {
             _context = context;
             _vnPayService = vnPayService;
+            _moMoService = moMoService;
             _emailService = emailService;
         }
 
@@ -36,7 +37,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [HttpPost]
         public IActionResult TimKiemPhong(DateTime? checkin, DateTime? checkout, int soKhach = 1)
         {
-            // Xử lý ngày nhận và ngày trả
             DateTime checkinDate = checkin ?? DateTime.Today;
             DateTime checkoutDate = checkout ?? DateTime.Today.AddDays(1);
 
@@ -47,19 +47,17 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View("TimKiemPhong", new List<PhongViewModel>());
             }
 
-            // Tìm kiếm phòng khả dụng
             var allRooms = _context.Phongs
                 .Include(p => p.LoaiPhong)
-                .Where(p => (p.SoLuongKhach ?? 0) >= soKhach) // Đủ sức chứa số khách
+                .Where(p => (p.SoLuongKhach ?? 0) >= soKhach)
                 .ToList();
 
             var bookedRooms = _context.PhieuDatPhongs
-            .Include(p => p.ChiTietPhieuPhongs)
-            .ThenInclude(c => c.Phong)
-             .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TinhTrangSuDung != "Đã check-out")
-             .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
-              .ToList();
-
+                .Include(p => p.ChiTietPhieuPhongs)
+                .ThenInclude(c => c.Phong)
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TinhTrangSuDung != "Đã check-out")
+                .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
+                .ToList();
 
             var availableRooms = new List<PhongViewModel>();
             foreach (var room in allRooms)
@@ -92,7 +90,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 }
             }
 
-            // Thông báo nếu không tìm thấy phòng
             if (!availableRooms.Any())
             {
                 TempData["ThongBao"] = "Không tìm thấy phòng khả dụng phù hợp với yêu cầu của bạn. Vui lòng thử lại với khoảng thời gian hoặc số khách khác!";
@@ -100,6 +97,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View("TimKiemPhong", availableRooms);
         }
+
         [HttpGet]
         public IActionResult DatPhong(int phongId, DateTime checkin, DateTime checkout)
         {
@@ -148,10 +146,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
 
             var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
-     c.PhongId == model.PhongId &&
-     c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
-     ((model.Checkin < c.PhieuDatPhong.NgayTra) && (model.Checkout > c.PhieuDatPhong.NgayNhan)));
-
+                c.PhongId == model.PhongId &&
+                c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
+                ((model.Checkin < c.PhieuDatPhong.NgayTra) && (model.Checkout > c.PhieuDatPhong.NgayNhan)));
 
             if (isRoomBooked)
             {
@@ -203,8 +200,17 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 PhieuDatPhongId = 0
             };
 
-            var paymentUrl = _vnPayService.CreatePaymentUrl(paymentModel, HttpContext);
-            return Redirect(paymentUrl);
+            var paymentMethod = Request.Form["paymentMethod"].ToString();
+            if (paymentMethod == "MoMo")
+            {
+                var paymentUrl = _moMoService.CreatePaymentUrl(paymentModel, HttpContext);
+                return Redirect(paymentUrl);
+            }
+            else
+            {
+                var paymentUrl = _vnPayService.CreatePaymentUrl(paymentModel, HttpContext);
+                return Redirect(paymentUrl);
+            }
         }
 
         [HttpGet]
@@ -216,7 +222,23 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 ViewData["Hoten"] = userName;
             }
             var response = _vnPayService.PaymentExecute(Request.Query);
+            return await ProcessPaymentCallback(response, "VNPay");
+        }
 
+        [HttpGet]
+        public async Task<IActionResult> MoMoPaymentCallback()
+        {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
+            var response = _moMoService.PaymentExecute(Request.Query);
+            return await ProcessPaymentCallback(response, "MoMo");
+        }
+
+        private async Task<IActionResult> ProcessPaymentCallback(PaymentResponse response, string paymentMethod)
+        {
             var pendingBookingJson = HttpContext.Session.GetString("PendingBooking");
             if (string.IsNullOrEmpty(pendingBookingJson))
             {
@@ -241,9 +263,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
 
             var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
-             c.PhongId == pendingBooking.PhongId &&
-             c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
-            ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra) && (pendingBooking.Checkout > c.PhieuDatPhong.NgayNhan)));
+                c.PhongId == pendingBooking.PhongId &&
+                c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
+                ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra) && (pendingBooking.Checkout > c.PhieuDatPhong.NgayNhan)));
 
             if (isRoomBooked)
             {
@@ -253,7 +275,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             if (response.Success)
             {
-                // Tạo PhieuDatPhong
                 var phieu = new PhieuDatPhong
                 {
                     MaPhieu = $"PD{DateTime.Now.Ticks}",
@@ -264,38 +285,35 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     TrangThai = "Đã thanh toán",
                     TinhTrangSuDung = "Chờ xử lý",
                     TongTien = pendingBooking.TongTien,
-                    VnpTransactionId = response.TransactionId,
+                    VnpTransactionId = paymentMethod == "VNPay" ? response.TransactionId : null,
+                    MoMoTransactionId = paymentMethod == "MoMo" ? response.TransactionId : null,
                     SoTienDaThanhToan = pendingBooking.TongTien
                 };
 
                 _context.PhieuDatPhongs.Add(phieu);
 
-                // Tạo ChiTietPhieuPhong
                 var chiTiet = new ChiTietPhieuPhong
                 {
                     PhongId = phong.PhongId,
                     DonGia = phong.GiaPhong1Dem
                 };
-                phieu.ChiTietPhieuPhongs.Add(chiTiet); // Sử dụng navigation property
+                phieu.ChiTietPhieuPhongs.Add(chiTiet);
 
-                // Tạo HoaDon
                 var hoaDon = new HoaDon
                 {
                     NgayLap = DateTime.Now,
                     KhachHangId = khach.KhachHangId,
                     NguoiLapDh = "WEBSITE là người lập HĐ",
                     TongTienPhong = pendingBooking.TongTien,
-                    TongTienDichVu = 0, // Chưa có dịch vụ
+                    TongTienDichVu = 0,
                     TongTien = pendingBooking.TongTien,
-                    HinhThucThanhToan = "VNPay",
+                    HinhThucThanhToan = paymentMethod,
                     TrangThai = "Đã thanh toán",
                     IsKhachVangLai = khach.HoTen == "Khách vãng lai",
                     GhiChu = "Hóa đơn phòng đặt qua website"
-
                 };
                 _context.HoaDons.Add(hoaDon);
 
-               
                 await _context.SaveChangesAsync();
 
                 var hoaDonPdp = new HoaDonPdp
@@ -307,11 +325,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 };
                 _context.HoaDonPdps.Add(hoaDonPdp);
 
-               
                 var taiKhoan = _context.TaiKhoans.FirstOrDefault(t => t.Email == khach.Email);
                 if (taiKhoan == null)
                 {
-              
                     taiKhoan = new TaiKhoan
                     {
                         Email = khach.Email,
@@ -323,41 +339,38 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     };
                     _context.TaiKhoans.Add(taiKhoan);
                 }
-                
 
-                _context.SaveChanges(); 
+                _context.SaveChanges();
 
-              
                 if (khach.TaiKhoanId == null)
                 {
                     khach.TaiKhoanId = taiKhoan.TaiKhoanId;
-                    _context.SaveChanges(); 
+                    _context.SaveChanges();
                 }
 
-                // Gửi email xác nhận
                 try
                 {
                     var emailBody = $@"
-            <h2>Xác nhận đặt phòng và tài khoản thành công</h2>
-            <p>Kính gửi {khach.HoTen},</p>
-            <p>Cảm ơn bạn đã đặt phòng tại Khách sạn Thiềm Định. Dưới đây là thông tin đặt phòng của bạn:</p>
-            <ul>
-                <li><strong>Mã phiếu:</strong> {phieu.MaPhieu}</li>
-                <li><strong>Phòng:</strong> {phong.SoPhong} ({phong.LoaiPhong?.TenLoai})</li>
-                <li><strong>Ngày nhận:</strong> {phieu.NgayNhan?.ToString("dd/MM/yyyy")}</li>
-                <li><strong>Ngày trả:</strong> {phieu.NgayTra?.ToString("dd/MM/yyyy")}</li>
-                <li><strong>Số đêm:</strong> {pendingBooking.SoDem}</li>
-                <li><strong>Tổng tiền:</strong> {phieu.TongTien?.ToString("N0")} VNĐ</li>
-                <li><strong>Mã giao dịch:</strong> {phieu.VnpTransactionId}</li>
-                <li><strong>Ghi chú:</strong> {pendingBooking.GhiChu ?? "Không có"}</li>
-            </ul>
-            <p><strong>Thông tin tài khoản:</strong></p>
-            <ul>
-                <li><strong>Email đăng nhập:</strong> {taiKhoan.Email}</li>
-                <li><strong>Mật khẩu mặc định:</strong> {taiKhoan.MatKhau} (Không áp dụng với tài khoản đã có rồi, vui lòng đổi mật khẩu sau khi đăng nhập lần đầu)</li>
-            </ul>
-            <p>Vui lòng liên hệ chúng tôi nếu có bất kỳ câu hỏi nào. Hotline: 0853461030</p>
-            <p>Trân trọng,<br>Khách sạn Thiềm Định</p>";
+                        <h2>Xác nhận đặt phòng và tài khoản thành công</h2>
+                        <p>Kính gửi {khach.HoTen},</p>
+                        <p>Cảm ơn bạn đã đặt phòng tại Khách sạn Thiềm Định. Dưới đây là thông tin đặt phòng của bạn:</p>
+                        <ul>
+                            <li><strong>Mã phiếu:</strong> {phieu.MaPhieu}</li>
+                            <li><strong>Phòng:</strong> {phong.SoPhong} ({phong.LoaiPhong?.TenLoai})</li>
+                            <li><strong>Ngày nhận:</strong> {phieu.NgayNhan?.ToString("dd/MM/yyyy")}</li>
+                            <li><strong>Ngày trả:</strong> {phieu.NgayTra?.ToString("dd/MM/yyyy")}</li>
+                            <li><strong>Số đêm:</strong> {pendingBooking.SoDem}</li>
+                            <li><strong>Tổng tiền:</strong> {phieu.TongTien?.ToString("N0")} VNĐ</li>
+                            <li><strong>Mã giao dịch:</strong> {(paymentMethod == "VNPay" ? phieu.VnpTransactionId : phieu.MoMoTransactionId)}</li>
+                            <li><strong>Ghi chú:</strong> {pendingBooking.GhiChu ?? "Không có"}</li>
+                        </ul>
+                        <p><strong>Thông tin tài khoản:</strong></p>
+                        <ul>
+                            <li><strong>Email đăng nhập:</strong> {taiKhoan.Email}</li>
+                            <li><strong>Mật khẩu mặc định:</strong> {taiKhoan.MatKhau} (Không áp dụng với tài khoản đã có rồi, vui lòng đổi mật khẩu sau khi đăng nhập lần đầu)</li>
+                        </ul>
+                        <p>Vui lòng liên hệ chúng tôi nếu có bất kỳ câu hỏi nào. Hotline: 0853461030</p>
+                        <p>Trân trọng,<br>Khách sạn Thiềm Định</p>";
 
                     await _emailService.SendEmailAsync(khach.Email, "Xác nhận đặt phòng và tài khoản - Khách sạn Thiềm Định", emailBody);
                 }
@@ -370,7 +383,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
             else
             {
-                TempData["ThongBao"] = $"Thanh toán thất bại! Mã lỗi: {response.VnPayResponseCode}";
+                TempData["ThongBao"] = $"Thanh toán thất bại! Mã lỗi: {(paymentMethod == "VNPay" ? response.VnPayResponseCode : response.MoMoResponseCode)}";
             }
 
             HttpContext.Session.Remove("PendingBooking");

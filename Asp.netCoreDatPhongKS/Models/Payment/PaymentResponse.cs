@@ -9,5 +9,7 @@
         public string TransactionId { get; set; }
         public string Token { get; set; }
         public string VnPayResponseCode { get; set; }
+        public decimal Amount { get; set; } // Thêm Amount
+        public string MoMoResponseCode { get; set; } // Thêm MoMoResponseCode
     }
 }
