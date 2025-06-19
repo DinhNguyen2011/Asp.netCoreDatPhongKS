@@ -8514,6 +8514,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\lgmain.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\loaiphong\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Asp.netCoreDatPhongKS</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Asp.netCoreDatPhongKS</BasePath>
+      <RelativePath>images/loaiphong/VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>nfflp3lp0m</Fingerprint>
+      <Integrity>nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\loaiphong\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\logomain.png'))">
       <SourceType>Package</SourceType>
       <SourceId>Asp.netCoreDatPhongKS</SourceId>
@@ -8639,6 +8657,78 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\mi-y-bolognese.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Asp.netCoreDatPhongKS</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Asp.netCoreDatPhongKS</BasePath>
+      <RelativePath>images/nhanvien/Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>bjkfhiqqoc</Fingerprint>
+      <Integrity>SZHf4Mzw6nmwQWQcGgY19Q1EwVyT7kkwinxUlBB4I8E=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Asp.netCoreDatPhongKS</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Asp.netCoreDatPhongKS</BasePath>
+      <RelativePath>images/nhanvien/Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>3erhden4bj</Fingerprint>
+      <Integrity>FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Asp.netCoreDatPhongKS</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Asp.netCoreDatPhongKS</BasePath>
+      <RelativePath>images/nhanvien/Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>p3jbncd064</Fingerprint>
+      <Integrity>i9PAXlUxo+7RV5t1EiW4mexqm2djGN9160LyH6c8sJo=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Asp.netCoreDatPhongKS</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Asp.netCoreDatPhongKS</BasePath>
+      <RelativePath>images/nhanvien/Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>3erhden4bj</Fingerprint>
+      <Integrity>FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nuoc-cam.jpg'))">
       <SourceType>Package</SourceType>

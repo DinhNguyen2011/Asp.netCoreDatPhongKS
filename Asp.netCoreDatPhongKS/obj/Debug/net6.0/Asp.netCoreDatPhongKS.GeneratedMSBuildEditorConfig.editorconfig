@@ -24,6 +24,22 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hpVGlldFBob25nXENoaVRpZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DanhGium/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFuaEdpdW1cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DanhGium/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFuaEdpdW1cRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DanhGium/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFuaEdpdW1cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DanhGium/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFuaEdpdW1cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/DichVu/CreateDonHangDichVu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGljaFZ1XENyZWF0ZURvbkhhbmdEaWNoVnUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -42,6 +58,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/GioiThieu/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR2lvaVRoaWV1XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDonDichVu/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uRGljaFZ1XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDonDichVu/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uRGljaFZ1XERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDonDichVu/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uRGljaFZ1XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDonDichVu/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9hRG9uRGljaFZ1XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/HoaDon/CreateHoaDonTong.cshtml]
@@ -88,6 +120,38 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaW1LaWVtUGhvbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhachHang/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hhY2hIYW5nXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhachHang/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hhY2hIYW5nXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhachHang/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hhY2hIYW5nXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhachHang/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2hhY2hIYW5nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhuyenMai/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2h1eWVuTWFpXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhuyenMai/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2h1eWVuTWFpXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhuyenMai/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2h1eWVuTWFpXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/KhuyenMai/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcS2h1eWVuTWFpXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/LoaiPhong/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9haVBob25nXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -106,6 +170,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/LoaiPhong/IndexChoAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9haVBob25nXEluZGV4Q2hvQWRtaW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/NhanVien/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmhhblZpZW5cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/NhanVien/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmhhblZpZW5cRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/NhanVien/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmhhblZpZW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/NhanVien/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmhhblZpZW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/PhanQuyen/CreateQuyen.cshtml]

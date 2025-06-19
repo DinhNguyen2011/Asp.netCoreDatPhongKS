@@ -1,0 +1,59 @@
+﻿@model Asp.netCoreDatPhongKS.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Sửa thông tin nhân viên";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Sửa thông tin nhân viên</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="NhanVienId" />
+    <input type="hidden" asp-for="TaiKhoanId" />
+    <div class="form-group">
+        <label asp-for="HoTen" class="control-label"></label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SoDienThoai" class="control-label"></label>
+        <input asp-for="SoDienThoai" class="form-control" />
+        <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DiaChi" class="control-label"></label>
+        <input asp-for="DiaChi" class="form-control" />
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Cccd" class="control-label"></label>
+        <input asp-for="Cccd" class="form-control" />
+        <span asp-validation-for="Cccd" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="hinhAnhFile" class="control-label">Hình ảnh</label>
+        @if (!string.IsNullOrEmpty(Model.HinhAnh) && Model.HinhAnh != "/images/nhanvien/default.png")
+        {
+            <div>
+                <img src="@Url.Content(Model.HinhAnh)" alt="Hình ảnh hiện tại" style="max-width: 100px;" />
+            </div>
+        }
+        <input type="file" name="hinhAnhFile" class="form-control-file" accept="image/*" />
+        <span class="text-danger">@ViewData.ModelState["hinhAnhFile"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NgayTao" class="control-label"></label>
+        <input asp-for="NgayTao" class="form-control" readonly value="@Model.NgayTao?.ToString("dd/MM/yyyy")" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Lưu" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
+</form>
+

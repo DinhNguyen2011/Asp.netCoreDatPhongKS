@@ -1893,6 +1893,10 @@
       "PackagePath": "staticwebassets\\images\\lgmain.png"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png",
+      "PackagePath": "staticwebassets\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\logomain.png",
       "PackagePath": "staticwebassets\\images\\logomain.png"
     },
@@ -1919,6 +1923,22 @@
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\mi-y-bolognese.jpg",
       "PackagePath": "staticwebassets\\images\\mi-y-bolognese.jpg"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png",
+      "PackagePath": "staticwebassets\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png",
+      "PackagePath": "staticwebassets\\images\\nhanvien\\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png",
+      "PackagePath": "staticwebassets\\images\\nhanvien\\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png",
+      "PackagePath": "staticwebassets\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png"
     },
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nuoc-cam.jpg",

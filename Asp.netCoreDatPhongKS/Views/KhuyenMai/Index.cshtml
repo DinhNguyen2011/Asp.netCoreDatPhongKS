@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.KhuyenMai>
+
+@{
+    ViewData["Title"] = "Quản lý khuyến mãi";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Quản lý khuyến mãi</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm khuyến mãi mới</a>
+</p>
+
+<form asp-action="Index" method="get" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <label for="searchString" class="mr-1">Tìm kiếm:</label>
+        <input type="text" name="searchString" id="searchString" class="form-control" value="@ViewBag.SearchString" placeholder="Mã KM, Mô tả" />
+    </div>
+    <div class="form-group mr-2">
+        <label for="trangThai" class="mr-1">Trạng thái:</label>
+        <select name="trangThai" id="trangThai" class="form-control">
+            <option value="">Tất cả</option>
+            <option value="true" selected="@(ViewBag.TrangThai == true)">Hoạt động</option>
+            <option value="false" selected="@(ViewBag.TrangThai == false)">Ngừng hoạt động</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Lọc</button>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Mã khuyến mãi</th>
+                <th>Mô tả</th>
+                <th class="d-none d-md-table-cell">Phần trăm giảm</th>
+                <th class="d-none d-md-table-cell">Ngày bắt đầu</th>
+                <th class="d-none d-md-table-cell">Ngày kết thúc</th>
+                <th class="d-none d-lg-table-cell">Ngày tạo</th>
+                <th>Trạng thái</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaKhuyenMai</td>
+                    <td class="text-truncate" style="max-width: 150px;" title="@item.MoTa">@item.MoTa</td>
+                    <td class="d-none d-md-table-cell">@item.PhanTramGiam%</td>
+                    <td class="d-none d-md-table-cell">@item.NgayBatDau?.ToString("dd/MM/yyyy")</td>
+                    <td class="d-none d-md-table-cell">@item.NgayKetThuc?.ToString("dd/MM/yyyy")</td>
+                    <td class="d-none d-lg-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
+                    <td>@(item.TrangThai == true ? "Hoạt động" : "Ngừng hoạt động")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.KhuyenMaiId" class="btn btn-warning btn-sm">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.KhuyenMaiId" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table-sm th, .table-sm td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

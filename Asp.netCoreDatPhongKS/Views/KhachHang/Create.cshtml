@@ -1,0 +1,46 @@
+﻿@model Asp.netCoreDatPhongKS.Models.KhachHang
+
+@{
+    ViewData["Title"] = "Thêm khách hàng mới";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Thêm khách hàng mới</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="HoTen" class="control-label"></label>
+        <input asp-for="HoTen" class="form-control" />
+        <span asp-validation-for="HoTen" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email" class="control-label"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SoDienThoai" class="control-label"></label>
+        <input asp-for="SoDienThoai" class="form-control" />
+        <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DiaChi" class="control-label"></label>
+        <input asp-for="DiaChi" class="form-control" />
+        <span asp-validation-for="DiaChi" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Cccd" class="control-label"></label>
+        <input asp-for="Cccd" class="form-control" />
+        <span asp-validation-for="Cccd" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GhiChu" class="control-label"></label>
+        <textarea asp-for="GhiChu" class="form-control"></textarea>
+        <span asp-validation-for="GhiChu" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Thêm" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
+</form>

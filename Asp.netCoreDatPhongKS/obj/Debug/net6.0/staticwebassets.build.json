@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7M8L/LCnztKtuRYVm9BsnrJdgNElUjZI+rYZsMRxxNQ=",
+  "Hash": "A3nbxEM6Pk813iBedNN0+WRHxfqRMqVsI5hrOJfoQsw=",
   "Source": "Asp.netCoreDatPhongKS",
   "BasePath": "_content/Asp.netCoreDatPhongKS",
   "Mode": "Default",
@@ -9971,6 +9971,27 @@
       "OriginalItemSpec": "wwwroot\\images\\lgmain.png"
     },
     {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "images/loaiphong/VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "nfflp3lp0m",
+      "Integrity": "nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png"
+    },
+    {
       "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\logomain.png",
       "SourceId": "Asp.netCoreDatPhongKS",
       "SourceType": "Discovered",
@@ -10116,6 +10137,90 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\mi-y-bolognese.jpg"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "images/nhanvien/Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "bjkfhiqqoc",
+      "Integrity": "SZHf4Mzw6nmwQWQcGgY19Q1EwVyT7kkwinxUlBB4I8E=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "images/nhanvien/Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3erhden4bj",
+      "Integrity": "FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "images/nhanvien/Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "p3jbncd064",
+      "Integrity": "i9PAXlUxo+7RV5t1EiW4mexqm2djGN9160LyH6c8sJo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "images/nhanvien/Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3erhden4bj",
+      "Integrity": "FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png"
     },
     {
       "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nuoc-cam.jpg",
@@ -51172,6 +51277,88 @@
       ]
     },
     {
+      "Route": "images/loaiphong/VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.nfflp3lp0m.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "634904"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Jun 2025 16:43:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nfflp3lp0m"
+        },
+        {
+          "Name": "label",
+          "Value": "images/loaiphong/VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0="
+        }
+      ]
+    },
+    {
+      "Route": "images/loaiphong/VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "634904"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 18 Jun 2025 16:43:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0="
+        }
+      ]
+    },
+    {
       "Route": "images/logomain.png",
       "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\logomain.png",
       "Selectors": [],
@@ -51742,6 +51929,334 @@
         {
           "Name": "integrity",
           "Value": "sha256-lWDJlcVXIMIvGXvdP2rn6ft8QRtkOpnu8oTMM67mGsc="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.bjkfhiqqoc.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "46657"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SZHf4Mzw6nmwQWQcGgY19Q1EwVyT7kkwinxUlBB4I8E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:36:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "bjkfhiqqoc"
+        },
+        {
+          "Name": "label",
+          "Value": "images/nhanvien/Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SZHf4Mzw6nmwQWQcGgY19Q1EwVyT7kkwinxUlBB4I8E="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "46657"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SZHf4Mzw6nmwQWQcGgY19Q1EwVyT7kkwinxUlBB4I8E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:36:18 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SZHf4Mzw6nmwQWQcGgY19Q1EwVyT7kkwinxUlBB4I8E="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.3erhden4bj.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "179170"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:34:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3erhden4bj"
+        },
+        {
+          "Name": "label",
+          "Value": "images/nhanvien/Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "179170"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:34:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.p3jbncd064.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12268"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"i9PAXlUxo+7RV5t1EiW4mexqm2djGN9160LyH6c8sJo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:40:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "p3jbncd064"
+        },
+        {
+          "Name": "label",
+          "Value": "images/nhanvien/Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-i9PAXlUxo+7RV5t1EiW4mexqm2djGN9160LyH6c8sJo="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "12268"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"i9PAXlUxo+7RV5t1EiW4mexqm2djGN9160LyH6c8sJo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:40:47 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-i9PAXlUxo+7RV5t1EiW4mexqm2djGN9160LyH6c8sJo="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.3erhden4bj.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "179170"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:35:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3erhden4bj"
+        },
+        {
+          "Name": "label",
+          "Value": "images/nhanvien/Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y="
+        }
+      ]
+    },
+    {
+      "Route": "images/nhanvien/Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "179170"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 19 Jun 2025 16:35:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A+OelhEGZnt8Y="
         }
       ]
     },

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.KhachHang>
+
+@{
+    ViewData["Title"] = "Quản lý khách hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Quản lý khách hàng</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm khách hàng mới</a>
+</p>
+
+<form asp-action="Index" method="get" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <label for="searchString" class="mr-1">Tìm kiếm:</label>
+        <input type="text" name="searchString" id="searchString" class="form-control" value="@ViewBag.SearchString" placeholder="Tên, Email, SĐT" />
+    </div>  
+    <button type="submit" class="btn btn-primary">Tìm</button>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th class="d-none d-md-table-cell">Địa chỉ</th>
+                <th class="d-none d-md-table-cell">CCCD</th>
+                <th class="d-none d-lg-table-cell">Ghi chú</th>
+                <th>Tài khoản</th>
+                <th class="d-none d-md-table-cell">Ngày tạo</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.HoTen</td>
+                    <td>@item.Email</td>
+                    <td>@item.SoDienThoai</td>
+                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.DiaChi">@item.DiaChi</td>
+                    <td class="d-none d-md-table-cell">@item.Cccd</td>
+                    <td class="d-none d-lg-table-cell text-truncate" style="max-width: 150px;" title="@item.GhiChu">@item.GhiChu</td>
+                    <td>@item.TaiKhoan?.TaiKhoanId</td>
+                    <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.KhachHangId" class="btn btn-warning btn-sm">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.KhachHangId" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+    .table-sm th, .table-sm td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+    .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

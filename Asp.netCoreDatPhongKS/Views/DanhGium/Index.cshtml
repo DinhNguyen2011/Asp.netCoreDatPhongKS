@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.DanhGium>
+
+@{
+    ViewData["Title"] = "Quản lý đánh giá";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Quản lý đánh giá</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm đánh giá mới</a>
+</p>
+
+<form asp-action="Index" method="get" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <label for="phongId" class="mr-1">Phòng:</label>
+        <select name="phongId" id="phongId" class="form-control" asp-items="ViewBag.PhongId">
+            <option value="">Tất cả</option>
+        </select>
+    </div>
+    <div class="form-group mr-2">
+        <label for="dichVuId" class="mr-1">Dịch vụ:</label>
+        <select name="dichVuId" id="dichVuId" class="form-control" asp-items="ViewBag.DichVuId">
+            <option value="">Tất cả</option>
+        </select>
+    </div>
+    <div class="form-group mr-2">
+        <label for="taiKhoanId" class="mr-1">Người đánh giá:</label>
+        <select name="taiKhoanId" id="taiKhoanId" class="form-control" asp-items="ViewBag.TaiKhoanId">
+            <option value="">Tất cả</option>
+        </select>
+    </div>
+    <div class="form-group mr-2">
+        <label for="noiDung" class="mr-1">Nội dung:</label>
+        <input type="text" name="noiDung" id="noiDung" class="form-control" value="@ViewBag.NoiDung" />
+    </div>
+    <button type="submit" class="btn btn-primary">Lọc</button>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Phòng</th>
+                <th>Dịch vụ</th>
+                <th>Điểm</th>
+                <th class="d-none d-md-table-cell">Nội dung</th>
+                <th class="d-none d-md-table-cell">Ngày đánh giá</th>
+                <th>Người đánh giá</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(item.Phong?.SoPhong ?? "N/A")</td>
+                    <td>@(item.DichVu?.TenDichVu ?? "N/A")</td>
+                    <td>@item.Diem</td>
+                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.NoiDung">@item.NoiDung</td>
+                    <td class="d-none d-md-table-cell">@item.NgayDanhGia?.ToString("dd/MM/yyyy")</td>
+                    <td>@(item.TaiKhoan?.Hoten ?? "N/A")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.DanhGiaId" class="btn btn-warning btn-sm">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.DanhGiaId" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table-sm th, .table-sm td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .text-truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

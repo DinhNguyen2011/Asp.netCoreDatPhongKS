@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.HoaDonDichVu>
+
+@{
+    ViewData["Title"] = "Quản lý hóa đơn dịch vụ";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Quản lý hóa đơn dịch vụ</h2>
+
+<p>
+    <a asp-controller="DichVu" asp-action="Index" class="btn btn-danger btn-sm">Thêm hóa đơn dịch vụ</a>
+
+</p>
+
+<form asp-action="Index" method="get" class="form-inline mb-3">
+    <div class="form-group mr-2">
+        <label for="maDonHangDv" class="mr-1">Mã đơn hàng DV:</label>
+        <input type="number" name="maDonHangDv" id="maDonHangDv" class="form-control" value="@ViewBag.MaDonHangDv" />
+    </div>
+    <div class="form-group mr-2">
+        <label for="trangThaiThanhToan" class="mr-1">Trạng thái thanh toán:</label>
+        <input type="text" name="trangThaiThanhToan" id="trangThaiThanhToan" class="form-control" value="@ViewBag.TrangThaiThanhToan" />
+    </div>
+    <button type="submit" class="btn btn-primary">Lọc</button>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng DV</th>
+                <th>Trạng thái thanh toán</th>
+                <th class="d-none d-md-table-cell">Mã hóa đơn tổng</th>
+                <th class="d-none d-md-table-cell">Ngày thanh toán</th>
+                <th class="d-none d-lg-table-cell">Hình thức thanh toán</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MaDonHangDv</td>
+                    <td>@item.TrangThaiThanhToan</td>
+                    <td class="d-none d-md-table-cell">@item.MaHoaDonTong</td>
+                    <td class="d-none d-md-table-cell">@item.NgayThanhToan?.ToString("dd/MM/yyyy")</td>
+                    <td class="d-none d-lg-table-cell">@item.HinhThucThanhToan</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .table-sm th, .table-sm td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+</style>

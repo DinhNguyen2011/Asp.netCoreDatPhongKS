@@ -1,0 +1,49 @@
+﻿@model Asp.netCoreDatPhongKS.Models.KhuyenMai
+
+@{
+    ViewData["Title"] = "Thêm khuyến mãi mới";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>Thêm khuyến mãi mới</h2>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="MaKhuyenMai" class="control-label"></label>
+        <input asp-for="MaKhuyenMai" class="form-control" />
+        <span asp-validation-for="MaKhuyenMai" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="MoTa" class="control-label"></label>
+        <textarea asp-for="MoTa" class="form-control"></textarea>
+        <span asp-validation-for="MoTa" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhanTramGiam" class="control-label"></label>
+        <input asp-for="PhanTramGiam" class="form-control" type="number" min="0" max="100" />
+        <span asp-validation-for="PhanTramGiam" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NgayBatDau" class="control-label"></label>
+        <input asp-for="NgayBatDau" class="form-control" type="date" />
+        <span asp-validation-for="NgayBatDau" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NgayKetThuc" class="control-label"></label>
+        <input asp-for="NgayKetThuc" class="form-control" type="date" />
+        <span asp-validation-for="NgayKetThuc" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TrangThai" class="control-label"></label>
+        <select asp-for="TrangThai" class="form-control">
+            <option value="true">Hoạt động</option>
+            <option value="false">Ngừng hoạt động</option>
+        </select>
+        <span asp-validation-for="TrangThai" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Thêm" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
+</form>
