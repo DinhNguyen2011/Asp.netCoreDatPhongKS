@@ -457,6 +457,7 @@ wwwroot\images\don-phong.jpg
 wwwroot\images\espresso.jpg
 wwwroot\images\giat-la.jpg
 wwwroot\images\goi-cuon-tom-thit.jpg
+wwwroot\images\GTHT.jpg
 wwwroot\images\ho-boi.jpg
 wwwroot\images\hoteo.png
 wwwroot\images\hu-tieu-nam-vang.jpg
@@ -470,6 +471,7 @@ wwwroot\images\latte.jpg
 wwwroot\images\lau-bo-nhung-giam.jpg
 wwwroot\images\lau-thai-hai-san.jpg
 wwwroot\images\lgmain.png
+wwwroot\images\lgogt.jpg
 wwwroot\images\loaiphong\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png
 wwwroot\images\logomain.png
 wwwroot\images\luxury1.jpg
@@ -514,6 +516,9 @@ wwwroot\images\slider-image.jpg
 wwwroot\images\slider-image1.jpg
 wwwroot\images\suon-nuong-bbq.jpg
 wwwroot\images\sup-hai-san.jpg
+wwwroot\images\Team1.jpg
+wwwroot\images\team2.jpg
+wwwroot\images\team5.jpg
 wwwroot\images\thuong1.jpg
 wwwroot\images\thuong2.jpg
 wwwroot\images\tra-chanh.jpg

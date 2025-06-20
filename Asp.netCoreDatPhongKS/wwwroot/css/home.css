@@ -4,7 +4,7 @@
 }
 
 .home-container {
-    max-width: 1170px;
+    max-width: 100%;
     margin: 15px 10px;
     display: flex;
     justify-content: center;

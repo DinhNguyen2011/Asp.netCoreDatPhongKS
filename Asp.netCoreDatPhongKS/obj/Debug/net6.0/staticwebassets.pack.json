@@ -1705,6 +1705,14 @@
       "PackagePath": "staticwebassets\\images\\7up.jpg"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\GTHT.jpg",
+      "PackagePath": "staticwebassets\\images\\GTHT.jpg"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\Team1.jpg",
+      "PackagePath": "staticwebassets\\images\\Team1.jpg"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\about-img1.jpg",
       "PackagePath": "staticwebassets\\images\\about-img1.jpg"
     },
@@ -1893,6 +1901,10 @@
       "PackagePath": "staticwebassets\\images\\lgmain.png"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\lgogt.jpg",
+      "PackagePath": "staticwebassets\\images\\lgogt.jpg"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png",
       "PackagePath": "staticwebassets\\images\\loaiphong\\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png"
     },
@@ -2067,6 +2079,14 @@
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\sup-hai-san.jpg",
       "PackagePath": "staticwebassets\\images\\sup-hai-san.jpg"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\team2.jpg",
+      "PackagePath": "staticwebassets\\images\\team2.jpg"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\team5.jpg",
+      "PackagePath": "staticwebassets\\images\\team5.jpg"
     },
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\thuong1.jpg",

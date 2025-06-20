@@ -3,8 +3,28 @@
   "WorkspaceRootPath": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\views\\gioithieu\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\views\\gioithieu\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\wwwroot\\css\\gioithieu.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\wwwroot\\css\\gioithieu.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\wwwroot\\css\\home.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\wwwroot\\css\\home.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\views\\danhgium\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -21,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\models\\phong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\models\\phong.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\views\\shared\\_layoutadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,33 +82,85 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "gioithieu.css",
+              "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\gioithieu.css",
+              "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\wwwroot\\css\\gioithieu.css",
+              "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\gioithieu.css",
+              "RelativeToolTip": "Asp.netCoreDatPhongKS\\wwwroot\\css\\gioithieu.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-06-20T04:57:13.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\GioiThieu\\Index.cshtml",
+              "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Views\\GioiThieu\\Index.cshtml",
+              "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\GioiThieu\\Index.cshtml*",
+              "RelativeToolTip": "Asp.netCoreDatPhongKS\\Views\\GioiThieu\\Index.cshtml*",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAADkAAACBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-20T04:44:05.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "home.css",
+              "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home.css",
+              "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\wwwroot\\css\\home.css",
+              "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home.css",
+              "RelativeToolTip": "Asp.netCoreDatPhongKS\\wwwroot\\css\\home.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-06-20T04:34:26.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Asp.netCoreDatPhongKS\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAHEBAAAAAAAAAAAUwI8BAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-20T03:25:01.24Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
               "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
               "RelativeToolTip": "Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
-              "ViewState": "AgIAAFsBAAAAAAAAAADwvx4BAAA3AAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-19T17:33:25.901Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\DanhGium\\Index.cshtml",
               "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Views\\DanhGium\\Index.cshtml",
               "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\DanhGium\\Index.cshtml",
               "RelativeToolTip": "Asp.netCoreDatPhongKS\\Views\\DanhGium\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-06-19T17:21:38.967Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "DichVu.cs",
               "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Models\\DichVu.cs",
               "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Models\\DichVu.cs",
@@ -104,7 +172,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "Phong.cs",
               "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Models\\Phong.cs",
               "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Models\\Phong.cs",
@@ -116,7 +184,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "DanhGiumController.cs",
               "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Controllers\\DanhGiumController.cs",
               "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Controllers\\DanhGiumController.cs",
@@ -134,9 +202,10 @@
               "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Views\\Shared\\_LayoutAdmin.cshtml",
               "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\Shared\\_LayoutAdmin.cshtml",
               "RelativeToolTip": "Asp.netCoreDatPhongKS\\Views\\Shared\\_LayoutAdmin.cshtml",
-              "ViewState": "AgIAAJgAAAAAAAAAAAAAAJkAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAABIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-06-19T17:21:14.987Z"
+              "WhenOpened": "2025-06-19T17:21:14.987Z",
+              "EditorCaption": ""
             }
           ]
         },
