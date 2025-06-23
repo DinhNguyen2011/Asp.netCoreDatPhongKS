@@ -1,0 +1,74 @@
+﻿@model Asp.netCoreDatPhongKS.Models.TaiKhoan
+@{
+    ViewData["Title"] = "Thông tin tài khoản";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="text-center mb-5">@ViewData["Title"]</h2>
+
+    @if (TempData["ProfileSuccess"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["ProfileSuccess"]
+        </div>
+    }
+    @if (TempData["ProfileError"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ProfileError"]
+        </div>
+    }
+
+    <div class="card profile-container">
+        <div class="card-body">
+            <h5 class="card-title">Thông tin tài khoản</h5>
+            <form asp-action="Profile" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label">Email</label>
+                    <input asp-for="Email" class="form-control" readonly />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Hoten" class="form-label">Họ tên</label>
+                    <input asp-for="Hoten" class="form-control" required />
+                    <span asp-validation-for="Hoten" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="hinhAnh" class="form-label">Ảnh đại diện</label>
+                    <input type="file" id="hinhAnh" name="hinhAnh" class="form-control" accept=".jpg,.jpeg,.png,.gif" />
+                    <span class="text-danger" id="hinhAnhError"></span>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                {
+                    <div class="mb-3">
+                        <label class="form-label">Ảnh hiện tại</label>
+                        <img src="@Model.HinhAnh" alt="Ảnh đại diện" class="img-thumbnail" style="max-width: 150px;" />
+                    </div>
+                }
+                <div class="mb-3">
+                    <label class="form-label">Preview ảnh mới</label>
+                    <img id="imagePreview" src="" alt="Preview" class="img-thumbnail" style="max-width: 150px; display: none;" />
+                </div>
+                <input type="hidden" asp-for="TaiKhoanId" />
+                <input type="hidden" asp-for="VaiTroId" />
+                <input type="hidden" asp-for="TrangThai" />
+                <input type="hidden" asp-for="MatKhau" />
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <a asp-action="ChangePassword" class="btn btn-secondary">Đổi mật khẩu</a>
+                <a asp-action="Index" asp-controller="HomeAdmin" class="btn btn-outline-secondary">Quay lại</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    <link href="~/css/profile-admin.css" rel="stylesheet" />
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/profile-admin.js"></script>

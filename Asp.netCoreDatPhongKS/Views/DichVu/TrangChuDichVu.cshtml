@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.DichVu>
 
 @{
-    ViewData["Title"] = "Danh Sách Dịch Vụ";
+    ViewData["Title"] = "Dịch Vụ";
 }
 
 <h1>Danh Sách Dịch Vụ</h1>
 
 <!-- Form Bộ lọc -->
 <form asp-action="TrangChuDichVu" method="get" class="mb-4">
-    <div class="form-group">
-        <label for="loaiDichVu">Lọc theo loại dịch vụ:</label>
+    <div class="form-group" style="width: 173px !important;">
+        <label for="loaiDichVu">Lọc theo loại dịch vụ</label>
         <select name="loaiDichVu" class="form-control" onchange="this.form.submit()">
             @foreach (var item in ViewBag.LoaiDichVu)
             {

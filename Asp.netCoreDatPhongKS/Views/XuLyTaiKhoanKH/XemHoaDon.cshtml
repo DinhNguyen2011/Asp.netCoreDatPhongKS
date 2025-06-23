@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.HoaDon>
+@{
+    ViewData["Title"] = "Hóa đơn";
+}
+<div class="container-fluid td-padding-side">
+    <h2 class="display-4 text-center fw-normal mb-5">@ViewData["Title"]</h2>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success" data-aos="fade-up">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" data-aos="fade-up">@TempData["Error"]</div>
+    }
+    <table class="table table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>Mã hóa đơn</th>
+                <th>Ngày lập</th>
+                <th>Phòng</th>
+                <th>Dịch vụ</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hoaDon in Model)
+            {
+                <tr>
+                    <td>@hoaDon.MaHoaDon</td>
+                    <td>@hoaDon.NgayLap?.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @foreach (var hp in hoaDon.HoaDonPdps)
+                        {
+                            foreach (var ct in hp.PhieuDatPhong?.ChiTietPhieuPhongs ?? new List<ChiTietPhieuPhong>())
+                            {
+                                <span>@ct.Phong?.SoPhong (@String.Format("{0:N0}", ct.DonGia) VNĐ)</span>
+
+                                <br />
+                            }
+                        }
+                    </td>
+                    <td>
+                        @foreach (var hd in hoaDon.HoaDonDichVus)
+                        {
+                            foreach (var ct in hd.MaDonHangDvNavigation?.ChiTietDonHangDichVus ?? new List<ChiTietDonHangDichVu>())
+                            {
+                                <span>@ct.DichVu?.TenDichVu (x@ct.SoLuong, @String.Format("{0:N0}", ct.DonGia) VNĐ)</span>
+
+                                <br />
+                            }
+                        }
+                    </td>
+                    <td>@String.Format("{0:N0}", hoaDon.TongTien ?? 0) VNĐ</td>
+                    <td>@hoaDon.TrangThai</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

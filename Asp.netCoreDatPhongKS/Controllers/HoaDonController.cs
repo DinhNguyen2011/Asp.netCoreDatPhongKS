@@ -233,6 +233,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                                 phieu.TinhTrangSuDung = "Đã check-out";
                                 phieu.TrangThai = "Đã thanh toán";
                                 chiTietPhieu.Phong.TinhTrang = "Trống";
+
                             }
                         }
                     }

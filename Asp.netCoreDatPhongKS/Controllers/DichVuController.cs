@@ -19,6 +19,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: DichVu/TrangChuDichVu
         public async Task<IActionResult> TrangChuDichVu(string loaiDichVu)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             // Tạo danh sách các loại dịch vụ cho dropdown
             var serviceTypes = new List<SelectListItem>
             {

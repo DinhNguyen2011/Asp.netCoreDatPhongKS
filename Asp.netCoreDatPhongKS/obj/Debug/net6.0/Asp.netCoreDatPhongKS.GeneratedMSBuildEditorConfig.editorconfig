@@ -296,6 +296,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/TaiKhoan/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cQ2hhbmdlUGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/TaiKhoan/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -304,12 +308,36 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/TaiKhoan/ProfileAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cUHJvZmlsZUFkbWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/TaiKhoan/ProfileUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cUHJvZmlsZVVzZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/TaiKhoan/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/TaiKhoan/thongTinCaNhan.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFpS2hvYW5cdGhvbmdUaW5DYU5oYW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/XuLyTaiKhoanKH/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWHVMeVRhaUtob2FuS0hcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/XuLyTaiKhoanKH/XemDichVu.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWHVMeVRhaUtob2FuS0hcWGVtRGljaFZ1LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/XuLyTaiKhoanKH/XemHoaDon.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWHVMeVRhaUtob2FuS0hcWGVtSG9hRG9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/XuLyTaiKhoanKH/XemPhieuDatPhong.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcWHVMeVRhaUtob2FuS0hcWGVtUGhpZXVEYXRQaG9uZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LuanVanTotNghiep/Asp.netCoreDatPhongKS/Asp.netCoreDatPhongKS/Views/_ViewImports.cshtml]

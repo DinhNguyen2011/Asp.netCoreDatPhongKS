@@ -248,11 +248,49 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var pendingBooking = JsonSerializer.Deserialize<PendingBookingModel>(pendingBookingJson);
 
-            var khach = _context.KhachHangs.FirstOrDefault(k => k.Cccd == pendingBooking.Cccd);
+            // Kiểm tra Email trong KhachHangs trước
+            var khach = _context.KhachHangs.FirstOrDefault(k => k.Email == pendingBooking.Email);
             if (khach == null)
             {
-                TempData["ThongBao"] = "Không tìm thấy thông tin khách hàng!";
-                return RedirectToAction("Index");
+                // Nếu không tìm thấy Email, kiểm tra CCCD
+                khach = _context.KhachHangs.FirstOrDefault(k => k.Cccd == pendingBooking.Cccd);
+                if (khach == null)
+                {
+                    // Tạo mới KhachHang nếu không tìm thấy Email hoặc CCCD
+                    khach = new KhachHang
+                    {
+                        HoTen = pendingBooking.HoTen,
+                        Email = pendingBooking.Email,
+                        SoDienThoai = pendingBooking.SoDienThoai,
+                        DiaChi = pendingBooking.DiaChi,
+                        Cccd = pendingBooking.Cccd,
+                        GhiChu = pendingBooking.GhiChu,
+                        NgayTao = DateTime.Now
+                    };
+                    _context.KhachHangs.Add(khach);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    // Cập nhật thông tin KhachHang nếu CCCD trùng
+                    khach.HoTen = pendingBooking.HoTen;
+                    khach.SoDienThoai = pendingBooking.SoDienThoai;
+                    khach.DiaChi = pendingBooking.DiaChi;
+                    khach.GhiChu = pendingBooking.GhiChu;
+                    _context.Update(khach);
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                // Cập nhật thông tin KhachHang nếu Email trùng
+                khach.HoTen = pendingBooking.HoTen;
+                khach.SoDienThoai = pendingBooking.SoDienThoai;
+                khach.DiaChi = pendingBooking.DiaChi;
+                khach.Cccd = pendingBooking.Cccd;
+                khach.GhiChu = pendingBooking.GhiChu;
+                _context.Update(khach);
+                _context.SaveChanges();
             }
 
             var phong = _context.Phongs.Include(p => p.LoaiPhong).FirstOrDefault(p => p.PhongId == pendingBooking.PhongId);
@@ -338,14 +376,13 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         NgayTao = DateTime.Now
                     };
                     _context.TaiKhoans.Add(taiKhoan);
+                    await _context.SaveChangesAsync();
                 }
-
-                _context.SaveChanges();
 
                 if (khach.TaiKhoanId == null)
                 {
                     khach.TaiKhoanId = taiKhoan.TaiKhoanId;
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
 
                 try
@@ -367,7 +404,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         <p><strong>Thông tin tài khoản:</strong></p>
                         <ul>
                             <li><strong>Email đăng nhập:</strong> {taiKhoan.Email}</li>
-                            <li><strong>Mật khẩu mặc định:</strong> {taiKhoan.MatKhau} (Không áp dụng với tài khoản đã có rồi, vui lòng đổi mật khẩu sau khi đăng nhập lần đầu)</li>
+                            <li><strong>Mật khẩu mặc định:</strong> {(taiKhoan.MatKhau == "1" ? "1 (Vui lòng đổi mật khẩu sau khi đăng nhập lần đầu)" : "Đã được thiết lập trước đó")}</li>
                         </ul>
                         <p>Vui lòng liên hệ chúng tôi nếu có bất kỳ câu hỏi nào. Hotline: 0853461030</p>
                         <p>Trân trọng,<br>Khách sạn Thiềm Định</p>";

@@ -1681,6 +1681,14 @@
       "PackagePath": "staticwebassets\\css\\phong-timkiem.css"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\profile-admin.css",
+      "PackagePath": "staticwebassets\\css\\profile-admin.css"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\profile-user.css",
+      "PackagePath": "staticwebassets\\css\\profile-user.css"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\reponPhoneLayout.css",
       "PackagePath": "staticwebassets\\css\\reponPhoneLayout.css"
     },
@@ -1699,6 +1707,10 @@
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\233c082e-611b-40e9-9d58-49c56db70544.png",
+      "PackagePath": "staticwebassets\\images\\233c082e-611b-40e9-9d58-49c56db70544.png"
     },
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\7up.jpg",
@@ -1839,6 +1851,10 @@
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\espresso.jpg",
       "PackagePath": "staticwebassets\\images\\espresso.jpg"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\f67a04f3-14cd-4882-943f-38ddc23415e7.png",
+      "PackagePath": "staticwebassets\\images\\f67a04f3-14cd-4882-943f-38ddc23415e7.png"
     },
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\giat-la.jpg",
@@ -2139,6 +2155,14 @@
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\js\\plugins.js",
       "PackagePath": "staticwebassets\\js\\plugins.js"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\js\\profile-admin.js",
+      "PackagePath": "staticwebassets\\js\\profile-admin.js"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\js\\profile-user.js",
+      "PackagePath": "staticwebassets\\js\\profile-user.js"
     },
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\js\\script.js",

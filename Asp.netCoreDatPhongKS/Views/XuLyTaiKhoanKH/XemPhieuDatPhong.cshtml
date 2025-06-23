@@ -1,0 +1,88 @@
+﻿@model Asp.netCoreDatPhongKS.Models.PhieuDatPhong
+@{
+    ViewData["Title"] = "Chi tiết phiếu đặt phòng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid td-padding-side" data-aos="fade-up">
+    <h2 class="display-4 text-center fw-normal mb-5">@ViewData["Title"]</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger" data-aos="fade-up">
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (Model == null)
+    {
+        <div class="alert alert-info" data-aos="fade-up">
+            Không tìm thấy phiếu đặt phòng.
+        </div>
+    }
+    else
+    {
+        <div class="card profile-container">
+            <div class="card-body">
+                <h5 class="card-title">Chi tiết phiếu đặt phòng</h5>
+                <div class="mb-3">
+                    <strong>Mã phiếu:</strong> @Model.MaPhieu
+                </div>
+                <div class="mb-3">
+                    <strong>Ngày đặt:</strong> @Model.NgayDat?.ToString("dd/MM/yyyy")
+                </div>
+                <div class="mb-3">
+                    <strong>Ngày nhận:</strong> @Model.NgayNhan?.ToString("dd/MM/yyyy")
+                </div>
+                <div class="mb-3">
+                    <strong>Ngày trả:</strong> @Model.NgayTra?.ToString("dd/MM/yyyy")
+                </div>
+                <div class="mb-3">
+                    <strong>Phòng:</strong>
+                    @foreach (var chiTiet in Model.ChiTietPhieuPhongs)
+                    {
+                        <div>@chiTiet.Phong?.SoPhong (@chiTiet.Phong?.LoaiPhong?.TenLoai) - @chiTiet.DonGia?.ToString("N0") VNĐ</div>
+                    }
+                </div>
+                <div class="mb-3">
+                    <strong>Tổng tiền:</strong> @Model.TongTien?.ToString("N0") VNĐ
+                </div>
+                <div class="mb-3">
+                    <strong>Trạng thái:</strong> @Model.TrangThai
+                </div>
+                @if (!string.IsNullOrEmpty(Model.VnpTransactionId))
+                {
+                    <div class="mb-3">
+                        <strong>Mã giao dịch VNPay:</strong> @Model.VnpTransactionId
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.MoMoTransactionId))
+                {
+                    <div class="mb-3">
+                        <strong>Mã giao dịch MoMo:</strong> @Model.MoMoTransactionId
+                    </div>
+                }
+                <div class="mb-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary">Quay lại</a>
+                    @if (Model.NgayNhan >= DateTime.Now)
+                    {
+                        <form asp-action="CancelBooking" method="post" style="display:inline;">
+                            <input type="hidden" name="phieuDatPhongId" value="@Model.PhieuDatPhongId" />
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn hủy phiếu này?')">Hủy phiếu</button>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+    <link href="~/css/profile-user.css" rel="stylesheet" />
+
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>AOS.init({ duration: 800 });</script>
