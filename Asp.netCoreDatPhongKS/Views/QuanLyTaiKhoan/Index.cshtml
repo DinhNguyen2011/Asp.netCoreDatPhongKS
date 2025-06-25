@@ -13,9 +13,6 @@
                 <th>Họ tên</th>
                 <th>Email</th>
                 <th>Vai trò</th>
-                <th>CCCD</th>
-                <th>Số điện thoại</th>
-                <th>Địa chỉ</th>
                 <th>Trạng thái</th>
                 <th>Hành động</th>
             </tr>
@@ -28,9 +25,7 @@
                     <td>@taiKhoan.Hoten</td>
                     <td>@taiKhoan.Email</td>
                     <td>@taiKhoan.VaiTro.TenVaiTro</td>
-                    <td>@(taiKhoan.VaiTroId == 2 ? nhanVien.Cccd : "-")</td>
-                    <td>@(taiKhoan.VaiTroId == 2 ? nhanVien.SoDienThoai : "-")</td>
-                    <td>@(taiKhoan.VaiTroId == 2 ? nhanVien.DiaChi : "-")</td>
+                
                     <td>@(taiKhoan.TrangThai == true ? "Kích hoạt" : "Vô hiệu")</td>
                     <td>
                         <a href="@Url.Action("Edit", "QuanLyTaiKhoan", new { taiKhoanId = taiKhoan.TaiKhoanId })" class="btn btn-primary btn-sm">Sửa</a>
@@ -41,14 +36,3 @@
         </tbody>
     </table>
 </div>
-
-@* @section Scripts { *@
-@*     @if (TempData["Success"] != null) *@
-@*     { *@
-@*         <script>toastr.success('@TempData["Success"]');</script> *@
-@*     } *@
-@*     @if (TempData["Error"] != null) *@
-@*     { *@
-@*         <script>toastr.error('@TempData["Error"]');</script> *@
-@*     } *@
-@* } *@

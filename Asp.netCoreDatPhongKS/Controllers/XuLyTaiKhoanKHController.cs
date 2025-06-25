@@ -47,7 +47,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .Include(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(ct => ct.Phong)
                 .ThenInclude(p => p.LoaiPhong)
-                .Where(p => p.KhachHangId == khachHang.KhachHangId && p.TrangThai != "Hủy")
+                .Where(p => p.KhachHangId == khachHang.KhachHangId && p.TrangThai != "Hủy" )
                 .ToListAsync();
 
             return View(phieuDatPhongs);

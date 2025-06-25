@@ -31,7 +31,7 @@
                         <th>Dịch vụ</th>
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
-                        <th>Ghi chú</th>
+                       
                     </tr>
                 </thead>
                 <tbody>
@@ -43,12 +43,12 @@
                             <td>
                                 @foreach (var chiTiet in donHang.ChiTietDonHangDichVus)
                                 {
-                                    <div>@chiTiet.DichVu.TenDichVu (x@chiTiet.SoLuong) - @chiTiet.ThanhTien?.ToString("N0") VNĐ</div>
+                                    <div>@chiTiet.DichVu.TenDichVu (@chiTiet.SoLuong) - @chiTiet.ThanhTien?.ToString("N0") VNĐ</div>
                                 }
                             </td>
                             <td>@donHang.ChiTietDonHangDichVus.Sum(ct => ct.ThanhTien)?.ToString("N0") VNĐ</td>
                             <td>@donHang.TrangThai</td>
-                            <td>@donHang.GhiChu</td>
+                          
                         </tr>
                     }
                 </tbody>

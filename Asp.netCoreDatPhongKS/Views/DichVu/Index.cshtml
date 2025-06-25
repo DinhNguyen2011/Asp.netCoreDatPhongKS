@@ -29,8 +29,11 @@
 <form asp-action="CreateDonHangDichVu" method="post">
     <!-- Khách vãng lai -->
     <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="isKhachVangLai" name="isKhachVangLai" />
+        <!-- Phải có input hidden để đảm bảo luôn gửi giá trị -->
+        <input type="hidden" name="isKhachVangLai" value="false" />
+        <input type="checkbox" class="form-check-input" id="isKhachVangLai" name="isKhachVangLai" value="true" />
         <label class="form-check-label" for="isKhachVangLai">Khách vãng lai</label>
+
     </div>
 
     <!-- Chọn khách hàng -->

@@ -248,51 +248,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var pendingBooking = JsonSerializer.Deserialize<PendingBookingModel>(pendingBookingJson);
 
-            // Kiểm tra Email trong KhachHangs trước
-            var khach = _context.KhachHangs.FirstOrDefault(k => k.Email == pendingBooking.Email);
-            if (khach == null)
-            {
-                // Nếu không tìm thấy Email, kiểm tra CCCD
-                khach = _context.KhachHangs.FirstOrDefault(k => k.Cccd == pendingBooking.Cccd);
-                if (khach == null)
-                {
-                    // Tạo mới KhachHang nếu không tìm thấy Email hoặc CCCD
-                    khach = new KhachHang
-                    {
-                        HoTen = pendingBooking.HoTen,
-                        Email = pendingBooking.Email,
-                        SoDienThoai = pendingBooking.SoDienThoai,
-                        DiaChi = pendingBooking.DiaChi,
-                        Cccd = pendingBooking.Cccd,
-                        GhiChu = pendingBooking.GhiChu,
-                        NgayTao = DateTime.Now
-                    };
-                    _context.KhachHangs.Add(khach);
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    // Cập nhật thông tin KhachHang nếu CCCD trùng
-                    khach.HoTen = pendingBooking.HoTen;
-                    khach.SoDienThoai = pendingBooking.SoDienThoai;
-                    khach.DiaChi = pendingBooking.DiaChi;
-                    khach.GhiChu = pendingBooking.GhiChu;
-                    _context.Update(khach);
-                    _context.SaveChanges();
-                }
-            }
-            else
-            {
-                // Cập nhật thông tin KhachHang nếu Email trùng
-                khach.HoTen = pendingBooking.HoTen;
-                khach.SoDienThoai = pendingBooking.SoDienThoai;
-                khach.DiaChi = pendingBooking.DiaChi;
-                khach.Cccd = pendingBooking.Cccd;
-                khach.GhiChu = pendingBooking.GhiChu;
-                _context.Update(khach);
-                _context.SaveChanges();
-            }
-
             var phong = _context.Phongs.Include(p => p.LoaiPhong).FirstOrDefault(p => p.PhongId == pendingBooking.PhongId);
             if (phong == null)
             {
@@ -313,6 +268,58 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             if (response.Success)
             {
+                // Kiểm tra Email trong TaiKhoan trước
+                var taiKhoan = await _context.TaiKhoans.FirstOrDefaultAsync(t => t.Email == pendingBooking.Email);
+                if (taiKhoan == null)
+                {
+                    // Tạo mới TaiKhoan nếu Email chưa tồn tại
+                    taiKhoan = new TaiKhoan
+                    {
+                        Email = pendingBooking.Email,
+                        MatKhau = "1", // Mật khẩu mặc định
+                        VaiTroId = 3, // Vai trò khách hàng
+                        TrangThai = true,
+                        Hoten = pendingBooking.HoTen,
+                        NgayTao = DateTime.Now,
+                        
+                    };
+                    _context.TaiKhoans.Add(taiKhoan);
+                    await _context.SaveChangesAsync();
+                }
+
+                // Kiểm tra Email trong KhachHangs
+                var khach = await _context.KhachHangs.FirstOrDefaultAsync(k => k.Email == pendingBooking.Email);
+                if (khach == null)
+                {
+                    // Tạo mới KhachHang nếu Email chưa tồn tại
+                    khach = new KhachHang
+                    {
+                        HoTen = pendingBooking.HoTen,
+                        Email = pendingBooking.Email,
+                        SoDienThoai = pendingBooking.SoDienThoai,
+                        DiaChi = pendingBooking.DiaChi,
+                        Cccd = pendingBooking.Cccd,
+                        GhiChu = pendingBooking.GhiChu,
+                        NgayTao = DateTime.Now,
+                        TaiKhoanId = taiKhoan.TaiKhoanId // Liên kết với TaiKhoan
+                    };
+                    _context.KhachHangs.Add(khach);
+                }
+                else
+                {
+                    // Cập nhật thông tin KhachHang nếu Email đã tồn tại
+                    khach.HoTen = pendingBooking.HoTen;
+                    khach.SoDienThoai = pendingBooking.SoDienThoai;
+                    khach.DiaChi = pendingBooking.DiaChi;
+                    khach.Cccd = pendingBooking.Cccd;
+                    khach.GhiChu = pendingBooking.GhiChu;
+                    khach.TaiKhoanId = taiKhoan.TaiKhoanId; // Liên kết với TaiKhoan
+                    _context.Update(khach);
+                }
+
+                await _context.SaveChangesAsync();
+
+                // Tạo PhieuDatPhong
                 var phieu = new PhieuDatPhong
                 {
                     MaPhieu = $"PD{DateTime.Now.Ticks}",
@@ -330,6 +337,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                 _context.PhieuDatPhongs.Add(phieu);
 
+                // Tạo ChiTietPhieuPhong
                 var chiTiet = new ChiTietPhieuPhong
                 {
                     PhongId = phong.PhongId,
@@ -337,6 +345,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 };
                 phieu.ChiTietPhieuPhongs.Add(chiTiet);
 
+                // Tạo HoaDon
                 var hoaDon = new HoaDon
                 {
                     NgayLap = DateTime.Now,
@@ -354,6 +363,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                 await _context.SaveChangesAsync();
 
+                // Tạo HoaDonPdp
                 var hoaDonPdp = new HoaDonPdp
                 {
                     MaHoaDon = hoaDon.MaHoaDon,
@@ -363,28 +373,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 };
                 _context.HoaDonPdps.Add(hoaDonPdp);
 
-                var taiKhoan = _context.TaiKhoans.FirstOrDefault(t => t.Email == khach.Email);
-                if (taiKhoan == null)
-                {
-                    taiKhoan = new TaiKhoan
-                    {
-                        Email = khach.Email,
-                        MatKhau = "1",
-                        VaiTroId = 3,
-                        TrangThai = true,
-                        Hoten = khach.HoTen,
-                        NgayTao = DateTime.Now
-                    };
-                    _context.TaiKhoans.Add(taiKhoan);
-                    await _context.SaveChangesAsync();
-                }
+                await _context.SaveChangesAsync();
 
-                if (khach.TaiKhoanId == null)
-                {
-                    khach.TaiKhoanId = taiKhoan.TaiKhoanId;
-                    await _context.SaveChangesAsync();
-                }
-
+                // Gửi email xác nhận
                 try
                 {
                     var emailBody = $@"

@@ -60,7 +60,7 @@
                             <td>@phieu.TrangThai</td>
                             <td>
                                 <a asp-action="XemPhieuDatPhong" asp-route-id="@phieu.PhieuDatPhongId" class="btn btn-info btn-sm">Xem</a>
-                                @if (phieu.NgayNhan >= DateTime.Now)
+                                @if (phieu.NgayNhan >= DateTime.Now && phieu.TinhTrangSuDung != "Đã check-out")
                                 {
                                     <form asp-action="CancelBooking" method="post" style="display:inline;">
                                         <input type="hidden" name="phieuDatPhongId" value="@phieu.PhieuDatPhongId" />

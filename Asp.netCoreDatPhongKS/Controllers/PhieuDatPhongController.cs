@@ -701,7 +701,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     soTienCoc = phieu.SoTienCoc ?? 0,
                     soTienDaThanhToan = phieu.SoTienDaThanhToan ?? 0,
                     trangThai = phieu.TrangThai,
-                    tinhTrangSuDung = phieu.TinhTrangSuDung
+                    tinhTrangSuDung = phieu.TinhTrangSuDung,
+                    idvnpay = phieu.VnpTransactionId,
+                    idmomo = phieu.MoMoTransactionId
                 }
             });
         }
