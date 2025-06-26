@@ -189,7 +189,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
             return RedirectToAction("PrintHoaDonDichVu", new { id = hoaDonDichVu.Id });
         }
 
-        // Action PrintHoaDonDichVu: In hóa đơn dịch vụ
         public async Task<IActionResult> PrintHoaDonDichVu(int id)
         {
             var hoaDonDichVu = await _context.HoaDonDichVus

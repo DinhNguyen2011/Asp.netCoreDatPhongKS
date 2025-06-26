@@ -1,104 +1,171 @@
-﻿/* Responsive styles for DichVu Index */
+﻿
+/* Container chính */
+.service-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Tiêu đề */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Form bộ lọc */
+.filter-form {
+    max-width: 300px;
+    margin-bottom: 30px;
+}
+
+    .filter-form .form-group {
+        width: 100% !important;
+        max-width: 200px;
+    }
+
+    .filter-form select.form-control {
+        padding: 10px;
+        font-size: 1rem;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        background-color: #fff;
+        transition: border-color 0.3s ease;
+    }
+
+        .filter-form select.form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+            outline: none;
+        }
+
+/* Card dịch vụ */
 .service-card {
-    transition: all 0.3s ease;
-    border: 1px solid #ddd;
+    border: none;
     border-radius: 10px;
-    overflow: hidden;
-    height: 350px !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
     .service-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     }
 
-.service-image {
-    max-width: 100%;
-    height: 200px; /* Kích thước ảnh giữ nguyên trên mọi thiết bị */
-    object-fit: contain; /* Hiển thị toàn bộ ảnh, không cắt */
-    object-position: center; /* Căn giữa ảnh trong khung */
-    background-color: #f5f5f5; /* Màu nền cho phần trống nếu ảnh không lấp đầy khung */
-}
+    .service-card .image-container {
+        position: relative;
+        width: 100%;
+        min-height: 200px; /* Chiều cao tối thiểu thay vì cố định */
+        background-color: #f5f5f5; /* Màu nền khi hình ảnh không tải */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        overflow: hidden;
+    }
 
-.card-body {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 15px;
-}
+    .service-card img.card-img-top {
+        width: 100%;
+        min-height: 200px; /* Đảm bảo chiều cao tối thiểu */
+        max-height: 200px; /* Giới hạn chiều cao tối đa */
+        object-fit: contain; /* Hiển thị toàn bộ hình ảnh */
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
 
-.card-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #333;
-}
+    .service-card .card-body {
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
 
-.card-text {
-    font-size: 0.9rem;
+    .service-card .card-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .service-card .card-text {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 10px;
+        flex-grow: 1;
+    }
+
+        .service-card .card-text.price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+/* Thông báo khi không có dịch vụ */
+.no-service-message {
+    text-align: center;
+    font-size: 1.2rem;
     color: #666;
-    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
-.btn-primary {
-    background-color: #ff85a2;
-    border: none;
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-}
-
-    .btn-primary:hover {
-        background-color: #ff6b89;
+/* Responsive */
+@media (max-width: 992px) {
+    .row {
+        margin-left: -10px;
+        margin-right: -10px;
     }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
+    .col-md-4 {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
     .service-card {
-        height: 400px !important; /* Tăng chiều cao card trên tablet để chứa nội dung */
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
     }
 
-    .card-title {
-        font-size: 1.1rem;
+    .filter-form {
+        max-width: 100%;
+        padding: 0 15px;
     }
 
-    .card-text {
-        font-size: 0.85rem;
-    }
+        .filter-form .form-group {
+            max-width: 100%;
+        }
 
-    .btn-primary {
-        font-size: 0.85rem;
-        padding: 6px;
+    .service-card .image-container,
+    .service-card img.card-img-top {
+        min-height: 150px;
+        max-height: 150px;
     }
 }
 
 @media (max-width: 576px) {
-    .service-card {
-        height: 420px !important; /* Tăng chiều cao card trên mobile để chứa nội dung */
+    .service-card .image-container,
+    .service-card img.card-img-top {
+        min-height: 120px;
+        max-height: 120px;
     }
 
-    .card-title {
-        font-size: 1rem;
+    .service-card .card-title {
+        font-size: 1.1rem;
     }
 
-    .card-text {
-        font-size: 0.8rem;
-    }
-
-    .btn-primary {
-        font-size: 0.8rem;
-        padding: 5px;
-    }
-
-    .text-center.mb-4 p {
+    .service-card .card-text {
         font-size: 0.9rem;
     }
 
-    h2.text-center.mb-4 {
-        font-size: 1.5rem;
-    }
+        .service-card .card-text.price {
+            font-size: 1rem;
+        }
 }

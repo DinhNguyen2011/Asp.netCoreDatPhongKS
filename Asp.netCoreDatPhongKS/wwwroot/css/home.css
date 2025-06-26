@@ -1,9 +1,4 @@
-﻿body {
-    font-family: 'Playfair Display', serif;
-    background-color: #f7f7f7;
-}
-
-.home-container {
+﻿.home-container {
     max-width: 100%;
     margin: 15px 10px;
     display: flex;
@@ -13,50 +8,45 @@
     padding: 0px !important;
 }
 
+/* Intro section với hình ảnh nền */
 .intro-section {
- 
-    border-radius:15px;
-    background: url('/images/item3.jpg');
-    height:500px;
+    border-radius: 15px;
+    background: url('/images/item3.jpg') no-repeat center center;
+    background-size: contain; /* Hiển thị toàn bộ hình ảnh, giữ tỷ lệ */
+    height: 500px;
     flex: 1;
     text-align: left;
-    padding: 0px !important;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: #f5f5f5; /* Màu nền dự phòng nếu hình không tải */
 }
 
-    /* Lấp lánh chữ khách sạn */
-    /*.intro-section h1 {
-        font-size: 48px;
-        margin-bottom: 30px;
-        background: linear-gradient(90deg, #ff94c2, #fff, #ff94c2);
-        background-size: 200%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shine 1s linear infinite;
-    }*/
-
-@keyframes shine {
-    0% {
-        background-position: 0%;
+    /* Tiêu đề trong intro section */
+    .intro-section h1 {
+        font-size: 2.5rem;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin: 10px 0;
+        font-family: 'Playfair Display', serif;
     }
 
-    100% {
-        background-position: 200%;
+    /* Nút khám phá */
+    .intro-section .btn-primary {
+        background-color: #007bff;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        align-self: flex-start;
     }
-}
 
-.explore-button {
-    background-color: #f7f7f7;
-    border: 1px solid #ccc;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-    .explore-button:hover {
-        background-color: #e0e0e0;
-    }
+        .intro-section .btn-primary:hover {
+            background-color: #0056b3;
+        }
 
 /* Form có hiệu ứng hover phồng nhẹ */
 .availability-form {
@@ -64,7 +54,7 @@
     background-color: white;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
@@ -96,6 +86,7 @@
         border: 1px solid #ccc;
         border-radius: 8px;
         margin-bottom: 10px;
+        font-size: 1rem;
     }
 
 .check-button {
@@ -106,9 +97,144 @@
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background-color 0.3s ease;
 }
 
     .check-button:hover {
         background-color: #e0e0e0;
     }
+
+/* Responsive */
+@media (max-width: 992px) {
+    .home-container {
+        flex-direction: column;
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .intro-section {
+        height: 350px; /* Giảm chiều cao cho tablet */
+        flex: none;
+        width: 100%;
+        margin-bottom: 20px;
+        background-size: contain; /* Đảm bảo hình ảnh đầy đủ */
+        background-position: center top; /* Căn chỉnh hình ảnh */
+    }
+
+    .availability-form {
+        flex: none;
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+    }
+
+    .intro-section h1 {
+        font-size: 2rem;
+    }
+
+    .intro-section .btn-primary {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .availability-form h2 {
+        font-size: 24px;
+    }
+
+    .availability-form input {
+        font-size: 0.9rem;
+    }
+
+    .check-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .intro-section {
+        height: 250px; /* Giảm chiều cao cho tablet nhỏ */
+        padding: 15px;
+        background-size: contain;
+        background-position: center top;
+    }
+
+        .intro-section h1 {
+            font-size: 1.8rem;
+        }
+
+        .intro-section .btn-primary {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+    .availability-form {
+        padding: 15px;
+    }
+
+        .availability-form h2 {
+            font-size: 20px;
+        }
+
+        .availability-form label {
+            font-size: 0.9rem;
+        }
+
+        .availability-form input {
+            padding: 8px;
+            font-size: 0.85rem;
+        }
+
+    .check-button {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .intro-section {
+        height: 200px; /* Giảm chiều cao tối đa cho mobile */
+        padding: 10px;
+        background-size: contain; /* Hiển thị toàn bộ hình ảnh */
+        background-position: center top;
+        background-repeat: no-repeat;
+        display: none !important;
+        background: none !important;
+    }
+
+        .intro-section h1 {
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .intro-section .btn-primary {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+
+    .availability-form {
+        padding: 10px;
+    }
+
+        .availability-form h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .availability-form label {
+            font-size: 0.85rem;
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+
+        .availability-form input {
+            padding: 6px;
+            font-size: 0.8rem;
+        }
+
+    .check-button {
+        font-size: 12px;
+        padding: 6px;
+        margin-top: 15px;
+    }
+}

@@ -7482,8 +7482,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>lsr40ibs6a</Fingerprint>
-      <Integrity>tZ01KVb4laYIarN7ik88n6ZUiwAoto7toZn/mgm2PPo=</Integrity>
+      <Fingerprint>cpfjc3jf74</Fingerprint>
+      <Integrity>wMGDyrX7oT+1bZ6Cw/oXBX0cXMUmYQZGwUHIB4DsUXc=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\dichvu.css'))</OriginalItemSpec>
@@ -7536,8 +7536,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>ox8peuyvlt</Fingerprint>
-      <Integrity>fN+Karwmq3kc6bWQw2bD3l3O9TLApEn62lKa/Pu0HQ0=</Integrity>
+      <Fingerprint>4hq70xmew5</Fingerprint>
+      <Integrity>yIX7RbHQGM0ASA5NesoLRuZDR/LVJqZXr7k0TlxKqVA=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\home.css'))</OriginalItemSpec>
@@ -9408,8 +9408,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>u66e994v2w</Fingerprint>
-      <Integrity>1oPo62j2bXkeb1ComnVC6vqBbmCiiXnLkw653LmUdqA=</Integrity>
+      <Fingerprint>dtv0fiwqi3</Fingerprint>
+      <Integrity>7+esMnKd1FzLzkhvLnNjhfgyqP1fdpUIByfODFd1yJg=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\sup-hai-san.jpg'))</OriginalItemSpec>
