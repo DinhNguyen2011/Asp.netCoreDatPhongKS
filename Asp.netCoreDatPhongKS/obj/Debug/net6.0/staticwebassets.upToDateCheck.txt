@@ -415,7 +415,7 @@ wwwroot\css\datphong.css
 wwwroot\css\dichvu.css
 wwwroot\css\dsLPhong.css
 wwwroot\css\gioithieu.css
-wwwroot\css\home.css
+wwwroot\css\home-hotel.css
 wwwroot\css\phong-timkiem.css
 wwwroot\css\profile-admin.css
 wwwroot\css\profile-user.css
@@ -423,6 +423,7 @@ wwwroot\css\reponPhoneLayout.css
 wwwroot\css\site.css
 wwwroot\css\style.css
 wwwroot\css\vendor.css
+wwwroot\css\xulypdp.css
 wwwroot\favicon.ico
 wwwroot\images\233c082e-611b-40e9-9d58-49c56db70544.png
 wwwroot\images\7up.jpg

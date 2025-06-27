@@ -364,7 +364,24 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     //     hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0)) +
                     //     existingHoaDon.HoaDonPdps.Sum(hdp => 
                     //     hdp.PhieuDatPhong.ChiTietPhieuPhongs.FirstOrDefault()?.DonGia ?? 0);
-
+                    if (existingHoaDon.HoaDonDichVus != null && existingHoaDon.HoaDonDichVus.Any())
+                    {
+                        foreach (var hdv in existingHoaDon.HoaDonDichVus)
+                        {
+                            if (hoaDon.TrangThai == "Chưa thanh toán")
+                            {
+                                hdv.TrangThaiThanhToan = "Chưa thanh toán";
+                                hdv.NgayThanhToan = null;
+                            }
+                            else if (hoaDon.TrangThai == "Đã thanh toán")
+                            {
+                                hdv.TrangThaiThanhToan = "Đã thanh toán";
+                                hdv.NgayThanhToan = DateTime.Now;
+                                hdv.HinhThucThanhToan = existingHoaDon.HinhThucThanhToan; // Đồng bộ hình thức thanh toán
+                            }
+                            _context.Update(hdv);
+                        }
+                    }
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }

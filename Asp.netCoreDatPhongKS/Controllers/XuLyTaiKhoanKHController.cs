@@ -178,5 +178,45 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(donHangDichVus);
         }
+        [HttpGet]
+        public async Task<IActionResult> XemHoaDon()
+        {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
+            var email = HttpContext.Session.GetString("Email");
+            if (string.IsNullOrEmpty(email))
+            {
+                TempData["LoginError"] = "Vui lòng đăng nhập để xem hóa đơn.";
+                return RedirectToAction("Login", "TaiKhoan");
+            }
+
+            var khachHang = await _context.KhachHangs
+                .FirstOrDefaultAsync(kh => kh.TaiKhoan.Email == email);
+
+            if (khachHang == null)
+            {
+                TempData["Error"] = "Không tìm thấy thông tin khách hàng.";
+                return View(new HoaDon[0]);
+            }
+
+            var hoaDons = await _context.HoaDons
+                .Include(h => h.KhachHang)
+                .Include(h => h.HoaDonPdps)
+                .ThenInclude(hdp => hdp.PhieuDatPhong)
+                .ThenInclude(pdp => pdp.ChiTietPhieuPhongs)
+                .ThenInclude(ct => ct.Phong)
+                .ThenInclude(p => p.LoaiPhong)
+                .Include(h => h.HoaDonDichVus)
+                .ThenInclude(hddv => hddv.MaDonHangDvNavigation)
+                .ThenInclude(dhdv => dhdv.ChiTietDonHangDichVus)
+                .ThenInclude(ct => ct.DichVu)
+                .Where(h => h.KhachHangId == khachHang.KhachHangId)
+                .ToListAsync();
+
+            return View(hoaDons);
+        }
     }
 }

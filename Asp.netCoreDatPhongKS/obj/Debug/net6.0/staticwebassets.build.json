@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "z9gJQy+HZSAmI7jTa7HycFYWuQjXW8h/2QcsMqKOwj8=",
+  "Hash": "+pPX2vs3nmcrH+W5BmfJxZb8zhufQWp9sK75cVehLqg=",
   "Source": "Asp.netCoreDatPhongKS",
   "BasePath": "_content/Asp.netCoreDatPhongKS",
   "Mode": "Default",
@@ -8816,12 +8816,12 @@
       "OriginalItemSpec": "wwwroot\\css\\gioithieu.css"
     },
     {
-      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home.css",
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home-hotel.css",
       "SourceId": "Asp.netCoreDatPhongKS",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
       "BasePath": "_content/Asp.netCoreDatPhongKS",
-      "RelativePath": "css/home#[.{fingerprint}]?.css",
+      "RelativePath": "css/home-hotel#[.{fingerprint}]?.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -8830,11 +8830,11 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "4hq70xmew5",
-      "Integrity": "yIX7RbHQGM0ASA5NesoLRuZDR/LVJqZXr7k0TlxKqVA=",
+      "Fingerprint": "xz1vyzxhnd",
+      "Integrity": "3TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\home.css"
+      "OriginalItemSpec": "wwwroot\\css\\home-hotel.css"
     },
     {
       "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\phong-timkiem.css",
@@ -8982,6 +8982,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\vendor.css"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\xulypdp.css",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "css/xulypdp#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "1cg6xrm6u3",
+      "Integrity": "z3qjUD/JLR67VuWgl+72wAMSTIHxZqknRya+xPY+AV8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\xulypdp.css"
     },
     {
       "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\favicon.ico",
@@ -46998,8 +47019,8 @@
       ]
     },
     {
-      "Route": "css/home.4hq70xmew5.css",
-      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home.css",
+      "Route": "css/home-hotel.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home-hotel.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -47008,7 +47029,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5563"
+          "Value": "1956"
         },
         {
           "Name": "Content-Type",
@@ -47016,56 +47037,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"yIX7RbHQGM0ASA5NesoLRuZDR/LVJqZXr7k0TlxKqVA=\""
+          "Value": "\"3TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Thu, 26 Jun 2025 17:40:51 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "4hq70xmew5"
-        },
-        {
-          "Name": "label",
-          "Value": "css/home.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-yIX7RbHQGM0ASA5NesoLRuZDR/LVJqZXr7k0TlxKqVA="
-        }
-      ]
-    },
-    {
-      "Route": "css/home.css",
-      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "5563"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"yIX7RbHQGM0ASA5NesoLRuZDR/LVJqZXr7k0TlxKqVA=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Thu, 26 Jun 2025 17:40:51 GMT"
+          "Value": "Fri, 27 Jun 2025 16:38:30 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -47075,7 +47051,52 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-yIX7RbHQGM0ASA5NesoLRuZDR/LVJqZXr7k0TlxKqVA="
+          "Value": "sha256-3TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA="
+        }
+      ]
+    },
+    {
+      "Route": "css/home-hotel.xz1vyzxhnd.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\home-hotel.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1956"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 27 Jun 2025 16:38:30 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xz1vyzxhnd"
+        },
+        {
+          "Name": "label",
+          "Value": "css/home-hotel.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA="
         }
       ]
     },
@@ -47650,6 +47671,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-yia3D/0JNjtqY7/y9wMne/sgn0/IK7KrJ5nkTvmaafw="
+        }
+      ]
+    },
+    {
+      "Route": "css/xulypdp.1cg6xrm6u3.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\xulypdp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4990"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"z3qjUD/JLR67VuWgl+72wAMSTIHxZqknRya+xPY+AV8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 27 Jun 2025 17:06:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "1cg6xrm6u3"
+        },
+        {
+          "Name": "label",
+          "Value": "css/xulypdp.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-z3qjUD/JLR67VuWgl+72wAMSTIHxZqknRya+xPY+AV8="
+        }
+      ]
+    },
+    {
+      "Route": "css/xulypdp.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\xulypdp.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4990"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"z3qjUD/JLR67VuWgl+72wAMSTIHxZqknRya+xPY+AV8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 27 Jun 2025 17:06:04 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-z3qjUD/JLR67VuWgl+72wAMSTIHxZqknRya+xPY+AV8="
         }
       ]
     },

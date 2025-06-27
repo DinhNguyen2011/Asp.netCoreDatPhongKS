@@ -3,7 +3,7 @@
     ViewData["Title"] = "Thông tin tài khoản";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link rel="stylesheet" href="~/css/profile-user.css" />
 <div class="container-fluid td-padding-side" data-aos="fade-up">
     <h2 class="display-4 text-center fw-normal mb-5">@ViewData["Title"]</h2>
 
@@ -54,9 +54,9 @@
                 <input type="hidden" asp-for="VaiTroId" />
                 <input type="hidden" asp-for="TrangThai" />
                 <input type="hidden" asp-for="MatKhau" />
-                <button type="submit" class="btn btn-primary">Cập nhật</button>
-                <a asp-action="ChangePassword" class="btn btn-secondary">Đổi mật khẩu</a>
-                <a asp-action="Index" asp-controller="Home" class="btn btn-outline-secondary">Quay lại</a>
+                <button type="submit" class="btn btn-primary" style="margin:3px;">Cập nhật</button>
+                <a asp-action="ChangePassword" class="btn btn-secondary" style="margin:3px;">Đổi mật khẩu</a>
+                <a asp-action="Index" asp-controller="Home" class="btn btn-outline-secondary" style="margin:3px;">Quay lại</a>
             </form>
         </div>
     </div>
