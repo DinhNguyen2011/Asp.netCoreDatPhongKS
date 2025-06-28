@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 
 namespace Asp.netCoreDatPhongKS.Models
@@ -22,12 +23,22 @@ namespace Asp.netCoreDatPhongKS.Models
         public string? HinhAnh { get; set; }
         public string? Hoten { get; set; }
         public DateTime? NgayTao { get; set; }
-
+        [ValidateNever]
         public virtual VaiTro? VaiTro { get; set; }
+        [ValidateNever]
+
         public virtual ICollection<DanhGium> DanhGia { get; set; }
+        [ValidateNever]
+
         public virtual ICollection<KhachHang> KhachHangs { get; set; }
+        [ValidateNever]
+
         public virtual ICollection<LienHeVoiCtoi> LienHeVoiCtois { get; set; }
+        [ValidateNever]
+
         public virtual ICollection<NhanVien> NhanViens { get; set; }
+        [ValidateNever]
+
         public virtual ICollection<QuyenTaiKhoan> QuyenTaiKhoans { get; set; }
     }
 }
