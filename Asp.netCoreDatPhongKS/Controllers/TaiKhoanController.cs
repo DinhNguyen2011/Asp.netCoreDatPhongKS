@@ -246,8 +246,20 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 TempData["LoginError"] = "Vui lòng đăng nhập để đổi mật khẩu.";
                 return RedirectToAction("Index", "Home");
             }
+            var taiKhoan = _context.TaiKhoans
+              .FirstOrDefault(tk => tk.TaiKhoanId == int.Parse(taiKhoanId) && tk.TrangThai == true);
 
-            return View();
+            if (taiKhoan == null)
+            {
+                TempData["LoginError"] = "Tài khoản không tồn tại hoặc đã bị khóa.";
+                HttpContext.Session.Clear();
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (taiKhoan.VaiTroId == 1 || taiKhoan.VaiTroId == 2)
+                return View("ChangePasswordAdmin", taiKhoan);
+            else
+                return View("ChangePasswordUser", taiKhoan);
         }
 
         [HttpPost]

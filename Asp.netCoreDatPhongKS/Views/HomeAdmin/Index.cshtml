@@ -1,4 +1,91 @@
 ﻿@{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<h1>xin chào</h1>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .rule-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .rule-item {
+        margin-bottom: 15px;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+        .rule-item:last-child {
+            border-bottom: none;
+        }
+
+    .rule-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+
+    .rule-content {
+        color: #555;
+    }
+
+    .back-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #ccc;
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+        .back-button:hover {
+            background-color: #bbb;
+        }
+</style>
+<h1 style="color:red">Xin chào  @ViewData["Hoten"]</h1>
+<div class="container">
+    <h1>Nội quy khách sạn</h1>
+    <div class="rule-container">
+        <div class="rule-item">
+            <div class="rule-title">1. Quy định về số lượng khách trong phòng</div>
+            <div class="rule-content">Trong trường hợp khách hàng đi 5 người nhưng khách sạn chỉ còn phòng dành cho 4 người(hay các trường hợp khác), khách sạn sẽ thu thêm phụ phí theo quy định hiện hành là 10% theo giá của phòng.</div>
+        </div>
+        <div class="rule-item">
+            <div class="rule-title">2. Quy tắc ứng xử</div>
+            <div class="rule-content">Khách hàng phải giữ gìn trật tự, không gây ồn ào sau 22:00 để đảm bảo sự thoải mái cho các khách hàng khác.</div>
+        </div>
+        <div class="rule-item">
+            <div class="rule-title">3. Giữ gìn vệ sinh</div>
+            <div class="rule-content">Khách hàng vui lòng giữ gìn vệ sinh chung, không vứt rác bừa bãi trong khuôn viên khách sạn.</div>
+        </div>
+        <div class="rule-item">
+            <div class="rule-title">4. Hút thuốc</div>
+            <div class="rule-content">Hút thuốc chỉ được phép ở khu vực được chỉ định. Vi phạm sẽ bị phạt theo quy định của khách sạn.</div>
+        </div>
+        <div class="rule-item">
+            <div class="rule-title">5. Thanh toán</div>
+            <div class="rule-content">Khách hàng cần thanh toán đầy đủ chi phí trước khi rời khách sạn. Mọi chi phí phát sinh sẽ được thông báo trước.</div>
+        </div>
+    </div>
+
+</div>
