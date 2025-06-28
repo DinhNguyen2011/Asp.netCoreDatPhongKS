@@ -3,56 +3,62 @@
     ViewData["Title"] = "Danh sách phiếu đặt phòng";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+<link href="~/css/PhieuDatPhongAdmin.css" rel="stylesheet" />
 <div class="container mt-4">
     <h2>Danh sách phiếu đặt phòng</h2>
-    <a href="@Url.Action("Create", "PhieuDatPhong")" class="btn btn-primary mb-3">Tạo phiếu mới</a>
-    <a href="@Url.Action("hienThiphieuHuy", "PhieuDatPhong")" class="btn btn-danger btn-sm">Xem phiếu hủy</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Mã phiếu</th>
-                <th>Khách hàng</th>
-                <th>Phòng</th>
-                <th>Loại phòng</th>
-                <th>Ngày nhận</th>
-                <th>Ngày trả</th>
-                <th>Tổng tiền</th>
-                <th>Tiền cọc</th>
-                <th>Số tiền đã thanh toán</th>
-                <th>Trạng thái</th>
-                <th>Tình trạng sử dụng</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="mb-3">
+        <a href="@Url.Action("Create", "PhieuDatPhong")" class="btn btn-primary">Tạo phiếu mới</a>
+        <a href="@Url.Action("hienThiphieuHuy", "PhieuDatPhong")" class="btn btn-danger">Xem phiếu hủy</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
                 <tr>
-                    <td>@item.MaPhieu</td>
-                    <td>@(item.KhachHang?.HoTen ?? "Không xác định")</td>
-                    <td>@item.ChiTietPhieuPhongs.FirstOrDefault()?.Phong?.SoPhong</td>
-                    <td>@item.ChiTietPhieuPhongs.FirstOrDefault()?.Phong?.LoaiPhong?.TenLoai</td>
-                    <td>@item.NgayNhan?.ToString("dd/MM/yyyy")</td>
-                    <td>@item.NgayTra?.ToString("dd/MM/yyyy")</td>
-                    <td>@item.TongTien?.ToString("N0") VNĐ</td>
-                    <td>@item.SoTienCoc?.ToString("N0") VNĐ</td>
-                    <td>@item.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
-                    <td>@item.TrangThai</td>
-                    <td>@item.TinhTrangSuDung</td>
-                    <td>
-                        <button class="btn btn-info btn-sm" onclick="showPhieuDatPhongDetails(@item.PhieuDatPhongId)">Chi tiết</button>
-                        @if (!(item.TinhTrangSuDung == "Đã check-out"))
-                        {
-                            <a asp-action="Edit" asp-route-id="@item.PhieuDatPhongId" class="btn btn-warning btn-sm">Sửa</a>
-                        }  <a asp-action="Delete" asp-route-id="@item.PhieuDatPhongId" class="btn btn-danger btn-sm">Xóa</a>
-                        <a asp-action="PrintPhieuDatPhong" asp-route-id="@item.PhieuDatPhongId" class="btn btn-success btn-sm" target="_blank">In</a>
-                        
-                    </td>
+                    <th>Mã phiếu</th>
+                    <th>Khách hàng</th>
+                    <th>Phòng</th>
+                    <th>Loại phòng</th>
+                    <th>Ngày nhận</th>
+                    <th>Ngày trả</th>
+                    <th>Tổng tiền</th>
+                    <th>Tiền cọc</th>
+                    <th>Đã thanh toán</th>
+                    <th>Trạng thái</th>
+                    <th>Tình trạng</th>
+                    <th class="action-column">Thao tác phiếu đặt phòng</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.MaPhieu</td>
+                        <td>@(item.KhachHang?.HoTen ?? "Không xác định")</td>
+                        <td>@(item.ChiTietPhieuPhongs.FirstOrDefault()?.Phong?.SoPhong ?? "N/A")</td>
+                        <td>@(item.ChiTietPhieuPhongs.FirstOrDefault()?.Phong?.LoaiPhong?.TenLoai ?? "N/A")</td>
+                        <td>@(item.NgayNhan?.ToString("dd/MM/yyyy") ?? "N/A")</td>
+                        <td>@(item.NgayTra?.ToString("dd/MM/yyyy") ?? "N/A")</td>
+                        <td>@(item.TongTien?.ToString("N0") ?? "0") VNĐ</td>
+                        <td>@(item.SoTienCoc?.ToString("N0") ?? "0") VNĐ</td>
+                        <td>@(item.SoTienDaThanhToan?.ToString("N0") ?? "0") VNĐ</td>
+                        <td>@item.TrangThai</td>
+                        <td>@item.TinhTrangSuDung</td>
+                        <td class="action-column">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-info btn-sm" onclick="showPhieuDatPhongDetails(@item.PhieuDatPhongId)">Chi tiết</button>
+                                @if (item.TinhTrangSuDung != "Đã check-out")
+                                {
+                                    <a asp-action="Edit" asp-route-id="@item.PhieuDatPhongId" class="btn btn-warning btn-sm">Sửa</a>
+                                }
+                                <a asp-action="Delete" asp-route-id="@item.PhieuDatPhongId" class="btn btn-danger btn-sm">Xóa</a>
+                                <a asp-action="PrintPhieuDatPhong" asp-route-id="@item.PhieuDatPhongId" class="btn btn-success btn-sm" target="_blank">In</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div id="phieuDatPhongDetailsModal" class="modal fade" tabindex="-1">
@@ -98,8 +104,8 @@
                         <p><strong>Tiền đã thanh toán:</strong> ${phieu.soTienDaThanhToan.toLocaleString()} VNĐ</p>
                         <p><strong>Trạng thái:</strong> ${phieu.trangThai}</p>
                         <p><strong>Tình trạng sử dụng:</strong> ${phieu.tinhTrangSuDung}</p>
-                           <p><strong>VNPay:</strong> ${phieu.idvnpay}</p>
-                              <p><strong>MoMo:</strong> ${phieu.idmomo}</p>
+                        <p><strong>VNPay:</strong> ${phieu.idvnpay}</p>
+                        <p><strong>MoMo:</strong> ${phieu.idmomo}</p>
                     `;
                     document.getElementById('phieuDatPhongDetailsContent').innerHTML = content;
                     $('#phieuDatPhongDetailsModal').modal('show');

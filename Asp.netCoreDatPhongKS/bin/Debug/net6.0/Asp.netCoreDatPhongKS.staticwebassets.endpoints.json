@@ -33787,6 +33787,88 @@
       ]
     },
     {
+      "Route": "css/PhieuDatPhongAdmin.css",
+      "AssetFile": "css/PhieuDatPhongAdmin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5727"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 28 Jun 2025 11:18:34 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc="
+        }
+      ]
+    },
+    {
+      "Route": "css/PhieuDatPhongAdmin.et5u6aptpw.css",
+      "AssetFile": "css/PhieuDatPhongAdmin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5727"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 28 Jun 2025 11:18:34 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "et5u6aptpw"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc="
+        },
+        {
+          "Name": "label",
+          "Value": "css/PhieuDatPhongAdmin.css"
+        }
+      ]
+    },
+    {
       "Route": "css/ajax-loader.fypy1n2a1i.gif",
       "AssetFile": "css/ajax-loader.gif",
       "Selectors": [],

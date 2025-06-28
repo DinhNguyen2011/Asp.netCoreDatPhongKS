@@ -1649,6 +1649,10 @@
       "PackagePath": "staticwebassets\\assets\\js\\setting-demo2.js"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\PhieuDatPhongAdmin.css",
+      "PackagePath": "staticwebassets\\css\\PhieuDatPhongAdmin.css"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\ajax-loader.gif",
       "PackagePath": "staticwebassets\\css\\ajax-loader.gif"
     },

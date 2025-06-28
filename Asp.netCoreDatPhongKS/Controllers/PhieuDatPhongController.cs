@@ -48,7 +48,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                    .ToList();
             return View(huypdp);
         }
-        
+
 
         [AuthorizePermission("ManagePhieuDatPhong")]
         public IActionResult Create()
@@ -69,44 +69,20 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 new SelectListItem { Value = "Đã check-out", Text = "Đã check-out" },
                 new SelectListItem { Value = "Chờ xử lý", Text = "Chờ xử lý" }
             };
+            ViewBag.KhuyenMaiOptions = _context.KhuyenMais
+                .Where(km => km.TrangThai == true && km.NgayBatDau <= DateTime.Now && km.NgayKetThuc >= DateTime.Now)
+                .Select(km => new SelectListItem
+                {
+                    Value = km.KhuyenMaiId.ToString(),
+                    Text = $"{km.MaKhuyenMai} - {km.MoTa} ({km.PhanTramGiam}% - {km.NgayBatDau:dd/MM/yyyy} đến {km.NgayKetThuc:dd/MM/yyyy})"
+                }).ToList();
             return View();
         }
-
-        private List<Phong> GetAvailableRooms(DateTime? newNgayNhan, DateTime? newNgayTra, int? soLuongKhach)
-        {
-            var query = _context.Phongs
-                .Include(p => p.LoaiPhong)
-                .AsQueryable();
-
-            if (soLuongKhach.HasValue)
-            {
-                query = query.Where(p => p.SoLuongKhach >= soLuongKhach);
-            }
-
-            var bookedRooms = _context.PhieuDatPhongs
-                .Include(p => p.ChiTietPhieuPhongs)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung !="Đã check-out")
-                .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
-                .ToList();
-
-            var availableRooms = query.ToList().Where(room =>
-            {
-                if (!newNgayNhan.HasValue || !newNgayTra.HasValue) return true;
-                return !bookedRooms.Any(booking =>
-                    booking.PhongId == room.PhongId &&
-                    !(newNgayTra.Value <= booking.NgayNhan || newNgayNhan.Value >= booking.NgayTra));
-            }).ToList();
-
-            return availableRooms;
-        }
-
-        // POST: Xử lý tạo phiếu đặt phòng
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizePermission("ManagePhieuDatPhong")]
-        public async Task<IActionResult> Create(PhieuDatPhong model, List<int> phongIds, decimal soTienCoc, decimal? soTienDaThanhToan, string trangThai, string tinhTrangSuDung)
+        public async Task<IActionResult> Create(PhieuDatPhong model, List<int> phongIds, decimal soTienCoc, decimal? soTienDaThanhToan, string trangThai, string tinhTrangSuDung, int? khuyenMaiId)
         {
-            // Danh sách giá trị hợp lệ
             var validTrangThai = new List<string> { "Chưa thanh toán", "Đã thanh toán", "Hủy", "Hoàn thành" };
             var validTinhTrangSuDung = new List<string> { "Chưa sử dụng", "Đã check-in", "Đã check-out", "Chờ xử lý" };
 
@@ -135,25 +111,28 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ModelState.AddModelError("NgayNhan", "Ngày nhận phải trước ngày trả.");
             }
+            if (khuyenMaiId.HasValue)
+            {
+                var khuyenMai = await _context.KhuyenMais.FindAsync(khuyenMaiId);
+                if (khuyenMai == null || khuyenMai.TrangThai != true || khuyenMai.NgayBatDau > DateTime.Now || khuyenMai.NgayKetThuc < DateTime.Now)
+                {
+                    ModelState.AddModelError("KhuyenMaiId", "Khuyến mãi không hợp lệ hoặc đã hết hạn.");
+                }
+            }
 
             if (!ModelState.IsValid)
             {
                 ViewBag.KhachHangs = _context.KhachHangs.ToList();
                 ViewBag.Phongs = GetAvailableRooms(model.NgayNhan, model.NgayTra, null);
-                ViewBag.TrangThaiOptions = new List<SelectListItem>
-                {
-                    new SelectListItem { Value = "Chưa thanh toán", Text = "Chưa thanh toán" },
-                    new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
-                    new SelectListItem { Value = "Hủy", Text = "Hủy" },
-                    new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
-                };
-                ViewBag.TinhTrangSuDungOptions = new List<SelectListItem>
-                {
-                    new SelectListItem { Value = "Chưa sử dụng", Text = "Chưa sử dụng" },
-                    new SelectListItem { Value = "Đã check-in", Text = "Đã check-in" },
-                    new SelectListItem { Value = "Đã check-out", Text = "Đã check-out" },
-                    new SelectListItem { Value = "Chờ xử lý", Text = "Chờ xử lý" }
-                };
+                ViewBag.TrangThaiOptions = validTrangThai.Select(t => new SelectListItem { Value = t, Text = t }).ToList();
+                ViewBag.TinhTrangSuDungOptions = validTinhTrangSuDung.Select(t => new SelectListItem { Value = t, Text = t }).ToList();
+                ViewBag.KhuyenMaiOptions = _context.KhuyenMais
+                    .Where(km => km.TrangThai == true && km.NgayBatDau <= DateTime.Now && km.NgayKetThuc >= DateTime.Now)
+                    .Select(km => new SelectListItem
+                    {
+                        Value = km.KhuyenMaiId.ToString(),
+                        Text = $"{km.MaKhuyenMai} - {km.MoTa} ({km.PhanTramGiam}% - {km.NgayBatDau:dd/MM/yyyy} đến {km.NgayKetThuc:dd/MM/yyyy})"
+                    }).ToList();
                 return View(model);
             }
 
@@ -187,7 +166,17 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     soNgay = soNgay < 1 ? 1 : soNgay;
                     var tongTien = donGia * soNgay;
 
-                    // Kiểm tra SoTienDaThanhToan có vượt quá TongTien không
+                    // Áp dụng khuyến mãi
+                    if (khuyenMaiId.HasValue)
+                    {
+                        var khuyenMai = await _context.KhuyenMais.FindAsync(khuyenMaiId);
+                        if (khuyenMai != null)
+                        {
+                            var phanTramGiam = khuyenMai.PhanTramGiam ?? 0;
+                            tongTien *= (1 - phanTramGiam / 100.0m);
+                        }
+                    }
+
                     var soTienDaThanhToanPerRoom = soTienDaThanhToan.HasValue ? soTienDaThanhToan.Value / phongIds.Count : 0;
                     if (soTienDaThanhToanPerRoom > tongTien)
                     {
@@ -207,6 +196,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         SoTienDaThanhToan = soTienDaThanhToanPerRoom,
                         TrangThai = soTienDaThanhToanPerRoom >= tongTien ? "Đã thanh toán" : (string.IsNullOrEmpty(trangThai) ? "Chưa thanh toán" : trangThai),
                         TinhTrangSuDung = string.IsNullOrEmpty(tinhTrangSuDung) ? "Chưa sử dụng" : tinhTrangSuDung,
+                        KhuyenMaiId = khuyenMaiId,
                         ChiTietPhieuPhongs = new List<ChiTietPhieuPhong>
                         {
                             new ChiTietPhieuPhong
@@ -238,24 +228,46 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 TempData["Error"] = $"Có lỗi xảy ra: {ex.Message}";
                 ViewBag.KhachHangs = _context.KhachHangs.ToList();
                 ViewBag.Phongs = GetAvailableRooms(model.NgayNhan, model.NgayTra, null);
-                ViewBag.TrangThaiOptions = new List<SelectListItem>
-                {
-                    new SelectListItem { Value = "Chưa thanh toán", Text = "Chưa thanh toán" },
-                    new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
-                    new SelectListItem { Value = "Hủy", Text = "Hủy" },
-                    new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
-                };
-                ViewBag.TinhTrangSuDungOptions = new List<SelectListItem>
-                {
-                    new SelectListItem { Value = "Chưa sử dụng", Text = "Chưa sử dụng" },
-                    new SelectListItem { Value = "Đã check-in", Text = "Đã check-in" },
-                    new SelectListItem { Value = "Đã check-out", Text = "Đã check-out" },
-                    new SelectListItem { Value = "Chờ xử lý", Text = "Chờ xử lý" }
-                };
+                ViewBag.TrangThaiOptions = validTrangThai.Select(t => new SelectListItem { Value = t, Text = t }).ToList();
+                ViewBag.TinhTrangSuDungOptions = validTinhTrangSuDung.Select(t => new SelectListItem { Value = t, Text = t }).ToList();
+                ViewBag.KhuyenMaiOptions = _context.KhuyenMais
+                    .Where(km => km.TrangThai == true && km.NgayBatDau <= DateTime.Now && km.NgayKetThuc >= DateTime.Now)
+                    .Select(km => new SelectListItem
+                    {
+                        Value = km.KhuyenMaiId.ToString(),
+                        Text = $"{km.MaKhuyenMai} - {km.MoTa} ({km.PhanTramGiam}% - {km.NgayBatDau:dd/MM/yyyy} đến {km.NgayKetThuc:dd/MM/yyyy})"
+                    }).ToList();
                 return View(model);
             }
         }
 
+        private List<Phong> GetAvailableRooms(DateTime? newNgayNhan, DateTime? newNgayTra, int? soLuongKhach)
+        {
+            var query = _context.Phongs
+                .Include(p => p.LoaiPhong)
+                .AsQueryable();
+
+            if (soLuongKhach.HasValue)
+            {
+                query = query.Where(p => p.SoLuongKhach >= soLuongKhach);
+            }
+
+            var bookedRooms = _context.PhieuDatPhongs
+                .Include(p => p.ChiTietPhieuPhongs)
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung !="Đã check-out")
+                .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
+                .ToList();
+
+            var availableRooms = query.ToList().Where(room =>
+            {
+                if (!newNgayNhan.HasValue || !newNgayTra.HasValue) return true;
+                return !bookedRooms.Any(booking =>
+                    booking.PhongId == room.PhongId &&
+                    !(newNgayTra.Value <= booking.NgayNhan || newNgayNhan.Value >= booking.NgayTra));
+            }).ToList();
+
+            return availableRooms;
+        }
         private bool IsRoomAvailable(int phongId, DateTime? newNgayNhan, DateTime? newNgayTra)
         {
             if (!newNgayNhan.HasValue || !newNgayTra.HasValue) return false;
@@ -448,92 +460,69 @@ namespace Asp.netCoreDatPhongKS.Controllers
         }
 
         // GET: Hiển thị form xác nhận xóa phiếu đặt phòng
-        [AuthorizePermission("ManagePhieuDatPhong")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            var phieu = await _context.PhieuDatPhongs
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var phieuDatPhong = await _context.PhieuDatPhongs
                 .Include(p => p.KhachHang)
-                .Include(p => p.ChiTietPhieuPhongs)
-                .ThenInclude(c => c.Phong)
-                .ThenInclude(p => p!.LoaiPhong)
-                .Include(p => p.HoaDonPdp)
-                .FirstOrDefaultAsync(p => p.PhieuDatPhongId == id);
+                .Include(p => p.KhuyenMai)
+                .FirstOrDefaultAsync(m => m.PhieuDatPhongId == id);
 
-            if (phieu == null)
+            if (phieuDatPhong == null)
             {
-                TempData["Error"] = "Phiếu đặt phòng không tồn tại.";
-                return RedirectToAction("Index");
+                return NotFound();
             }
 
-            if (phieu.TinhTrangSuDung != "Chưa sử dụng" || phieu.TrangThai != "Chưa thanh toán" || phieu.HoaDonPdp != null)
-            {
-                TempData["Error"] = "Không thể xóa phiếu do đã thanh toán, đang sử dụng, hoặc có hóa đơn liên kết.";
-                return RedirectToAction("Index");
-            }
+            // Kiểm tra ràng buộc ChiTietPhieuPhong
+            var hasChiTiet = await _context.ChiTietPhieuPhongs
+                .AnyAsync(ct => ct.PhieuDatPhongId == id);
 
-            return View(phieu);
+            // Kiểm tra ràng buộc HoaDonPdp
+            var hasHoaDon = await _context.HoaDonPdps
+                .AnyAsync(hd => hd.PhieuDatPhongId == id);
+
+            ViewBag.HasChiTiet = hasChiTiet;
+            ViewBag.HasHoaDon = hasHoaDon;
+            return View(phieuDatPhong);
         }
 
-        // POST: Xử lý xóa phiếu đặt phòng
+        // POST: PhieuDatPhong/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [AuthorizePermission("ManagePhieuDatPhong")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var phieu = await _context.PhieuDatPhongs
+            var phieuDatPhong = await _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
-                .ThenInclude(c => c.Phong)
-                .Include(p => p.HoaDonPdp)
                 .FirstOrDefaultAsync(p => p.PhieuDatPhongId == id);
 
-            if (phieu == null)
+            if (phieuDatPhong == null)
             {
-                TempData["Error"] = "Phiếu đặt phòng không tồn tại.";
-                return RedirectToAction("Index");
+                return NotFound();
             }
 
-            if (phieu.TinhTrangSuDung != "Chưa sử dụng" || phieu.TrangThai != "Chưa thanh toán" || phieu.HoaDonPdp != null)
+            // Kiểm tra ràng buộc ChiTietPhieuPhong
+            if (phieuDatPhong.ChiTietPhieuPhongs.Any())
             {
-                TempData["Error"] = "Không thể xóa phiếu do đã thanh toán, đang sử dụng, hoặc có hóa đơn liên kết.";
-                return RedirectToAction("Index");
+                TempData["ErrorMessage"] = "Không thể xóa phiếu đặt phòng vì còn chi tiết phiếu phòng liên quan.";
+                return RedirectToAction(nameof(Index));
             }
 
-            IDbContextTransaction transaction = null;
-            try
+            // Kiểm tra ràng buộc HoaDonPdp nếu có
+            if (phieuDatPhong.HoaDonPdp != null)
             {
-                transaction = await _context.Database.BeginTransactionAsync();
-
-                foreach (var chiTiet in phieu.ChiTietPhieuPhongs)
-                {
-                    var phong = chiTiet.Phong;
-                    if (phong != null)
-                    {
-                        phong.TinhTrang = "Trống";
-                        _context.Phongs.Update(phong);
-                    }
-                }
-
-                _context.ChiTietPhieuPhongs.RemoveRange(phieu.ChiTietPhieuPhongs);
-                _context.PhieuDatPhongs.Remove(phieu);
-
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
-
-                TempData["Success"] = "Xóa phiếu đặt phòng thành công.";
-                return RedirectToAction("Index");
+                TempData["ErrorMessage"] = "Không thể xóa phiếu đặt phòng vì đã có hóa đơn liên quan.";
+                return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
-            {
-                if (transaction != null)
-                {
-                    await transaction.RollbackAsync();
-                }
 
-                TempData["Error"] = $"Có lỗi xảy ra: {ex.Message}";
-                return RedirectToAction("Index");
-            }
+            _context.PhieuDatPhongs.Remove(phieuDatPhong);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Xóa phiếu đặt phòng thành công.";
+            return RedirectToAction(nameof(Index));
         }
-
         // GET: In phiếu đặt phòng
         [AuthorizePermission("ManagePhieuDatPhong")]
         public async Task<IActionResult> PrintPhieuDatPhong(int id)

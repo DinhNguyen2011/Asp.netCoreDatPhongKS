@@ -5028,6 +5028,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"xz1vyzxhnd"},{"Name":"integrity","Value":"sha256-3TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/css/home-hotel.css"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1956"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00223TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA=\u0022"},{"Name":"Last-Modified","Value":"Fri, 27 Jun 2025 16:38:30 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/css/PhieuDatPhongAdmin.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\PhieuDatPhongAdmin.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"5727"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 11:18:34 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/css/PhieuDatPhongAdmin.et5u6aptpw.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\PhieuDatPhongAdmin.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"et5u6aptpw"},{"Name":"integrity","Value":"sha256-Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/css/PhieuDatPhongAdmin.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"5727"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 11:18:34 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/css/phong-timkiem.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\phong-timkiem.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>

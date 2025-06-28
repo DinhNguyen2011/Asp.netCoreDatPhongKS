@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+<link href="~/css/PhieuDatPhongAdmin.css" rel="stylesheet" />
 <div class="container mt-4">
     <h2>Tạo phiếu đặt phòng</h2>
     @if (TempData["Error"] != null)
@@ -75,12 +76,26 @@
             <input type="number" id="soLuongKhach" class="form-control" min="1" />
         </div>
         <div class="form-group">
+            <label>Khuyến mãi</label>
+            <select name="khuyenMaiId" class="form-control" id="khuyenMaiSelect" onchange="calculateTotal()">
+                <option value="">Không áp dụng khuyến mãi</option>
+                @foreach (var km in ViewBag.KhuyenMaiOptions ?? new List<SelectListItem>())
+                {
+                    <option value="@km.Value" data-phantramgiam="@(km.Text.Contains("(") ? km.Text.Substring(km.Text.IndexOf("(") + 1, km.Text.IndexOf("%") - km.Text.IndexOf("(") - 1) : "0")">@km.Text</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
             <label>Tiền cọc <span class="text-danger">*</span></label>
             <input type="number" name="soTienCoc" class="form-control" min="0" step="0.01" required />
         </div>
         <div class="form-group">
             <label>Số tiền đã thanh toán (nếu có)</label>
             <input type="number" name="soTienDaThanhToan" class="form-control" min="0" step="0.01" />
+        </div>
+        <div class="form-group">
+            <label>Tổng tiền (sau khuyến mãi)</label>
+            <input type="text" id="tongTien" class="form-control" readonly />
         </div>
         <div class="form-group">
             <label>Trạng thái <span class="text-danger">*</span></label>
@@ -104,7 +119,7 @@
         </div>
         <div class="form-group">
             <label>Chọn phòng <span class="text-danger">*</span></label>
-            <select name="phongIds" multiple class="form-control" required id="phongSelect">
+            <select name="phongIds" multiple class="form-control" required id="phongSelect" onchange="calculateTotal()">
                 @foreach (var phong in ViewBag.Phongs ?? new List<Asp.netCoreDatPhongKS.Models.Phong>())
                 {
                     <option value="@phong.PhongId"
@@ -134,17 +149,21 @@
         transition: transform 0.2s;
         position: relative;
     }
-    #roomPreview .card:hover {
-        transform: scale(1.02);
-    }
+
+        #roomPreview .card:hover {
+            transform: scale(1.02);
+        }
+
     #roomPreview .card-img-top {
         height: 150px;
         object-fit: cover;
     }
+
     #roomPreview .carousel-inner img {
         height: 150px;
         object-fit: cover;
     }
+
     #roomPreview .remove-room {
         position: absolute;
         top: 10px;
@@ -152,6 +171,7 @@
         cursor: pointer;
         z-index: 3;
     }
+
     #roomPreview .card-text.description {
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -159,6 +179,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     #roomPreview .icon {
         margin-right: 5px;
     }
@@ -242,7 +263,7 @@
                     );
                     option.dataset.hinhanh = room.hinhAnh ? room.hinhAnh.replace('~/images/', '/images/') : FALLBACK_IMAGE;
                     option.dataset.hinhanh1 = room.hinhAnh1 ? room.hinhAnh1?.replace('~/images/', '/images/') : '';
-                    option.dataset.hinhanh2 = room.hinhAnh2? room.hinhAnh2?.replace('~/images/', '/images/') : '';
+                    option.dataset.hinhanh2 = room.hinhAnh2 ? room.hinhAnh2?.replace('~/images/', '/images/') : '';
                     option.dataset.hinhanh3 = room.hinhAnh3 ? room.hinhAnh3?.replace('~/images/', '/images/') : '';
                     option.dataset.sophong = room.soPhong;
                     option.dataset.loaiPhong = room.loaiPhong || 'Không xác định';
@@ -251,6 +272,7 @@
                     select.appendChild(option);
                 });
                 updateRoomPreview();
+                calculateTotal();
                 toastr.success('Lọc phòng khả dụng thành công.');
             } else {
                 toastr.error(data.message);
@@ -260,6 +282,33 @@
             console.error('Lỗi khi lọc phòng:', error);
             toastr.error('Có lỗi xảy ra: ' + error.message);
         });
+    }
+
+    function calculateTotal() {
+        var select = document.getElementById('phongSelect');
+        var ngayNhan = document.getElementById('ngayNhan').value;
+        var ngayTra = document.getElementById('ngayTra').value;
+        var khuyenMaiSelect = document.getElementById('khuyenMaiSelect');
+        var phanTramGiam = parseFloat(khuyenMaiSelect.selectedOptions[0]?.dataset.phantramgiam || 0);
+
+        if (!ngayNhan || !ngayTra) {
+            document.getElementById('tongTien').value = '0 VNĐ';
+            return;
+        }
+
+        var soNgay = Math.max(1, Math.round((new Date(ngayTra) - new Date(ngayNhan)) / (1000 * 60 * 60 * 24)));
+        var tongTien = 0;
+
+        Array.from(select.selectedOptions).forEach(option => {
+            var donGia = parseFloat(option.dataset.dongia || 0);
+            tongTien += donGia * soNgay;
+        });
+
+        if (phanTramGiam > 0) {
+            tongTien *= (1 - phanTramGiam / 100);
+        }
+
+        document.getElementById('tongTien').value = tongTien.toLocaleString('vi-VN') + ' VNĐ';
     }
 
     function updateRoomPreview() {
@@ -324,6 +373,7 @@
                     toastr.error('Có lỗi khi tải chi tiết phòng');
                 });
         });
+        calculateTotal();
     }
 
     function removeRoom(phongId) {
@@ -336,6 +386,8 @@
     }
 
     document.getElementById('phongSelect').addEventListener('change', updateRoomPreview);
+    document.getElementById('ngayNhan').addEventListener('change', calculateTotal);
+    document.getElementById('ngayTra').addEventListener('change', calculateTotal);
 
     @if (TempData["Success"] != null)
     {

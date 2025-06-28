@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "+pPX2vs3nmcrH+W5BmfJxZb8zhufQWp9sK75cVehLqg=",
+  "Hash": "dTbA4Lua7SvWLvLZ5/RIuOQ1e+Ph2xkJX/U1zaOCKX0=",
   "Source": "Asp.netCoreDatPhongKS",
   "BasePath": "_content/Asp.netCoreDatPhongKS",
   "Mode": "Default",
@@ -8835,6 +8835,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\home-hotel.css"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\PhieuDatPhongAdmin.css",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "css/PhieuDatPhongAdmin#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "et5u6aptpw",
+      "Integrity": "Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\PhieuDatPhongAdmin.css"
     },
     {
       "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\phong-timkiem.css",
@@ -47097,6 +47118,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-3TlgUMBQwZ9KZQ5PFvZwgAjfcW3gCs1PSvGHsVqS8iA="
+        }
+      ]
+    },
+    {
+      "Route": "css/PhieuDatPhongAdmin.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\PhieuDatPhongAdmin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5727"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 28 Jun 2025 11:18:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc="
+        }
+      ]
+    },
+    {
+      "Route": "css/PhieuDatPhongAdmin.et5u6aptpw.css",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\css\\PhieuDatPhongAdmin.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5727"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 28 Jun 2025 11:18:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "et5u6aptpw"
+        },
+        {
+          "Name": "label",
+          "Value": "css/PhieuDatPhongAdmin.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Donn4ZOnpGy9Y263uFrwF2xIZsYjVwUFKhke6TA7Sjc="
         }
       ]
     },

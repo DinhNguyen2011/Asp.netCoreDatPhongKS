@@ -1,67 +1,90 @@
 ﻿@model Asp.netCoreDatPhongKS.Models.PhieuDatPhong
+
 @{
-    ViewData["Title"] = "Xóa phiếu đặt phòng";
+    ViewData["Title"] = "Xóa Phiếu Đặt Phòng";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<link href="~/css/PhieuDatPhongAdmin.css" rel="stylesheet" />
+<h1>Xóa Phiếu Đặt Phòng</h1>
 
-<h2>Xóa phiếu đặt phòng #@Model?.MaPhieu</h2>
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
-
-<div class="alert alert-warning">
-    <strong>Cảnh báo:</strong> Bạn có chắc muốn xóa phiếu đặt phòng này? Hành động này không thể hoàn tác.
-</div>
-
+<h3>Bạn có chắc muốn xóa phiếu đặt phòng này?</h3>
 <div>
+    <h4>Thông tin phiếu đặt phòng</h4>
+    <hr />
     <dl class="row">
-        <dt class="col-sm-3">Mã phiếu</dt>
-        <dd class="col-sm-9">@Model?.MaPhieu</dd>
-
-        <dt class="col-sm-3">Khách hàng</dt>
-        <dd class="col-sm-9">@(Model?.KhachHang?.HoTen ?? "Không xác định") (@(Model?.KhachHang?.Email ?? "Không có"))</dd>
-
-        <dt class="col-sm-3">Ngày nhận</dt>
-        <dd class="col-sm-9">@Model?.NgayNhan?.ToString("dd/MM/yyyy")</dd>
-
-        <dt class="col-sm-3">Ngày trả</dt>
-        <dd class="col-sm-9">@Model?.NgayTra?.ToString("dd/MM/yyyy")</dd>
-
-        <dt class="col-sm-3">Phòng</dt>
-        <dd class="col-sm-9">
-            <ul class="list-group">
-                @foreach (var chiTiet in Model?.ChiTietPhieuPhongs)
-                {
-                    <li class="list-group-item">@(chiTiet.Phong?.SoPhong ?? "Không xác định") (@(chiTiet.Phong?.LoaiPhong?.TenLoai ?? "Không xác định"))</li>
-                }
-            </ul>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MaPhieu)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaPhieu)
         </dd>
-
-        <dt class="col-sm-3">Tổng tiền</dt>
-        <dd class="col-sm-9">@Model?.TongTien?.ToString("N0") VNĐ</dd>
-
-        <dt class="col-sm-3">Tiền cọc</dt>
-        <dd class="col-sm-9">@Model?.SoTienCoc?.ToString("N0") VNĐ</dd>
-
-        <dt class="col-sm-3">Đã thanh toán</dt>
-        <dd class="col-sm-9">@Model?.SoTienDaThanhToan?.ToString("N0") VNĐ</dd>
-
-        <dt class="col-sm-3">Trạng thái</dt>
-        <dd class="col-sm-9">@Model?.TrangThai</dd>
-
-        <dt class="col-sm-3">Tình trạng sử dụng</dt>
-        <dd class="col-sm-9">@Model?.TinhTrangSuDung</dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KhachHang.HoTen)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.KhachHang.HoTen)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NgayDat)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NgayDat)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NgayNhan)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NgayNhan)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NgayTra)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NgayTra)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TongTien)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TongTien)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TrangThai)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrangThai)
+        </dd>
     </dl>
 
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="PhieuDatPhongId" />
-        <button type="submit" class="btn btn-danger">Xóa</button>
-        <a asp-action="Index" class="btn btn-secondary">Hủy</a>
-    </form>
+    @if (ViewBag.HasChiTiet || ViewBag.HasHoaDon)
+    {
+        <div class="alert alert-warning" role="alert">
+            Không thể xóa phiếu đặt phòng này vì:
+            <ul>
+                @if (ViewBag.HasChiTiet)
+                {
+                    <li>Có chi tiết phòng liên quan. Vui lòng xóa tất cả chi tiết phiếu phòng trước.</li>
+                }
+                @if (ViewBag.HasHoaDon)
+                {
+                    <li>Có hóa đơn liên quan. Vui lòng xóa hóa đơn trước.</li>
+                }
+            </ul>
+        </div>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    }
+    else
+    {
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="PhieuDatPhongId" />
+            <input type="submit" value="Xóa" class="btn btn-danger" /> |
+            <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+        </form>
+    }
 </div>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script>AOS.init({ duration: 800 });</script>

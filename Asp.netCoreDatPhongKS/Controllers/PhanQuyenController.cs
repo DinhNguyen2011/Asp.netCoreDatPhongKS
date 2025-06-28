@@ -17,7 +17,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
         }
 
-        // Hiển thị danh sách tài khoản Nhân viên/Lễ tân và quyền
         [HttpGet]
         [Route("index")]
         public async Task<IActionResult> Index()
@@ -26,14 +25,12 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .Include(t => t.VaiTro)
                 .Include(t => t.QuyenTaiKhoans)
                 .ThenInclude(tq => tq.Quyen)
-                .Where(t => t.VaiTroId == 2) // Chỉ lấy Nhân viên/Lễ tân
+                .Where(t => t.VaiTroId == 2) 
                 .ToListAsync();
             var quyen = await _context.Quyens.ToListAsync();
             ViewBag.Quyen = quyen;
             return View(taiKhoans);
         }
-
-        // Gán quyền cho tài khoản
         [HttpGet]
         [Route("edit/{taiKhoanId}")]
         public async Task<IActionResult> Edit(int taiKhoanId)

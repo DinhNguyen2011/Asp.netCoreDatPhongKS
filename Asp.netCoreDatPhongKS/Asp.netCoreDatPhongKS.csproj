@@ -30,6 +30,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\css\PhieuDatPhongAdmin.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="wwwroot\css\home-hotel.css">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

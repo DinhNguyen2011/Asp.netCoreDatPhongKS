@@ -37,7 +37,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession(); // CHỈ 1 lần duy nhất ở đây
+app.UseSession(); 
 app.UseAuthorization();
 
 app.MapControllerRoute(

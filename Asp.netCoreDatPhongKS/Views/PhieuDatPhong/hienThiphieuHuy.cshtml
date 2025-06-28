@@ -1,11 +1,10 @@
 ﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.PhieuDatPhong>
-
-
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
-<table class="table">
+<link href="~/css/PhieuDatPhongAdmin.css" rel="stylesheet" />
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Phiếu đặt phòng ID</th>
@@ -46,3 +45,4 @@
 
     </tbody>
 </table>
+</div>

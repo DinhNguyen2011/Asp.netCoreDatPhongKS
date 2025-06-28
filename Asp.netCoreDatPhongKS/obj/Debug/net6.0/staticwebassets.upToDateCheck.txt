@@ -416,6 +416,7 @@ wwwroot\css\dichvu.css
 wwwroot\css\dsLPhong.css
 wwwroot\css\gioithieu.css
 wwwroot\css\home-hotel.css
+wwwroot\css\PhieuDatPhongAdmin.css
 wwwroot\css\phong-timkiem.css
 wwwroot\css\profile-admin.css
 wwwroot\css\profile-user.css
