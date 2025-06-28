@@ -6,10 +6,18 @@
 
 <div class="container mt-4">
     <h2>Thêm tài khoản mới</h2>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
     <form asp-action="Create" asp-controller="QuanLyTaiKhoan" method="post">
         <div class="form-group">
             <label asp-for="VaiTroId">Vai trò</label>
-            <select asp-for="VaiTroId" class="form-control" onchange="toggleNhanVienFields(this)" required>
+            <select asp-for="VaiTroId" class="form-control" onchange="toggleAdditionalFields(this)" required>
                 <option value="">-- Chọn vai trò --</option>
                 <option value="3">Khách hàng</option>
                 <option value="2">Nhân viên/Lễ tân</option>
@@ -41,21 +49,21 @@
             <span asp-validation-for="TaiKhoan.TrangThai" class="text-danger"></span>
         </div>
 
-        <div id="nhanVienFields" style="@(Model.VaiTroId == 2 ? "" : "display:none;")">
-            <h4>Thông tin nhân viên</h4>
+        <div id="additionalFields" style="display:none;">
+            <h4 id="additionalFieldsTitle"></h4>
             <div class="form-group">
                 <label asp-for="NhanVien.Cccd">CCCD</label>
-                <input asp-for="NhanVien.Cccd" class="form-control" data-val-nhanvien="true" />
+                <input asp-for="NhanVien.Cccd" class="form-control" data-val-additional="true" />
                 <span asp-validation-for="NhanVien.Cccd" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NhanVien.SoDienThoai">Số điện thoại</label>
-                <input asp-for="NhanVien.SoDienThoai" class="form-control" data-val-nhanvien="true" />
+                <input asp-for="NhanVien.SoDienThoai" class="form-control" data-val-additional="true" />
                 <span asp-validation-for="NhanVien.SoDienThoai" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NhanVien.DiaChi">Địa chỉ</label>
-                <input asp-for="NhanVien.DiaChi" class="form-control" />
+                <input asp-for="NhanVien.DiaChi" class="form-control" data-val-additional="true" />
                 <span asp-validation-for="NhanVien.DiaChi" class="text-danger"></span>
             </div>
         </div>
@@ -65,34 +73,41 @@
     </form>
 </div>
 
-<script>
-    function toggleNhanVienFields(select) {
-        var nhanVienFields = document.getElementById('nhanVienFields');
-        nhanVienFields.style.display = select.value == '2' ? 'block' : 'none';
-
-        // Enable/disable validation for NhanVien fields
-        var nhanVienInputs = nhanVienFields.querySelectorAll('input[data-val-nhanvien]');
-        nhanVienInputs.forEach(input => {
-            input.required = select.value == '2';
-        });
-    }
-</script>
-
-
+    <partial name="_ValidationScriptsPartial" />
     <script>
-        // Client-side validation for NhanVien fields
-        $(document).ready(function () {
-            $.validator.addMethod("nhanVienRequired", function (value, element) {
-                var vaiTroId = $('#VaiTroId').val();
-                return vaiTroId != '2' || (vaiTroId == '2' && value && value.trim() != '');
-            }, "Trường này là bắt buộc khi chọn vai trò Nhân viên/Lễ tân.");
+        function toggleAdditionalFields(select) {
+            var additionalFields = document.getElementById('additionalFields');
+            var additionalFieldsTitle = document.getElementById('additionalFieldsTitle');
+            var additionalInputs = additionalFields.querySelectorAll('input[data-val-additional]');
 
-            $.validator.unobtrusive.adapters.addBool("nhanVienRequired");
+            if (select.value == '2' || select.value == '3') {
+                additionalFields.style.display = 'block';
+                additionalFieldsTitle.textContent = select.value == '2' ? 'Thông tin nhân viên' : 'Thông tin khách hàng';
+                additionalInputs.forEach(input => {
+                    input.required = true; // Required for both roles
+                });
+            } else {
+                additionalFields.style.display = 'none';
+                additionalInputs.forEach(input => {
+                    input.required = false;
+                });
+            }
+        }
+
+        // Client-side validation for additional fields
+        $(document).ready(function () {
+            $.validator.addMethod("additionalRequired", function (value, element) {
+                var vaiTroId = $('#VaiTroId').val();
+                return vaiTroId != '2' && vaiTroId != '3' || (value && value.trim() != '');
+            }, "Trường này là bắt buộc khi chọn vai trò Nhân viên hoặc Khách hàng.");
+
+            $.validator.unobtrusive.adapters.addBool("additionalRequired");
 
             // Revalidate form when VaiTroId changes
             $('#VaiTroId').change(function () {
                 $('form').validate().element('#NhanVien_Cccd');
                 $('form').validate().element('#NhanVien_SoDienThoai');
+                $('form').validate().element('#NhanVien_DiaChi');
             });
         });
 

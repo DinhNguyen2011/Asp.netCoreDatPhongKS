@@ -60,8 +60,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 new SelectListItem { Value = "Chưa thanh toán", Text = "Chưa thanh toán" },
                 new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
                 new SelectListItem { Value = "Hủy", Text = "Hủy" },
-                new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
             };
+               // new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
             ViewBag.TinhTrangSuDungOptions = new List<SelectListItem>
             {
                 new SelectListItem { Value = "Chưa sử dụng", Text = "Chưa sử dụng" },
@@ -84,6 +84,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
         public async Task<IActionResult> Create(PhieuDatPhong model, List<int> phongIds, decimal soTienCoc, decimal? soTienDaThanhToan, string trangThai, string tinhTrangSuDung, int? khuyenMaiId)
         {
             var validTrangThai = new List<string> { "Chưa thanh toán", "Đã thanh toán", "Hủy", "Hoàn thành" };
+           // var validTrangThai = new List<string> { "Chưa thanh toán", "Đã thanh toán", "Hủy", "Hoàn thành" };
+
             var validTinhTrangSuDung = new List<string> { "Chưa sử dụng", "Đã check-in", "Đã check-out", "Chờ xử lý" };
 
             // Validation
@@ -254,7 +256,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung !="Đã check-out")
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TinhTrangSuDung !="Đã check-out")
+               // .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung !="Đã check-out")
                 .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
                 .ToList();
 
@@ -312,7 +315,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 new SelectListItem { Value = "Chưa thanh toán", Text = "Chưa thanh toán" },
                 new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
                 new SelectListItem { Value = "Hủy", Text = "Hủy" },
-                new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
+               // new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
             };
             ViewBag.TinhTrangSuDungOptions = new List<SelectListItem>
             {
@@ -377,7 +380,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     new SelectListItem { Value = "Chưa thanh toán", Text = "Chưa thanh toán" },
                     new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
                     new SelectListItem { Value = "Hủy", Text = "Hủy" },
-                    new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
+                 //   new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
                 };
                 ViewBag.TinhTrangSuDungOptions = new List<SelectListItem>
                 {
@@ -446,7 +449,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     new SelectListItem { Value = "Chưa thanh toán", Text = "Chưa thanh toán" },
                     new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
                     new SelectListItem { Value = "Hủy", Text = "Hủy" },
-                    new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
+                  //  new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }
                 };
                 ViewBag.TinhTrangSuDungOptions = new List<SelectListItem>
                 {

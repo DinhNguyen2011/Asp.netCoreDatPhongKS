@@ -1,9 +1,11 @@
 ﻿using Asp.netCoreDatPhongKS.Filters;
 using Asp.netCoreDatPhongKS.Models;
 using Asp.netCoreDatPhongKS.Models.ViewModels;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
@@ -16,19 +18,25 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
         }
 
-        // Quản lý: Danh sách tất cả tài khoản
         [AuthorizePermission("ManageTaiKhoan")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? vaiTroId)
         {
-            var taiKhoans = await _context.TaiKhoans
+            var query = _context.TaiKhoans
                 .Include(t => t.VaiTro)
                 .Include(t => t.NhanViens)
-                .Where(t => t.VaiTroId == 2 || t.VaiTroId == 3)
-                .ToListAsync();
+                .Include(t => t.KhachHangs)
+                .Where(t => t.VaiTroId == 2 || t.VaiTroId == 3);
+
+            if (vaiTroId.HasValue)
+            {
+                query = query.Where(t => t.VaiTroId == vaiTroId.Value);
+            }
+
+            var taiKhoans = await query.ToListAsync();
+            ViewBag.VaiTroId = vaiTroId;
             return View("~/Views/QuanLyTaiKhoan/Index.cshtml", taiKhoans);
         }
 
-        // Quản lý: Thêm tài khoản mới
         [AuthorizePermission("ManageTaiKhoan")]
         public IActionResult Create()
         {
@@ -52,6 +60,12 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View("~/Views/QuanLyTaiKhoan/Create.cshtml", model);
             }
 
+            if (model.VaiTroId == 3 && (model.NhanVien == null || string.IsNullOrEmpty(model.NhanVien.Cccd) || string.IsNullOrEmpty(model.NhanVien.SoDienThoai) || string.IsNullOrEmpty(model.NhanVien.DiaChi)))
+            {
+                TempData["Error"] = "Vui lòng nhập đầy đủ thông tin khách hàng.";
+                return View("~/Views/QuanLyTaiKhoan/Create.cshtml", model);
+            }
+
             var existingAccount = await _context.TaiKhoans.FirstOrDefaultAsync(t => t.Email == model.TaiKhoan.Email);
             if (existingAccount != null)
             {
@@ -62,42 +76,69 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var newTaiKhoan = new TaiKhoan
             {
                 Email = model.TaiKhoan.Email,
-                MatKhau = model.MatKhau,
+                MatKhau = BCrypt.Net.BCrypt.HashPassword(model.MatKhau),
                 Hoten = model.TaiKhoan.Hoten,
                 TrangThai = model.TaiKhoan.TrangThai ?? true,
                 VaiTroId = model.VaiTroId,
-                HinhAnh = model.TaiKhoan.HinhAnh
+                HinhAnh = model.TaiKhoan.HinhAnh,
+                NgayTao = DateTime.Now
             };
 
-            _context.TaiKhoans.Add(newTaiKhoan);
-            await _context.SaveChangesAsync();
-
-            if (model.VaiTroId == 2)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                var newNhanVien = new NhanVien
-                {
-                    TaiKhoanId = newTaiKhoan.TaiKhoanId,
-                    HoTen = model.TaiKhoan.Hoten,
-                    Cccd = model.NhanVien!.Cccd,
-                    DiaChi = model.NhanVien!.DiaChi,
-                    SoDienThoai = model.NhanVien!.SoDienThoai,
-                    Email = model.TaiKhoan.Email,
-                    HinhAnh = model.NhanVien!.HinhAnh
-                };
-                _context.NhanViens.Add(newNhanVien);
+                _context.TaiKhoans.Add(newTaiKhoan);
                 await _context.SaveChangesAsync();
-            }
 
-            TempData["Success"] = "Thêm tài khoản thành công.";
-            return RedirectToAction("Index");
+                if (model.VaiTroId == 2)
+                {
+                    var newNhanVien = new NhanVien
+                    {
+                        TaiKhoanId = newTaiKhoan.TaiKhoanId,
+                        HoTen = model.TaiKhoan.Hoten,
+                        Cccd = model.NhanVien!.Cccd,
+                        DiaChi = model.NhanVien!.DiaChi,
+                        SoDienThoai = model.NhanVien!.SoDienThoai,
+                        Email = model.TaiKhoan.Email,
+                        HinhAnh = model.NhanVien!.HinhAnh
+                    };
+                    _context.NhanViens.Add(newNhanVien);
+                }
+                else if (model.VaiTroId == 3)
+                {
+                    var newKhachHang = new KhachHang
+                    {
+                        TaiKhoanId = newTaiKhoan.TaiKhoanId,
+                        HoTen = model.TaiKhoan.Hoten,
+                        Cccd = model.NhanVien!.Cccd,
+                        DiaChi = model.NhanVien!.DiaChi,
+                        SoDienThoai = model.NhanVien!.SoDienThoai,
+                        Email = model.TaiKhoan.Email,
+                        NgayTao = DateTime.Now
+                    };
+                    _context.KhachHangs.Add(newKhachHang);
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                TempData["Success"] = "Thêm tài khoản thành công.";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                TempData["Error"] = "Có lỗi xảy ra khi thêm tài khoản.";
+                return View("~/Views/QuanLyTaiKhoan/Create.cshtml", model);
+            }
         }
 
-        // Quản lý: Sửa tài khoản
         [AuthorizePermission("ManageTaiKhoan")]
         public async Task<IActionResult> Edit(int taiKhoanId)
         {
             var taiKhoan = await _context.TaiKhoans
                 .Include(t => t.NhanViens)
+                .Include(t => t.KhachHangs)
                 .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && (t.VaiTroId == 2 || t.VaiTroId == 3));
             if (taiKhoan == null)
                 return NotFound();
@@ -105,8 +146,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var model = new TaiKhoanViewModel
             {
                 TaiKhoan = taiKhoan,
-                NhanVien = taiKhoan.NhanViens.FirstOrDefault() ?? new NhanVien(),
-                VaiTroId = taiKhoan.VaiTroId ?? 3 // Mặc định là Khách hàng nếu VaiTroId null
+              //  NhanVien = taiKhoan.NhanViens.FirstOrDefault() ?? taiKhoan.KhachHangs.FirstOrDefault() ?? new NhanVien(),
+                VaiTroId = taiKhoan.VaiTroId ?? 3
             };
             return View("~/Views/QuanLyTaiKhoan/Edit.cshtml", model);
         }
@@ -128,8 +169,15 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View("~/Views/QuanLyTaiKhoan/Edit.cshtml", model);
             }
 
+            if (model.VaiTroId == 3 && (model.NhanVien == null || string.IsNullOrEmpty(model.NhanVien.Cccd) || string.IsNullOrEmpty(model.NhanVien.SoDienThoai) || string.IsNullOrEmpty(model.NhanVien.DiaChi)))
+            {
+                TempData["Error"] = "Vui lòng nhập đầy đủ thông tin khách hàng.";
+                return View("~/Views/QuanLyTaiKhoan/Edit.cshtml", model);
+            }
+
             var existingTaiKhoan = await _context.TaiKhoans
                 .Include(t => t.NhanViens)
+                .Include(t => t.KhachHangs)
                 .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && (t.VaiTroId == 2 || t.VaiTroId == 3));
             if (existingTaiKhoan == null)
                 return NotFound();
@@ -141,48 +189,73 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View("~/Views/QuanLyTaiKhoan/Edit.cshtml", model);
             }
 
-            existingTaiKhoan.Email = model.TaiKhoan.Email;
-            existingTaiKhoan.Hoten = model.TaiKhoan.Hoten;
-            existingTaiKhoan.TrangThai = model.TaiKhoan.TrangThai ?? true;
-            existingTaiKhoan.HinhAnh = model.TaiKhoan.HinhAnh;
-            if (!string.IsNullOrEmpty(newMatKhau))
-                existingTaiKhoan.MatKhau = newMatKhau;
-
-            if (existingTaiKhoan.VaiTroId == 2)
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                var existingNhanVien = existingTaiKhoan.NhanViens.FirstOrDefault();
-                if (existingNhanVien == null)
+                existingTaiKhoan.Email = model.TaiKhoan.Email;
+                existingTaiKhoan.Hoten = model.TaiKhoan.Hoten;
+                existingTaiKhoan.TrangThai = model.TaiKhoan.TrangThai ?? true;
+                existingTaiKhoan.HinhAnh = model.TaiKhoan.HinhAnh;
+                if (!string.IsNullOrEmpty(newMatKhau))
+                    existingTaiKhoan.MatKhau = BCrypt.Net.BCrypt.HashPassword(newMatKhau);
+
+                if (existingTaiKhoan.VaiTroId == 2)
                 {
-                    existingNhanVien = new NhanVien { TaiKhoanId = taiKhoanId };
-                    _context.NhanViens.Add(existingNhanVien);
+                    var existingNhanVien = existingTaiKhoan.NhanViens.FirstOrDefault();
+                    if (existingNhanVien == null)
+                    {
+                        existingNhanVien = new NhanVien { TaiKhoanId = taiKhoanId };
+                        _context.NhanViens.Add(existingNhanVien);
+                    }
+                    existingNhanVien.HoTen = model.TaiKhoan.Hoten;
+                    existingNhanVien.Cccd = model.NhanVien!.Cccd;
+                    existingNhanVien.DiaChi = model.NhanVien!.DiaChi;
+                    existingNhanVien.SoDienThoai = model.NhanVien!.SoDienThoai;
+                    existingNhanVien.Email = model.TaiKhoan.Email;
+                    existingNhanVien.HinhAnh = model.NhanVien!.HinhAnh;
                 }
-                existingNhanVien.HoTen = model.TaiKhoan.Hoten;
-                existingNhanVien.Cccd = model.NhanVien!.Cccd;
-                existingNhanVien.DiaChi = model.NhanVien!.DiaChi;
-                existingNhanVien.SoDienThoai = model.NhanVien!.SoDienThoai;
-                existingNhanVien.Email = model.TaiKhoan.Email;
-                existingNhanVien.HinhAnh = model.NhanVien!.HinhAnh;
+                else if (existingTaiKhoan.VaiTroId == 3)
+                {
+                    var existingKhachHang = existingTaiKhoan.KhachHangs.FirstOrDefault();
+                    if (existingKhachHang == null)
+                    {
+                        existingKhachHang = new KhachHang { TaiKhoanId = taiKhoanId, NgayTao = DateTime.Now };
+                        _context.KhachHangs.Add(existingKhachHang);
+                    }
+                    existingKhachHang.HoTen = model.TaiKhoan.Hoten;
+                    existingKhachHang.Cccd = model.NhanVien!.Cccd;
+                    existingKhachHang.DiaChi = model.NhanVien!.DiaChi;
+                    existingKhachHang.SoDienThoai = model.NhanVien!.SoDienThoai;
+                    existingKhachHang.Email = model.TaiKhoan.Email;
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                var sessionTaiKhoanId = HttpContext.Session.GetString("TaiKhoanId");
+                if (sessionTaiKhoanId == taiKhoanId.ToString())
+                {
+                    HttpContext.Session.SetString("Hoten", model.TaiKhoan.Hoten);
+                    HttpContext.Session.SetString("Email", model.TaiKhoan.Email);
+                }
+
+                TempData["Success"] = "Sửa tài khoản thành công.";
+                return RedirectToAction("Index");
             }
-
-            await _context.SaveChangesAsync();
-
-            var sessionTaiKhoanId = HttpContext.Session.GetString("TaiKhoanId");
-            if (sessionTaiKhoanId == taiKhoanId.ToString())
+            catch
             {
-                HttpContext.Session.SetString("Hoten", model.TaiKhoan.Hoten);
-                HttpContext.Session.SetString("Email", model.TaiKhoan.Email);
+                await transaction.RollbackAsync();
+                TempData["Error"] = "Có lỗi xảy ra khi sửa tài khoản.";
+                return View("~/Views/QuanLyTaiKhoan/Edit.cshtml", model);
             }
-
-            TempData["Success"] = "Sửa tài khoản thành công.";
-            return RedirectToAction("Index");
         }
 
-        // Quản lý: Xóa tài khoản
         [AuthorizePermission("ManageTaiKhoan")]
         public async Task<IActionResult> Delete(int taiKhoanId)
         {
             var taiKhoan = await _context.TaiKhoans
                 .Include(t => t.NhanViens)
+                .Include(t => t.KhachHangs)
                 .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && (t.VaiTroId == 2 || t.VaiTroId == 3));
             if (taiKhoan == null)
                 return NotFound();
@@ -190,8 +263,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var model = new TaiKhoanViewModel
             {
                 TaiKhoan = taiKhoan,
-                NhanVien = taiKhoan.NhanViens.FirstOrDefault() ?? new NhanVien(),
-                VaiTroId = taiKhoan.VaiTroId ?? 3 // Mặc định là Khách hàng nếu VaiTroId null
+              //  NhanVien = taiKhoan.NhanViens.FirstOrDefault() ?? taiKhoan.KhachHangs.FirstOrDefault() ?? new NhanVien(),
+                VaiTroId = taiKhoan.VaiTroId ?? 3
             };
             return View("~/Views/QuanLyTaiKhoan/Delete.cshtml", model);
         }
@@ -203,167 +276,36 @@ namespace Asp.netCoreDatPhongKS.Controllers
         {
             var taiKhoan = await _context.TaiKhoans
                 .Include(t => t.NhanViens)
+                .Include(t => t.KhachHangs)
                 .Include(t => t.QuyenTaiKhoans)
                 .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && (t.VaiTroId == 2 || t.VaiTroId == 3));
             if (taiKhoan == null)
                 return NotFound();
 
-            _context.QuyenTaiKhoans.RemoveRange(taiKhoan.QuyenTaiKhoans);
-            _context.NhanViens.RemoveRange(taiKhoan.NhanViens);
-            _context.TaiKhoans.Remove(taiKhoan);
-
-            await _context.SaveChangesAsync();
-
-            var sessionTaiKhoanId = HttpContext.Session.GetString("TaiKhoanId");
-            if (sessionTaiKhoanId == taiKhoanId.ToString())
-                HttpContext.Session.Clear();
-
-            TempData["Success"] = "Xóa tài khoản thành công.";
-            return RedirectToAction("Index");
-        }
-
-        // Nhân viên: Quản lý tài khoản khách hàng
-        [AuthorizePermission("ViewCus", "ManageKhachHang")]
-        public async Task<IActionResult> ManageKhachHang()
-        {
-            var khachHangs = await _context.TaiKhoans
-                .Include(t => t.VaiTro)
-                .Where(t => t.VaiTroId == 3)
-                .ToListAsync();
-            return View("~/Views/QuanLyTaiKhoan/ManageKhachHang.cshtml", khachHangs);
-        }
-
-        // Nhân viên: Thêm tài khoản khách hàng
-        [AuthorizePermission("CreateCus", "ManageKhachHang")]
-        public IActionResult CreateKhachHang()
-        {
-            return View("~/Views/QuanLyTaiKhoan/CreateKhachHang.cshtml");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [AuthorizePermission("CreateCus", "ManageKhachHang")]
-        public async Task<IActionResult> CreateKhachHang(TaiKhoan taiKhoan, string matKhau)
-        {
-            if (!ModelState.IsValid || string.IsNullOrEmpty(taiKhoan.Email) || string.IsNullOrEmpty(matKhau) || string.IsNullOrEmpty(taiKhoan.Hoten))
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                TempData["Error"] = "Vui lòng nhập đầy đủ thông tin.";
-                return View("~/Views/QuanLyTaiKhoan/CreateKhachHang.cshtml", taiKhoan);
+                _context.QuyenTaiKhoans.RemoveRange(taiKhoan.QuyenTaiKhoans);
+                _context.NhanViens.RemoveRange(taiKhoan.NhanViens);
+                _context.KhachHangs.RemoveRange(taiKhoan.KhachHangs);
+                _context.TaiKhoans.Remove(taiKhoan);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                var sessionTaiKhoanId = HttpContext.Session.GetString("TaiKhoanId");
+                if (sessionTaiKhoanId == taiKhoanId.ToString())
+                    HttpContext.Session.Clear();
+
+                TempData["Success"] = "Xóa tài khoản thành công.";
+                return RedirectToAction("Index");
             }
-
-            var existingAccount = await _context.TaiKhoans.FirstOrDefaultAsync(t => t.Email == taiKhoan.Email);
-            if (existingAccount != null)
+            catch
             {
-                TempData["Error"] = "Email đã được sử dụng.";
-                return View("~/Views/QuanLyTaiKhoan/CreateKhachHang.cshtml", taiKhoan);
+                await transaction.RollbackAsync();
+                TempData["Error"] = "Có lỗi xảy ra khi xóa tài khoản.";
+                return RedirectToAction("Index");
             }
-
-            var newTaiKhoan = new TaiKhoan
-            {
-                Email = taiKhoan.Email,
-                MatKhau = matKhau,
-                Hoten = taiKhoan.Hoten,
-                TrangThai = taiKhoan.TrangThai ?? true,
-                VaiTroId = 3,
-                HinhAnh = taiKhoan.HinhAnh
-            };
-
-            _context.TaiKhoans.Add(newTaiKhoan);
-            await _context.SaveChangesAsync();
-
-            TempData["Success"] = "Thêm tài khoản khách hàng thành công.";
-            return RedirectToAction("ManageKhachHang");
-        }
-
-        // Nhân viên: Sửa tài khoản khách hàng
-        [AuthorizePermission("EditCus", "ManageKhachHang")]
-        public async Task<IActionResult> EditKhachHang(int taiKhoanId)
-        {
-            var taiKhoan = await _context.TaiKhoans
-                .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && t.VaiTroId == 3);
-            if (taiKhoan == null)
-                return NotFound();
-
-            return View("~/Views/QuanLyTaiKhoan/EditKhachHang.cshtml", taiKhoan);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [AuthorizePermission("EditCus", "ManageKhachHang")]
-        public async Task<IActionResult> EditKhachHang(int taiKhoanId, TaiKhoan taiKhoan, string? newMatKhau)
-        {
-            if (!ModelState.IsValid || string.IsNullOrEmpty(taiKhoan.Email) || string.IsNullOrEmpty(taiKhoan.Hoten))
-            {
-                TempData["Error"] = "Vui lòng nhập đầy đủ thông tin.";
-                return View("~/Views/QuanLyTaiKhoan/EditKhachHang.cshtml", taiKhoan);
-            }
-
-            var existingTaiKhoan = await _context.TaiKhoans
-                .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && t.VaiTroId == 3);
-            if (existingTaiKhoan == null)
-                return NotFound();
-
-            var emailConflict = await _context.TaiKhoans.FirstOrDefaultAsync(t => t.Email == taiKhoan.Email && t.TaiKhoanId != taiKhoanId);
-            if (emailConflict != null)
-            {
-                TempData["Error"] = "Email đã được sử dụng.";
-                return View("~/Views/QuanLyTaiKhoan/EditKhachHang.cshtml", taiKhoan);
-            }
-
-            existingTaiKhoan.Email = taiKhoan.Email;
-            existingTaiKhoan.Hoten = taiKhoan.Hoten;
-            existingTaiKhoan.TrangThai = taiKhoan.TrangThai ?? true;
-            existingTaiKhoan.HinhAnh = taiKhoan.HinhAnh;
-            if (!string.IsNullOrEmpty(newMatKhau))
-                existingTaiKhoan.MatKhau = newMatKhau;
-
-            await _context.SaveChangesAsync();
-
-            var sessionTaiKhoanId = HttpContext.Session.GetString("TaiKhoanId");
-            if (sessionTaiKhoanId == taiKhoanId.ToString())
-            {
-                HttpContext.Session.SetString("Hoten", taiKhoan.Hoten);
-                HttpContext.Session.SetString("Email", taiKhoan.Email);
-            }
-
-            TempData["Success"] = "Sửa tài khoản khách hàng thành công.";
-            return RedirectToAction("ManageKhachHang");
-        }
-
-        // Nhân viên: Xóa tài khoản khách hàng
-        [AuthorizePermission("DeleteCus", "ManageKhachHang")]
-        public async Task<IActionResult> DeleteKhachHang(int taiKhoanId)
-        {
-            var taiKhoan = await _context.TaiKhoans
-                .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && t.VaiTroId == 3);
-            if (taiKhoan == null)
-                return NotFound();
-
-            return View("~/Views/QuanLyTaiKhoan/DeleteKhachHang.cshtml", taiKhoan);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [AuthorizePermission("DeleteCus", "ManageKhachHang")]
-        public async Task<IActionResult> DeleteKhachHangConfirmed(int taiKhoanId)
-        {
-            var taiKhoan = await _context.TaiKhoans
-                .Include(t => t.QuyenTaiKhoans)
-                .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && t.VaiTroId == 3);
-            if (taiKhoan == null)
-                return NotFound();
-
-            _context.QuyenTaiKhoans.RemoveRange(taiKhoan.QuyenTaiKhoans);
-            _context.TaiKhoans.Remove(taiKhoan);
-
-            await _context.SaveChangesAsync();
-
-            var sessionTaiKhoanId = HttpContext.Session.GetString("TaiKhoanId");
-            if (sessionTaiKhoanId == taiKhoanId.ToString())
-                HttpContext.Session.Clear();
-
-            TempData["Success"] = "Xóa tài khoản khách hàng thành công.";
-            return RedirectToAction("ManageKhachHang");
         }
     }
 }

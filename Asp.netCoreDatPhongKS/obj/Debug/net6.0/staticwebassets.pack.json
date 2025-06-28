@@ -1961,6 +1961,10 @@
       "PackagePath": "staticwebassets\\images\\mi-y-bolognese.jpg"
     },
     {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png",
+      "PackagePath": "staticwebassets\\images\\nhanvien\\DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png"
+    },
+    {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png",
       "PackagePath": "staticwebassets\\images\\nhanvien\\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png"
     },
@@ -1975,6 +1979,14 @@
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png",
       "PackagePath": "staticwebassets\\images\\nhanvien\\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.png",
+      "PackagePath": "staticwebassets\\images\\nhanvien\\NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.png"
+    },
+    {
+      "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nhanvien\\NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.png",
+      "PackagePath": "staticwebassets\\images\\nhanvien\\NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.png"
     },
     {
       "Id": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\nuoc-cam.jpg",

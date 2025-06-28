@@ -5868,6 +5868,18 @@
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"x5ohskypi9"},{"Name":"integrity","Value":"sha256-lWDJlcVXIMIvGXvdP2rn6ft8QRtkOpnu8oTMM67mGsc="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/images/mi-y-bolognese.jpg"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"16968"},{"Name":"Content-Type","Value":"image/jpeg"},{"Name":"ETag","Value":"\u0022lWDJlcVXIMIvGXvdP2rn6ft8QRtkOpnu8oTMM67mGsc=\u0022"},{"Name":"Last-Modified","Value":"Tue, 27 May 2025 11:17:31 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nhanvien/DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.nfflp3lp0m.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"nfflp3lp0m"},{"Name":"integrity","Value":"sha256-nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/images/nhanvien/DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"634904"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 16:32:13 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nhanvien/DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"634904"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 16:32:13 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nhanvien/Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.bjkfhiqqoc.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -5915,6 +5927,30 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A\u002BOelhEGZnt8Y="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"179170"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022FcZmX/GiB9HHNZv5FWxi2FnyGNDKw8A\u002BOelhEGZnt8Y=\u0022"},{"Name":"Last-Modified","Value":"Thu, 19 Jun 2025 16:35:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nhanvien/NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.nfflp3lp0m.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"nfflp3lp0m"},{"Name":"integrity","Value":"sha256-nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/images/nhanvien/NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"634904"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 16:31:21 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nhanvien/NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"634904"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022nYlHacQrwZjrI/R5J12EDMHeaFdK7Gz4jjX3n1nrBz0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 16:31:21 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nhanvien/NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"184407"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 16:30:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nhanvien/NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.um975gqx9f.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nhanvien\NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"um975gqx9f"},{"Name":"integrity","Value":"sha256-eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo="},{"Name":"label","Value":"_content/Asp.netCoreDatPhongKS/images/nhanvien/NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"184407"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo=\u0022"},{"Name":"Last-Modified","Value":"Sat, 28 Jun 2025 16:30:43 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Asp.netCoreDatPhongKS/images/nuoc-cam.d5x86q9nbc.jpg">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\nuoc-cam.jpg'))</AssetFile>
