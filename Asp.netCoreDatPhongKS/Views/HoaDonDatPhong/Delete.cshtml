@@ -1,0 +1,31 @@
+﻿@model Asp.netCoreDatPhongKS.Models.HoaDonPdp
+
+@{
+    ViewData["Title"] = "Xóa Hóa đơn đặt phòng";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Bạn có chắc muốn xóa hóa đơn này?</h3>
+<div>
+    <h4>Hóa đơn đặt phòng</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">Mã Hóa Đơn</dt>
+        <dd class="col-sm-10">@Model.MaHoaDonNavigation?.MaHoaDon</dd>
+        <dt class="col-sm-2">Phiếu Đặt Phòng</dt>
+        <dd class="col-sm-10">@Model.PhieuDatPhong?.MaPhieu</dd>
+        <dt class="col-sm-2">Thành Tiền</dt>
+        <dd class="col-sm-10">@Model.ThanhTien.ToString("C")</dd>
+        <dt class="col-sm-2">Trạng Thái</dt>
+        <dd class="col-sm-10">@Model.TrangThai</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Xóa" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>

@@ -74,17 +74,17 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            @* @{ *@
-                            @*     var hasManageDichVu = quyen.Contains("ManageDichVu"); *@
-                            @* } *@
-                            <a class="nav-link" href="@(hasManageDichVu ? Url.Action("IndexChoAdmin", "LoaiPhong") : "#")" onclick="@(!hasManageDichVu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            @{
+                                var hasManageLoaiPhong = quyen.Contains("ManageLoaiPhong");
+                            }
+                            <a class="nav-link" href="@(hasManageLoaiPhong ? Url.Action("IndexChoAdmin", "LoaiPhong") : "#")" onclick="@(!hasManageLoaiPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
                                 <span class="menu-title">Quản lý Loại Phòng </span>
                                 <i class="mdi mdi-television menu-icon"></i>
                             </a>
                         </li>
                         <li class="nav-item">
                             @{
-                                var hasManageDatPhong = quyen.Contains("ManagePhieuDatPhong") || quyen.Contains("BookRoom") || quyen.Contains("CreateBooking");
+                                var hasManageDatPhong = quyen.Contains("ManagePhieuDatPhong");
                             }
                             <a class="nav-link" href="@(hasManageDatPhong ? Url.Action("Index", "PhieuDatPhong") : "#")" onclick="@(!hasManageDatPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
                                 <span class="menu-title">Quản lý phiếu đặt phòng</span>
@@ -129,15 +129,6 @@
                         </li>
                         <li class="nav-item">
                             @{
-                                var hasManageLoaiPhong = quyen.Contains("ManageDoanhThu");
-                            }
-                            <a class="nav-link" href="@(hasManageLoaiPhong ? Url.Action("Index", "DoanhThu") : "#")" onclick="@(!hasManageLoaiPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý doanh thu</span>
-                                <i class="mdi mdi-home-variant menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
                                 var hasManageHoaDonDV = quyen.Contains("ManageHoaDonDichVu");
                             }
                             <a class="nav-link" href="@(hasManageHoaDonDV ? Url.Action("Index", "HoaDonDichVu") : "#")" onclick="@(!hasManageHoaDonDV ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
@@ -145,6 +136,25 @@
                                 <i class="mdi mdi-home-variant menu-icon"></i>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            @{
+                                var hasManageHoaDonPDP = quyen.Contains("ManageHoaDonDatPhong");
+                            }
+                            <a class="nav-link" href="@(hasManageHoaDonPDP ? Url.Action("Index", "HoaDonDatPhong") : "#")" onclick="@(!hasManageHoaDonPDP ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý hóa đơn đặt phòng</span>
+                                <i class="mdi mdi-home-variant menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @{
+                                var hasManageDoanhThu = quyen.Contains("ManageDoanhThu");
+                            }
+                            <a class="nav-link" href="@(hasManageDoanhThu ? Url.Action("Index", "DoanhThu") : "#")" onclick="@(!hasManageDoanhThu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý doanh thu</span>
+                                <i class="mdi mdi-home-variant menu-icon"></i>
+                            </a>
+                        </li>
+                      
                         <li class="nav-item">
                             @{
                                 var hasManageKhuyenMai = quyen.Contains("ManageKhuyenMai");
@@ -217,7 +227,7 @@
                                     </div>
                                     <span class="profile-username">
                                         <span class="op-7">Xin chào,</span>
-                                        <span class="fw-bold">Quản trị viên</span>
+                                        <span class="fw-bold">  @ViewData["Hoten"]</span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -226,8 +236,8 @@
                                         <div class="user-box">
                                          
                                             <div class="u-text">
-                                                <h4>Quản trị viên</h4>
-                                                <p class="text-muted">admin@hotel.com</p>
+                                                <h4>@ViewData["Hoten"]</h4>
+                                                <p class="text-muted">@ViewData["Email"]</p>
                                                 <a href="@Url.Action("Profile", "TaiKhoan")" class="btn btn-xs btn-secondary btn-sm">Xem hồ sơ</a>
                                                 <a href="@Url.Action("ChangePassword", "TaiKhoan")" class="btn btn-xs btn-secondary btn-sm">Đổi mật khẩu</a>
                                             </div>

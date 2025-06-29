@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.HoaDonPdp>
+
+@{
+    ViewData["Title"] = "Danh sách Hóa đơn đặt phòng";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@* <p> *@
+@*     <a asp-action="Create" class="btn btn-primary">Thêm mới</a> *@
+@* </p> *@
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã Hóa Đơn</th>
+            <th>Phiếu Đặt Phòng</th>
+            <th>Thành Tiền</th>
+            <th>Trạng Thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaHoaDonNavigation?.MaHoaDon</td>
+                <td>@item.PhieuDatPhong?.MaPhieu</td>
+                <td>@item.ThanhTien.ToString("C")</td>
+                <td>@item.TrangThai</td>
+                <td>
+                  @* <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Sửa</a> *@
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Xóa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

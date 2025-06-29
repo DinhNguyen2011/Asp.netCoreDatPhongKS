@@ -8298,6 +8298,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\com-tam-suon-nuong.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\dichvu\e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Asp.netCoreDatPhongKS</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Asp.netCoreDatPhongKS</BasePath>
+      <RelativePath>images/dichvu/e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>um975gqx9f</Fingerprint>
+      <Integrity>eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\dichvu\e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\don-phong.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>Asp.netCoreDatPhongKS</SourceId>

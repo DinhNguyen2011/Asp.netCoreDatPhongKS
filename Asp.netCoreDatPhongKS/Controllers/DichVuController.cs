@@ -206,5 +206,162 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(hoaDonDichVu);
         }
+        public IActionResult IndexQLDichVu()
+        {
+            var dv = _context.DichVus.ToList();
+            return View(dv);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: DichVu/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(DichVu model, IFormFile? HinhAnhFile)
+        {
+            if (string.IsNullOrEmpty(model.TenDichVu) || model.DonGia <= 0)
+            {
+                TempData["Error"] = "Vui lòng nhập đầy đủ Tên dịch vụ và Đơn giá hợp lệ.";
+                return View(model);
+            }
+
+            try
+            {
+                if (HinhAnhFile != null && HinhAnhFile.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(HinhAnhFile.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/dichvu", fileName);
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await HinhAnhFile.CopyToAsync(stream);
+                    }
+                    model.HinhAnh = "/images/dichvu/" + fileName;
+                }
+
+                model.NgayTao = DateTime.Now;
+                model.NgayCapNhat = DateTime.Now;
+                model.TrangThai ??= true;
+
+                _context.DichVus.Add(model);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Thêm dịch vụ thành công.";
+                return RedirectToAction(nameof(IndexQLDichVu));
+            }
+            catch
+            {
+                TempData["Error"] = "Có lỗi xảy ra khi thêm dịch vụ.";
+                return View(model);
+            }
+        }
+
+        // GET: DichVu/Edit/5
+        public async Task<IActionResult> Edit(int id)
+        {
+            var dichVu = await _context.DichVus.FindAsync(id);
+            if (dichVu == null)
+                return NotFound();
+
+            return View(dichVu);
+        }
+
+        // POST: DichVu/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, DichVu model, IFormFile? HinhAnhFile)
+        {
+            if (id != model.DichVuId)
+                return NotFound();
+
+            if (string.IsNullOrEmpty(model.TenDichVu) || model.DonGia <= 0)
+            {
+                TempData["Error"] = "Vui lòng nhập đầy đủ Tên dịch vụ và Đơn giá hợp lệ.";
+                return View(model);
+            }
+
+            var existingDichVu = await _context.DichVus.FindAsync(id);
+            if (existingDichVu == null)
+                return NotFound();
+
+            try
+            {
+                if (HinhAnhFile != null && HinhAnhFile.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(HinhAnhFile.FileName);
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/dichvu", fileName);
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await HinhAnhFile.CopyToAsync(stream);
+                    }
+                    // Xóa hình cũ nếu có
+                    if (!string.IsNullOrEmpty(existingDichVu.HinhAnh))
+                    {
+                        var oldFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", existingDichVu.HinhAnh.TrimStart('/'));
+                        if (System.IO.File.Exists(oldFilePath))
+                            System.IO.File.Delete(oldFilePath);
+                    }
+                    existingDichVu.HinhAnh = "/images/dichvu/" + fileName;
+                }
+
+                existingDichVu.TenDichVu = model.TenDichVu;
+                existingDichVu.MoTa = model.MoTa;
+                existingDichVu.DonGia = model.DonGia;
+                existingDichVu.TrangThai = model.TrangThai ?? true;
+                existingDichVu.NgayCapNhat = DateTime.Now;
+
+                _context.Update(existingDichVu);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Sửa dịch vụ thành công.";
+                return RedirectToAction(nameof(IndexQLDichVu));
+            }
+            catch
+            {
+                TempData["Error"] = "Có lỗi xảy ra khi sửa dịch vụ.";
+                return View(model);
+            }
+        }
+
+        // GET: DichVu/Delete/5
+        public async Task<IActionResult> Delete(int id)
+        {
+            var dichVu = await _context.DichVus.FindAsync(id);
+            if (dichVu == null)
+                return NotFound();
+
+            return View(dichVu);
+        }
+
+        // POST: DichVu/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var dichVu = await _context.DichVus.FindAsync(id);
+            if (dichVu == null)
+                return NotFound();
+
+            try
+            {
+                if (!string.IsNullOrEmpty(dichVu.HinhAnh))
+                {
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", dichVu.HinhAnh.TrimStart('/'));
+                    if (System.IO.File.Exists(filePath))
+                        System.IO.File.Delete(filePath);
+                }
+
+                _context.DichVus.Remove(dichVu);
+                await _context.SaveChangesAsync();
+                TempData["Success"] = "Xóa dịch vụ thành công.";
+                return RedirectToAction(nameof(IndexQLDichVu));
+            }
+            catch
+            {
+                TempData["Error"] = "Có lỗi xảy ra khi xóa dịch vụ.";
+                return View(dichVu);
+            }
+        }
     }
 }

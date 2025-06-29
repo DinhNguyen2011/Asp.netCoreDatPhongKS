@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "s0JrNOthwSSB1cD0JO95GmuKBEoxOEEm1n5egL0gLhA=",
+  "Hash": "ALl6kt+EfMSlVIRVTyQqvClxoTmbkn4FewKa8Eg9LiM=",
   "Source": "Asp.netCoreDatPhongKS",
   "BasePath": "_content/Asp.netCoreDatPhongKS",
   "Mode": "Default",
@@ -9717,6 +9717,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\com-tam-suon-nuong.jpg"
+    },
+    {
+      "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\dichvu\\e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png",
+      "SourceId": "Asp.netCoreDatPhongKS",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\",
+      "BasePath": "_content/Asp.netCoreDatPhongKS",
+      "RelativePath": "images/dichvu/e3063cc8-35a5-4dcb-b939-10bfd1483e6a#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "um975gqx9f",
+      "Integrity": "eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\dichvu\\e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png"
     },
     {
       "Identity": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\don-phong.jpg",
@@ -50625,6 +50646,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-6UFcqHxOWNaEu/7W52m4cS/OJlN5u66xnarrx2Kb6Qw="
+        }
+      ]
+    },
+    {
+      "Route": "images/dichvu/e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\dichvu\\e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "184407"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 29 Jun 2025 08:32:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo="
+        }
+      ]
+    },
+    {
+      "Route": "images/dichvu/e3063cc8-35a5-4dcb-b939-10bfd1483e6a.um975gqx9f.png",
+      "AssetFile": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\wwwroot\\images\\dichvu\\e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "184407"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 29 Jun 2025 08:32:01 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "um975gqx9f"
+        },
+        {
+          "Name": "label",
+          "Value": "images/dichvu/e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-eo7tAAynVESr51pMZXtM9pixxlNeCTsndd2Q4qm7iMo="
         }
       ]
     },

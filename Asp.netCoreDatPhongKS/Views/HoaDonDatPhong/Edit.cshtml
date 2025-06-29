@@ -1,0 +1,40 @@
+﻿@model Asp.netCoreDatPhongKS.Models.HoaDonPdp
+
+@{
+    ViewData["Title"] = "Sửa Hóa đơn đặt phòng";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="MaHoaDon" class="control-label"></label>
+        <select asp-for="MaHoaDon" class="form-control" asp-items="@(new SelectList(ViewData["MaHoaDon"] as List<HoaDon>, "MaHoaDon", "MaHoaDon"))">
+            <option value="">Chọn hóa đơn</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="PhieuDatPhongId" class="control-label"></label>
+        <select asp-for="PhieuDatPhongId" class="form-control" asp-items="@(new SelectList(ViewData["PhieuDatPhongId"] as List<PhieuDatPhong>, "PhieuDatPhongId", "MaPhieu"))">
+            <option value="">Chọn phiếu đặt phòng</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="ThanhTien" class="control-label"></label>
+        <input asp-for="ThanhTien" class="form-control" />
+        <span asp-validation-for="ThanhTien" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TrangThai" class="control-label"></label>
+        <input asp-for="TrangThai" class="form-control" />
+        <span asp-validation-for="TrangThai" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Lưu" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
+</form>

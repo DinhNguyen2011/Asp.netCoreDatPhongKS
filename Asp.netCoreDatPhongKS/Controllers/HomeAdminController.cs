@@ -15,6 +15,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ViewData["Hoten"] = userName;
             }
+            string email = HttpContext.Session.GetString("Email");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Email"] = email;
+            }
             return View();
          
         }

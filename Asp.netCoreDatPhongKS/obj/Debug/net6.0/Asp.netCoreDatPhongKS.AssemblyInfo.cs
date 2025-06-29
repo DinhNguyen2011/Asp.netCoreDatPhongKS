@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Asp.netCoreDatPhongKS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6d554e991ee547117a352dab452530a9705e51b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96ddcccf9f6c684f572fcca584f36c88b4c3a0d3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Asp.netCoreDatPhongKS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Asp.netCoreDatPhongKS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

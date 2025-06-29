@@ -1,0 +1,110 @@
+﻿@model Asp.netCoreDatPhongKS.Models.DichVu
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .notification {
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 4px;
+        text-align: center;
+    }
+
+    .success {
+        background-color: #dff0d8;
+        color: #3c763d;
+        border: 1px solid #d6e9c6;
+    }
+
+    .error {
+        background-color: #f2dede;
+        color: #a94442;
+        border: 1px solid #ebccd1;
+    }
+
+    .form-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input[type="submit"], .back-button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    input[type="submit"] {
+        background-color: #f44336;
+        color: white;
+    }
+
+        input[type="submit"]:hover {
+            background-color: #da190b;
+        }
+
+    .back-button {
+        background-color: #ccc;
+        color: #333;
+        text-decoration: none;
+        display: inline-block;
+        margin-left: 10px;
+    }
+
+        .back-button:hover {
+            background-color: #bbb;
+        }
+</style>
+
+<div class="container">
+    <h1>Xóa dịch vụ</h1>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="notification success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="notification error">@TempData["Error"]</div>
+    }
+
+    <div class="form-container">
+        <p>Bạn có chắc chắn muốn xóa dịch vụ "<strong>@Model.TenDichVu</strong>" không?</p>
+        <form asp-action="Delete" asp-controller="DichVu" method="post">
+            <input type="hidden" asp-for="DichVuId" />
+            <input type="submit" value="Xóa dịch vụ" />
+            <a href="@Url.Action("Index")" class="back-button">Quay lại</a>
+        </form>
+    </div>
+</div>
