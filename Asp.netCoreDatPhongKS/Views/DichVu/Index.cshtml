@@ -5,7 +5,6 @@
 }
 
 <h2>Danh sách dịch vụ</h2>
-<a href="@Url.Action("IndexQLDichVu", "DichVu")" class="btn btn-primary">Quản lý dịch vụ</a>
 
 <!-- Form tìm kiếm và lọc -->
 <form asp-action="Index" method="get" class="mb-4">
@@ -16,8 +15,8 @@
         <div class="col-md-3">
             <select name="trangThai" class="form-select">
                 <option value="">Tất cả trạng thái</option>
-                <option value="Hoạt động">Hoạt động</option>
-                <option value="Không hoạt động">Không hoạt động</option>
+                <option value="Hoạt động" selected="@(ViewBag.TrangThai == "Hoạt động")">Hoạt động</option>
+                <option value="Không hoạt động" selected="@(ViewBag.TrangThai == "Không hoạt động")">Không hoạt động</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -26,15 +25,24 @@
     </div>
 </form>
 
+<!-- Thông báo lỗi/success -->
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
 
-<form asp-action="CreateDonHangDichVu" method="post">
+<!-- Form tạo đơn hàng dịch vụ -->
+<form asp-action="CreateDonHangDichVu" method="post" id="createDonHangForm">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <!-- Khách vãng lai -->
     <div class="mb-3 form-check">
-        <!-- Phải có input hidden để đảm bảo luôn gửi giá trị -->
-        <input type="hidden" name="isKhachVangLai" value="false" />
         <input type="checkbox" class="form-check-input" id="isKhachVangLai" name="isKhachVangLai" value="true" />
         <label class="form-check-label" for="isKhachVangLai">Khách vãng lai</label>
-
     </div>
 
     <!-- Chọn khách hàng -->
@@ -47,23 +55,27 @@
                 <option value="@khach.Value">@khach.Text</option>
             }
         </select>
+        <span class="text-danger" id="khachHangError"></span>
     </div>
 
     <!-- Thanh toán ngay -->
     <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="thanhToanNgay" name="thanhToanNgay" />
+        <input type="checkbox" class="form-check-input" id="thanhToanNgay" name="thanhToanNgay" value="true" />
         <label class="form-check-label" for="thanhToanNgay">Thanh toán ngay</label>
     </div>
 
     <!-- Hình thức thanh toán -->
     <div class="mb-3" id="hinhThucThanhToanGroup" style="display:none;">
         <label class="form-label">Hình thức thanh toán</label>
-        <select name="hinhThucThanhToan" class="form-select">
+        <select name="hinhThucThanhToan" class="form-select" id="hinhThucThanhToan">
             <option value="">Chọn hình thức</option>
             <option value="Tiền mặt">Tiền mặt</option>
             <option value="Chuyển khoản">Chuyển khoản</option>
             <option value="VNPay">VNPay</option>
+            <option value="MoMo">MoMo</option>
+
         </select>
+        <span class="text-danger" id="hinhThucThanhToanError"></span>
     </div>
 
     <!-- Bảng danh sách dịch vụ với checkbox và số lượng -->
@@ -101,7 +113,8 @@
                         }
                     </td>
                     <td>
-                        <input type="number" class="form-control so-luong" name="soLuongs" min="1" style="display:none;" />
+                        <input type="number" class="form-control so-luong" name="soLuongs" min="1" style="display:none;" data-dichvu-id="@dichVu.DichVuId" />
+                        <span class="text-danger so-luong-error"></span>
                     </td>
                 </tr>
             }
@@ -110,38 +123,82 @@
 
     <!-- Nút tạo đơn hàng dịch vụ -->
     <button type="submit" class="btn btn-success">Tạo đơn hàng dịch vụ</button>
+    <a asp-action="Index" asp-controller="HoaDon" class="btn btn-secondary">Quay lại</a>
 </form>
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Ẩn/hiện khách hàng khi chọn vãng lai
-            $('#isKhachVangLai').change(function () {
-                if ($(this).is(':checked')) {
-                    $('#khachHangGroup').hide();
-                    $('#khachHangId').val('');
-                    $('#thanhToanNgay').prop('checked', true).prop('disabled', true);
-                    $('#hinhThucThanhToanGroup').show();
-                } else {
-                    $('#khachHangGroup').show();
-                    $('#thanhToanNgay').prop('disabled', false);
-                    $('#hinhThucThanhToanGroup').toggle($('#thanhToanNgay').is(':checked'));
-                }
-            });
-
-            // Ẩn/hiện hình thức thanh toán
-            $('#thanhToanNgay').change(function () {
-                $('#hinhThucThanhToanGroup').toggle($(this).is(':checked'));
-            });
-
-            // Hiển thị ô số lượng khi checkbox được chọn
-            $('.dich-vu-checkbox').change(function () {
-                var soLuongInput = $(this).closest('tr').find('.so-luong');
-                soLuongInput.toggle(this.checked);
-                if (!this.checked) {
-                    soLuongInput.val('');
-                }
-            });
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Ẩn/hiện khách hàng khi chọn vãng lai
+        $('#isKhachVangLai').change(function () {
+            if ($(this).is(':checked')) {
+                $('#khachHangGroup').hide();
+                $('#khachHangId').val('');
+                $('#thanhToanNgay').prop('checked', true).prop('disabled', true);
+                $('#hinhThucThanhToanGroup').show();
+                $('#hinhThucThanhToan').prop('required', true);
+            } else {
+                $('#khachHangGroup').show();
+                $('#thanhToanNgay').prop('disabled', false);
+                $('#hinhThucThanhToanGroup').toggle($('#thanhToanNgay').is(':checked'));
+                $('#hinhThucThanhToan').prop('required', $('#thanhToanNgay').is(':checked'));
+            }
         });
-    </script>
+
+        // Ẩn/hiện hình thức thanh toán
+        $('#thanhToanNgay').change(function () {
+            $('#hinhThucThanhToanGroup').toggle($(this).is(':checked'));
+            $('#hinhThucThanhToan').prop('required', $(this).is(':checked'));
+        });
+
+        // Hiển thị ô số lượng khi checkbox được chọn
+        $('.dich-vu-checkbox').change(function () {
+            var soLuongInput = $(this).closest('tr').find('.so-luong');
+            soLuongInput.toggle(this.checked);
+            if (!this.checked) {
+                soLuongInput.val('');
+                soLuongInput.next('.so-luong-error').text('');
+            }
+        });
+
+        // Validation form trước khi submit
+        $('#createDonHangForm').submit(function (e) {
+            var isValid = true;
+            $('.text-danger').text('');
+
+            // Kiểm tra khách hàng
+            if (!$('#isKhachVangLai').is(':checked') && !$('#khachHangId').val()) {
+                $('#khachHangError').text('Vui lòng chọn khách hàng.');
+                isValid = false;
+            }
+
+            // Kiểm tra hình thức thanh toán
+            if ($('#thanhToanNgay').is(':checked') && !$('#hinhThucThanhToan').val()) {
+                $('#hinhThucThanhToanError').text('Vui lòng chọn hình thức thanh toán.');
+                isValid = false;
+            }
+
+            // Kiểm tra dịch vụ và số lượng
+            var selectedDichVus = $('.dich-vu-checkbox:checked');
+            if (selectedDichVus.length === 0) {
+                alert('Vui lòng chọn ít nhất một dịch vụ.');
+                isValid = false;
+            } else {
+                selectedDichVus.each(function () {
+                    var soLuongInput = $(this).closest('tr').find('.so-luong');
+                    var soLuong = parseInt(soLuongInput.val());
+                    if (!soLuong || soLuong < 1) {
+                        soLuongInput.next('.so-luong-error').text('Vui lòng nhập số lượng lớn hơn 0.');
+                        isValid = false;
+                    }
+                });
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            } else {
+                console.log('Form valid, submitting...');
+            }
+        });
+    });
+</script>

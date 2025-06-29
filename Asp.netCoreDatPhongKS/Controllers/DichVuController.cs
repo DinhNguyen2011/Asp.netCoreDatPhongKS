@@ -74,121 +74,142 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(await dichVus.ToListAsync());
         }
-
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateDonHangDichVu(int? khachHangId, bool isKhachVangLai, int[] dichVuIds, int[] soLuongs, bool thanhToanNgay, string hinhThucThanhToan)
         {
+         
+            // Khôi phục ViewBag.KhachHangId
+            ViewBag.KhachHangId = new SelectList(
+                await _context.KhachHangs
+                    .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TinhTrangSuDung == "Đã check-in"))
+                    .ToListAsync(),
+                "KhachHangId", "HoTen", khachHangId);
+
             // Kiểm tra dữ liệu đầu vào
-            if (dichVuIds == null || dichVuIds.Length == 0 || soLuongs == null || soLuongs.Length != dichVuIds.Length)
+            if (dichVuIds == null || dichVuIds.Length == 0 || soLuongs == null || soLuongs.Length == 0)
             {
-                ModelState.AddModelError("", "Vui lòng chọn ít nhất một dịch vụ và số lượng hợp lệ.");
-                ViewBag.KhachHangId = new SelectList(
-                    await _context.KhachHangs
-                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
-                        .ToListAsync(),
-                    "KhachHangId", "HoTen", khachHangId);
+                TempData["Error"] = "Vui lòng chọn ít nhất một dịch vụ và số lượng hợp lệ.";
                 return View("Index", await _context.DichVus.ToListAsync());
             }
 
+            // Lọc các dịch vụ có số lượng > 0
+            var validDichVus = dichVuIds.Zip(soLuongs, (id, sl) => new { DichVuId = id, SoLuong = sl })
+                .Where(x => x.SoLuong > 0)
+                .ToList();
+
+            if (!validDichVus.Any())
+            {
+                TempData["Error"] = "Vui lòng chọn ít nhất một dịch vụ với số lượng lớn hơn 0.";
+                return View("Index", await _context.DichVus.ToListAsync());
+            }
+
+            // Validation khách hàng
             if (!isKhachVangLai && !khachHangId.HasValue)
             {
-                ModelState.AddModelError("", "Vui lòng chọn khách hàng hoặc chọn khách vãng lai.");
-                ViewBag.KhachHangId = new SelectList(
-                    await _context.KhachHangs
-                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
-                        .ToListAsync(),
-                    "KhachHangId", "HoTen", khachHangId);
+                TempData["Error"] = "Vui lòng chọn khách hàng hoặc chọn khách vãng lai.";
                 return View("Index", await _context.DichVus.ToListAsync());
             }
 
-            if (thanhToanNgay && string.IsNullOrEmpty(hinhThucThanhToan))
+            // Validation hình thức thanh toán
+            if ((thanhToanNgay || isKhachVangLai) && string.IsNullOrEmpty(hinhThucThanhToan))
             {
-                ModelState.AddModelError("", "Vui lòng chọn hình thức thanh toán.");
-                ViewBag.KhachHangId = new SelectList(
-                    await _context.KhachHangs
-                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
-                        .ToListAsync(),
-                    "KhachHangId", "HoTen", khachHangId);
+                TempData["Error"] = "Vui lòng chọn hình thức thanh toán.";
                 return View("Index", await _context.DichVus.ToListAsync());
             }
 
-            var userName = HttpContext.Session.GetString("Hoten");
-            if (string.IsNullOrEmpty(userName))
-            {
-                ModelState.AddModelError("", "Vui lòng đăng nhập để tạo đơn hàng.");
-                ViewBag.KhachHangId = new SelectList(
-                    await _context.KhachHangs
-                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
-                        .ToListAsync(),
-                    "KhachHangId", "HoTen", khachHangId);
-                return View("Index", await _context.DichVus.ToListAsync());
-            }
+            // Lấy thông tin nhân viên
+            var userName = HttpContext.Session.GetString("Hoten") ?? "Nhân viên không xác định";
 
-            // Tạo đơn hàng dịch vụ
-            var donHang = new DonHangDichVu
+            try
             {
-                KhachHangId = isKhachVangLai ? null : khachHangId,
-                NgayDat = DateTime.Now,
-                TrangThai = thanhToanNgay || isKhachVangLai ? "Hoàn thành" : "Chờ thanh toán",
-                GhiChu = isKhachVangLai ? "Khách vãng lai" : $"Nhân viên lập: {userName}"
-            };
-
-            _context.DonHangDichVus.Add(donHang);
-            await _context.SaveChangesAsync();
-
-            // Thêm chi tiết dịch vụ
-            decimal tongTien = 0;
-            for (int i = 0; i < dichVuIds.Length; i++)
-            {
-                if (soLuongs[i] > 0)
+                using (var transaction = await _context.Database.BeginTransactionAsync())
                 {
-                    var dichVu = await _context.DichVus.FindAsync(dichVuIds[i]);
-                    if (dichVu != null)
+                    // Tạo đơn hàng dịch vụ
+                    var donHang = new DonHangDichVu
                     {
-                        var chiTiet = new ChiTietDonHangDichVu
+                        KhachHangId = isKhachVangLai ? null : khachHangId,
+                        NgayDat = DateTime.Now,
+                        TrangThai = thanhToanNgay || isKhachVangLai ? "Hoàn thành" : "Chờ thanh toán",
+                        GhiChu = isKhachVangLai ? "Khách vãng lai" : $"Nhân viên lập: {userName}"
+                    };
+
+                    _context.DonHangDichVus.Add(donHang);
+                    await _context.SaveChangesAsync();
+
+                    // Thêm chi tiết dịch vụ
+                    decimal tongTien = 0;
+                    foreach (var item in validDichVus)
+                    {
+                        var dichVu = await _context.DichVus.FindAsync(item.DichVuId);
+                        if (dichVu != null)
                         {
-                            MaDonHangDv = donHang.MaDonHangDv,
-                            DichVuId = dichVuIds[i],
-                            SoLuong = soLuongs[i],
-                            DonGia = dichVu.DonGia,
-                            ThanhTien = soLuongs[i] * dichVu.DonGia
-                        };
-                        tongTien += chiTiet.ThanhTien ?? 0;
-                        _context.ChiTietDonHangDichVus.Add(chiTiet);
+                            var chiTiet = new ChiTietDonHangDichVu
+                            {
+                                MaDonHangDv = donHang.MaDonHangDv,
+                                DichVuId = item.DichVuId,
+                                SoLuong = item.SoLuong,
+                                DonGia = dichVu.DonGia,
+                                ThanhTien = item.SoLuong * dichVu.DonGia
+                            };
+                            tongTien += chiTiet.ThanhTien ?? 0;
+                            _context.ChiTietDonHangDichVus.Add(chiTiet);
+                        }
                     }
+
+                    if (tongTien == 0)
+                    {
+                        throw new Exception("Không có dịch vụ hợp lệ được chọn.");
+                    }
+
+                    await _context.SaveChangesAsync();
+
+                    // Tạo hóa đơn dịch vụ
+                    var hoaDonDichVu = new HoaDonDichVu
+                    {
+                        MaDonHangDv = donHang.MaDonHangDv,
+                        TrangThaiThanhToan = thanhToanNgay || isKhachVangLai ? "Đã thanh toán" : "Chưa thanh toán",
+                        NgayThanhToan = thanhToanNgay || isKhachVangLai ? DateTime.Now : null,
+                        HinhThucThanhToan = thanhToanNgay || isKhachVangLai ? hinhThucThanhToan : null
+                    };
+                    _context.HoaDonDichVus.Add(hoaDonDichVu);
+                    await _context.SaveChangesAsync();
+
+                    // Tạo hóa đơn tổng (HoaDon) nếu cần
+                    var hoaDon = new HoaDon
+                    {
+                        NgayLap = DateTime.Now,
+                        KhachHangId = isKhachVangLai ? null : khachHangId,
+                        TongTienPhong = 0, // Không có phòng trong trường hợp này
+                        TongTienDichVu = tongTien,
+                        TongTien = tongTien,
+                        HinhThucThanhToan = hinhThucThanhToan,
+                        TrangThai = thanhToanNgay || isKhachVangLai ? "Đã thanh toán" : "Chưa thanh toán",
+                        IsKhachVangLai = isKhachVangLai,
+                        GhiChu = isKhachVangLai ? "Hóa đơn dịch vụ cho khách vãng lai" : $"Hóa đơn dịch vụ, lập bởi: {userName}",
+                        SoTienConNo = thanhToanNgay || isKhachVangLai ? 0 : tongTien,
+                        NguoiLapDh = userName
+                    };
+                    _context.HoaDons.Add(hoaDon);
+                    await _context.SaveChangesAsync();
+
+                    // Liên kết HoaDonDichVu với HoaDon
+                    hoaDonDichVu.MaHoaDonTong = hoaDon.MaHoaDon;
+                    await _context.SaveChangesAsync();
+
+                    await transaction.CommitAsync();
+
+                    TempData["Success"] = "Tạo đơn hàng dịch vụ thành công.";
+                    return RedirectToAction("PrintHoaDonDichVu", new { id = hoaDonDichVu.Id });
                 }
             }
-
-            if (tongTien == 0)
+            catch (Exception ex)
             {
-                ModelState.AddModelError("", "Không có dịch vụ hợp lệ được chọn.");
-                ViewBag.KhachHangId = new SelectList(
-                    await _context.KhachHangs
-                        .Where(kh => _context.PhieuDatPhongs.Any(p => p.KhachHangId == kh.KhachHangId && p.TrangThai == "Đang sử dụng"))
-                        .ToListAsync(),
-                    "KhachHangId", "HoTen", khachHangId);
+                Console.WriteLine($"Lỗi khi tạo đơn hàng: {ex.Message}");
+                TempData["Error"] = $"Có lỗi xảy ra: {ex.Message}";
                 return View("Index", await _context.DichVus.ToListAsync());
             }
-
-            await _context.SaveChangesAsync();
-
-            // Tạo hóa đơn dịch vụ
-            var hoaDonDichVu = new HoaDonDichVu
-            {
-                MaDonHangDv = donHang.MaDonHangDv,
-                TrangThaiThanhToan = thanhToanNgay || isKhachVangLai ? "Đã thanh toán" : "Chưa thanh toán",
-                NgayThanhToan = thanhToanNgay || isKhachVangLai ? DateTime.Now : null,
-                HinhThucThanhToan = thanhToanNgay || isKhachVangLai ? hinhThucThanhToan : null
-            };
-            _context.HoaDonDichVus.Add(hoaDonDichVu);
-            await _context.SaveChangesAsync();
-
-            // Luôn in hóa đơn dịch vụ
-            return RedirectToAction("PrintHoaDonDichVu", new { id = hoaDonDichVu.Id });
         }
-
         public async Task<IActionResult> PrintHoaDonDichVu(int id)
         {
             var hoaDonDichVu = await _context.HoaDonDichVus

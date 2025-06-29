@@ -78,7 +78,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     Id = hoaDon.MaHoaDon,
                     Loai = "Hóa đơn tổng",
                     NgayLap = hoaDon.NgayLap,
-                    KhachHangTen = hoaDon.KhachHang?.HoTen ?? "Không xác định",
+                    KhachHangTen = hoaDon.KhachHang?.HoTen ?? "Khách vãng lai",
                     KhachHangCCCD = hoaDon.KhachHang?.Cccd ?? "Không có",
                     NhanVienTen = hoaDon.NguoiLapDh ?? "Không xác định",
                     TongTien = hoaDon.TongTien ?? 0,
@@ -307,7 +307,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             ViewBag.KhachHangs = await _context.KhachHangs.ToListAsync();
         
-            ViewBag.HinhThucThanhToans = new List<string> { "Tiền mặt", "Chuyển khoản", "Thẻ tín dụng" }; // Tùy chỉnh theo nghiệp vụ
+            ViewBag.HinhThucThanhToans = new List<string> { "Tiền mặt", "Chuyển khoản", "VNPay","MoMo" }; // Tùy chỉnh theo nghiệp vụ
 
             return View(hoaDon);
         }
