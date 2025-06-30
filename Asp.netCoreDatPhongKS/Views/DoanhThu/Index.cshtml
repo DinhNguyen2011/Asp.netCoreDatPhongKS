@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.ViewModels.DoanhThuViewModel>
+
+@{
+    ViewData["Title"] = "Thống kê doanh thu";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/DoanhThu.css" />
+
+<div class="doanhthu-container">
+    <h2 class="doanhthu-title">Thống kê doanh thu</h2>
+
+    <form method="get" asp-action="ThongKeDoanhThu" class="doanhthu-form-group mb-4" id="filterForm">
+        <div class="form-group">
+            <label for="fromDate" class="doanhthu-label">Từ ngày:</label>
+            <input type="date" name="fromDate" id="fromDate" class="form-control doanhthu-input mx-2" value="@ViewBag.FromDate" required />
+        </div>
+        <div class="form-group">
+            <label for="toDate" class="doanhthu-label">Đến ngày:</label>
+            <input type="date" name="toDate" id="toDate" class="form-control doanhthu-input mx-2" value="@ViewBag.ToDate" required />
+        </div>
+        <button type="submit" class="btn btn-primary doanhthu-btn">Lọc</button>
+    </form>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="doanhthu-chart-container">
+            <canvas id="doanhThuChart" width="300" height="300"></canvas>
+            <p class="doanhthu-total">Tổng doanh thu: @Model.Sum(x => x.DoanhThu).ToString("N0") VNĐ</p>
+        </div>
+
+        <table class="table table-bordered mt-4">
+            <thead>
+                <tr>
+                    <th>Ngày</th>
+                    <th>Doanh thu (VNĐ)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Ngay.ToString("dd/MM/yyyy")</td>
+                        <td>@item.DoanhThu.ToString("N0")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            var ctx = document.getElementById('doanhThuChart').getContext('2d');
+            var doanhThuChart = new Chart(ctx, {
+                type: 'pie', // 'bar' biểu đồ cột
+                data: {
+                    labels: [
+                        @foreach (var item in Model)
+                        {
+                                <text>"@item.Ngay.ToString("dd/MM/yyyy")",</text>
+                        }
+                    ],
+                    datasets: [{
+                        label: 'Doanh Thu',
+                        data: [
+                            @foreach (var item in Model)
+                            {
+                                    <text>@item.DoanhThu,</text>
+                            }
+                        ],
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#8e44ad', '#e67e22', '#2ecc71',
+                            '#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e74c3c', '#95a5a6'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+
+            // Validation: Ensure fromDate <= toDate
+            document.getElementById('filterForm').addEventListener('submit', function (e) {
+                var fromDate = document.getElementById('fromDate').value;
+                var toDate = document.getElementById('toDate').value;
+                if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+                    e.preventDefault();
+                    alert('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+                }
+            });
+        </script>
+    }
+    else
+    {
+        <div class="alert alert-warning doanhthu-alert">
+            Không có dữ liệu thống kê trong khoảng thời gian này.
+        </div>
+    }
+</div>

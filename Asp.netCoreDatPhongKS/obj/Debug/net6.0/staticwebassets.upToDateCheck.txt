@@ -413,8 +413,10 @@ wwwroot\css\ajax-loader.gif
 wwwroot\css\bootstrap.min.css
 wwwroot\css\datphong.css
 wwwroot\css\dichvu.css
+wwwroot\css\DoanhThu.css
 wwwroot\css\dsLPhong.css
 wwwroot\css\gioithieu.css
+wwwroot\css\hoadontong.css
 wwwroot\css\home-hotel.css
 wwwroot\css\PhieuDatPhongAdmin.css
 wwwroot\css\phong-timkiem.css
@@ -603,4 +605,3 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\css\hoadontong.css

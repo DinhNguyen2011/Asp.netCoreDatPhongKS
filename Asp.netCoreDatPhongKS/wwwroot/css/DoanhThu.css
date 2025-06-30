@@ -1,0 +1,31 @@
+﻿#doanhThuChart {
+    max-width: 400px;
+    max-height: 400px;
+    margin: 0 auto;
+    display: block;
+}
+
+.doanhthu-chart-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.doanhthu-total {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.doanhthu-form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.doanhthu-input {
+    width: 200px;
+}
+
+.doanhthu-btn {
+    padding: 8px 20px;
+}
