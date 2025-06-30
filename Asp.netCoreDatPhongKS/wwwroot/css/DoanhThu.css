@@ -1,31 +1,144 @@
-﻿#doanhThuChart {
-    max-width: 400px;
-    max-height: 400px;
-    margin: 0 auto;
-    display: block;
+﻿/* General container styling */
+.doanhthu-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.doanhthu-chart-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.doanhthu-total {
-    margin-top: 10px;
+/* Title styling */
+.doanhthu-title {
+    font-size: 28px;
     font-weight: bold;
     color: #333;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
+/* Form styling */
 .doanhthu-form-group {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-end; /* Căn chỉnh các phần tử con (input, button) ở dưới cùng */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column; /* Đặt label trên input */
+    align-items: flex-start;
+}
+
+.doanhthu-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    margin-bottom: 5px;
 }
 
 .doanhthu-input {
     width: 200px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
 .doanhthu-btn {
     padding: 8px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    height: 36px; /* Đảm bảo chiều cao nút khớp với input */
+    line-height: 1.5; /* Căn chỉnh văn bản trong nút */
+}
+
+    .doanhthu-btn:hover {
+        background-color: #0056b3;
+    }
+
+/* Chart container styling */
+.doanhthu-chart-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#doanhThuChart {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Total revenue text */
+.doanhthu-total {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+    .table th, .table td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .table tbody tr:hover {
+        background-color: #e9ecef;
+    }
+
+/* Alert styling */
+.doanhthu-alert {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .doanhthu-form-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .doanhthu-input {
+        width: 100%;
+    }
+
+    .doanhthu-btn {
+        width: 100%;
+        height: auto;
+    }
+
+    .table th, .table td {
+        font-size: 14px;
+        padding: 8px;
+    }
 }

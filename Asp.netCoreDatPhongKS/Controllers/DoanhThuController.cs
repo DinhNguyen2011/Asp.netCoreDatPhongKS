@@ -51,7 +51,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .Select(g => new DoanhThuViewModel
                 {
                     Ngay = g.Key,
-                    DoanhThu = g.Sum(hd => hd.TongTien ?? 0)
+                    DoanhThu = g.Sum(hd => hd.TongTien ?? 0),
+                    DoanhThuDichVu = g.Sum(hd => hd.TongTienDichVu ?? 0),
+                    DoanhThuPdp = g.Sum(hd => hd.TongTienPhong ?? 0)
                 })
                 .OrderBy(x => x.Ngay)
                 .ToListAsync();
