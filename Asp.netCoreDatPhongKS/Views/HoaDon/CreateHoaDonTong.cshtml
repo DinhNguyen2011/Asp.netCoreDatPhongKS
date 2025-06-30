@@ -4,12 +4,14 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     var khachHangs = ViewBag.KhachHangs as List<Asp.netCoreDatPhongKS.Models.KhachHang>;
 }
+
 <link href="~/css/hoadontong.css" rel="stylesheet" />
+
 <h2>Tạo hóa đơn tổng (Check-out)</h2>
 <p>Nhân viên: @ViewData["Hoten"]</p>
 
 <!-- Form tìm kiếm khách hàng -->
-<form asp-action="CreateHoaDonTong" method="get" class="mb-3">
+<form asp-action="CreateHoaDonTong" method="get" class="mb-4">
     <div class="input-group">
         <input type="text" name="searchKhachHang" class="form-control" placeholder="Tìm kiếm tên hoặc CCCD khách hàng..." value="@ViewBag.SearchKhachHang" />
         <button type="submit" class="btn btn-primary">Tìm kiếm</button>
@@ -17,11 +19,11 @@
 </form>
 
 <!-- Form tạo hóa đơn tổng -->
-<form asp-action="CreateHoaDonTong" method="post">
+<form asp-action="CreateHoaDonTong" method="post" class="container mt-4">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <!-- Danh sách khách hàng -->
-    <div class="mb-3">
+    <div class="form-group">
         <label class="form-label">Chọn khách hàng</label>
         <select name="khachHangId" id="khachHangId" class="form-select" required>
             <option value="">Chọn khách hàng</option>
@@ -33,19 +35,19 @@
     </div>
 
     <!-- Hóa đơn dịch vụ chưa thanh toán -->
-    <div class="mb-3" id="hoaDonDichVuList">
+    <div class="form-group" id="hoaDonDichVuList">
         <h5>Hóa đơn dịch vụ chưa thanh toán</h5>
         <div id="hoaDonDichVuContainer"></div>
     </div>
 
     <!-- Phiếu đặt phòng chưa thanh toán -->
-    <div class="mb-3" id="phieuDatPhongList">
+    <div class="form-group" id="phieuDatPhongList">
         <h5>Phiếu đặt phòng chưa thanh toán</h5>
         <div id="phieuDatPhongContainer"></div>
     </div>
 
     <!-- Hình thức thanh toán -->
-    <div class="mb-3">
+    <div class="form-group">
         <label class="form-label">Hình thức thanh toán</label>
         <select name="hinhThucThanhToan" class="form-select" required>
             <option value="">Chọn hình thức</option>
@@ -53,60 +55,61 @@
             <option value="Chuyển khoản">Chuyển khoản</option>
             <option value="VNPay">VNPay</option>
             <option value="MoMo">MoMo</option>
-
         </select>
     </div>
 
     <!-- Nút submit -->
-    <button type="submit" class="btn btn-primary">Tạo hóa đơn tổng</button>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Tạo hóa đơn tổng</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
 </form>
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#khachHangId').change(function () {
-                var khachHangId = $(this).val();
-                if (khachHangId) {
-                    // Lấy danh sách hóa đơn dịch vụ
-                    $.get('/HoaDon/GetHoaDonDichVu?khachHangId=' + khachHangId, function (data) {
-                        $('#hoaDonDichVuContainer').empty();
-                        if (data.length > 0) {
-                            data.forEach(function (hdv) {
-                                $('#hoaDonDichVuContainer').append(
-                                    '<div class="form-check">' +
-                                    '<input type="checkbox" name="hoaDonDichVuIds" value="' + hdv.id + '" class="form-check-input" id="hdv_' + hdv.id + '">' +
-                                    '<label class="form-check-label" for="hdv_' + hdv.id + '">' +
-                                    'Mã đơn hàng: #' + hdv.maDonHangDv + ', Tổng tiền: ' + hdv.tongTien.toLocaleString('vi-VN') + ' VNĐ' +
-                                    '</label></div>'
-                                );
-                            });
-                        } else {
-                            $('#hoaDonDichVuContainer').append('<p>Không có hóa đơn dịch vụ chưa thanh toán.</p>');
-                        }
-                    });
-
-                    // Lấy danh sách phiếu đặt phòng
-                    $.get('/HoaDon/GetPhieuDatPhong?khachHangId=' + khachHangId, function (data) {
-                        $('#phieuDatPhongContainer').empty();
-                        if (data.length > 0) {
-                            data.forEach(function (phieu) {
-                                $('#phieuDatPhongContainer').append(
-                                    '<div class="form-check">' +
-                                    '<input type="checkbox" name="phieuDatPhongIds" value="' + phieu.phieuDatPhongId + '" class="form-check-input" id="phieu_' + phieu.phieuDatPhongId + '">' +
-                                    '<label class="form-check-label" for="phieu_' + phieu.phieuDatPhongId + '">' +
-                            'Mã phiếu: ' + phieu.maPhieu + ', Phòng: ' + phieu.soPhong + ', Tổng tiền: ' + phieu.tongsotien.toLocaleString('vi-VN') + ' VNĐ' +
-                                    '</label></div>'
-                                );
-                            });
-                        } else {
-                            $('#phieuDatPhongContainer').append('<p>Không có phiếu đặt phòng chưa thanh toán.</p>');
-                        }
-                    });
-                } else {
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#khachHangId').change(function () {
+            var khachHangId = $(this).val();
+            if (khachHangId) {
+                // Lấy danh sách hóa đơn dịch vụ
+                $.get('/HoaDon/GetHoaDonDichVu?khachHangId=' + khachHangId, function (data) {
                     $('#hoaDonDichVuContainer').empty();
+                    if (data.length > 0) {
+                        data.forEach(function (hdv) {
+                            $('#hoaDonDichVuContainer').append(
+                                '<div class="form-check">' +
+                                '<input type="checkbox" name="hoaDonDichVuIds" value="' + hdv.id + '" class="form-check-input" id="hdv_' + hdv.id + '">' +
+                                '<label class="form-check-label" for="hdv_' + hdv.id + '">' +
+                                'Mã đơn hàng: #' + hdv.maDonHangDv + ', Tổng tiền: ' + hdv.tongTien.toLocaleString('vi-VN') + ' VNĐ' +
+                                '</label></div>'
+                            );
+                        });
+                    } else {
+                        $('#hoaDonDichVuContainer').append('<p>Không có hóa đơn dịch vụ chưa thanh toán.</p>');
+                    }
+                });
+
+                // Lấy danh sách phiếu đặt phòng
+                $.get('/HoaDon/GetPhieuDatPhong?khachHangId=' + khachHangId, function (data) {
                     $('#phieuDatPhongContainer').empty();
-                }
-            });
+                    if (data.length > 0) {
+                        data.forEach(function (phieu) {
+                            $('#phieuDatPhongContainer').append(
+                                '<div class="form-check">' +
+                                '<input type="checkbox" name="phieuDatPhongIds" value="' + phieu.phieuDatPhongId + '" class="form-check-input" id="phieu_' + phieu.phieuDatPhongId + '">' +
+                                '<label class="form-check-label" for="phieu_' + phieu.phieuDatPhongId + '">' +
+                                'Mã phiếu: ' + phieu.maPhieu + ', Phòng: ' + phieu.soPhong + ', Tổng tiền: ' + phieu.tongsotien.toLocaleString('vi-VN') + ' VNĐ' +
+                                '</label></div>'
+                            );
+                        });
+                    } else {
+                        $('#phieuDatPhongContainer').append('<p>Không có phiếu đặt phòng chưa thanh toán.</p>');
+                    }
+                });
+            } else {
+                $('#hoaDonDichVuContainer').empty();
+                $('#phieuDatPhongContainer').empty();
+            }
         });
-    </script>
+    });
+</script>

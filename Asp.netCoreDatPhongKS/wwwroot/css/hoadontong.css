@@ -1,304 +1,112 @@
-﻿/* wwwroot/css/hoadontong.css */
-
-/* General styles */
+﻿/* Giao diện tổng thể */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f6f9;
-}
-
-.container.mt-4 {
-    background: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Headings */
-h2, h4, h6 {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f5f9ff;
     color: #333;
-    font-weight: 600;
-    margin-bottom: 20px;
 }
 
-/* Form styles */
-.input-group {
-    max-width: 600px;
-    margin-bottom: 20px;
+/* Tiêu đề */
+h2 {
+    color: #1e3a8a; /* Xanh dương đậm */
 }
 
-    .input-group .form-control,
-    .input-group .form-select {
-        border-radius: 5px;
-        border: 1px solid #ced4da;
-        padding: 10px;
-        font-size: 14px;
-        transition: border-color 0.3s ease;
-    }
-
-        .input-group .form-control:focus,
-        .input-group .form-select:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-        }
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-    .form-group label {
-        font-weight: 500;
-        color: #555;
-    }
-
-.form-control {
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-    padding: 10px;
-    font-size: 14px;
-    transition: border-color 0.3s ease;
-}
-
-    .form-control:focus {
-        border-color: #007bff;
-        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-    }
-
-.text-danger {
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-/* Buttons */
-.btn {
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-size: 13px;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-    .btn-success:hover {
-        background-color: #218838;
-        border-color: #218838;
-    }
-
-.btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-}
-
-    .btn-danger:hover {
-        background-color: #c82333;
-        border-color: #c82333;
-    }
-
-.btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-}
-
-    .btn-secondary:hover {
-        background-color: #5a6268;
-        border-color: #5a6268;
-    }
-
-.btn-info {
-    background-color: #17a2b8;
-    border-color: #17a2b8;
-}
-
-    .btn-info:hover {
-        background-color: #138496;
-        border-color: #138496;
-    }
-
-.btn-sm {
-    padding: 6px 12px;
-    font-size: 12px;
-    margin-right: 5px;
-}
-
-/* Alerts */
-.alert {
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-}
-
-.alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-    border-color: #f5c6cb;
-}
-
-/* Table styles */
+/* Table wrapper có scroll ngang nếu tràn */
 .table-responsive {
     overflow-x: auto;
-    margin-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
+/* Bảng hóa đơn chính */
 .table {
-    background-color: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    table-layout: auto;
+    border-collapse: collapse;
+    margin-bottom: 0;
 }
-
-    .table thead th {
-        background-color: #007bff;
-        color: #fff;
-        font-weight: 600;
-        padding: 10px;
-        text-align: center;
-        white-space: nowrap;
-    }
-
-    .table tbody tr {
-        transition: background-color 0.2s;
-    }
-
-        .table tbody tr:hover {
-            background-color: #f8f9fa;
-        }
-
-    .table tbody td {
-        padding: 10px;
-        vertical-align: middle;
-        border-top: 1px solid #dee2e6;
-        max-width: 150px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-
-        .table tbody td:first-child,
-        .table tbody td:nth-child(2),
-        .table tbody td:nth-child(3),
-        .table tbody td:nth-child(4) {
-            text-align: left;
-        }
-
-.action-column {
-    width: 250px;
-    text-align: center;
-}
-
-/* Chi tiết hóa đơn */
-.hoa-don-details {
-    display: none;
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-top: 1px solid #dee2e6;
-}
-
-    .hoa-don-details h6 {
-        font-size: 1.1rem;
-        margin-top: 10px;
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-.table-sm {
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-    border-radius: 5px;
-}
-
-    .table-sm th,
-    .table-sm td {
-        padding: 8px;
-        text-align: center;
-    }
-
-        .table-sm th:first-child,
-        .table-sm td:first-child,
-        .table-sm th:nth-child(2),
-        .table-sm td:nth-child(2),
-        .table-sm th:nth-child(3),
-        .table-sm td:nth-child(3),
-        .table-sm th:nth-child(4),
-        .table-sm td:nth-child(4) {
-            text-align: left;
-        }
-
-/* Card styles */
-.card {
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.card-header {
-    background-color: #007bff;
-    color: #fff;
-    font-weight: 600;
-    border-bottom: none;
-    padding: 10px 15px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-}
-
-.card-body {
-    padding: 15px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .container.mt-4 {
-        padding: 15px;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-        .input-group .form-control,
-        .input-group .form-select,
-        .input-group .btn {
-            margin-bottom: 10px;
-            width: 100%;
-        }
 
     .table th,
     .table td {
-        font-size: 12px;
+        text-align: center;
+        vertical-align: middle;
         padding: 8px;
-        max-width: 100px;
+        white-space: nowrap;
     }
 
-    .action-column {
-        width: 150px;
+    /* Header bảng */
+    .table thead.table-dark th {
+        background-color: #1d4ed8; /* Màu xanh dương đậm */
+        color: #fff;
     }
 
-    .btn-sm {
-        padding: 5px 8px;
-        font-size: 11px;
+    /* Hàng chẵn/lẻ */
+    .table tbody tr:nth-child(odd) {
+        background-color: #eef4ff;
     }
 
-    .hoa-don-details {
-        padding: 10px;
+    .table tbody tr:hover {
+        background-color: #c7dafe;
+        transition: 0.2s;
     }
 
-    .table-sm th,
-    .table-sm td {
-        font-size: 0.85rem;
-        padding: 6px;
+/* Button */
+.btn {
+    border-radius: 4px;
+}
+
+.btn-info {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-success {
+    background-color: #059669;
+    border-color: #059669;
+}
+
+.btn-danger {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
+
+/* Phần chi tiết */
+.hoa-don-details {
+    display: none;
+    background-color: #f0f9ff;
+    border-top: 1px solid #cbd5e1;
+}
+
+    .hoa-don-details h6 {
+        font-weight: bold;
+        color: #2563eb;
+        margin-top: 10px;
+    }
+
+    /* Bảng nhỏ trong chi tiết */
+    .hoa-don-details .table-sm th {
+        background-color: #dbeafe;
+        color: #1e3a8a;
+    }
+
+/* Responsive trên mobile */
+@media (max-width: 768px) {
+    .table th, .table td {
+        font-size: 13px;
+    }
+
+    .btn {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+
+    h2 {
+        font-size: 20px;
     }
 }
