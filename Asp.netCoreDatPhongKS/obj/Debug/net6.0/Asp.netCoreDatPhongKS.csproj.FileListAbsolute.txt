@@ -65,12 +65,6 @@ D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets.build.json
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets.development.json
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets.build.endpoints.json
-D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets\msbuild.Asp.netCoreDatPhongKS.Microsoft.AspNetCore.StaticWebAssets.props
-D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets\msbuild.Asp.netCoreDatPhongKS.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets\msbuild.build.Asp.netCoreDatPhongKS.props
-D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.Asp.netCoreDatPhongKS.props
-D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.Asp.netCoreDatPhongKS.props
-D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets.pack.json
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\Asp.netC.C4C9B4A1.Up2Date
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\Asp.netCoreDatPhongKS.dll
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\refint\Asp.netCoreDatPhongKS.dll
@@ -268,3 +262,8 @@ D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\bin\Debug\net6.0
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\bin\Debug\net6.0\BCrypt.Net-Next.dll
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\Asp.netCoreDatPhongKS.sourcelink.json
 D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets.upToDateCheck.txt
+D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\rpswa.dswa.cache.json
+D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\rjimswa.dswa.cache.json
+D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\rjsmrazor.dswa.cache.json
+D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\rjsmcshtml.dswa.cache.json
+D:\LuanVanTotNghiep\Asp.netCoreDatPhongKS\Asp.netCoreDatPhongKS\obj\Debug\net6.0\staticwebassets.build.json.cache

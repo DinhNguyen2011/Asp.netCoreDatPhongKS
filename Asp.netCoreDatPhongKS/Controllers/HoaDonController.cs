@@ -448,5 +448,82 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return Json(phieuDatPhongs);
         }
+        // Hành động Delete: Hiển thị view xác nhận xóa
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.KhachHang)
+                .Include(h => h.HoaDonDichVus)
+                .ThenInclude(hdv => hdv.MaDonHangDvNavigation)
+                .Include(h => h.HoaDonPdps)
+                .ThenInclude(hp => hp.PhieuDatPhong)
+                .FirstOrDefaultAsync(m => m.MaHoaDon == id);
+
+            if (hoaDon == null)
+            {
+                return NotFound();
+            }
+
+            // Kiểm tra các bản ghi liên quan
+            var relatedHoaDonDichVus = await _context.HoaDonDichVus
+                .Where(hdv => hdv.MaHoaDonTong == id)
+                .Include(hdv => hdv.MaDonHangDvNavigation)
+                .ToListAsync();
+
+            var relatedHoaDonPdps = await _context.HoaDonPdps
+                .Where(hp => hp.MaHoaDon == id)
+                .Include(hp => hp.PhieuDatPhong)
+                .ToListAsync();
+
+            ViewBag.RelatedHoaDonDichVus = relatedHoaDonDichVus;
+            ViewBag.RelatedHoaDonPdps = relatedHoaDonPdps;
+
+            return View(hoaDon);
+        }
+
+        // Hành động DeleteConfirmed: Xử lý xóa hóa đơn
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var hoaDon = await _context.HoaDons
+                .Include(h => h.HoaDonDichVus)
+                .Include(h => h.HoaDonPdps)
+                .FirstOrDefaultAsync(m => m.MaHoaDon == id);
+
+            if (hoaDon == null)
+            {
+                return NotFound();
+            }
+
+            // Kiểm tra khóa ngoại
+            var relatedHoaDonDichVus = await _context.HoaDonDichVus
+                .Where(hdv => hdv.MaHoaDonTong == id)
+                .ToListAsync();
+
+            var relatedHoaDonPdps = await _context.HoaDonPdps
+                .Where(hp => hp.MaHoaDon == id)
+                .ToListAsync();
+
+            if (relatedHoaDonDichVus.Any() || relatedHoaDonPdps.Any())
+            {
+                // Nếu có bản ghi liên quan, trả về view với thông báo lỗi
+                ViewBag.RelatedHoaDonDichVus = relatedHoaDonDichVus;
+                ViewBag.RelatedHoaDonPdps = relatedHoaDonPdps;
+                ViewBag.ErrorMessage = "Không thể xóa hóa đơn vì có bản ghi liên quan. Vui lòng kiểm tra và xóa các bản ghi liên quan trước.";
+                return View("Delete", hoaDon);
+            }
+
+            // Xóa hóa đơn nếu không có bản ghi liên quan
+            _context.HoaDons.Remove(hoaDon);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }   

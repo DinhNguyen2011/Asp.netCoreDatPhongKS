@@ -115,7 +115,7 @@
         </div>
 
         <div class="text-center mt-4">
-            <a href="@Url.Action("DatPhong", "Home", new { phongId = Model.PhongId, checkin = DateTime.Today.ToString("yyyy-MM-dd"), checkout = DateTime.Today.AddDays(1).ToString("yyyy-MM-dd") })" *@
+            <a href="@Url.Action("DatPhong", "Home", new { phongId = Model.PhongId, checkin = DateTime.Today.ToString("yyyy-MM-dd"), checkout = DateTime.Today.AddDays(1).ToString("yyyy-MM-dd") })" 
                class="btn btn-success">Đặt phòng</a>
         </div>
     </div>

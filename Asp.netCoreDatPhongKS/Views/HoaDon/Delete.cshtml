@@ -1,0 +1,148 @@
+﻿@model Asp.netCoreDatPhongKS.Models.HoaDon
+@{
+    ViewData["Title"] = "Xác nhận xóa hóa đơn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<link href="~/css/hoadontong.css" rel="stylesheet" />
+
+<h2>Xác nhận xóa hóa đơn</h2>
+
+<!-- Hiển thị thông báo lỗi nếu có -->
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<!-- Thông tin hóa đơn -->
+<div class="card mb-4">
+    <div class="card-header">
+        <h4>Thông tin hóa đơn</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Mã hóa đơn</dt>
+            <dd class="col-sm-9">@Model.MaHoaDon</dd>
+
+            <dt class="col-sm-3">Ngày lập</dt>
+            <dd class="col-sm-9">@Model.NgayLap?.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-3">Khách hàng</dt>
+            <dd class="col-sm-9">@(Model.KhachHang != null ? Model.KhachHang.HoTen : "Khách vãng lai")</dd>
+
+            <dt class="col-sm-3">Tổng tiền phòng</dt>
+            <dd class="col-sm-9">@Model.TongTienPhong?.ToString("N0") VNĐ</dd>
+
+            <dt class="col-sm-3">Tổng tiền dịch vụ</dt>
+            <dd class="col-sm-9">@Model.TongTienDichVu?.ToString("N0") VNĐ</dd>
+
+            <dt class="col-sm-3">Tổng tiền</dt>
+            <dd class="col-sm-9">@Model.TongTien?.ToString("N0") VNĐ</dd>
+
+            <dt class="col-sm-3">Hình thức thanh toán</dt>
+            <dd class="col-sm-9">@(Model.HinhThucThanhToan ?? "Chưa xác định")</dd>
+
+            <dt class="col-sm-3">Trạng thái</dt>
+            <dd class="col-sm-9">@(Model.TrangThai ?? "Chưa xác định")</dd>
+
+            <dt class="col-sm-3">Ghi chú</dt>
+            <dd class="col-sm-9">@(Model.GhiChu ?? "Không có")</dd>
+
+            <dt class="col-sm-3">Người lập</dt>
+            <dd class="col-sm-9">@(Model.NguoiLapDh ?? "Không có")</dd>
+        </dl>
+    </div>
+</div>
+
+<!-- Hiển thị các bản ghi liên quan từ HoaDonDichVus -->
+@if (ViewBag.RelatedHoaDonDichVus != null && ViewBag.RelatedHoaDonDichVus.Count > 0)
+{
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Các hóa đơn dịch vụ liên quan</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã hóa đơn dịch vụ</th>
+                        <th>Mã đơn hàng dịch vụ</th>
+                        <th>Trạng thái thanh toán</th>
+                        <th>Ngày thanh toán</th>
+                        <th>Hình thức thanh toán</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hdv in ViewBag.RelatedHoaDonDichVus)
+                    {
+                        <tr>
+                            <td>@hdv.Id</td>
+                            <td>@hdv.MaDonHangDvNavigation.MaDonHangDv</td>
+                            <td>@hdv.TrangThaiThanhToan</td>
+                            <td>@(hdv.NgayThanhToan?.ToString("dd/MM/yyyy HH:mm") ?? "Chưa thanh toán")</td>
+                            <td>@(hdv.HinhThucThanhToan ?? "Chưa xác định")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<!-- Hiển thị các bản ghi liên quan từ HoaDonPdps -->
+@if (ViewBag.RelatedHoaDonPdps != null && ViewBag.RelatedHoaDonPdps.Count > 0)
+{
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>Các hóa đơn phiếu đặt phòng liên quan</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th>Mã hóa đơn PDP</th>
+                        <th>Mã phiếu đặt phòng</th>
+                        <th>Thành tiền</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hp in ViewBag.RelatedHoaDonPdps)
+                    {
+                        <tr>
+                            <td>@hp.Id</td>
+                            <td>@hp.PhieuDatPhongId</td>
+                            <td>@hp.ThanhTien.ToString("N0") VNĐ</td>
+                            <td>@(hp.TrangThai ?? "Chưa xác định")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
+<!-- Form xác nhận xóa -->
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@Model.MaHoaDon" />
+    <div class="form-group">
+        <button type="submit" class="btn btn-danger" @(ViewBag.RelatedHoaDonDichVus != null && ViewBag.RelatedHoaDonDichVus.Count > 0 || ViewBag.RelatedHoaDonPdps != null && ViewBag.RelatedHoaDonPdps.Count > 0 ? "disabled" : "")>Xóa hóa đơn</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
+</form>
+
+
+    <script>
+        $(document).ready(function () {
+            // Nếu có bản ghi liên quan, hiển thị cảnh báo
+            @if (ViewBag.RelatedHoaDonDichVus != null && ViewBag.RelatedHoaDonDichVus.Count > 0 || ViewBag.RelatedHoaDonPdps != null && ViewBag.RelatedHoaDonPdps.Count > 0)
+            {
+                    <text>
+                        alert('Hóa đơn này có bản ghi liên quan. Vui lòng xóa các bản ghi liên quan trước khi xóa hóa đơn.');
+                    </text>
+            }
+        });
+    </script>
