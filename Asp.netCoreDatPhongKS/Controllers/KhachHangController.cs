@@ -19,6 +19,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhachHang/Index
         public IActionResult Index(string searchString)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var khachHangs = _context.KhachHangs
                 .Include(kh => kh.TaiKhoan)
                 .AsQueryable();
@@ -38,6 +43,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhachHang/Create
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View();
         }
 
@@ -46,6 +56,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(KhachHang khachHang)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (ModelState.IsValid)
             {
                 // Check if Email already exists in TaiKhoan
@@ -84,6 +99,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhachHang/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -105,6 +125,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, KhachHang khachHang)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id != khachHang.KhachHangId)
             {
                 return NotFound();
@@ -165,6 +190,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhachHang/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();

@@ -18,6 +18,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhuyenMai/Index
         public IActionResult Index(string searchString, bool? trangThai)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var khuyenMais = _context.KhuyenMais
                 .AsQueryable();
 
@@ -41,6 +46,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhuyenMai/Create
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View();
         }
 
@@ -49,6 +59,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(KhuyenMai khuyenMai)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             // Validate NgayBatDau <= NgayKetThuc
             if (khuyenMai.NgayBatDau.HasValue && khuyenMai.NgayKetThuc.HasValue &&
                 khuyenMai.NgayBatDau > khuyenMai.NgayKetThuc)
@@ -78,6 +93,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhuyenMai/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -97,6 +117,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, KhuyenMai khuyenMai)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id != khuyenMai.KhuyenMaiId)
             {
                 return NotFound();
@@ -150,6 +175,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: KhuyenMai/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -177,6 +207,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var khuyenMai = await _context.KhuyenMais
                 .Include(km => km.PhieuDatPhongs)
                 .FirstOrDefaultAsync(km => km.KhuyenMaiId == id);

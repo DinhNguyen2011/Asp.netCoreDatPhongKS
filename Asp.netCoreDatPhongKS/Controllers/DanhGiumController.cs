@@ -19,6 +19,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: DanhGium/Index
         public IActionResult Index(int? PhongId, int? dichVuId, int? taiKhoanId, string noiDung)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var danhGiums = _context.DanhGia
                 .Include(dg => dg.Phong)
                 .Include(dg => dg.DichVu)
@@ -56,6 +61,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: DanhGium/Create
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             ViewBag.PhongId = new SelectList(_context.Phongs, "PhongId", "SoPhong");
             ViewBag.DichVuId = new SelectList(_context.DichVus, "DichVuId", "TenDichVu");
             ViewBag.TaiKhoanId = new SelectList(_context.TaiKhoans, "TaiKhoanId", "Hoten");
@@ -67,6 +77,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DanhGium danhGium)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             // Ensure PhongId and DichVuId are null if no selection is made
             if (string.IsNullOrEmpty(Request.Form["PhongId"]))
             {
@@ -100,6 +115,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: DanhGium/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -122,6 +142,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, DanhGium danhGium)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id != danhGium.DanhGiaId)
             {
                 return NotFound();
@@ -181,6 +206,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: DanhGium/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -204,6 +234,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var danhGium = await _context.DanhGia.FindAsync(id);
             if (danhGium == null)
             {

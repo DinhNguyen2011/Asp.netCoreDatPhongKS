@@ -29,6 +29,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: NhanVien/Index
         public IActionResult Index(string searchString)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var nhanViens = _context.NhanViens
                 .Include(nv => nv.TaiKhoan)
                 .AsQueryable();
@@ -48,6 +53,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: NhanVien/Create
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View();
         }
 
@@ -103,6 +113,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: NhanVien/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -192,6 +207,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: NhanVien/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -228,6 +248,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var nhanVien = await _context.NhanViens
                 .Include(nv => nv.TaiKhoan)
                 .ThenInclude(tk => tk.KhachHangs)

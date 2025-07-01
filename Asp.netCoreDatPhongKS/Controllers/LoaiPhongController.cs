@@ -29,6 +29,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: LoaiPhong/Index (Public view)
         public IActionResult Index(string loai, int? minGia, int? maxGia, int? soNguoi)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var danhSach = _context.LoaiPhongs.AsQueryable();
 
             if (!string.IsNullOrEmpty(loai))
@@ -54,6 +59,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: LoaiPhong/IndexChoAdmin (Admin view)
         public IActionResult IndexChoAdmin(string loai, int? minGia, int? maxGia, int? soNguoi)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var danhSach = _context.LoaiPhongs.AsQueryable();
 
             if (!string.IsNullOrEmpty(loai))
@@ -79,6 +89,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: LoaiPhong/Create
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View();
         }
 
@@ -87,6 +102,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(LoaiPhong loaiPhong, IFormFile? anhDemoFile)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             // Xử lý file hình ảnh
             if (anhDemoFile != null && anhDemoFile.Length > 0)
             {
@@ -116,6 +136,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: LoaiPhong/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -188,6 +213,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: LoaiPhong/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();

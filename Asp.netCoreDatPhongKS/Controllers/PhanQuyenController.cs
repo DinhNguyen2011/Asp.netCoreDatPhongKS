@@ -21,6 +21,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [Route("index")]
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var taiKhoans = await _context.TaiKhoans
                 .Include(t => t.VaiTro)
                 .Include(t => t.QuyenTaiKhoans)
@@ -35,6 +40,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [Route("edit/{taiKhoanId}")]
         public async Task<IActionResult> Edit(int taiKhoanId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var taiKhoan = await _context.TaiKhoans
                 .Include(t => t.VaiTro)
                 .Include(t => t.QuyenTaiKhoans)
@@ -52,6 +62,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [Route("edit/{taiKhoanId}")]
         public async Task<IActionResult> Edit(int taiKhoanId, List<int> selectedQuyenIds)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var taiKhoan = await _context.TaiKhoans
                 .Include(t => t.QuyenTaiKhoans)
                 .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && t.VaiTroId == 2);
@@ -93,6 +108,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [Route("quyen/index")]
         public async Task<IActionResult> QuyenIndex()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var quyen = await _context.Quyens.ToListAsync();
             return View(quyen);
         }
@@ -102,6 +122,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [Route("quyen/create")]
         public IActionResult CreateQuyen()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View();
         }
 
@@ -133,6 +158,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [Route("quyen/edit/{quyenId}")]
         public async Task<IActionResult> EditQuyen(int quyenId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var quyen = await _context.Quyens.FirstOrDefaultAsync(q => q.QuyenId == quyenId);
             if (quyen == null)
                 return NotFound();
@@ -175,6 +205,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [Route("quyen/delete/{quyenId}")]
         public async Task<IActionResult> DeleteQuyen(int quyenId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var quyen = await _context.Quyens.FirstOrDefaultAsync(q => q.QuyenId == quyenId);
             if (quyen == null)
                 return NotFound();

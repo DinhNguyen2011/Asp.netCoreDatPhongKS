@@ -19,6 +19,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: HoaDonDichVu/Index
         public IActionResult Index(int? maDonHangDv, string trangThaiThanhToan)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var hoaDonDichVus = _context.HoaDonDichVus
                 .Include(hd => hd.MaDonHangDvNavigation)
                 .Include(hd => hd.MaHoaDonTongNavigation)
@@ -132,6 +137,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: HoaDonDichVu/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -154,6 +164,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var hoaDonDichVu = await _context.HoaDonDichVus.FindAsync(id);
             if (hoaDonDichVu == null)
             {

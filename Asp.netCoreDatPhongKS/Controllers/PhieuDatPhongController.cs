@@ -22,6 +22,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             try
             {
                 var phieuDatPhongs = await _context.PhieuDatPhongs
@@ -42,6 +47,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         public IActionResult hienThiphieuHuy()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var huypdp = _context.PhieuDatPhongs
                           .Include(p => p.KhachHang)
                    .Where(p => p.TrangThai == "Hủy")
@@ -53,6 +63,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [AuthorizePermission("ManagePhieuDatPhong")]
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             ViewBag.KhachHangs = _context.KhachHangs.ToList();
             ViewBag.Phongs = GetAvailableRooms(null, null, null);
             ViewBag.TrangThaiOptions = new List<SelectListItem>
@@ -290,6 +305,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [AuthorizePermission("ManagePhieuDatPhong")]
         public async Task<IActionResult> Edit(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var phieu = await _context.PhieuDatPhongs
                 .Include(p => p.KhachHang)
                 .Include(p => p.ChiTietPhieuPhongs)
@@ -465,6 +485,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: Hiển thị form xác nhận xóa phiếu đặt phòng
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();

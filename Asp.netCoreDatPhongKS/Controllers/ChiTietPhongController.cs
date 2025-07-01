@@ -17,6 +17,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         public async Task<IActionResult> ChiTiet(int phongId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             // Tìm phòng theo phongId
             var phong = await _context.Phongs
                 .Include(p => p.LoaiPhong) // Bao gồm thông tin loại phòng

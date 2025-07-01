@@ -26,6 +26,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [HttpGet]
         public async Task<IActionResult> ThongKeDoanhThu(DateTime? fromDate, DateTime? toDate)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             // Lưu trữ ngày để hiển thị trong View
             ViewBag.FromDate = fromDate?.ToString("yyyy-MM-dd");
             ViewBag.ToDate = toDate?.ToString("yyyy-MM-dd");

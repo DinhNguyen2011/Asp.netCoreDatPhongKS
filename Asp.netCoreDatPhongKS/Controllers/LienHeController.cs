@@ -22,6 +22,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // Admin: List all contacts
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var lienHeList = await _context.LienHeVoiCtois.ToListAsync();
             return View(lienHeList);
         }
@@ -29,6 +34,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // Admin: View contact details
         public async Task<IActionResult> Details(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -50,6 +60,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // Admin: Create new contact (GET)
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View();
         }
 
@@ -58,6 +73,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("LienHeId,KhachHangId,TaiKhoanId,HoTen,Email,SoDienThoai,NoiDung,NgayGui,TrangThai,GhiChu")] LienHeVoiCtoi lienHe)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (ModelState.IsValid)
             {
                 lienHe.NgayGui = DateTime.Now;
@@ -72,6 +92,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // Admin: Edit contact (GET)
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -90,6 +115,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("LienHeId,KhachHangId,TaiKhoanId,HoTen,Email,SoDienThoai,NoiDung,TrangThai,GhiChu")] LienHeVoiCtoi lienHe)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id != lienHe.LienHeId)
             {
                 return NotFound();
@@ -138,6 +168,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // Admin: Delete contact (GET)
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -161,6 +196,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var lienHe = await _context.LienHeVoiCtois.FindAsync(id);
             if (lienHe != null)
             {
@@ -172,6 +212,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         public IActionResult KhachHangLienHe()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View(new LienHeVoiCtoi { TrangThai = "Chưa xử lý" });
         }
 
@@ -180,6 +225,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> KhachHangLienHe([Bind("HoTen,Email,SoDienThoai,NoiDung")] LienHeVoiCtoi lienHe)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             lienHe.TrangThai = "Chưa xử lý"; // Gán trước để tránh lỗi validation
             if (!ModelState.IsValid)
             {

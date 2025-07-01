@@ -19,6 +19,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: HoaDonDatPhong
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var hoaDonPdps = await _context.HoaDonPdps
                 .Include(h => h.MaHoaDonNavigation)
                 .Include(h => h.PhieuDatPhong)
@@ -29,6 +34,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: HoaDonDatPhong/Create
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             ViewData["MaHoaDon"] = _context.HoaDons.ToList();
             ViewData["PhieuDatPhongId"] = _context.PhieuDatPhongs.ToList();
             return View();
@@ -39,6 +49,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HoaDonPdp hoaDonPdp)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(hoaDonPdp);
@@ -53,6 +68,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: HoaDonDatPhong/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -73,6 +93,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, HoaDonPdp hoaDonPdp)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id != hoaDonPdp.Id)
             {
                 return NotFound();
@@ -103,6 +128,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: HoaDonDatPhong/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -125,6 +155,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var hoaDonPdp = await _context.HoaDonPdps.FindAsync(id);
             if (hoaDonPdp != null)
             {

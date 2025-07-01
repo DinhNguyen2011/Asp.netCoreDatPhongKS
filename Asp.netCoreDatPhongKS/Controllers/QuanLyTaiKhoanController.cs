@@ -21,6 +21,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [AuthorizePermission("ManageTaiKhoan")]
         public async Task<IActionResult> Index(int? vaiTroId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var query = _context.TaiKhoans
                 .Include(t => t.VaiTro)
                 .Include(t => t.NhanViens)
@@ -40,6 +45,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [AuthorizePermission("ManageTaiKhoan")]
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View("~/Views/QuanLyTaiKhoan/Create.cshtml", new TaiKhoanViewModel());
         }
 
@@ -136,6 +146,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [AuthorizePermission("ManageTaiKhoan")]
         public async Task<IActionResult> Edit(int taiKhoanId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var taiKhoan = await _context.TaiKhoans
                 .FirstOrDefaultAsync(t => t.TaiKhoanId == taiKhoanId && (t.VaiTroId == 2 || t.VaiTroId == 3));
             if (taiKhoan == null)
@@ -205,6 +220,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [AuthorizePermission("ManageTaiKhoan")]
         public async Task<IActionResult> Delete(int taiKhoanId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var taiKhoan = await _context.TaiKhoans
                 .Include(t => t.NhanViens)
                 .Include(t => t.KhachHangs)

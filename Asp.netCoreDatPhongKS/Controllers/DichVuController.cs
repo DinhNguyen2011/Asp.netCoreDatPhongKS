@@ -229,11 +229,21 @@ namespace Asp.netCoreDatPhongKS.Controllers
         }
         public IActionResult IndexQLDichVu()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var dv = _context.DichVus.ToList();
             return View(dv);
         }
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             return View();
         }
 
@@ -242,6 +252,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(DichVu model, IFormFile? HinhAnhFile)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (string.IsNullOrEmpty(model.TenDichVu) || model.DonGia <= 0)
             {
                 TempData["Error"] = "Vui lòng nhập đầy đủ Tên dịch vụ và Đơn giá hợp lệ.";
@@ -281,6 +296,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: DichVu/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var dichVu = await _context.DichVus.FindAsync(id);
             if (dichVu == null)
                 return NotFound();
@@ -293,6 +313,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, DichVu model, IFormFile? HinhAnhFile)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id != model.DichVuId)
                 return NotFound();
 
@@ -348,6 +373,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: DichVu/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var dichVu = await _context.DichVus.FindAsync(id);
             if (dichVu == null)
                 return NotFound();
@@ -360,6 +390,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var dichVu = await _context.DichVus.FindAsync(id);
             if (dichVu == null)
                 return NotFound();

@@ -30,6 +30,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: Phong
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var phongs = await _context.Phongs
                 .Include(p => p.LoaiPhong)
                 .ToListAsync();
@@ -40,6 +45,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             ViewBag.LoaiPhongs = _context.LoaiPhongs.ToList();
             return View();
         }
@@ -125,6 +135,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: Phong/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
@@ -244,6 +259,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: Phong/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (id == null)
             {
                 return NotFound();
