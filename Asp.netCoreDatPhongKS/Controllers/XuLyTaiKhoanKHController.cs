@@ -1,13 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.netCoreDatPhongKS.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Asp.netCoreDatPhongKS.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [Authorize]
     public class XuLyTaiKhoanKHController : Controller
     {
         private readonly HotelPlaceVipContext _context;

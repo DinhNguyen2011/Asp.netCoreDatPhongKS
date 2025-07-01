@@ -6,8 +6,8 @@ using System.Text.Json;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [RestrictToAdmin]
     [Route("phanquyen")]
-    [AuthorizePermission("ManagePhanQuyen")]
     public class PhanQuyenController : Controller
     {
         private readonly HotelPlaceVipContext _context;

@@ -1,14 +1,16 @@
-﻿using Asp.netCoreDatPhongKS.Models;
+﻿using Asp.netCoreDatPhongKS.Filters;
+using Asp.netCoreDatPhongKS.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [RestrictToAdmin]
     public class NhanVienController : Controller
     {
         private readonly HotelPlaceVipContext _context;

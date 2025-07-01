@@ -1,4 +1,5 @@
-﻿using Asp.netCoreDatPhongKS.Models;
+﻿using Asp.netCoreDatPhongKS.Filters;
+using Asp.netCoreDatPhongKS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [RestrictToAdmin]
     public class HoaDonDichVuController : Controller
     {
         private readonly HotelPlaceVipContext _context;

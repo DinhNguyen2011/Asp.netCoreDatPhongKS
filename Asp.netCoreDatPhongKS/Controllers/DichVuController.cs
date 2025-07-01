@@ -1,9 +1,10 @@
-﻿using Asp.netCoreDatPhongKS.Models;
+﻿using Asp.netCoreDatPhongKS.Filters;
+using Asp.netCoreDatPhongKS.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
@@ -49,6 +50,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(result);
         }
+        [RestrictToAdmin]
         // Action Index: Hiển thị danh sách dịch vụ với checkbox
         public async Task<IActionResult> Index(string searchString, string trangThai)
         {
@@ -74,6 +76,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(await dichVus.ToListAsync());
         }
+
+        [RestrictToAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateDonHangDichVu(int? khachHangId, bool isKhachVangLai, int[] dichVuIds, int[] soLuongs, bool thanhToanNgay, string hinhThucThanhToan)
@@ -210,6 +214,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View("Index", await _context.DichVus.ToListAsync());
             }
         }
+
+        [RestrictToAdmin]
         public async Task<IActionResult> PrintHoaDonDichVu(int id)
         {
             var hoaDonDichVu = await _context.HoaDonDichVus
@@ -227,6 +233,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(hoaDonDichVu);
         }
+        [RestrictToAdmin]
         public IActionResult IndexQLDichVu()
         {
             string userName = HttpContext.Session.GetString("Hoten");
@@ -237,6 +244,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var dv = _context.DichVus.ToList();
             return View(dv);
         }
+        [RestrictToAdmin]
+
         public IActionResult Create()
         {
             string userName = HttpContext.Session.GetString("Hoten");
@@ -292,6 +301,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View(model);
             }
         }
+
+        [RestrictToAdmin]
 
         // GET: DichVu/Edit/5
         public async Task<IActionResult> Edit(int id)
@@ -370,6 +381,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
         }
 
+        [RestrictToAdmin]
+
         // GET: DichVu/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
@@ -384,6 +397,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(dichVu);
         }
+        [RestrictToAdmin]
 
         // POST: DichVu/Delete/5
         [HttpPost, ActionName("Delete")]

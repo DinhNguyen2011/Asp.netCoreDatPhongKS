@@ -1,4 +1,5 @@
-﻿using Asp.netCoreDatPhongKS.Models;
+﻿using Asp.netCoreDatPhongKS.Filters;
+using Asp.netCoreDatPhongKS.Models;
 using Asp.netCoreDatPhongKS.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
             _emailService = emailService;
         }
-
+        [RestrictToAdmin]
         // Admin: List all contacts
         public async Task<IActionResult> Index()
         {
@@ -30,7 +31,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var lienHeList = await _context.LienHeVoiCtois.ToListAsync();
             return View(lienHeList);
         }
-
+        [RestrictToAdmin]
         // Admin: View contact details
         public async Task<IActionResult> Details(int? id)
         {
@@ -56,7 +57,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(lienHe);
         }
-
+        [RestrictToAdmin]
         // Admin: Create new contact (GET)
         public IActionResult Create()
         {
@@ -88,7 +89,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             return View(lienHe);
         }
 
-
+        [RestrictToAdmin]
         // Admin: Edit contact (GET)
         public async Task<IActionResult> Edit(int? id)
         {
@@ -164,7 +165,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
             return View(lienHe);
         }
-
+        [RestrictToAdmin]
         // Admin: Delete contact (GET)
         public async Task<IActionResult> Delete(int? id)
         {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [RestrictToAdmin]
     public class KhachHangController : Controller
     {
         private readonly HotelPlaceVipContext _context;

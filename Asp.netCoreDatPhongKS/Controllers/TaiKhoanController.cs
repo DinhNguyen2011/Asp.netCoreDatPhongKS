@@ -1,14 +1,23 @@
 ﻿using Asp.netCoreDatPhongKS.Models;
+using BCrypt.Net;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using BCrypt.Net;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    //Authorize: được sử dụng để yêu cầu người dùng phải đăng nhập
+    //(được xác thực - authenticated) trước khi truy cập vào một controller hoặc action cụ thể
+
+    //RestrictToAdmin
+    //Yêu cầu người dùng phải có VaiTroId == 1 hoặc 2 (admin).
     public class TaiKhoanController : Controller
     {
         private readonly HotelPlaceVipContext _context;
@@ -25,7 +34,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(TaiKhoan model)
+        public async Task<IActionResult> Login(TaiKhoan model)
         {
             if (ModelState.IsValid)
             {
@@ -55,33 +64,46 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                     if (isPasswordValid)
                     {
+                        // Thiết lập Claims
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, taiKhoan.Hoten ?? ""),
+                            new Claim(ClaimTypes.Email, taiKhoan.Email ?? ""),
+                            new Claim(ClaimTypes.NameIdentifier, taiKhoan.TaiKhoanId.ToString()),
+                            new Claim("VaiTroId", taiKhoan.VaiTroId?.ToString() ?? "0")
+                        };
+
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                        var authProperties = new AuthenticationProperties
+                        {
+                            IsPersistent = true,
+                            ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1)
+                        };
+
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+
+                        // Lưu thông tin session
                         HttpContext.Session.SetString("TaiKhoanId", taiKhoan.TaiKhoanId.ToString());
                         HttpContext.Session.SetString("Hoten", taiKhoan.Hoten ?? "");
                         HttpContext.Session.SetString("Email", taiKhoan.Email ?? "");
                         HttpContext.Session.SetString("VaiTroId", taiKhoan.VaiTroId?.ToString() ?? "");
-
-
                         var quyen = taiKhoan.QuyenTaiKhoans.Select(tq => tq.Quyen.MaQuyen).ToList();
                         HttpContext.Session.SetString("Quyen", JsonConvert.SerializeObject(quyen));
 
                         if (taiKhoan.VaiTroId == 1 || taiKhoan.VaiTroId == 2)
                             return RedirectToAction("Index", "HomeAdmin");
-                        else if (taiKhoan.VaiTroId == 3)
+                        else
                             return RedirectToAction("Index", "Home");
-
-                        TempData["LoginError"] = "Bạn không có quyền truy cập.";
-                        return RedirectToAction("Index", "Home");
                     }
                 }
-                TempData["LoginError"] = "Thông tin đăng nhập hoặc mật khẩu không đúng";
+                TempData["LoginError"] = "Thông tin đăng nhập hoặc mật khẩu không đúng.";
                 return RedirectToAction("Index", "Home");
             }
 
             TempData["LoginError"] = "Vui lòng nhập đầy đủ thông tin.";
             return RedirectToAction("Index", "Home");
         }
-
-        [HttpGet]
+            [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -123,7 +145,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             TempData["OpenLoginForm"] = true;
             return RedirectToAction("Index", "Home");
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult Profile()
         {
@@ -155,7 +177,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             else
                 return View("ProfileUser", taiKhoan);
         }
-
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Profile(TaiKhoan model, IFormFile? hinhAnh)
@@ -231,7 +253,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             TempData["ProfileSuccess"] = "Cập nhật thông tin thành công.";
             return RedirectToAction("Profile");
         }
-
+        [Authorize]
         [HttpGet]
         public IActionResult ChangePassword()
         {
@@ -261,7 +283,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             else
                 return View("ChangePasswordUser", taiKhoan);
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult ChangePassword(string currentPassword, string newPassword, string confirmPassword)
         {

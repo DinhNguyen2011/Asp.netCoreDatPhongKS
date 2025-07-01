@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [RestrictToAdmin]
     [Route("admin")]
     public class HomeAdminController : Controller
     {

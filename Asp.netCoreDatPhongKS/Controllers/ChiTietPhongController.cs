@@ -30,10 +30,10 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             if (phong == null)
             {
-                return NotFound(); // Trả về lỗi 404 nếu không tìm thấy phòng
+                return NotFound(); 
             }
 
-            return View(phong); // Truyền đối tượng phong sang view
+            return View(phong);
         }
     }
 }

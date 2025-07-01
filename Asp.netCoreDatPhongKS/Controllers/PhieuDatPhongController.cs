@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [RestrictToAdmin]
     public class PhieuDatPhongController : Controller
     {
         private readonly HotelPlaceVipContext _context;

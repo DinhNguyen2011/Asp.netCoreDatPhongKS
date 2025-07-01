@@ -307,9 +307,11 @@
                                 </li>
                                 @if (ViewData["Hoten"] != null)
                                 {
+                                    var hoten = ViewData["Hoten"]?.ToString();
+                                     var displayName = hoten.Length > 5 ? hoten.Substring(0, 5) + "..." : hoten;
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Hi, @ViewData["Hoten"]
+                                            Hi, @displayName
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                             <li><a class="dropdown-item" asp-controller="TaiKhoan" asp-action="Profile">Thông tin cá nhân</a></li>

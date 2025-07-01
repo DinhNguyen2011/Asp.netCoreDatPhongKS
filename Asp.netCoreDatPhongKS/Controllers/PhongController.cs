@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+    [RestrictToAdmin]
     public class PhongController : Controller
     {
         private readonly HotelPlaceVipContext _context;

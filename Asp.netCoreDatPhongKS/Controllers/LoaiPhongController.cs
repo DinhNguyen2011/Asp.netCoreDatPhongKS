@@ -1,11 +1,12 @@
-﻿using Asp.netCoreDatPhongKS.Models;
+﻿using Asp.netCoreDatPhongKS.Filters;
+using Asp.netCoreDatPhongKS.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
@@ -55,7 +56,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(danhSach.ToList());
         }
-
+        [RestrictToAdmin]
         // GET: LoaiPhong/IndexChoAdmin (Admin view)
         public IActionResult IndexChoAdmin(string loai, int? minGia, int? maxGia, int? soNguoi)
         {
@@ -85,7 +86,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(danhSach.ToList());
         }
-
+        [RestrictToAdmin]
         // GET: LoaiPhong/Create
         public IActionResult Create()
         {
@@ -132,7 +133,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(loaiPhong);
         }
-
+        [RestrictToAdmin]
         // GET: LoaiPhong/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -209,7 +210,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(loaiPhongInput);
         }
-
+        [RestrictToAdmin]
         // GET: LoaiPhong/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
