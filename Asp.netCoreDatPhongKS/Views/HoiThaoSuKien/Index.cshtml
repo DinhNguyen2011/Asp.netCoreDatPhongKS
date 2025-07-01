@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Hội thảo & Sự kiện";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/hoithao.css" />
+
+<div class="htsk-wrapper">
+    <div class="htsk-container">
+        <div class="htsk-left">
+            <h3>Dịch vụ tổ chức sự kiện</h3>
+            <ul class="htsk-list">
+                <li><i class="fa fa-check-circle"></i> Phòng họp đa chức năng, cấu trúc linh hoạt phù hợp nhiều loại hình sự kiện</li>
+                <li><i class="fa fa-check-circle"></i> Diện tích 120m2 phù hợp với các sự kiện vừa & nhỏ</li>
+                <li><i class="fa fa-check-circle"></i> Khu vực tiền sảnh phù hợp tiệc tea break</li>
+                <li><i class="fa fa-check-circle"></i> Trang thiết bị hiện đại</li>
+                <li><i class="fa fa-check-circle"></i> Hỗ trợ âm thanh ánh sáng chuyên nghiệp</li>
+            </ul>
+        </div>
+
+        <div class="htsk-center">
+            <img id="htsk-image" src="~/images/phong-hop.png" alt="Phòng họp" />
+            <div class="htsk-slider">
+                <span id="htsk-index">1/2</span>
+                <button onclick="nextImage()">→</button>
+            </div>
+        </div>
+
+        <div class="htsk-right">
+            <span class="htsk-label">Phòng Họp Và Sự Kiện</span>
+            <h2>Không Gian Tổ Chức Sự Kiện</h2>
+            <p>
+                Phòng sự kiện đa chức năng với dịch vụ chuyên nghiệp, trang thiết bị hỗ trợ hiện đại và đội ngũ nhân viên tận tâm, bài bản.
+            </p>
+            <a href="@Url.Action("KhachHangLienHe", "LienHe")" class="htsk-button">Lên Kế Hoạch Cho Sự Kiện Của Bạn</a>
+        </div>
+    </div>
+
+    <!-- Why Choose Us -->
+    <div class="htsk-why">
+        <h3>Tại sao nên chọn chúng tôi?</h3>
+        <ul class="htsk-why-list">
+            <li>✅ Vị trí trung tâm, dễ dàng di chuyển</li>
+            <li>✅ Hỗ trợ tư vấn & setup sự kiện miễn phí</li>
+            <li>✅ Ưu đãi đặc biệt cho khách hàng doanh nghiệp</li>
+            <li>✅ Đội ngũ kỹ thuật viên & sự kiện luôn sẵn sàng</li>
+        </ul>
+    </div>
+
+    <!-- FAQ -->
+    <div class="htsk-faq">
+        <h3>Câu hỏi thường gặp</h3>
+        <ul>
+            <li><strong>Thời gian tổ chức tối đa bao lâu?</strong> – Chúng tôi hỗ trợ linh hoạt theo khung giờ đăng ký trước.</li>
+            <li><strong>Có được mang thiết bị riêng vào không?</strong> – Có, chúng tôi hỗ trợ kỹ thuật lắp đặt thêm.</li>
+            <li><strong>Giá thuê phòng tính như thế nào?</strong> – Theo khung giờ, thời lượng và dịch vụ đi kèm.</li>
+        </ul>
+    </div>
+</div>
+
+
+    <script>
+        const images = [
+            '/images/phong-hop.png',
+            '/images/phong-hop1.png'
+        ];
+        let currentIndex = 0;
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            document.getElementById("htsk-image").src = images[currentIndex];
+            document.getElementById("htsk-index").innerText = `${currentIndex + 1}/${images.length}`;
+        }
+    </script>
+

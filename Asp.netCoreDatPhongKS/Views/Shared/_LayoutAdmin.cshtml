@@ -175,6 +175,15 @@
                         </li>
                         <li class="nav-item">
                             @{
+                                var hasManageLienHe = quyen.Contains("ManageLienHe");
+                            }
+                            <a class="nav-link" href="@(hasManageLienHe? Url.Action("Index", "LienHe") : "#")" onclick="@(!hasManageLienHe ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý liên hệ</span>
+                                <i class="mdi mdi-home-variant menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @{
                                 var hasManagePhanQuyen = quyen.Contains("ManagePhanQuyen");
                             }
                             <a class="nav-link" href="@(hasManagePhanQuyen ? Url.Action("Index", "PhanQuyen") : "#")" onclick="@(!hasManagePhanQuyen ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">

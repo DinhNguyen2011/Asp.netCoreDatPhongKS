@@ -1,0 +1,193 @@
+﻿.htsk-wrapper {
+    padding: 40px 20px;
+    background-color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.htsk-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.htsk-left, .htsk-center, .htsk-right {
+    background-color: #fff;
+}
+
+/* LEFT PANEL */
+.htsk-left {
+    flex: 1;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 280px;
+}
+
+    .htsk-left h3 {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+.htsk-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .htsk-list li {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+    }
+
+    .htsk-list i {
+        color: #999;
+        margin-right: 10px;
+    }
+
+/* CENTER IMAGE */
+.htsk-center {
+    flex: 2;
+    position: relative;
+    min-width: 300px;
+}
+
+    .htsk-center img {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+.htsk-slider {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* RIGHT PANEL */
+.htsk-right {
+    flex: 1;
+    min-width: 280px;
+}
+
+.htsk-label {
+    display: inline-block;
+    background: #d6dad8;
+    padding: 5px 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.htsk-right h2 {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.htsk-right p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.htsk-button {
+    display: inline-block;
+    margin-top: 15px;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+    .htsk-button:hover {
+        background-color: #555;
+    }
+
+/* Why Choose Us */
+.htsk-why {
+    margin-top: 40px;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+    .htsk-why h3 {
+        font-size: 22px;
+        margin-bottom: 15px;
+    }
+
+.htsk-why-list {
+    list-style: none;
+    padding-left: 0;
+    font-size: 16px;
+}
+
+    .htsk-why-list li {
+        margin-bottom: 10px;
+    }
+
+/* FAQ */
+.htsk-faq {
+    margin-top: 40px;
+    background-color: #eef1f5;
+    padding: 30px;
+    border-radius: 8px;
+}
+
+    .htsk-faq h3 {
+        margin-bottom: 15px;
+    }
+
+    .htsk-faq ul {
+        list-style: none;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .htsk-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .htsk-left, .htsk-center, .htsk-right {
+        width: 100%;
+    }
+
+    .htsk-center {
+        order: -1;
+    }
+}
+
+@media (max-width: 576px) {
+    .htsk-left, .htsk-right {
+        padding: 15px;
+    }
+
+        .htsk-left h3,
+        .htsk-right h2 {
+            font-size: 20px;
+        }
+
+    .htsk-button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .htsk-slider {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}

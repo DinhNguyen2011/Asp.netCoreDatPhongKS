@@ -331,10 +331,6 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.Property(e => e.SoDienThoai).HasMaxLength(20);
 
-                entity.Property(e => e.TrangThai)
-                    .HasMaxLength(50)
-                    .HasDefaultValueSql("(N'Chờ xử lý')");
-
                 entity.HasOne(d => d.KhachHang)
                     .WithMany(p => p.LienHeVoiCtois)
                     .HasForeignKey(d => d.KhachHangId)

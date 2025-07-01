@@ -1,0 +1,97 @@
+﻿@model Asp.netCoreDatPhongKS.Models.LienHeVoiCtoi
+
+@{
+    ViewData["Title"] = "Liên hệ với chúng tôi";
+}
+
+    <link href="~/css/KhachHangLienHe.css" rel="stylesheet" />
+
+
+<div class="contact-wrapper container py-5">
+    <div class="row">
+        <div class="col-md-7">
+            <h2>Liên hệ với Khách sạn Thiềm Định</h2>
+            <p>Chúng tôi luôn sẵn sàng hỗ trợ bạn. Vui lòng điền thông tin bên dưới hoặc sử dụng các kênh liên lạc khác.</p>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+            }
+
+            <form asp-action="KhachHangLienHe" method="post" class="contact-form">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="mb-3">
+                    <label asp-for="HoTen" class="form-label"></label>
+                    <input asp-for="HoTen" class="form-control" placeholder="Nhập họ tên" />
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Nhập email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SoDienThoai" class="form-label"></label>
+                    <input asp-for="SoDienThoai" class="form-control" placeholder="Nhập số điện thoại (tùy chọn)" />
+                    <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="NoiDung" class="form-label"></label>
+                    <textarea asp-for="NoiDung" class="form-control" rows="6" placeholder="Nội dung liên hệ"></textarea>
+                    <span asp-validation-for="NoiDung" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Gửi liên hệ</button>
+            </form>
+        </div>
+
+        <div class="col-md-5 mt-4 mt-md-0">
+            <h4>Thông tin liên hệ</h4>
+            <p><strong>Hotline:</strong> <a href="tel:0853461030">0853 461 030</a></p>
+            <p><strong>Email:</strong> <a href="mailto:dinhn6666@gmail.com">dinhn6666@gmail.com</a></p>
+            <p><strong>Địa chỉ:</strong> 180 Cao Lỗ, Quận 8, TP. HCM</p>
+
+            <div class="my-3">
+                <!-- Nhúng Google Maps (truy cập địa chỉ, copy embe thay iframe-->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.961580255408!2d106.67510897369529!3d10.7374445599143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752fad3fb62a95%3A0xa9576c84a879d1fe!2zMTgwIENhbyBM4buXLCBQaMaw4budbmcgNCwgUXXhuq1uIDgsIEjhu5MgQ2jDrSBNaW5oIDcwMDAwLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1751355725549!5m2!1sen!2s" width="400" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              
+            </div>
+
+      </div>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
+    <script>
+        $(function () {
+            $(".contact-form").validate({
+                rules: {
+                    HoTen: { required: true },
+                    Email: { required: true, email: true },
+                    NoiDung: { required: true },
+                    SoDienThoai: { phone: true }
+                },
+                messages: {
+                    HoTen: "Vui lòng nhập họ tên",
+                    Email: { required: "Vui lòng nhập email", email: "Email không hợp lệ" },
+                    NoiDung: "Vui lòng nhập nội dung",
+                    SoDienThoai: "Số điện thoại không hợp lệ"
+                },
+                errorElement: "span",
+                errorPlacement: function (err, el) { err.addClass("text-danger"); err.insertAfter(el); }
+            });
+        });
+    </script>
+
