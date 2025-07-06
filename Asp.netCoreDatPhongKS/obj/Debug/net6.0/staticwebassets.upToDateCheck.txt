@@ -413,6 +413,7 @@ wwwroot\css\ajax-loader.gif
 wwwroot\css\bootstrap.min.css
 wwwroot\css\datphong.css
 wwwroot\css\dichvu.css
+wwwroot\css\dn-dk.css
 wwwroot\css\DoanhThu.css
 wwwroot\css\dsLPhong.css
 wwwroot\css\gioithieu.css

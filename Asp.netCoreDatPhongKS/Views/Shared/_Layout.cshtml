@@ -22,6 +22,7 @@
 
     <!-- Style -->
     <link rel="stylesheet" type="text/css" href="~/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/css/dn-dk.css">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -310,7 +311,7 @@
                                     var hoten = ViewData["Hoten"]?.ToString();
                                      var displayName = hoten.Length > 5 ? hoten.Substring(0, 5) + "..." : hoten;
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="@hoten">
                                             Hi, @displayName
                                         </a>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -339,7 +340,7 @@
                             <div class="modal-content p-4" style="border-radius: 20px; background: #fff;">
                                 <div class="modal-header border-0">
                                     <h5 class="modal-title w-100 text-center fw-bold" id="modalTitle">ĐĂNG NHẬP</h5>
-                                    <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                                    <button type="button" class="btn-close position-absolute end-0 me-3" data-bs-dismiss="modal" aria-label="Đóng" tabindex="0"></button>
                                 </div>
                                 <div class="modal-body">
                                     <!-- Form Đăng nhập -->
@@ -351,30 +352,24 @@
                                         }
                                         @if (ViewBag.LoginCheck != null)
                                         {
-                                            <div class="alert alert-danger text-center mb-3">
-                                                @Html.Raw(ViewBag.LoginCheck)
-                                            </div>
+                                            <div class="alert alert-danger text-center mb-3">@Html.Raw(ViewBag.LoginCheck)</div>
                                         }
                                         <form action="/TaiKhoan/Login" method="post">
                                             <div class="form-group mb-3">
-                                                <input name="Email" class="form-control rounded-pill px-4 py-2" placeholder="Email" />
+                                                <input name="Email" class="form-control rounded-pill px-4 py-2" placeholder="Email" tabindex="0" />
                                             </div>
                                             <div class="form-group mb-3">
-                                                <input name="MatKhau" type="password" class="form-control rounded-pill px-4 py-2" placeholder="Nhập mật khẩu" />
+                                                <input name="MatKhau" type="password" class="form-control rounded-pill px-4 py-2" placeholder="Nhập mật khẩu" tabindex="0" />
                                             </div>
                                             <div class="text-center mb-3">
-                                                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2"
-                                                        style="background-color: #ff85a2; border: none; font-size: 17px;">
-                                                    ĐĂNG NHẬP
-                                                </button>
+                                                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2" style="background-color: #ff85a2; border: none; font-size: 17px;" tabindex="0">ĐĂNG NHẬP</button>
                                             </div>
-                                        
-                                            <div class="text-center small">
+                                            <div class="text-center small" tabindex="-1">
                                                 <span>Bạn chưa có tài khoản?</span>
-                                                <a href="javascript:void(0);" class="fw-bold text-primary text-decoration-none" onclick="showRegisterForm()">Đăng ký ngay</a>
+                                                <a href="javascript:void(0);" class="fw-bold text-primary text-decoration-none" onclick="showRegisterForm()" tabindex="0">Đăng ký ngay</a>
                                             </div>
                                             <div class="text-center mt-2 small">
-                                                <a href="/TaiKhoan/ForgotPassword" class="text-danger text-decoration-none">Quên mật khẩu?</a>
+                                                <a href="/TaiKhoan/ForgotPassword" class="text-danger text-decoration-none" tabindex="0">Quên mật khẩu?</a>
                                             </div>
                                         </form>
                                     </div>
@@ -386,23 +381,23 @@
                                                 <div class="alert alert-danger text-center mb-3">@TempData["RegisterError"]</div>
                                             }
                                             <div class="form-group mb-3">
-                                                <input name="Email" class="form-control rounded-pill px-4 py-2" placeholder="Email" />
+                                                <input name="Email" class="form-control rounded-pill px-4 py-2" placeholder="Email" tabindex="0" />
                                             </div>
                                             <div class="form-group mb-3">
-                                                <input name="MatKhau" type="password" class="form-control rounded-pill px-4 py-2" placeholder="Mật khẩu" />
+                                                <input name="MatKhau" type="password" class="form-control rounded-pill px-4 py-2" placeholder="Mật khẩu" tabindex="0" />
                                             </div>
                                             <div class="form-group mb-3">
-                                                <input name="Hoten" class="form-control rounded-pill px-4 py-2" placeholder="Họ tên" />
+                                                <input name="Hoten" class="form-control rounded-pill px-4 py-2" placeholder="Họ tên" tabindex="0" />
                                             </div>
                                             <div class="form-group mb-3">
-                                                <input name="HinhAnh" class="form-control rounded-pill px-4 py-2" placeholder="Link ảnh đại diện (không bắt buộc)" />
+                                                <input name="HinhAnh" class="form-control rounded-pill px-4 py-2" placeholder="Link ảnh đại diện (không bắt buộc)" tabindex="0" />
                                             </div>
                                             <div class="text-center mb-3">
-                                                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2" style="background-color: #ff85a2; border: none; font-size: 17px;">ĐĂNG KÝ</button>
+                                                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2" style="background-color: #ff85a2; border: none; font-size: 17px;" tabindex="0">ĐĂNG KÝ</button>
                                             </div>
-                                            <div class="text-center small">
+                                            <div class="text-center small" tabindex="-1">
                                                 <span>Đã có tài khoản?</span>
-                                                <a href="javascript:void(0);" class="fw-bold text-primary text-decoration-none" onclick="showLoginForm()">Đăng nhập</a>
+                                                <a href="javascript:void(0);" class="fw-bold text-primary text-decoration-none" onclick="showLoginForm()" tabindex="0">Đăng nhập</a>
                                             </div>
                                         </form>
                                     </div>
@@ -561,6 +556,7 @@
         </div>
     </section>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="~/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="~/js/plugins.js"></script>
@@ -568,7 +564,6 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script type="text/javascript" src="~/js/script.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         function showRegisterForm() {
@@ -582,29 +577,29 @@
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('modalTitle').innerText = 'ĐĂNG NHẬP';
         }
-          window.onload = function () {
-        const loginError = "@Html.Raw(TempData["LoginError"])";
-
+        
+        window.onload = function () {
+            const modalElement = document.getElementById('loginRegisterModal');
+            const modal = new bootstrap.Modal(modalElement);
+            const loginError = "@Html.Raw(TempData["LoginError"])";
             const registerOpen = "@TempData["OpenRegisterForm"]";
             const loginOpen = "@TempData["OpenLoginForm"]";
 
             if (loginError) {
-                const modal = new bootstrap.Modal(document.getElementById('loginRegisterModal'));
                 modal.show();
                 showLoginForm();
                 const errMsg = document.getElementById("loginErrorMessage");
                 errMsg.innerText = loginError;
                 errMsg.style.display = "block";
             } else if (registerOpen === "True") {
-                const modal = new bootstrap.Modal(document.getElementById('loginRegisterModal'));
                 modal.show();
                 showRegisterForm();
             } else if (loginOpen === "True") {
-                const modal = new bootstrap.Modal(document.getElementById('loginRegisterModal'));
                 modal.show();
                 showLoginForm();
             }
         };
+    </script>
     </script>
 
 </body>

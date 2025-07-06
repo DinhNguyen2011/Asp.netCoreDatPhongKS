@@ -1,141 +1,74 @@
-﻿/* Scoped styles for contact page to avoid conflicts */
-.contact-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
+﻿/* Scoped styles for contact page to avoid conflicts with _Layout.cshtml */
+.contact-page .contact-form input,
+.contact-page .contact-form textarea {
+    transition: all 0.3s ease;
 }
 
-    .contact-wrapper h2 {
-        font-size: 2rem;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 1rem;
+    .contact-page .contact-form input:focus,
+    .contact-page .contact-form textarea:focus {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        outline: none;
     }
 
-    .contact-wrapper p {
-        font-size: 1rem;
-        color: #555;
-        line-height: 1.6;
-    }
-
-.contact-form {
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.contact-page .floating-label {
+    position: absolute;
+    pointer-events: none;
+    left: 15px;
+    top: 10px;
+    transition: 0.2s ease all;
+    color: #999;
 }
 
-    .contact-form .form-control {
-        border-radius: 5px;
-        border: 1px solid #ced4da;
-        padding: 0.75rem;
-        font-size: 1rem;
-    }
-
-        .contact-form .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-        }
-
-    .contact-form .btn-primary {
-        background-color: #007bff;
-        border: none;
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-        .contact-form .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
-    .contact-form .text-danger {
-        font-size: 0.875rem;
-        margin-top: 0.25rem;
-    }
-
-.contact-info h4 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 1rem;
+.contact-page input:focus ~ .floating-label,
+.contact-page input:not(:placeholder-shown) ~ .floating-label,
+.contact-page textarea:focus ~ .floating-label,
+.contact-page textarea:not(:placeholder-shown) ~ .floating-label {
+    top: -10px;
+    left: 10px;
+    font-size: 12px;
+    background: white;
+    padding: 0 5px;
+    color: #4a5568;
 }
 
-.contact-info p {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 0.5rem;
-}
-
-.contact-info a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-    .contact-info a:hover {
-        text-decoration: underline;
-    }
-
-.contact-info iframe {
-    border-radius: 8px;
+.contact-page .map-container {
+    height: 450px;
     width: 100%;
-    height: 200px;
 }
 
-.social-links img {
-    width: 30px;
-    height: 30px;
-    transition: transform 0.3s ease;
+/* Ensure Tailwind classes are not overridden */
+.contact-page .bg-gray-50 {
+    background-color: #f9fafb !important;
 }
 
-    .social-links img:hover {
-        transform: scale(1.1);
+.contact-page .bg-white {
+    background-color: #ffffff !important;
+}
+
+.contact-page .bg-amber-600 {
+    background-color: #d97706 !important;
+}
+
+.contact-page .hover\:bg-amber-700:hover {
+    background-color: #b45309 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .contact-page .hero-section {
+        height: 300px !important;
     }
 
-/* Responsive Design */
-@media (max-width: 767.98px) {
-    .contact-wrapper {
-        padding: 1rem;
-    }
-
-        .contact-wrapper h2 {
-            font-size: 1.75rem;
+        .contact-page .hero-section h1 {
+            font-size: 2rem !important;
         }
 
-    .contact-form {
-        padding: 1.5rem;
-    }
+        .contact-page .hero-section p {
+            font-size: 1rem !important;
+        }
 
-    .contact-info h4 {
-        font-size: 1.25rem;
-    }
-
-    .contact-info iframe {
-        height: 150px;
-    }
-
-    .contact-form .btn-primary {
-        width: 100%;
-        padding: 0.75rem;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .contact-wrapper h2 {
-        font-size: 1.5rem;
-    }
-
-    .contact-form {
-        padding: 1rem;
-    }
-
-    .contact-info p {
-        font-size: 0.9rem;
-    }
-
-    .social-links img {
-        width: 25px;
-        height: 25px;
+    .contact-page .map-container {
+        height: 300px !important;
     }
 }

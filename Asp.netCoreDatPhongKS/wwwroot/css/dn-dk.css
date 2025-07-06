@@ -1,0 +1,14 @@
+﻿
+
+.modal-content {
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 20px;
+}
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.5rem;
+        max-width: 95%;
+    }
+}
