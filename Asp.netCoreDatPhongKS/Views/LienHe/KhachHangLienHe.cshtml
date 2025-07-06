@@ -1,219 +1,201 @@
-﻿@model Asp.netCoreDatPhongKS.Models.LienHeVoiCtoi
+﻿
+@model Asp.netCoreDatPhongKS.Models.LienHeVoiCtoi
 
 @{
     ViewData["Title"] = "Liên Hệ Với Chúng Tôi";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Liên hệ với Khách sạn Thiềm Định để đặt phòng hoặc gửi thắc mắc. Chúng tôi luôn sẵn sàng hỗ trợ 24/7 tại TP.HCM.">
-    <title>@ViewData["Title"] | Khách sạn Thiềm Định</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .contact-form input, .contact-form textarea {
-            transition: all 0.3s ease;
+<style>
+    /* Đảm bảo phông chữ nhất quán với layout */
+    .lienhe-page {
+        font-family: 'Sora', sans-serif;
+    }
+
+        .lienhe-page h1, .lienhe-page h2, .lienhe-page h3, .lienhe-page h4 {
+            font-family: 'Cormorant Upright', serif;
         }
 
-            .contact-form input:focus, .contact-form textarea:focus {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            }
+    /* Kiểu cho form liên hệ */
+    .lienhe-form input,
+    .lienhe-form textarea {
+        transition: all 0.3s ease;
+        border-radius: 0.375rem;
+    }
 
-        .floating-label {
-            position: absolute;
-            pointer-events: none;
-            left: 15px;
-            top: 10px;
-            transition: 0.2s ease all;
-            color: #999;
+        .lienhe-form input:focus,
+        .lienhe-form textarea:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-color: #ff85a2;
+            outline: none;
         }
 
-        input:focus ~ .floating-label,
-        input:not(:placeholder-shown) ~ .floating-label,
-        textarea:focus ~ .floating-label,
-        textarea:not(:placeholder-shown) ~ .floating-label {
-            top: -10px;
-            left: 10px;
-            font-size: 12px;
-            background: white;
-            padding: 0 5px;
-            color: #4a5568;
+    .lienhe-floating-label {
+        position: absolute;
+        pointer-events: none;
+        left: 15px;
+        top: 10px;
+        transition: 0.2s ease all;
+        color: #999;
+        font-size: 16px;
+    }
+
+    .lienhe-form input:focus ~ .lienhe-floating-label,
+    .lienhe-form input:not(:placeholder-shown) ~ .lienhe-floating-label,
+    .lienhe-form textarea:focus ~ .lienhe-floating-label,
+    .lienhe-form textarea:not(:placeholder-shown) ~ .lienhe-floating-label {
+        top: -10px;
+        left: 10px;
+        font-size: 12px;
+        background: white;
+        padding: 0 5px;
+        color: #ff85a2;
+    }
+
+    .lienhe-map-container {
+        height: 450px;
+        width: 100%;
+        border-radius: 0.375rem;
+    }
+
+    /* Kiểu cho FAQ */
+    .lienhe-faq-toggle:hover {
+        background-color: #fff3cdb5; /* Màu bg-secondary từ layout */
+    }
+
+    .lienhe-faq-content {
+        display: none;
+    }
+
+        .lienhe-faq-content.show {
+            display: block;
         }
 
-        .map-container {
-            height: 450px;
-            width: 100%;
+    /* Nút và các yếu tố tương tác */
+    .lienhe-btn-primary {
+        background-color: #ff85a2;
+        border-color: #ff85a2;
+        transition: background-color 0.3s ease;
+    }
+
+        .lienhe-btn-primary:hover {
+            background-color: #e06f8c;
+            border-color: #e06f8c;
         }
-    </style>
-</head>
 
-<body class="bg-gray-50 font-sans">
-     <!-- Hero Section -->
-    <section class="relative h-96 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-        <div class="relative container mx-auto px-4 h-full flex items-center">
-            <div class="text-white max-w-2xl">
-                <h1 class="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
-                <p class="text-xl mb-6">We're here to make your stay in Saigon unforgettable. Reach out to us anytime.</p>
-                <div class="flex space-x-4">
-                    <a href="#contact-form" class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-md font-medium transition duration-300">Send Message</a>
-                    <a href="#contact-info" class="border border-white hover:bg-white hover:text-gray-800 text-white px-6 py-3 rounded-md font-medium transition duration-300">Contact Info</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Contact Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col lg:flex-row gap-12">
+    /* Đảm bảo biểu tượng Font Awesome hiển thị đúng */
+    .lienhe-icon-container i {
+        font-family: 'Font Awesome 6 Free' !important;
+        font-weight: 900; /* Solid icons */
+        font-size: 1.25rem;
+        color: #ff85a2; /* Màu từ layout */
+    }
+</style>
 
-                <!-- Contact Form -->
-                <div class="lg:w-7/12 contact-form">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Liên Hệ Với Khách Sạn Thiềm Định</h2>
-                    <p class="text-gray-600 mb-6">Chúng tôi luôn sẵn sàng hỗ trợ bạn. Vui lòng điền thông tin bên dưới hoặc sử dụng các kênh liên lạc khác.</p>
+<!-- Bao bọc nội dung để cách ly kiểu -->
+<div class="lienhe-page">
+
+    <!-- Phần form liên hệ -->
+    <section class="py-6">
+        <div class="container-fluid padding-side">
+            <div class="row g-4">
+                <!-- Form liên hệ -->
+                <div class="col-lg-7 lienhe-form">
+                    <h2 class="fs-2 fw-bold mb-3">Liên Hệ Với Khách Sạn Thiềm Định</h2>
+                    <p class="text-muted mb-4">Chúng tôi luôn sẵn sàng hỗ trợ bạn. Vui lòng điền thông tin bên dưới hoặc sử dụng các kênh liên lạc khác.</p>
 
                     @if (TempData["SuccessMessage"] != null)
                     {
-                        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
+                        <div class="alert alert-success border-start border-4 border-success p-3 mb-4" role="alert">
                             @TempData["SuccessMessage"]
                         </div>
                     }
                     @if (TempData["ErrorMessage"] != null)
                     {
-                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6" role="alert">
+                        <div class="alert alert-danger border-start border-4 border-danger p-3 mb-4" role="alert">
                             @TempData["ErrorMessage"]
                         </div>
                     }
 
-                    <form asp-action="KhachHangLienHe" method="post" class="contact-form bg-gray-50 p-8 rounded-lg shadow-sm">
-                        <div asp-validation-summary="ModelOnly" class="text-red-500 mb-3"></div>
+                    <form asp-action="KhachHangLienHe" method="post" class="lienhe-form bg-light p-4 rounded shadow-sm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                        <div class="mb-6 relative">
-                            <input asp-for="HoTen" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder=" " aria-labelledby="hoten-label" />
-                            <label for="HoTen" id="hoten-label" class="floating-label">Họ và Tên</label>
-                            <span asp-validation-for="HoTen" class="text-red-500"></span>
+                        <div class="mb-4 position-relative">
+                            <input asp-for="HoTen" class="form-control px-3 py-2" placeholder=" " aria-labelledby="hoten-label" />
+                            <label for="HoTen" id="hoten-label" class="lienhe-floating-label">Họ và Tên</label>
+                            <span asp-validation-for="HoTen" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-6 relative">
-                            <input asp-for="Email" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder=" " aria-labelledby="email-label" />
-                            <label for="Email" id="email-label" class="floating-label">Email</label>
-                            <span asp-validation-for="Email" class="text-red-500"></span>
+                        <div class="mb-4 position-relative">
+                            <input asp-for="Email" class="form-control px-3 py-2" placeholder=" " aria-labelledby="email-label" />
+                            <label for="Email" id="email-label" class="lienhe-floating-label">Email</label>
+                            <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-6 relative">
-                            <input asp-for="SoDienThoai" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder=" " aria-labelledby="sodienthoai-label" />
-                            <label for="SoDienThoai" id="sodienthoai-label" class="floating-label">Số Điện Thoại (Tùy chọn)</label>
-                            <span asp-validation-for="SoDienThoai" class="text-red-500"></span>
+                        <div class="mb-4 position-relative">
+                            <input asp-for="SoDienThoai" class="form-control px-3 py-2" placeholder=" " aria-labelledby="sodienthoai-label" />
+                            <label for="SoDienThoai" id="sodienthoai-label" class="lienhe-floating-label">Số Điện Thoại (Tùy chọn)</label>
+                            <span asp-validation-for="SoDienThoai" class="text-danger"></span>
                         </div>
 
-                        <div class="mb-6 relative">
-                            <textarea asp-for="NoiDung" rows="6" class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder=" " aria-labelledby="noidung-label"></textarea>
-                            <label for="NoiDung" id="noidung-label" class="floating-label">Nội Dung Liên Hệ</label>
-                            <span asp-validation-for="NoiDung" class="text-red-500"></span>
+                        <div class="mb-4 position-relative">
+                            <textarea asp-for="NoiDung" rows="6" class="form-control px-3 py-2" placeholder=" " aria-labelledby="noidung-label"></textarea>
+                            <label for="NoiDung" id="noidung-label" class="lienhe-floating-label">Nội Dung Liên Hệ</label>
+                            <span asp-validation-for="NoiDung" class="text-danger"></span>
                         </div>
 
-                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-md font-medium transition duration-300">
-                            Gửi Liên Hệ <i class="fas fa-paper-plane ml-2"></i>
+                        <button type="submit" class="btn lienhe-btn-primary w-100 py-2">
+                            Gửi Liên Hệ <i class="fas fa-paper-plane ms-2"></i>
                         </button>
                     </form>
                 </div>
 
-                <!-- Contact Info -->
-                @* <div class="lg:w-5/12">
-                    <div class="bg-gray-50 p-8 rounded-lg shadow-sm h-full">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Thông Tin Liên Hệ</h3>
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-phone-alt text-amber-600 text-xl"></i>
+                <!-- Thông Tin Liên Hệ -->
+                <div class="col-lg-5" id="lienhe-info">
+                    <div class="bg-light p-4 rounded shadow-sm h-100">
+                        <h3 class="fs-3 fw-semibold mb-4">Thông Tin Liên Hệ</h3>
+
+                        <div class="d-flex flex-column gap-4">
+                            <div class="d-flex align-items-start">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 lienhe-icon-container">
+                                    <i class="fas fa-map-marker-alt"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-800 mb-1">Hotline</h4>
-                                    <p class="text-gray-600"><a href="tel:0853461030" class="text-amber-600 hover:underline">0853 461 030</a></p>
+                                    <h4 class="fw-medium mb-1">Địa Chỉ</h4>
+                                    <p class="text-muted">280 Cao Lỗ, Quận 8, Thành phố Hồ Chí Minh, Việt Nam</p>
                                 </div>
                             </div>
 
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-envelope text-amber-600 text-xl"></i>
+                            <div class="d-flex align-items-start">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 lienhe-icon-container">
+                                    <i class="fas fa-phone-alt"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-800 mb-1">Email</h4>
-                                    <p class="text-gray-600"><a href="mailto:dinhn6666@gmail.com" class="text-amber-600 hover:underline">dinhn6666@gmail.com</a></p>
+                                    <h4 class="fw-medium mb-1">Số Điện Thoại</h4>
+                                    <p class="text-muted">+84 85 346 1030</p>
+                                    <p class="text-muted">+84 85 346 1031 (Đặt phòng)</p>
                                 </div>
                             </div>
 
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-map-marker-alt text-amber-600 text-xl"></i>
+                            <div class="d-flex align-items-start">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 lienhe-icon-container">
+                                    <i class="fas fa-envelope"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-800 mb-1">Địa Chỉ</h4>
-                                    <p class="text-gray-600">180 Cao Lỗ, Quận 8, TP. HCM</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-8">
-                            <h4 class="font-medium text-gray-800 mb-4">Vị Trí Của Chúng Tôi</h4>
-                            <div class="map-container rounded-lg shadow-lg overflow-hidden">
-                                  </div>
-                            <div class="mt-4 text-center">
-                                <a href="https://www.google.com/maps/dir/?api=1&destination=180+Cao+Lo,+Quan+8,+Ho+Chi+Minh+City" target="_blank" class="text-amber-600 hover:underline">Xem chỉ đường</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> *@
-                <!-- Contact Info -->
-                <div class="lg:w-1/2" id="contact-info">
-                    <div class="bg-gray-50 p-8 rounded-lg shadow-sm h-full">
-                        <h3 class="text-2xl font-semibold text-gray-800 mb-6">Contact Information</h3>
-
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-map-marker-alt text-amber-600 text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-800 mb-1">Address</h4>
-                                    <p class="text-gray-600">123 Nguyen Hue Boulevard, District 1, Ho Chi Minh City, Vietnam</p>
+                                    <h4 class="fw-medium mb-1">Email</h4>
+                                    <p class="text-muted">dinhn6666@gmail.com</p>
+                                    <p class="text-muted">reservations@thiemdinhhotel.com</p>
                                 </div>
                             </div>
 
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-phone-alt text-amber-600 text-xl"></i>
+                            <div class="d-flex align-items-start">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-circle me-3 lienhe-icon-container">
+                                    <i class="fas fa-clock"></i>
                                 </div>
                                 <div>
-                                    <h4 class="font-medium text-gray-800 mb-1">Phone</h4>
-                                    <p class="text-gray-600">+84 28 3823 4567</p>
-                                    <p class="text-gray-600">+84 28 3823 4568 (Reservations)</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-envelope text-amber-600 text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-800 mb-1">Email</h4>
-                                    <p class="text-gray-600">reservations@saigongrandhotel.com</p>
-                                    <p class="text-gray-600">info@saigongrandhotel.com</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start">
-                                <div class="bg-amber-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-clock text-amber-600 text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-medium text-gray-800 mb-1">Reception Hours</h4>
-                                    <p class="text-gray-600">24 hours / 7 days</p>
+                                    <h4 class="fw-medium mb-1">Giờ Lễ Tân</h4>
+                                    <p class="text-muted">24 giờ / 7 ngày</p>
                                 </div>
                             </div>
                         </div>
@@ -223,149 +205,122 @@
         </div>
     </section>
 
-    <!-- Map Section -->
-    <section class="py-12 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Our Location</h2>
-            <div class="map-container rounded-lg shadow-lg overflow-hidden">
-            
+    <!-- Phần bản đồ -->
+    <section class="py-5 bg-light">
+        <div class="container-fluid padding-side">
+            <h2 class="fs-2 fw-bold text-center mb-4">Vị Trí Của Chúng Tôi</h2>
+            <div class="lienhe-map-container shadow rounded overflow-hidden">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.961580255408!2d106.67510897369529!3d10.7374445599143!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752fad3fb62a95%3A0xa9576c84a879d1fe!2zMTgwIENhbyBM4buXLCBQaMaw4budbmcgNCwgUXXhuq1uIDgsIEjhu5MgQ2jDrSBNaW5oIDcwMDAwLCBWaWV0bmFt!5e0!3m2!1sen!2s!4v1751355725549!5m2!1sen!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
             </div>
 
-            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-subway text-2xl text-amber-600 mr-3"></i>
-                        <h3 class="text-xl font-semibold">Public Transport</h3>
-                    </div>
-                    <p class="text-gray-600">We're conveniently located near Ben Thanh Metro Station (Line 1) and multiple bus stops along Nguyen Hue Boulevard.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-plane text-2xl text-amber-600 mr-3"></i>
-                        <h3 class="text-xl font-semibold">From the Airport</h3>
-                    </div>
-                    <p class="text-gray-600">Tan Son Nhat International Airport is just 8km away. Taxi ride takes approximately 20-30 minutes depending on traffic.</p>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <i class="fas fa-car text-2xl text-amber-600 mr-3"></i>
-                        <h3 class="text-xl font-semibold">Parking</h3>
-                    </div>
-                    <p class="text-gray-600">Complimentary valet parking available for hotel guests. Limited street parking also available nearby.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Frequently Asked Questions</h2>
-
-            <div class="max-w-3xl mx-auto space-y-4">
-                <div class="border border-gray-200 rounded-lg overflow-hidden">
-                    <button class="faq-toggle w-full flex justify-between items-center p-5 bg-gray-50 hover:bg-gray-100 transition duration-300">
-                        <h3 class="text-lg font-medium text-left text-gray-800">What is your cancellation policy?</h3>
-                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                    </button>
-                    <div class="faq-content hidden p-5 border-t border-gray-200">
-                        <p class="text-gray-600">We offer free cancellation up to 48 hours before your scheduled arrival. For cancellations made within 48 hours of arrival, one night's room charge will be applied.</p>
+            <div class="mt-4 row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-subway fs-4 text-primary me-2 lienhe-icon-container"></i>
+                            <h3 class="fs-5 fw-semibold">Giao Thông Công Cộng</h3>
+                        </div>
+                        <p class="text-muted">Chúng tôi nằm gần trạm tàu điện ngầm Bến Thành (Tuyến 1) và nhiều điểm dừng xe buýt dọc đại lộ Nguyễn Huệ.</p>
                     </div>
                 </div>
 
-                <div class="border border-gray-200 rounded-lg overflow-hidden">
-                    <button class="faq-toggle w-full flex justify-between items-center p-5 bg-gray-50 hover:bg-gray-100 transition duration-300">
-                        <h3 class="text-lg font-medium text-left text-gray-800">Do you provide airport transfer service?</h3>
-                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                    </button>
-                    <div class="faq-content hidden p-5 border-t border-gray-200">
-                        <p class="text-gray-600">Yes, we offer airport transfer service for an additional fee. Please contact our concierge at least 24 hours before your arrival to arrange this service.</p>
+                <div class="col">
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-plane fs-4 text-primary me-2 lienhe-icon-container"></i>
+                            <h3 class="fs-5 fw-semibold">Từ Sân Bay</h3>
+                        </div>
+                        <p class="text-muted">Sân bay Quốc tế Tân Sơn Nhất cách khách sạn 8km. Chuyến taxi mất khoảng 20-30 phút tùy vào tình hình giao thông.</p>
                     </div>
                 </div>
 
-                <div class="border border-gray-200 rounded-lg overflow-hidden">
-                    <button class="faq-toggle w-full flex justify-between items-center p-5 bg-gray-50 hover:bg-gray-100 transition duration-300">
-                        <h3 class="text-lg font-medium text-left text-gray-800">What time is check-in and check-out?</h3>
-                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                    </button>
-                    <div class="faq-content hidden p-5 border-t border-gray-200">
-                        <p class="text-gray-600">Check-in time is from 2:00 PM and check-out is until 12:00 PM. Early check-in and late check-out are subject to availability and may incur additional charges.</p>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 rounded-lg overflow-hidden">
-                    <button class="faq-toggle w-full flex justify-between items-center p-5 bg-gray-50 hover:bg-gray-100 transition duration-300">
-                        <h3 class="text-lg font-medium text-left text-gray-800">Is breakfast included?</h3>
-                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                    </button>
-                    <div class="faq-content hidden p-5 border-t border-gray-200">
-                        <p class="text-gray-600">Breakfast is included in our room rates unless otherwise specified. We offer both Vietnamese and international breakfast options served daily from 6:30 AM to 10:30 AM.</p>
-                    </div>
-                </div>
-
-                <div class="border border-gray-200 rounded-lg overflow-hidden">
-                    <button class="faq-toggle w-full flex justify-between items-center p-5 bg-gray-50 hover:bg-gray-100 transition duration-300">
-                        <h3 class="text-lg font-medium text-left text-gray-800">Do you have facilities for disabled guests?</h3>
-                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
-                    </button>
-                    <div class="faq-content hidden p-5 border-t border-gray-200">
-                        <p class="text-gray-600">Yes, our hotel is fully accessible with wheelchair ramps, elevators, and specially designed rooms for guests with disabilities. Please inform us of any specific requirements when booking.</p>
+                <div class="col">
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-car fs-4 text-primary me-2 lienhe-icon-container"></i>
+                            <h3 class="fs-5 fw-semibold">Bãi Đỗ Xe</h3>
+                        </div>
+                        <p class="text-muted">Khách sạn cung cấp dịch vụ đỗ xe miễn phí cho khách. Có bãi đỗ xe đường phố giới hạn gần đó.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Newsletter -->
-    <section class="py-12 bg-amber-600 text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Stay Updated</h2>
-            <p class="max-w-2xl mx-auto mb-8 text-amber-100">Subscribe to our newsletter for exclusive offers, events, and news about The Saigon Grand Hotel.</p>
+    <!-- Phần FAQ -->
+    <section class="py-5">
+        <div class="container-fluid padding-side">
+            <h2 class="fs-2 fw-bold text-center mb-5">Câu Hỏi Thường Gặp</h2>
 
-            <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
-                <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-md focus:outline-none text-gray-800">
-                <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white px-6 py-3 rounded-md font-medium transition duration-300">Subscribe</button>
-            </form>
+            <div class="mx-auto" style="max-width: 48rem;">
+                <div class="border rounded mb-3">
+                    <button class="lienhe-faq-toggle w-100 d-flex justify-content-between align-items-center p-3 bg-light">
+                        <h3 class="fs-5 fw-medium text-start">Chính sách hủy phòng của khách sạn là gì?</h3>
+                        <i class="fas fa-chevron-down text-primary lienhe-icon-container"></i>
+                    </button>
+                    <div class="lienhe-faq-content p-3 border-top">
+                        <p class="text-muted">Chúng tôi cho phép hủy phòng miễn phí trước 48 giờ so với ngày đến. Nếu hủy trong vòng 48 giờ, bạn sẽ chịu phí tương đương một đêm phòng.</p>
+                    </div>
+                </div>
+
+                <div class="border rounded mb-3">
+                    <button class="lienhe-faq-toggle w-100 d-flex justify-content-between align-items-center p-3 bg-light">
+                        <h3 class="fs-5 fw-medium text-start">Khách sạn có cung cấp dịch vụ đưa đón sân bay không?</h3>
+                        <i class="fas fa-chevron-down text-primary lienhe-icon-container"></i>
+                    </button>
+                    <div class="lienhe-faq-content p-3 border-top">
+                        <p class="text-muted">Có, chúng tôi cung cấp dịch vụ đưa đón sân bay với một khoản phụ phí. Vui lòng liên hệ lễ tân ít nhất 24 giờ trước khi đến để sắp xếp.</p>
+                    </div>
+                </div>
+
+                <div class="border rounded mb-3">
+                    <button class="lienhe-faq-toggle w-100 d-flex justify-content-between align-items-center p-3 bg-light">
+                        <h3 class="fs-5 fw-medium text-start">Thời gian nhận và trả phòng là khi nào?</h3>
+                        <i class="fas fa-chevron-down text-primary lienhe-icon-container"></i>
+                    </button>
+                    <div class="lienhe-faq-content p-3 border-top">
+                        <p class="text-muted">Thời gian nhận phòng từ 14:00 và trả phòng đến 12:00. Nhận phòng sớm hoặc trả phòng muộn tùy thuộc vào tình trạng phòng và có thể phát sinh phí.</p>
+                    </div>
+                </div>
+
+                <div class="border rounded mb-3">
+                    <button class="lienhe-faq-toggle w-100 d-flex justify-content-between align-items-center p-3 bg-light">
+                        <h3 class="fs-5 fw-medium text-start">Bữa sáng có được bao gồm không?</h3>
+                        <i class="fas fa-chevron-down text-primary lienhe-icon-container"></i>
+                    </button>
+                    <div class="lienhe-faq-content p-3 border-top">
+                        <p class="text-muted">Bữa sáng được bao gồm trong giá phòng trừ khi có quy định khác. Chúng tôi phục vụ các món Việt Nam và quốc tế từ 6:30 đến 10:30 hàng ngày.</p>
+                    </div>
+                </div>
+
+                <div class="border rounded mb-3">
+                    <button class="lienhe-faq-toggle w-100 d-flex justify-content-between align-items-center p-3 bg-light">
+                        <h3 class="fs-5 fw-medium text-start">Khách sạn có tiện nghi cho người khuyết tật không?</h3>
+                        <i class="fas fa-chevron-down text-primary lienhe-icon-container"></i>
+                    </button>
+                    <div class="lienhe-faq-content p-3 border-top">
+                        <p class="text-muted">Có, khách sạn được thiết kế với lối đi cho xe lăn, thang máy và phòng dành riêng cho người khuyết tật. Vui lòng thông báo yêu cầu đặc biệt khi đặt phòng.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Scripts -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
-    <script>
-        $(function () {
-            $(".contact-form").validate({
-                rules: {
-                    HoTen: { required: true },
-                    Email: { required: true, email: true },
-                    NoiDung: { required: true },
-                    SoDienThoai: { phone: true }
-                },
-                messages: {
-                    HoTen: "Vui lòng nhập họ tên",
-                    Email: { required: "Vui lòng nhập email", email: "Email không hợp lệ" },
-                    NoiDung: "Vui lòng nhập nội dung",
-                    SoDienThoai: "Số điện thoại không hợp lệ"
-                },
-                errorElement: "span",
-                errorPlacement: function (err, el) { err.addClass("text-danger"); err.insertAfter(el); }
-            });
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
+<script>
+    // JavaScript cho FAQ toggle
+    document.querySelectorAll('.lienhe-faq-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            content.classList.toggle('show');
+            const icon = button.querySelector('i');
+            icon.classList.toggle('fa-chevron-down');
+            icon.classList.toggle('fa-chevron-up');
         });
-          // FAQ toggle functionality
-        document.querySelectorAll('.faq-toggle').forEach(button => {
-            button.addEventListener('click', () => {
-                const content = button.nextElementSibling;
-                const icon = button.querySelector('i');
-
-                content.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
-            });
-        });
-    </script>
-</body>
-</html>
+    });
+</script>

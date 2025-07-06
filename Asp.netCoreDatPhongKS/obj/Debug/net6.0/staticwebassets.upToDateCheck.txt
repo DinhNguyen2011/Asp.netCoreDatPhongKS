@@ -416,7 +416,6 @@ wwwroot\css\dichvu.css
 wwwroot\css\dn-dk.css
 wwwroot\css\DoanhThu.css
 wwwroot\css\dsLPhong.css
-wwwroot\css\gioithieu.css
 wwwroot\css\hoadontong.css
 wwwroot\css\hoithao.css
 wwwroot\css\home-hotel.css
@@ -611,3 +610,4 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\css\gioithieu.css
