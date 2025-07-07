@@ -40,7 +40,7 @@ namespace Asp.netCoreDatPhongKS.Services
             var requestId = Guid.NewGuid().ToString();
             var amount = model.Amount.ToString("F0");
             var orderInfo = model.OrderDescription;
-            var requestType = "captureWallet";
+            var requestType = "payWithMethod";
             var extraData = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { PhieuDatPhongId = model.PhieuDatPhongId })));
 
             var rawSignature = $"accessKey={accessKey}&amount={amount}&extraData={extraData}&ipnUrl={notifyUrl}&orderId={orderId}&orderInfo={orderInfo}&partnerCode={partnerCode}&redirectUrl={returnUrl}&requestId={requestId}&requestType={requestType}";
