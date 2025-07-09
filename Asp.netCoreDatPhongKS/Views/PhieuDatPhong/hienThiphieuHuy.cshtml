@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <link href="~/css/PhieuDatPhongAdmin.css" rel="stylesheet" />
+<a href="@Url.Action("Index", "PhieuDatPhong")" class="btn btn-primary">Trở về</a>
+
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
     <thead>
@@ -13,10 +15,9 @@
             <th>Khách hàng</th>
             <th>SĐT</th>
             <th>Ngày nhận</th>
-            <th>Ngày trả</th>
             <th>Tổng tiền</th>
-            <th>Tiền cọc</th>
-            <th>Số tiền đã thanh toán</th>
+            @* <th>Tiền cọc</th> *@
+            <th>Số tiền cần hoàn</th>
             <th>Trạng thái</th>
           
             <th></th>
@@ -32,11 +33,9 @@
                 <td>@item.KhachHang.HoTen</td>
                 <td>@item.KhachHang.SoDienThoai</td>
                 <td>@item.NgayNhan?.ToString("dd/MM/yyyy")</td>
-                <td>@item.NgayTra?.ToString("dd/MM/yyyy")</td>
                 <td>@item.TongTien?.ToString("N0") VNĐ</td>
-                <td>@item.SoTienCoc?.ToString("N0") VNĐ</td>
-                <td>@item.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
                 <td>@item.TrangThai</td>
+                <td>@item.TinhTrangSuDung</td>
               
                 <td>               
                 </td>

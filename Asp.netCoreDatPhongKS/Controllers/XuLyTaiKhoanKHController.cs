@@ -94,7 +94,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(phieu);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CancelBooking(int phieuDatPhongId)
@@ -139,14 +138,20 @@ namespace Asp.netCoreDatPhongKS.Controllers
             else
                 refundPercentage = 0.7m; // Hoàn 70%
 
-            phieu.TrangThai = $"Đã hủy (Hoàn {refundPercentage * 100}%)";
-            phieu.TinhTrangSuDung = "Đã check-out";
+            // Tính số tiền hoàn
+            decimal refundAmount = phieu.TongTien * refundPercentage ?? 0; // Giả sử TongTien là cột lưu tổng số tiền
+
+            // Cập nhật trạng thái và số tiền hoàn
+            phieu.TrangThai = $"Đã hủy (Hoàn {refundPercentage * 100}% - {String.Format("{0:N0}", refundAmount)} VNĐ)";
+            phieu.TinhTrangSuDung = "Đã hủy";
+            
+
             _context.Update(phieu);
             await _context.SaveChangesAsync();
-            TempData["Success"] = $"Hủy phiếu đặt phòng thành công. Hoàn {refundPercentage * 100}% - Vui lòng liên hệ tổng đài 0853461030 để xác nhận hoàn tiền.";
+
+            TempData["Success"] = $"Hủy phiếu đặt phòng thành công. Hoàn {refundPercentage * 100}% ({String.Format("{0:N0}", refundAmount)} VNĐ). Vui lòng liên hệ tổng đài 0853461030 để xác nhận hoàn tiền.";
             return RedirectToAction("Index");
         }
-
         [HttpGet]
         public async Task<IActionResult> XemDichVu()
         {

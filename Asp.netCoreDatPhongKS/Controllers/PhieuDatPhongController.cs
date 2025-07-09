@@ -31,6 +31,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             try
             {
                 var phieuDatPhongs = await _context.PhieuDatPhongs
+                    .Where(p=>p.TinhTrangSuDung != "Đã hủy")
                     .Include(p => p.KhachHang)
                     .Include(p => p.ChiTietPhieuPhongs)
                     .ThenInclude(c => c.Phong)
@@ -53,9 +54,10 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ViewData["Hoten"] = userName;
             }
+
             var huypdp = _context.PhieuDatPhongs
                           .Include(p => p.KhachHang)
-                   .Where(p => p.TrangThai == "Hủy")
+                   .Where(p => p.TinhTrangSuDung == "Đã hủy")
                    .ToList();
             return View(huypdp);
         }
@@ -272,7 +274,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TinhTrangSuDung !="Đã check-out")
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TinhTrangSuDung !="Đã check-out" && p.TinhTrangSuDung != "Đã hủy")
                // .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung !="Đã check-out")
                 .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
                 .ToList();

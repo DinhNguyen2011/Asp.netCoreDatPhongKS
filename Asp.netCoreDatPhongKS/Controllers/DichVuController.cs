@@ -17,9 +17,36 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
         }
 
-        // GET: DichVu/TrangChuDichVu
+        private IActionResult RestrictAccessByVaiTro()
+        {
+            string userName = HttpContext.Session.GetString("Hoten");
+
+            // Nếu có Hoten trong session, kiểm tra VaiTroId
+            if (!string.IsNullOrEmpty(userName))
+            {
+                // Tìm tài khoản dựa trên Hoten
+                var taiKhoan = _context.TaiKhoans
+                    .Include(t => t.VaiTro)
+                    .FirstOrDefault(t => t.Hoten == userName);
+
+                // Nếu tìm thấy tài khoản và VaiTroId là 1 hoặc 2, từ chối truy cập
+                if (taiKhoan != null && (taiKhoan.VaiTroId == 1 || taiKhoan.VaiTroId == 2))
+                {
+                    //  TempData["Error"] = "Tài khoản admin không được phép truy cập trang này.";
+                    return RedirectToAction("Erro", "Home");
+                }
+            }
+            //cho phép truy cập != tk admin
+            return null;
+        }
         public async Task<IActionResult> TrangChuDichVu(string loaiDichVu)
         {
+            var restrictResult = RestrictAccessByVaiTro();
+            if (restrictResult != null)
+            {
+                return restrictResult;
+            }
+
             string userName = HttpContext.Session.GetString("Hoten");
             if (!string.IsNullOrEmpty(userName))
             {
@@ -76,13 +103,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(await dichVus.ToListAsync());
         }
-
         [RestrictToAdmin]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateDonHangDichVu(int? khachHangId, bool isKhachVangLai, int[] dichVuIds, int[] soLuongs, bool thanhToanNgay, string hinhThucThanhToan)
         {
-         
             // Khôi phục ViewBag.KhachHangId
             ViewBag.KhachHangId = new SelectList(
                 await _context.KhachHangs
@@ -168,7 +193,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                     await _context.SaveChangesAsync();
 
-                    // Tạo hóa đơn dịch vụ
+                    // Chỉ tạo hóa đơn nếu trạng thái là "Đã thanh toán" (thanhToanNgay hoặc isKhachVangLai)
                     var hoaDonDichVu = new HoaDonDichVu
                     {
                         MaDonHangDv = donHang.MaDonHangDv,
@@ -179,31 +204,36 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     _context.HoaDonDichVus.Add(hoaDonDichVu);
                     await _context.SaveChangesAsync();
 
-                    // Tạo hóa đơn tổng (HoaDon) nếu cần
-                    var hoaDon = new HoaDon
+                    // Chỉ tạo hóa đơn tổng (HoaDon) nếu thanh toán ngay hoặc khách vãng lai
+                    if (thanhToanNgay || isKhachVangLai)
                     {
-                        NgayLap = DateTime.Now,
-                        KhachHangId = isKhachVangLai ? null : khachHangId,
-                        TongTienPhong = 0, // Không có phòng trong trường hợp này
-                        TongTienDichVu = tongTien,
-                        TongTien = tongTien,
-                        HinhThucThanhToan = hinhThucThanhToan,
-                        TrangThai = thanhToanNgay || isKhachVangLai ? "Đã thanh toán" : "Chưa thanh toán",
-                        IsKhachVangLai = isKhachVangLai,
-                        GhiChu = isKhachVangLai ? "Hóa đơn dịch vụ cho khách vãng lai" : $"Hóa đơn dịch vụ, lập bởi: {userName}",
-                        SoTienConNo = thanhToanNgay || isKhachVangLai ? 0 : tongTien,
-                        NguoiLapDh = userName
-                    };
-                    _context.HoaDons.Add(hoaDon);
-                    await _context.SaveChangesAsync();
+                        var hoaDon = new HoaDon
+                        {
+                            NgayLap = DateTime.Now,
+                            KhachHangId = isKhachVangLai ? null : khachHangId,
+                            TongTienPhong = 0, // Không có phòng trong trường hợp này
+                            TongTienDichVu = tongTien,
+                            TongTien = tongTien,
+                            HinhThucThanhToan = hinhThucThanhToan,
+                            TrangThai = "Đã thanh toán",
+                            IsKhachVangLai = isKhachVangLai,
+                            GhiChu = isKhachVangLai ? "Hóa đơn dịch vụ cho khách vãng lai" : $"Hóa đơn dịch vụ, lập bởi: {userName}",
+                            SoTienConNo = 0,
+                            NguoiLapDh = userName
+                        };
+                        _context.HoaDons.Add(hoaDon);
+                        await _context.SaveChangesAsync();
 
-                    // Liên kết HoaDonDichVu với HoaDon
-                    hoaDonDichVu.MaHoaDonTong = hoaDon.MaHoaDon;
-                    await _context.SaveChangesAsync();
+                        // Liên kết HoaDonDichVu với HoaDon
+                        hoaDonDichVu.MaHoaDonTong = hoaDon.MaHoaDon;
+                        await _context.SaveChangesAsync();
+                    }
 
                     await transaction.CommitAsync();
 
-                    TempData["Success"] = "Tạo đơn hàng dịch vụ thành công.";
+                    TempData["Success"] = thanhToanNgay || isKhachVangLai
+                        ? "Tạo đơn hàng dịch vụ và hóa đơn thành công."
+                        : "Tạo đơn hàng dịch vụ và hóa đơn dịch vụ (chưa thanh toán) thành công.";
                     return RedirectToAction("PrintHoaDonDichVu", new { id = hoaDonDichVu.Id });
                 }
             }
@@ -214,7 +244,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View("Index", await _context.DichVus.ToListAsync());
             }
         }
-
         [RestrictToAdmin]
         public async Task<IActionResult> PrintHoaDonDichVu(int id)
         {

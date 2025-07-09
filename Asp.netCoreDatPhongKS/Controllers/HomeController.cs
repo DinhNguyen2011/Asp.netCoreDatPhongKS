@@ -1,14 +1,16 @@
-﻿using System;
-using System.Text.Json;
+﻿using Asp.netCoreDatPhongKS.Filters;
 using Asp.netCoreDatPhongKS.Models;
 using Asp.netCoreDatPhongKS.Models.Payment;
 using Asp.netCoreDatPhongKS.Models.ViewModels;
 using Asp.netCoreDatPhongKS.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Text.Json;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
+ 
     public class HomeController : Controller
     {
         private readonly HotelPlaceVipContext _context;
@@ -23,9 +25,38 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _moMoService = moMoService;
             _emailService = emailService;
         }
+  
+        private IActionResult RestrictAccessByVaiTro()
+        {
+            string userName = HttpContext.Session.GetString("Hoten");
+
+            // Nếu có Hoten trong session, kiểm tra VaiTroId
+            if (!string.IsNullOrEmpty(userName))
+            {
+                // Tìm tài khoản dựa trên Hoten
+                var taiKhoan = _context.TaiKhoans
+                    .Include(t => t.VaiTro)
+                    .FirstOrDefault(t => t.Hoten == userName);
+
+                // Nếu tìm thấy tài khoản và VaiTroId là 1 hoặc 2, từ chối truy cập
+                if (taiKhoan != null && (taiKhoan.VaiTroId == 1 || taiKhoan.VaiTroId == 2))
+                {
+                  //  TempData["Error"] = "Tài khoản admin không được phép truy cập trang này.";
+                    return RedirectToAction("Erro", "Home");
+                }
+            }
+            //cho phép truy cập != tk admin
+            return null;
+        }
+
 
         public IActionResult Index()
         {
+            var restrictResult = RestrictAccessByVaiTro();
+            if (restrictResult != null)
+            {
+                return restrictResult;
+            }
             string userName = HttpContext.Session.GetString("Hoten");
             if (!string.IsNullOrEmpty(userName))
             {
@@ -55,7 +86,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(c => c.Phong)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TinhTrangSuDung != "Đã check-out")
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TinhTrangSuDung != "Đã check-out" && p.TinhTrangSuDung !="Đã hủy")
                 .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
                 .ToList();
 

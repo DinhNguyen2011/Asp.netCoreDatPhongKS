@@ -78,7 +78,7 @@
                                 var hasManageLoaiPhong = quyen.Contains("ManageLoaiPhong");
                             }
                             <a class="nav-link" href="@(hasManageLoaiPhong ? Url.Action("IndexChoAdmin", "LoaiPhong") : "#")" onclick="@(!hasManageLoaiPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý Loại Phòng </span>
+                                <span class="menu-title">Quản lý loại Phòng </span>
                                 <i class="mdi mdi-television menu-icon"></i>
                             </a>
                         </li>
@@ -88,6 +88,15 @@
                             }
                             <a class="nav-link" href="@(hasManageDatPhong ? Url.Action("Index", "PhieuDatPhong") : "#")" onclick="@(!hasManageDatPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
                                 <span class="menu-title">Quản lý phiếu đặt phòng</span>
+                                <i class="mdi mdi-bookmark-check menu-icon"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            @{
+                                var hasManageChiTietPDP = quyen.Contains("ManageChiTietPDP");
+                            }
+                            <a class="nav-link" href="@(hasManageChiTietPDP? Url.Action("Index", "ChiTietPDP") : "#")" onclick="@(!hasManageChiTietPDP ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý chi tiết phiếu đặt phòng</span>
                                 <i class="mdi mdi-bookmark-check menu-icon"></i>
                             </a>
                         </li>
