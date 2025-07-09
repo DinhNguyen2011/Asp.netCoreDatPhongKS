@@ -48,7 +48,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ViewData["Hoten"] = userName;
             }
-
             return View();
         }
     }

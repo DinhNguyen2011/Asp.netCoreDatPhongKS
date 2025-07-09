@@ -28,9 +28,14 @@
     </div>
     <div class="form-group">
         <label asp-for="TinhTrang" class="control-label"></label>
-        <input asp-for="TinhTrang" class="form-control" />
+        <select asp-for="TinhTrang" class="form-control">
+           
+            <option value="Trống">Trống</option>
+            <option value="Đã đặt">Đã đặt</option>
+        </select>
         <span asp-validation-for="TinhTrang" class="text-danger"></span>
     </div>
+
     <div class="form-group">
         <label asp-for="GiaPhong1Dem" class="control-label"></label>
         <input asp-for="GiaPhong1Dem" class="form-control" type="number" step="0.01" />

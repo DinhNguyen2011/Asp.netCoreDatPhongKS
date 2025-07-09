@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Asp.netCoreDatPhongKS.Models
 {
@@ -16,7 +18,14 @@ namespace Asp.netCoreDatPhongKS.Models
         }
 
         public int TaiKhoanId { get; set; }
+
+        [DisplayName("Địa chỉ Email")]
+        [Required(ErrorMessage = "Vui lòng nhập email.")]
+        //[EmailAddress(ErrorMessage = "Email không hợp lệ.")]
         public string? Email { get; set; }
+
+        [DisplayName("Mật khẩu")]
+        [Required(ErrorMessage = "Vui lòng nhập mật khẩu.")]
         public string? MatKhau { get; set; }
         public int? VaiTroId { get; set; }
         public bool? TrangThai { get; set; }
