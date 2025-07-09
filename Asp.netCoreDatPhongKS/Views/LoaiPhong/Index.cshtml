@@ -1,13 +1,17 @@
 ﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.LoaiPhong>
 
-<link href="~/css/dsLPhong.css" rel="stylesheet" />
-<h2 class="text-center td-title">Danh sách loại phòng</h2>
+@{
+    Layout = null; 
+}
 
-<form method="get" class="mb-4 p-3 td-card">
-    <div class="row">
-        <div class="col-md-3">
-            <label>Loại phòng:</label>
-            <select name="loai" class="form-select">
+<script src="https://cdn.tailwindcss.com" rel="stylesheet"></script>
+<h2 class="text-2xl font-bold text-center mb-6">Danh sách loại phòng</h2>
+
+<form method="get" class="mb-8 p-6 bg-white rounded-lg shadow-md space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div>
+            <label class="block font-medium mb-1">Loại phòng:</label>
+            <select name="loai" class="w-full border rounded-md px-3 py-2">
                 @{
                     var loaiPhongOptions = new List<string> { "Thường", "VIP", "Thương gia" };
                     var loaiSelected = ViewBag.Loai as string;
@@ -21,62 +25,58 @@
                     @Html.Raw($"<option value=\"{loai}\" {selected}>{loai}</option>")
                 }
             </select>
-
-
-
-
         </div>
 
-        <div class="col-md-3">
-            <label>Giá từ:</label>
-            <input type="number" name="minGia" class="form-control" value="@ViewBag.MinGia" placeholder="VD: 500000" />
+        <div>
+            <label class="block font-medium mb-1">Giá từ:</label>
+            <input type="number" name="minGia" class="w-full border rounded-md px-3 py-2" value="@ViewBag.MinGia" placeholder="VD: 500000" />
         </div>
 
-        <div class="col-md-3">
-            <label>Giá đến:</label>
-            <input type="number" name="maxGia" class="form-control" value="@ViewBag.MaxGia" placeholder="VD: 8000000" />
+        <div>
+            <label class="block font-medium mb-1">Giá đến:</label>
+            <input type="number" name="maxGia" class="w-full border rounded-md px-3 py-2" value="@ViewBag.MaxGia" placeholder="VD: 8000000" />
         </div>
 
-        <div class="col-md-2">
-            <label>Số người:</label>
-            <input type="number" name="soNguoi" class="form-control" value="@ViewBag.SoNguoi" min="1" />
+        <div>
+            <label class="block font-medium mb-1">Số người:</label>
+            <input type="number" name="soNguoi" class="w-full border rounded-md px-3 py-2" value="@ViewBag.SoNguoi" min="1" />
         </div>
+    </div>
 
-        <div class="col-md-3 d-flex align-items-end gap-2" style="margin:20px 0px !important;">
-            <button type="submit" class="td-button w-50">Lọc</button>
-            <a href="@Url.Action("Index", "LoaiPhong")" class="td-button w-50 text-center">Tải lại tất cả</a>
-        </div>
+    <div class="flex gap-4 justify-end mt-4">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+            Lọc
+        </button>
+        <a href="@Url.Action("Index", "LoaiPhong")" class="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition">
+            Tải lại tất cả
+        </a>
     </div>
 </form>
 
-<div class="row td-container">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     @foreach (var item in Model)
     {
         var bgImage = string.IsNullOrEmpty(item.AnhDemo) ? Url.Content("~/images/noimage.jpg") : Url.Content(item.AnhDemo);
-
-        <div class="col-md-4 mb-4">
-            <div class="td-card p-3 shadow-sm td-bg-item" style="background-image: url('@bgImage'); ">
-                <div class="td-bg-overlay p-3">
-                    <h5 class="td-title text-white">@item.TenLoai</h5>
-                    <p class="text-white">@item.MoTa</p>
-                    <p class="text-white"><strong>Giá cơ bản:</strong> @(item.GiaCoBan?.ToString("N0")) VNĐ</p>
-                    <p class="text-white"><strong>Số người tối đa:</strong> @item.SoluongNguoi</p>
-
-                    <a asp-controller="Home" asp-action="Index" asp-route-id="@item.LoaiPhongId" class="td-button mt-2">
-                       Đặt phòng
-                    </a>
-                </div>
+        <div class="relative rounded-lg overflow-hidden shadow-lg">
+            <div class="h-64 bg-cover bg-center" style="background-image: url('@bgImage');"></div>
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-4">
+                <h5 class="text-white text-lg font-semibold">@item.TenLoai</h5>
+                <p class="text-white text-sm">@item.MoTa</p>
+                <p class="text-white"><strong>Giá cơ bản:</strong> @(item.GiaCoBan?.ToString("N0")) VNĐ</p>
+                <p class="text-white"><strong>Số người tối đa:</strong> @item.SoluongNguoi</p>
+                <a asp-controller="Home" asp-action="Index" asp-route-id="@item.LoaiPhongId"
+                   class="mt-2 inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
+                    Đặt phòng
+                </a>
             </div>
         </div>
     }
-
 </div>
 
 <script>
-    // Ví dụ hiệu ứng click nút td-button
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.td-button').forEach(btn => {
-            btn.addEventListener('click', function () {
+            btn.addEventListener('click', () => {
                 btn.innerText = 'Đang tải...';
             });
         });
