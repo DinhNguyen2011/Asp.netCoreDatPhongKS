@@ -99,7 +99,7 @@
             </div>
 
             <!-- Booking Form -->
-            <form asp-action="DatPhong" method="post" onsubmit="return confirm('Bạn sẽ được chuyển đến cổng thanh toán ' + document.querySelector('[name=paymentMethod]').value + '. Xác nhận đặt phòng?');" class="px-6 pb-6">
+            <form asp-action="DatPhong" method="post" onsubmit="return validateBookingForm();" class="px-6 pb-6">
                 <input type="hidden" asp-for="PhongId" />
                 <input type="hidden" asp-for="Checkin" />
                 <input type="hidden" asp-for="Checkout" />
@@ -171,19 +171,45 @@
                     </label>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div class="flex items-center">
-                            <input type="radio" id="vnpay" name="paymentMethod" value="VNPay" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" checked>
+                            <input type="radio" id="vnpay" name="paymentMethod" value="VNPay" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
                             <label for="vnpay" class="ml-3 block text-sm font-medium text-gray-700">
-                               
-                                <img src="https://vinadesign.vn/uploads/thumbnails/800/2023/05/vnpay-logo-vinadesign-25-12-59-16.jpg" alt="MoMo" class="h-8 ml-2">
+                                <img src="https://vinadesign.vn/uploads/thumbnails/800/2023/05/vnpay-logo-vinadesign-25-12-59-16.jpg" alt="VNPay" class="h-8 ml-2">
                             </label>
                         </div>
                         <div class="flex items-center">
                             <input type="radio" id="momo" name="paymentMethod" value="MoMo" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
                             <label for="momo" class="ml-3 block text-sm font-medium text-gray-700">
-                                <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="VNPay" class="h-8 ml-2">
-
+                                <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="MoMo" class="h-8 ml-2">
                             </label>
                         </div>
+                    </div>
+                    <span id="paymentMethodError" class="text-red-500 text-xs hidden">Vui lòng chọn phương thức thanh toán.</span>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-medium text-gray-900 mb-4">
+                        <i class="fas fa-file-alt text-indigo-500 mr-2"></i> Điều khoản và Nội quy
+                    </h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-700 mb-2">
+                            <strong>Điều khoản và Nội quy của Khách sạn Thiềm Định:</strong>
+                        </p>
+                        <ul class="text-sm text-gray-700 list-disc list-inside">
+                            <li>Khách hàng phải cung cấp thông tin chính xác và chịu trách nhiệm về các thông tin đã cung cấp.</li>
+                            <li>Thanh toán phải được hoàn tất trước khi nhận phòng.</li>
+                            <li>Không hút thuốc trong phòng và các khu vực cấm hút thuốc của khách sạn.</li>
+                            <li>Tuân thủ giờ nhận phòng (14:00) và trả phòng (12:00) trừ khi có thỏa thuận trước.</li>
+                            <li>Khách sạn không chịu trách nhiệm về mất mát tài sản cá nhân nếu không được gửi tại quầy lễ tân.</li>
+                            <li>Hủy đặt phòng phải được thông báo trước 48 giờ để được hoàn tiền (nếu có).</li>
+                        </ul>
+                        <div class="mt-4 flex items-center">
+                            <input type="checkbox" id="terms" name="terms" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <label for="terms" class="ml-2 block text-sm font-medium text-gray-700">
+                                Tôi đồng ý với <a href="#" class="text-indigo-500 hover:underline">điều khoản và điều kiện</a> của khách sạn.
+                            </label>
+                        </div>
+                        <span id="termsError" class="text-red-500 text-xs hidden">Vui lòng đồng ý với điều khoản và điều kiện.</span>
                     </div>
                 </div>
 
@@ -204,5 +230,31 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js"></script>
+    <script>
+        function validateBookingForm() {
+            // Kiểm tra phương thức thanh toán
+            const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+            const paymentError = document.getElementById('paymentMethodError');
+            if (!paymentMethod) {
+                paymentError.classList.remove('hidden');
+                return false;
+            } else {
+                paymentError.classList.add('hidden');
+            }
+
+            // Kiểm tra checkbox điều khoản
+            const terms = document.getElementById('terms');
+            const termsError = document.getElementById('termsError');
+            if (!terms.checked) {
+                termsError.classList.remove('hidden');
+                return false;
+            } else {
+                termsError.classList.add('hidden');
+            }
+
+            // Nếu cả hai điều kiện đều thỏa mãn, hiển thị confirm
+            return confirm('Bạn sẽ được chuyển đến cổng thanh toán ' + paymentMethod.value + '. Xác nhận đặt phòng?');
+        }
+    </script>
 </body>
 </html>
