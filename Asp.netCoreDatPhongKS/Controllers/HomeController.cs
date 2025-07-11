@@ -66,17 +66,42 @@ namespace Asp.netCoreDatPhongKS.Controllers
         }
 
         [HttpPost]
-        public IActionResult TimKiemPhong(DateTime? checkin, DateTime? checkout, int soKhach = 1)
+        public IActionResult TimKiemPhong(DateTime? checkin, DateTime? checkout, int soKhach = 1, int rooms = 1)
         {
-            DateTime checkinDate = checkin ?? DateTime.Today;
-            DateTime checkoutDate = checkout ?? DateTime.Today.AddDays(1);
+            //DateTime checkinDate = checkin ?? DateTime.Today;
+            //DateTime checkoutDate = checkout ?? DateTime.Today.AddDays(1);
 
+            //int soDem = (checkoutDate - checkinDate).Days;
+            //if (soDem <= 0)
+            //{
+            //    TempData["ThongBao"] = "Ngày trả phải lớn hơn ngày nhận. Vui lòng kiểm tra lại!";
+            //    return View("TimKiemPhong", new List<PhongViewModel>());
+            //}
+
+            if (!checkin.HasValue || !checkout.HasValue)
+            {
+                TempData["ThongBao"] = "Vui lòng chọn cả ngày nhận phòng và ngày trả phòng!";
+                return View("Index"); // Trả về view chứa form
+            }
+
+            if (rooms < 1 || soKhach < 1)
+            {
+                TempData["ThongBao"] = "Số phòng và số lượng khách phải lớn hơn hoặc bằng 1!";
+                return View("Index"); // Trả về view chứa form
+            }
+
+            DateTime checkinDate = checkin.Value;
+            DateTime checkoutDate = checkout.Value;
+
+            // Kiểm tra ngày trả có lớn hơn ngày nhận không
             int soDem = (checkoutDate - checkinDate).Days;
             if (soDem <= 0)
             {
-                TempData["ThongBao"] = "Ngày trả phải lớn hơn ngày nhận. Vui lòng kiểm tra lại!";
-                return View("TimKiemPhong", new List<PhongViewModel>());
+                TempData["ThongBao"] = "Ngày trả phòng phải lớn hơn ngày nhận phòng. Vui lòng kiểm tra lại!";
+                return View("Index"); // Trả về view chứa form
             }
+
+
 
             var allRooms = _context.Phongs
                 .Include(p => p.LoaiPhong)

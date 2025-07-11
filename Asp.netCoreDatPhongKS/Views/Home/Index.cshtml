@@ -36,18 +36,40 @@
     </div>
     <div class="availability-form">
         <h2>Tìm kiếm phòng</h2>
-        <form asp-controller="Home" asp-action="TimKiemPhong" method="post">
-            <label>Ngày nhận phòng</label>
-            <input type="date" name="checkin" required  />
+        <form asp-controller="Home" asp-action="TimKiemPhong" method="post" id="timKiemPhongForm">
+            <!-- Hiển thị thông báo lỗi từ TempData -->
+            @if (TempData["ThongBao"] != null)
+            {
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    @TempData["ThongBao"]
+                </div>
+            }
 
-            <label>Ngày trả</label>
-            <input type="date" name="checkout" required />
+            <div class="form-group">
+                <label for="checkin">Ngày nhận phòng</label>
+                <input type="date" name="checkin" id="checkin" class="form-control"
+                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span class="text-red-500 text-xs error-message" style="display: none;"></span>
+            </div>
 
-            <label>Số phòng</label>
-            <input type="number" name="rooms" min="1" value="1"  />
+            <div class="form-group">
+                <label for="checkout">Ngày trả phòng</label>
+                <input type="date" name="checkout" id="checkout" class="form-control"
+                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span class="text-red-500 text-xs error-message" style="display: none;"></span>
+            </div>
 
-            <label>Số lượng khách</label>
-            <input type="number" name="soKhach" min="1" value="1" />
+            <div class="form-group">
+                <label for="rooms">Số phòng</label>
+                <input type="number" name="rooms" id="rooms" min="1" value="1" class="form-control"  />
+                <span class="text-red-500 text-xs error-message" style="display: none;"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="soKhach">Số lượng khách</label>
+                <input type="number" name="soKhach" id="soKhach" min="1" value="1" class="form-control"  />
+                <span class="text-red-500 text-xs error-message" style="display: none;"></span>
+            </div>
 
             <button type="submit" class="check-button">Tìm kiếm</button>
         </form>
