@@ -44,7 +44,7 @@
                     <p><strong>Số phòng:</strong> @Model.SoPhong</p>
                     <p><strong>Loại phòng:</strong> @Model.LoaiPhong?.TenLoai</p>
                     <p><strong>Mô tả:</strong> @Model.MoTa</p>
-                    <p>
+                   @*  <p>
                         <strong>Trạng thái:</strong>
                         @if (Model.TinhTrang == "Trong")
                         {
@@ -58,12 +58,12 @@
                         {
                             <span class="badge bg-secondary">@Model.TinhTrang</span>
                         }
-                    </p>
+                    </p> *@
                 </div>
                 <div class="col-md-6">
                     <p><strong>Giá 1 đêm:</strong> @Model.GiaPhong1Dem?.ToString("N0") VNĐ</p>
                     <p><strong>Số lượng khách:</strong> @Model.SoLuongKhach</p>
-                    <p><strong>Ngày tạo:</strong> @Model.NgayTao?.ToString("dd/MM/yyyy")</p>
+                  @*   <p><strong>Ngày tạo:</strong> @Model.NgayTao?.ToString("dd/MM/yyyy")</p> *@
                 </div>
             </div>
 

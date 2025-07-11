@@ -5,64 +5,85 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<link rel="stylesheet" href="~/css/DoanhThu.css" />
+<!-- Container chính với Tailwind CSS -->
+<div class="doanhthu-container max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg" style="height: 800px !important; ">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Thống kê doanh thu</h2>
 
-<div class="doanhthu-container">
-    <h2 class="doanhthu-title">Thống kê doanh thu</h2>
-
-    <form method="get" asp-action="ThongKeDoanhThu" class="doanhthu-form-group mb-4" id="filterForm">
-        <div class="form-group">
-            <label for="fromDate" class="doanhthu-label">Từ ngày:</label>
-            <input type="date" name="fromDate" id="fromDate" class="form-control doanhthu-input mx-2" value="@ViewBag.FromDate" required />
+    <!-- Form lọc -->
+    <form method="get" asp-action="ThongKeDoanhThu" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6" id="filterForm">
+        <div class="flex flex-col">
+            <label for="fromDate" class="text-sm font-medium text-gray-700 mb-1">Từ ngày:</label>
+            <input type="date" name="fromDate" id="fromDate" class="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="@ViewBag.FromDate" required />
         </div>
-        <div class="form-group">
-            <label for="toDate" class="doanhthu-label">Đến ngày:</label>
-            <input type="date" name="toDate" id="toDate" class="form-control doanhthu-input mx-2" value="@ViewBag.ToDate" required />
+        <div class="flex flex-col">
+            <label for="toDate" class="text-sm font-medium text-gray-700 mb-1">Đến ngày:</label>
+            <input type="date" name="toDate" id="toDate" class="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" value="@ViewBag.ToDate" required />
         </div>
-        <button type="submit" class="btn btn-primary doanhthu-btn">Lọc</button>
+        <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200">Lọc</button>
     </form>
 
     @if (Model != null && Model.Any())
     {
-        <div class="doanhthu-chart-container">
-            <canvas id="doanhThuChart" width="300" height="300"></canvas>
-            <p class="doanhthu-total">Tổng doanh thu: @Model.Sum(x => x.DoanhThu).ToString("N0") VNĐ</p>
-            <p class="doanhthu-total">Tổng doanh thu dịch vụ: @Model.Sum(x => x.DoanhThuDichVu).ToString("N0") VNĐ</p>
-            <p class="doanhthu-total">Tổng doanh thu phiếu đặt phòng: @Model.Sum(x => x.DoanhThuPdp).ToString("N0") VNĐ</p>
+        <!-- Container chia 2 cột: Biểu đồ & Bảng -->
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Biểu đồ -->
+            <div class="w-full md:w-1/2">
+                <div class="chart-container mb-8">
+                    <canvas id="doanhThuChart" class="w-full h-96"></canvas>
+                    <p class="text-center mt-4 text-lg font-semibold text-gray-800">Tổng doanh thu: @Model.Sum(x => x.DoanhThu).ToString("N0") VNĐ</p>
+                    <p class="text-center mt-2 text-lg font-semibold text-gray-800">Tổng doanh thu dịch vụ: @Model.Sum(x => x.DoanhThuDichVu).ToString("N0") VNĐ</p>
+                    <p class="text-center mt-2 text-lg font-semibold text-gray-800">Tổng doanh thu phiếu đặt phòng: @Model.Sum(x => x.DoanhThuPdp).ToString("N0") VNĐ</p>
+                </div>
+            </div>
+
+            <!-- Bảng thống kê -->
+            <div class="w-full md:w-1/2">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-700 border border-gray-200 rounded-lg">
+                        <thead class="bg-gray-100 text-gray-800">
+                            <tr>
+                                <th class="px-4 py-3">Ngày</th>
+                                <th class="px-4 py-3">Doanh thu (VNĐ)</th>
+                                <th class="px-4 py-3">Doanh thu dịch vụ (VNĐ)</th>
+                                <th class="px-4 py-3">Doanh thu PĐP (VNĐ)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="border-t">
+                                    <td class="px-4 py-3">@item.Ngay.ToString("dd/MM/yyyy")</td>
+                                    <td class="px-4 py-3">@item.DoanhThu.ToString("N0")</td>
+                                    <td class="px-4 py-3">@item.DoanhThuDichVu.ToString("N0")</td>
+                                    <td class="px-4 py-3">@item.DoanhThuPdp.ToString("N0")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <table class="table table-bordered mt-4">
-            <thead>
-                <tr>
-                    <th>Ngày</th>
-                    <th>Doanh thu (VNĐ)</th>
-                    <th>Doanh thu dịch vụ (VNĐ)</th>
-                    <th>Doanh thu PĐP (VNĐ)</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Ngay.ToString("dd/MM/yyyy")</td>
-                        <td>@item.DoanhThu.ToString("N0")</td>
-                        <td>@item.DoanhThuDichVu.ToString("N0")</td>
-                        <td>@item.DoanhThuPdp.ToString("N0")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
+        <!-- Chart.js và script -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            var ctx = document.getElementById('doanhThuChart').getContext('2d');
-            var doanhThuChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: [
-                        @foreach (var item in Model)
-                        {
-                                <text>"@item.Ngay.ToString("dd/MM/yyyy")",</text>
+            let doanhThuChart = null;
+
+            function renderChart() {
+                if (doanhThuChart) {
+                    doanhThuChart.destroy();
+                }
+
+                var ctx = document.getElementById('doanhThuChart').getContext('2d');
+                doanhThuChart = new Chart(ctx, {
+                    type: 'pie', // Có thể đổi 'bar' nếu muốn
+                    data: {
+                        labels: [
+                            @foreach (var item in Model)
+                            {
+                                    @Html.Raw($"\"{item.Ngay.ToString("dd/MM/yyyy")}\"")@if (!item.Equals(Model.Last())) {
+                                        <text>,</text>
+                                }
                         }
                     ],
                     datasets: [{
@@ -70,8 +91,10 @@
                         data: [
                             @foreach (var item in Model)
                             {
-                                    <text>@item.DoanhThu,</text>
-                            }
+                                    @Html.Raw($"{item.DoanhThu}")@if (!item.Equals(Model.Last())) {
+                                        <text>,</text>
+                                }
+                                                        }
                         ],
                         backgroundColor: [
                             '#FF6384', '#36A2EB', '#FFCE56', '#8e44ad', '#e67e22', '#2ecc71',
@@ -82,25 +105,71 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    maintainAspectRatio: true,
+                    aspectRatio: 1,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 20,
+                                padding: 10
+                            }
+                        }
+                    }
                 }
             });
+        }
 
-            // Validation: Ensure fromDate <= toDate
-            document.getElementById('filterForm').addEventListener('submit', function (e) {
-                var fromDate = document.getElementById('fromDate').value;
-                var toDate = document.getElementById('toDate').value;
-                if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
-                    e.preventDefault();
-                    alert('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
-                }
-            });
-        </script>
-    }
-    else
+        document.addEventListener('DOMContentLoaded', renderChart);
+
+        // Validation ngày
+        document.getElementById('filterForm').addEventListener('submit', function (e) {
+            var fromDate = document.getElementById('fromDate').value;
+            var toDate = document.getElementById('toDate').value;
+            if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+                e.preventDefault();
+                alert('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
+            }
+        });
+    </script>
+        }
+        else
     {
-        <div class="alert alert-warning doanhthu-alert">
+        <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded text-center">
             Không có dữ liệu thống kê trong khoảng thời gian này.
         </div>
     }
 </div>
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+    .doanhthu-container {
+        isolation: isolate;
+    }
+
+        .doanhthu-container input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .doanhthu-container table th,
+        .doanhthu-container table td {
+            text-align: center;
+        }
+
+    .chart-container {
+        max-height: 400px !important;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    #doanhThuChart {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        max-height: 400px !important;
+        width: 100%;
+    }
+</style>
