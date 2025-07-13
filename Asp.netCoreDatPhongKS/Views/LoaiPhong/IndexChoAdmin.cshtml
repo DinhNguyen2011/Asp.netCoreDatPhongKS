@@ -50,7 +50,7 @@
                 <tr>
                     <td>@item.TenLoai</td>
                     <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.MoTa">@item.MoTa</td>
-                    <td>@item.GiaCoBan?.ToString("C")</td>
+                    <td>@item.GiaCoBan.ToString("C")</td>
                     <td>@item.SoluongNguoi</td>
                     <td class="d-none d-md-table-cell">
                         @if (!string.IsNullOrEmpty(item.AnhDemo) && item.AnhDemo != "/images/loaiphong/default.png")

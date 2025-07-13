@@ -67,8 +67,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 ViewData["Hoten"] = userName;
             }
             // Validate NgayBatDau <= NgayKetThuc
-            if (khuyenMai.NgayBatDau.HasValue && khuyenMai.NgayKetThuc.HasValue &&
-                khuyenMai.NgayBatDau > khuyenMai.NgayKetThuc)
+            if (khuyenMai.NgayBatDau > khuyenMai.NgayKetThuc)
+
             {
                 ModelState.AddModelError("NgayKetThuc", "Ngày kết thúc phải sau ngày bắt đầu.");
             }
@@ -138,8 +138,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
 
             // Validate NgayBatDau <= NgayKetThuc
-            if (khuyenMai.NgayBatDau.HasValue && khuyenMai.NgayKetThuc.HasValue &&
-                khuyenMai.NgayBatDau > khuyenMai.NgayKetThuc)
+            if (khuyenMai.NgayBatDau > khuyenMai.NgayKetThuc)
+
             {
                 ModelState.AddModelError("NgayKetThuc", "Ngày kết thúc phải sau ngày bắt đầu.");
             }

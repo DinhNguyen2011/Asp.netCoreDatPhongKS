@@ -149,6 +149,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             if (!availableRooms.Any())
             {
                 TempData["ThongBao"] = "Không tìm thấy phòng khả dụng phù hợp với yêu cầu của bạn. Vui lòng thử lại với khoảng thời gian hoặc số khách khác!";
+                return View("Index"); // Trả về view chứa form
             }
 
             return View("TimKiemPhong", availableRooms);
@@ -201,10 +202,24 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View(model);
             }
 
-            var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
-                c.PhongId == model.PhongId &&
-                c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
-                ((model.Checkin < c.PhieuDatPhong.NgayTra) && (model.Checkout > c.PhieuDatPhong.NgayNhan)));
+            //var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
+            //    c.PhongId == model.PhongId &&
+            //    c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" && c.PhieuDatPhong.TinhTrangSuDung!= "Đã hủy");
+            //((model.Checkin < c.PhieuDatPhong.NgayTra) && (model.Checkout > c.PhieuDatPhong.NgayNhan)));
+
+            //trường hợp này đã so sánh ngày checkin, checkout( bảng tạm), vậy nếu phiếu đã hủy thì sao?? 
+
+
+            // Kiểm tra phòng có đang được đặt trong khoảng thời gian yêu cầu không
+            var bookedRooms = _context.PhieuDatPhongs
+        .Include(p => p.ChiTietPhieuPhongs)
+        .Where(p => p.TinhTrangSuDung != "Đã check-out" && p.TinhTrangSuDung != "Đã hủy" && p.NgayNhan != null && p.NgayTra != null)
+        .SelectMany(p => p.ChiTietPhieuPhongs.Where(c => c.PhongId == model.PhongId)
+            .Select(c => new { p.NgayNhan, p.NgayTra }))
+        .ToList();
+
+            var isRoomBooked = bookedRooms.Any(booking =>
+                !(model.Checkout <= booking.NgayNhan || model.Checkin >= booking.NgayTra));
 
             if (isRoomBooked)
             {
@@ -313,8 +328,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
                 c.PhongId == pendingBooking.PhongId &&
-                c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" &&
-                ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra) && (pendingBooking.Checkout > c.PhieuDatPhong.NgayNhan)));
+                c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" && c.PhieuDatPhong.TinhTrangSuDung != "Đã hủy" &&
+                ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra) 
+                && (pendingBooking.Checkout > c.PhieuDatPhong.NgayNhan)));
 
             if (isRoomBooked)
             {
@@ -425,7 +441,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     MaHoaDon = hoaDon.MaHoaDon,
                     PhieuDatPhongId = phieu.PhieuDatPhongId,
                     TrangThai = "Đã thanh toán",
-                    ThanhTien = phieu.TongTien ?? 0
+                    ThanhTien = phieu.TongTien
                 };
                 _context.HoaDonPdps.Add(hoaDonPdp);
 
@@ -444,7 +460,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                             <li><strong>Ngày nhận:</strong> {phieu.NgayNhan?.ToString("dd/MM/yyyy")}</li>
                             <li><strong>Ngày trả:</strong> {phieu.NgayTra?.ToString("dd/MM/yyyy")}</li>
                             <li><strong>Số đêm:</strong> {pendingBooking.SoDem}</li>
-                            <li><strong>Tổng tiền:</strong> {phieu.TongTien?.ToString("N0")} VNĐ</li>
+                            <li><strong>Tổng tiền:</strong> {phieu.TongTien.ToString("N0")} VNĐ</li>
                             <li><strong>Mã giao dịch:</strong> {(paymentMethod == "VNPay" ? phieu.VnpTransactionId : phieu.MoMoTransactionId)}</li>
                             <li><strong>Ghi chú:</strong> {pendingBooking.GhiChu ?? "Không có"}</li>
                         </ul>

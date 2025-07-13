@@ -3,7 +3,7 @@
     ViewData["Title"] = "In hóa đơn tổng";
     decimal tongTienDichVu = Model.HoaDonDichVus?.Sum(h => h.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0)) ?? 0;
     // Tính tổng tiền phòng theo công thức yêu cầu
-    decimal tongTienPhong = Model.HoaDonPdps.Sum(h => (h.PhieuDatPhong.TongTien ?? 0) - ((h.PhieuDatPhong.SoTienCoc ?? 0) + (h.PhieuDatPhong.SoTienDaThanhToan ?? 0)));
+    decimal tongTienPhong = Model.HoaDonPdps.Sum(h => (h.PhieuDatPhong.TongTien) - ((h.PhieuDatPhong.SoTienCoc ?? 0) + (h.PhieuDatPhong.SoTienDaThanhToan ?? 0)));
     decimal tongTienCoc = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienCoc ?? 0);
     decimal tongTienDaThanhToan = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienDaThanhToan ?? 0);
     decimal tongCong = tongTienDichVu + tongTienPhong;
@@ -103,7 +103,7 @@
                                 var soNgayO = ((hdp.PhieuDatPhong.NgayTra ?? DateTime.Now) - (hdp.PhieuDatPhong.NgayNhan ?? DateTime.Now)).Days;
                                 soNgayO = soNgayO < 1 ? 1 : soNgayO;
                                 // Tính ThanhTien cho mỗi phiếu
-                                decimal thanhTien = (hdp.PhieuDatPhong.TongTien ?? 0) - ((hdp.PhieuDatPhong.SoTienCoc ?? 0) + (hdp.PhieuDatPhong.SoTienDaThanhToan ?? 0));
+                                decimal thanhTien = (hdp.PhieuDatPhong.TongTien) - ((hdp.PhieuDatPhong.SoTienCoc ?? 0) + (hdp.PhieuDatPhong.SoTienDaThanhToan ?? 0));
 
                                 <tr>
                                     <td>@sttP</td>
@@ -112,7 +112,7 @@
                                     <td>@(chiTiet.Phong.LoaiPhong?.TenLoai ?? "Không xác định")</td>
                                     <td>@soNgayO ngày</td>
                                     <td>@chiTiet.DonGia?.ToString("N0") VNĐ</td>
-                                    <td>@hdp.PhieuDatPhong.TongTien?.ToString("N0") VNĐ</td>
+                                    <td>@hdp.PhieuDatPhong.TongTien.ToString("N0") VNĐ</td>
                                     <td>@hdp.PhieuDatPhong.SoTienCoc?.ToString("N0") VNĐ</td>
                                     <td>@hdp.PhieuDatPhong.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
                                     <td>@thanhTien.ToString("N0") VNĐ</td>

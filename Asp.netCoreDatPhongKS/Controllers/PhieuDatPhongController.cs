@@ -192,7 +192,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         var khuyenMai = await _context.KhuyenMais.FindAsync(khuyenMaiId);
                         if (khuyenMai != null)
                         {
-                            var phanTramGiam = khuyenMai.PhanTramGiam ?? 0;
+                            var phanTramGiam = khuyenMai.PhanTramGiam;
                             tongTien *= (1 - phanTramGiam / 100.0m);
                         }
                     }
@@ -260,7 +260,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View(model);
             }
         }
-
+      //trar về ds phòng  trống
         private List<Phong> GetAvailableRooms(DateTime? newNgayNhan, DateTime? newNgayTra, int? soLuongKhach)
         {
             var query = _context.Phongs
@@ -274,7 +274,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TinhTrangSuDung !="Đã check-out" && p.TinhTrangSuDung != "Đã hủy")
+                .Where(p => p.TinhTrangSuDung !="Đã check-out" && p.TinhTrangSuDung != "Đã hủy")
                // .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung !="Đã check-out")
                 .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
                 .ToList();
@@ -295,7 +295,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung != "Đã check-out")
+                .Where(p => p.TinhTrangSuDung != "Đã check-out" && p.TinhTrangSuDung != "Đã hủy")
+              //  .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TrangThai != "Hủy" && p.TrangThai != "Hoàn thành" && p.TinhTrangSuDung != "Đã check-out")
+
                 .SelectMany(p => p.ChiTietPhieuPhongs.Where(c => c.PhongId == phongId)
                     .Select(c => new { p.NgayNhan, p.NgayTra }))
                 .ToList();
@@ -389,7 +391,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ModelState.AddModelError("SoTienDaThanhToan", "Số tiền đã thanh toán không được âm.");
             }
-            if (soTienDaThanhToan.HasValue && soTienDaThanhToan > (phieu.TongTien ?? 0))
+            if (soTienDaThanhToan.HasValue && soTienDaThanhToan > (phieu.TongTien))
             {
                 ModelState.AddModelError("SoTienDaThanhToan", "Số tiền đã thanh toán không được vượt quá tổng tiền.");
             }
@@ -438,13 +440,13 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                     foreach (var chiTiet in phieu.ChiTietPhieuPhongs)
                     {
-                        var donGia = chiTiet.DonGia ?? (chiTiet.Phong?.GiaPhong1Dem ?? 0);
+                        var donGia = chiTiet.DonGia ?? (chiTiet.Phong.GiaPhong1Dem ?? 0);
                         tongTien += donGia * soNgay;
                     }
 
                     if (phieu.KhuyenMaiId.HasValue && phieu.KhuyenMai != null)
                     {
-                        var phanTramGiam = phieu.KhuyenMai.PhanTramGiam ?? 0;
+                        var phanTramGiam = phieu.KhuyenMai.PhanTramGiam;
                         tongTien *= (1 - phanTramGiam / 100);
                     }
 
@@ -579,7 +581,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizePermission("ManagePhieuDatPhong")]
-        public IActionResult FilterEmptyRooms(DateTime? ngayNhan, DateTime? ngayTra, int? soLuongKhach)
+        public IActionResult FilterEmptyRooms(DateTime? ngayNhan, DateTime? ngayTra, int? soLuongKhach) //lọc phòng trống
         {
             if (!ngayNhan.HasValue || !ngayTra.HasValue)
             {
@@ -717,7 +719,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     ngayNhan = phieu.NgayNhan,
                     ngayTra = phieu.NgayTra,
                     soNgay = soNgay,
-                    tongTien = phieu.TongTien ?? 0,
+                    tongTien = phieu.TongTien,
                     soTienCoc = phieu.SoTienCoc ?? 0,
                     soTienDaThanhToan = phieu.SoTienDaThanhToan ?? 0,
                     trangThai = phieu.TrangThai,

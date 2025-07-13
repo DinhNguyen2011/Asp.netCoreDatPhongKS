@@ -39,7 +39,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             // Truy vấn hóa đơn
             var query = _context.HoaDons
-                .Where(hd => hd.NgayLap.HasValue && hd.TongTien.HasValue);
+                .Where(hd => hd.NgayLap.HasValue);
+             // .Where(hd => hd.NgayLap.HasValue && hd.TongTien.HasValue);
 
             // Lọc theo khoảng thời gian
             if (fromDate.HasValue)
@@ -58,7 +59,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .Select(g => new DoanhThuViewModel
                 {
                     Ngay = g.Key,
-                    DoanhThu = g.Sum(hd => hd.TongTien ?? 0),
+                    DoanhThu = g.Sum(hd => hd.TongTien),
                     DoanhThuDichVu = g.Sum(hd => hd.TongTienDichVu ?? 0),
                     DoanhThuPdp = g.Sum(hd => hd.TongTienPhong ?? 0)
                 })

@@ -433,6 +433,7 @@ wwwroot\css\vendor.css
 wwwroot\css\xulypdp.css
 wwwroot\favicon.ico
 wwwroot\images\233c082e-611b-40e9-9d58-49c56db70544.png
+wwwroot\images\7133e263-aa7d-40e3-a820-ea4f2cd3eaca.jpg
 wwwroot\images\7up.jpg
 wwwroot\images\about-img1.jpg
 wwwroot\images\about-img2.jpg
@@ -486,6 +487,8 @@ wwwroot\images\lau-bo-nhung-giam.jpg
 wwwroot\images\lau-thai-hai-san.jpg
 wwwroot\images\lgmain.png
 wwwroot\images\lgogt.jpg
+wwwroot\images\loaiphong\Phòng thường_1adc85d3-b99e-45ec-b403-9494cbd609e9.jpg
+wwwroot\images\loaiphong\Phòng thường_66a91bf9-81ac-4aea-8fe8-99bb908e73a2.jpg
 wwwroot\images\loaiphong\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png
 wwwroot\images\logomain.png
 wwwroot\images\luxury1.jpg
@@ -495,6 +498,7 @@ wwwroot\images\main-logo-footer.png
 wwwroot\images\mi-quang.jpg
 wwwroot\images\mi-y-bolognese.jpg
 wwwroot\images\nhanvien\DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png
+wwwroot\images\nhanvien\DINH NGUYEN_f61827b8-a383-4e50-820b-4143ed2c5a13.png
 wwwroot\images\nhanvien\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png
 wwwroot\images\nhanvien\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png
 wwwroot\images\nhanvien\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png
@@ -512,6 +516,13 @@ wwwroot\images\pho-ga.jpg
 wwwroot\images\phong-gym.jpg
 wwwroot\images\phong-hop.png
 wwwroot\images\phong-hop1.png
+wwwroot\images\phong\001_17164b27-907a-4c57-8780-2a8c622a3dd0.jpg
+wwwroot\images\phong\001_50bbf9b3-52d5-4d39-b779-c132ae55e197.png
+wwwroot\images\phong\001_ae2c28ce-7c5f-447a-bcfe-81902d09adea.jpg
+wwwroot\images\phong\001_c5872ef3-be0d-4469-99a1-840dc7425900.png
+wwwroot\images\phong\001_e48598f3-3fe4-4788-b86f-f4ba15c329dc.jpg
+wwwroot\images\phong\001_f568f29a-88b8-438b-93b8-b5231b2aab67.png
+wwwroot\images\phong\001_ff05bfd9-fc2a-4fc7-a0a3-18273e6b4607.jpg
 wwwroot\images\phong\102_193c2b53-0a2d-4319-a7c2-4205e17b06ce.png
 wwwroot\images\phong\111_4f8d67f5-d8fe-4485-8edd-48358aa64060.png
 wwwroot\images\phong\111_68bb50ad-aab5-4e36-93b3-b896858fb253.png

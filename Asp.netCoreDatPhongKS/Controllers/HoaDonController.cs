@@ -83,7 +83,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     KhachHangTen = hoaDon.KhachHang?.HoTen ?? "Khách vãng lai",
                     KhachHangCCCD = hoaDon.KhachHang?.Cccd ?? "Không có",
                     NhanVienTen = hoaDon.NguoiLapDh ?? "Không xác định",
-                    TongTien = hoaDon.TongTien ?? 0,
+                    TongTien = hoaDon.TongTien,
                     TrangThai = hoaDon.TrangThai,
                     HoaDon = hoaDon,
                     HoaDonDichVu = null
@@ -220,7 +220,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                             if (chiTietPhieu != null)
                             {
                                 // Tính ThanhTien = TongTien - (SoTienCoc + SoTienDaThanhToan)
-                                decimal thanhTien = (phieu.TongTien ?? 0) - ((phieu.SoTienCoc ?? 0) + (phieu.SoTienDaThanhToan ?? 0));
+                                decimal thanhTien = (phieu.TongTien) - ((phieu.SoTienCoc ?? 0) + (phieu.SoTienDaThanhToan ?? 0));
                                 hoaDon.TongTienPhong += thanhTien;
 
                                 var hoaDonPdp = new HoaDonPdp
@@ -241,7 +241,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     }
 
                     // Tính tổng tiền hóa đơn
-                    hoaDon.TongTien = hoaDon.TongTienPhong + hoaDon.TongTienDichVu;
+                    hoaDon.TongTien = hoaDon.TongTienPhong ?? 0 + hoaDon.TongTienDichVu ?? 0;
 
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
@@ -442,7 +442,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     maPhieu = p.MaPhieu,
                     soPhong = p.ChiTietPhieuPhongs.FirstOrDefault().Phong.SoPhong,
                     loaiPhong = p.ChiTietPhieuPhongs.FirstOrDefault().Phong.LoaiPhong.TenLoai ?? "Không xác định",
-                    tongsotien = (p.TongTien ?? 0) - ((p.SoTienCoc ?? 0) + (p.SoTienDaThanhToan ?? 0)),
+                    tongsotien = (p.TongTien) - ((p.SoTienCoc ?? 0) + (p.SoTienDaThanhToan ?? 0)),
                     soTienCoc = p.SoTienCoc ?? 0,
                     soTienDaThanhToan = p.SoTienDaThanhToan ?? 0
                 })

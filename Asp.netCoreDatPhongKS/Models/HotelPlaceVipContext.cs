@@ -51,6 +51,10 @@ namespace Asp.netCoreDatPhongKS.Models
             {
                 entity.ToTable("ChiTietDonHangDichVu");
 
+                entity.HasIndex(e => e.DichVuId, "IX_ChiTietDonHangDichVu_DichVuId");
+
+                entity.HasIndex(e => e.MaDonHangDv, "IX_ChiTietDonHangDichVu_MaDonHangDV");
+
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.DonGia).HasColumnType("decimal(18, 2)");
@@ -81,6 +85,10 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.ToTable("ChiTietPhieuPhong");
 
+                entity.HasIndex(e => e.PhieuDatPhongId, "IX_ChiTietPhieuPhong_PhieuDatPhongID");
+
+                entity.HasIndex(e => e.PhongId, "IX_ChiTietPhieuPhong_PhongID");
+
                 entity.Property(e => e.ChiTietId).HasColumnName("ChiTietID");
 
                 entity.Property(e => e.DonGia).HasColumnType("decimal(18, 2)");
@@ -105,6 +113,16 @@ namespace Asp.netCoreDatPhongKS.Models
                 entity.HasKey(e => e.DanhGiaId)
                     .HasName("PK__DanhGia__52C0CA2556B8202C");
 
+                entity.HasIndex(e => e.DichVuId, "IX_DanhGia_DichVuId");
+
+                entity.HasIndex(e => e.DonHangDichVuId, "IX_DanhGia_DonHangDichVuId");
+
+                entity.HasIndex(e => e.PhieuDatPhongId, "IX_DanhGia_PhieuDatPhongId");
+
+                entity.HasIndex(e => e.PhongId, "IX_DanhGia_PhongID");
+
+                entity.HasIndex(e => e.TaiKhoanId, "IX_DanhGia_TaiKhoanId");
+
                 entity.Property(e => e.DanhGiaId).HasColumnName("DanhGiaID");
 
                 entity.Property(e => e.NgayDanhGia).HasColumnType("datetime");
@@ -115,6 +133,14 @@ namespace Asp.netCoreDatPhongKS.Models
                     .WithMany(p => p.DanhGia)
                     .HasForeignKey(d => d.DichVuId)
                     .HasConstraintName("FK_DanhGium_DichVu");
+
+                entity.HasOne(d => d.DonHangDichVu)
+                    .WithMany(p => p.DanhGia)
+                    .HasForeignKey(d => d.DonHangDichVuId);
+
+                entity.HasOne(d => d.PhieuDatPhong)
+                    .WithMany(p => p.DanhGia)
+                    .HasForeignKey(d => d.PhieuDatPhongId);
 
                 entity.HasOne(d => d.Phong)
                     .WithMany(p => p.DanhGia)
@@ -156,6 +182,8 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.ToTable("DonHangDichVu");
 
+                entity.HasIndex(e => e.KhachHangId, "IX_DonHangDichVu_KhachHangId");
+
                 entity.Property(e => e.NgayDat).HasColumnType("datetime");
 
                 entity.Property(e => e.TrangThai).HasMaxLength(50);
@@ -174,6 +202,8 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.ToTable("HoaDon");
 
+                entity.HasIndex(e => e.KhachHangId, "IX_HoaDon_KhachHangID");
+
                 entity.Property(e => e.HinhThucThanhToan).HasMaxLength(50);
 
                 entity.Property(e => e.IsKhachVangLai).HasDefaultValueSql("((0))");
@@ -188,9 +218,7 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.Property(e => e.SoTienConNo).HasColumnType("decimal(18, 2)");
 
-                entity.Property(e => e.TongTien)
-                    .HasColumnType("decimal(18, 2)")
-                    .HasDefaultValueSql("((0))");
+                entity.Property(e => e.TongTien).HasColumnType("decimal(18, 2)");
 
                 entity.Property(e => e.TongTienDichVu)
                     .HasColumnType("decimal(18, 2)")
@@ -242,6 +270,8 @@ namespace Asp.netCoreDatPhongKS.Models
             {
                 entity.ToTable("HoaDonPDP");
 
+                entity.HasIndex(e => e.MaHoaDon, "IX_HoaDonPDP_MaHoaDon");
+
                 entity.HasIndex(e => e.PhieuDatPhongId, "UQ__HoaDonPD__53A722215C43A14A")
                     .IsUnique();
 
@@ -268,6 +298,8 @@ namespace Asp.netCoreDatPhongKS.Models
             modelBuilder.Entity<KhachHang>(entity =>
             {
                 entity.ToTable("KhachHang");
+
+                entity.HasIndex(e => e.TaiKhoanId, "IX_KhachHang_TaiKhoanId");
 
                 entity.Property(e => e.KhachHangId).HasColumnName("KhachHangID");
 
@@ -321,6 +353,10 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.ToTable("LienHeVoiCToi");
 
+                entity.HasIndex(e => e.KhachHangId, "IX_LienHeVoiCToi_KhachHangId");
+
+                entity.HasIndex(e => e.TaiKhoanId, "IX_LienHeVoiCToi_TaiKhoanId");
+
                 entity.Property(e => e.Email).HasMaxLength(200);
 
                 entity.Property(e => e.HoTen).HasMaxLength(100);
@@ -363,6 +399,8 @@ namespace Asp.netCoreDatPhongKS.Models
             {
                 entity.ToTable("NhanVien");
 
+                entity.HasIndex(e => e.TaiKhoanId, "IX_NhanVien_TaiKhoanID");
+
                 entity.Property(e => e.NhanVienId).HasColumnName("NhanVienID");
 
                 entity.Property(e => e.Cccd)
@@ -394,6 +432,10 @@ namespace Asp.netCoreDatPhongKS.Models
             modelBuilder.Entity<PhieuDatPhong>(entity =>
             {
                 entity.ToTable("PhieuDatPhong");
+
+                entity.HasIndex(e => e.KhachHangId, "IX_PhieuDatPhong_KhachHangID");
+
+                entity.HasIndex(e => e.KhuyenMaiId, "IX_PhieuDatPhong_KhuyenMaiID");
 
                 entity.Property(e => e.PhieuDatPhongId).HasColumnName("PhieuDatPhongID");
 
@@ -433,6 +475,8 @@ namespace Asp.netCoreDatPhongKS.Models
             modelBuilder.Entity<Phong>(entity =>
             {
                 entity.ToTable("Phong");
+
+                entity.HasIndex(e => e.LoaiPhongId, "IX_Phong_LoaiPhongID");
 
                 entity.Property(e => e.PhongId).HasColumnName("PhongID");
 
@@ -481,6 +525,8 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.ToTable("QuyenTaiKhoan");
 
+                entity.HasIndex(e => e.QuyenId, "IX_QuyenTaiKhoan_QuyenId");
+
                 entity.HasOne(d => d.Quyen)
                     .WithMany(p => p.QuyenTaiKhoans)
                     .HasForeignKey(d => d.QuyenId)
@@ -497,6 +543,8 @@ namespace Asp.netCoreDatPhongKS.Models
             modelBuilder.Entity<TaiKhoan>(entity =>
             {
                 entity.ToTable("TaiKhoan");
+
+                entity.HasIndex(e => e.VaiTroId, "IX_TaiKhoan_VaiTroID");
 
                 entity.Property(e => e.TaiKhoanId).HasColumnName("TaiKhoanID");
 

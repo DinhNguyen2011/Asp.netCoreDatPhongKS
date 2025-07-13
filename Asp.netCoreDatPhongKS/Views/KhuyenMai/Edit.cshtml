@@ -27,12 +27,12 @@
     </div>
     <div class="form-group">
         <label asp-for="NgayBatDau" class="control-label"></label>
-        <input asp-for="NgayBatDau" class="form-control" type="date" value="@Model.NgayBatDau?.ToString("yyyy-MM-dd")" />
+        <input asp-for="NgayBatDau" class="form-control" type="date" value="@Model.NgayBatDau.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="NgayBatDau" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="NgayKetThuc" class="control-label"></label>
-        <input asp-for="NgayKetThuc" class="form-control" type="date" value="@Model.NgayKetThuc?.ToString("yyyy-MM-dd")" />
+        <input asp-for="NgayKetThuc" class="form-control" type="date" value="@Model.NgayKetThuc.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="NgayKetThuc" class="text-danger"></span>
     </div>
     <div class="form-group">

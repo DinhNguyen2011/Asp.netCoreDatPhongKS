@@ -44,7 +44,7 @@
                         <td>@(item.ChiTietPhieuPhongs.FirstOrDefault()?.Phong?.LoaiPhong?.TenLoai ?? "N/A")</td>
                         <td>@(item.NgayNhan?.ToString("dd/MM/yyyy") ?? "N/A")</td>
                         <td>@(item.NgayTra?.ToString("dd/MM/yyyy") ?? "N/A")</td>
-                        <td>@(item.TongTien?.ToString("N0") ?? "0") VNĐ</td>
+                        <td>@(item.TongTien.ToString("N0") ?? "0") VNĐ</td>
                         <td>@(item.SoTienCoc?.ToString("N0") ?? "0") VNĐ</td>
                         <td>@(item.SoTienDaThanhToan?.ToString("N0") ?? "0") VNĐ</td>
                         <td>@item.TrangThai</td>

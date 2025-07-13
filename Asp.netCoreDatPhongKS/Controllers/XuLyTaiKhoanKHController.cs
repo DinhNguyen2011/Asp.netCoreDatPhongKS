@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Asp.netCoreDatPhongKS.Controllers
@@ -21,22 +22,22 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Index()
-
         {
             string userName = HttpContext.Session.GetString("Hoten");
             if (!string.IsNullOrEmpty(userName))
             {
                 ViewData["Hoten"] = userName;
             }
-            var email = HttpContext.Session.GetString("Email");
-            if (string.IsNullOrEmpty(email))
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int parsedUserId))
             {
                 TempData["LoginError"] = "Vui lòng đăng nhập để xem phiếu đặt phòng.";
                 return RedirectToAction("Login", "TaiKhoan");
             }
 
             var khachHang = await _context.KhachHangs
-                .FirstOrDefaultAsync(kh => kh.TaiKhoan.Email == email);
+                .FirstOrDefaultAsync(kh => kh.TaiKhoanId == parsedUserId);
 
             if (khachHang == null)
             {
@@ -49,7 +50,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .Include(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(ct => ct.Phong)
                 .ThenInclude(p => p.LoaiPhong)
-                .Where(p => p.KhachHangId == khachHang.KhachHangId && p.TrangThai != "Hủy" )
+                .Where(p => p.KhachHangId == khachHang.KhachHangId && p.TrangThai != "Hủy")
                 .ToListAsync();
 
             return View(phieuDatPhongs);
@@ -63,15 +64,16 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ViewData["Hoten"] = userName;
             }
-            var email = HttpContext.Session.GetString("Email");
-            if (string.IsNullOrEmpty(email))
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int parsedUserId))
             {
                 TempData["LoginError"] = "Vui lòng đăng nhập để xem chi tiết phiếu.";
                 return RedirectToAction("Login", "TaiKhoan");
             }
 
             var khachHang = await _context.KhachHangs
-                .FirstOrDefaultAsync(kh => kh.TaiKhoan.Email == email);
+                .FirstOrDefaultAsync(kh => kh.TaiKhoanId == parsedUserId);
 
             if (khachHang == null)
             {
@@ -88,25 +90,27 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             if (phieu == null)
             {
-                TempData["Error"] = "Phiếu đặt phòng không tồn tại hoặc không thuộc về bạn.";
+                TempData["Error"] = $"Phiếu đặt phòng không tồn tại hoặc không thuộc về bạn. Debug: PhieuDatPhongId={id}, KhachHangId={khachHang.KhachHangId}";
                 return RedirectToAction("Index");
             }
 
             return View(phieu);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CancelBooking(int phieuDatPhongId)
+
+
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public async Task<IActionResult> CancelBooking(int phieuDatPhongId)
         {
-            var email = HttpContext.Session.GetString("Email");
-            if (string.IsNullOrEmpty(email))
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int parsedUserId))
             {
                 TempData["LoginError"] = "Vui lòng đăng nhập để hủy phiếu.";
                 return RedirectToAction("Login", "TaiKhoan");
             }
 
             var khachHang = await _context.KhachHangs
-                .FirstOrDefaultAsync(kh => kh.TaiKhoan.Email == email);
+                .FirstOrDefaultAsync(kh => kh.TaiKhoanId == parsedUserId);
 
             if (khachHang == null)
             {
@@ -115,6 +119,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
 
             var phieu = await _context.PhieuDatPhongs
+                .Include(p => p.ChiTietPhieuPhongs)
                 .FirstOrDefaultAsync(p => p.PhieuDatPhongId == phieuDatPhongId && p.KhachHangId == khachHang.KhachHangId);
 
             if (phieu == null)
@@ -138,15 +143,23 @@ namespace Asp.netCoreDatPhongKS.Controllers
             else
                 refundPercentage = 0.7m; // Hoàn 70%
 
-            // Tính số tiền hoàn
-            decimal refundAmount = phieu.TongTien * refundPercentage ?? 0; // Giả sử TongTien là cột lưu tổng số tiền
+            decimal refundAmount = phieu.TongTien * refundPercentage;
 
-            // Cập nhật trạng thái và số tiền hoàn
             phieu.TrangThai = $"Đã hủy (Hoàn {refundPercentage * 100}% - {String.Format("{0:N0}", refundAmount)} VNĐ)";
             phieu.TinhTrangSuDung = "Đã hủy";
-            
+
+            var phongIds = phieu.ChiTietPhieuPhongs.Select(ct => ct.PhongId).ToList();
+            var phongs = await _context.Phongs
+                .Where(p => phongIds.Contains(p.PhongId))
+                .ToListAsync();
+
+            foreach (var phong in phongs)
+            {
+                phong.TinhTrang = "Trống";
+            }
 
             _context.Update(phieu);
+            _context.UpdateRange(phongs);
             await _context.SaveChangesAsync();
 
             TempData["Success"] = $"Hủy phiếu đặt phòng thành công. Hoàn {refundPercentage * 100}% ({String.Format("{0:N0}", refundAmount)} VNĐ). Vui lòng liên hệ tổng đài 0853461030 để xác nhận hoàn tiền.";
@@ -160,15 +173,16 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ViewData["Hoten"] = userName;
             }
-            var email = HttpContext.Session.GetString("Email");
-            if (string.IsNullOrEmpty(email))
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int parsedUserId))
             {
                 TempData["LoginError"] = "Vui lòng đăng nhập để xem dịch vụ đã sử dụng.";
                 return RedirectToAction("Login", "TaiKhoan");
             }
 
             var khachHang = await _context.KhachHangs
-                .FirstOrDefaultAsync(kh => kh.TaiKhoan.Email == email);
+                .FirstOrDefaultAsync(kh => kh.TaiKhoanId == parsedUserId);
 
             if (khachHang == null)
             {
@@ -185,6 +199,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             return View(donHangDichVus);
         }
+
         [HttpGet]
         public async Task<IActionResult> XemHoaDon()
         {
@@ -193,15 +208,16 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ViewData["Hoten"] = userName;
             }
-            var email = HttpContext.Session.GetString("Email");
-            if (string.IsNullOrEmpty(email))
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int parsedUserId))
             {
                 TempData["LoginError"] = "Vui lòng đăng nhập để xem hóa đơn.";
                 return RedirectToAction("Login", "TaiKhoan");
             }
 
             var khachHang = await _context.KhachHangs
-                .FirstOrDefaultAsync(kh => kh.TaiKhoan.Email == email);
+                .FirstOrDefaultAsync(kh => kh.TaiKhoanId == parsedUserId);
 
             if (khachHang == null)
             {

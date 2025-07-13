@@ -16,7 +16,7 @@ namespace Asp.netCoreDatPhongKS.Models
         public int? KhachHangId { get; set; }
         public decimal? TongTienPhong { get; set; }
         public decimal? TongTienDichVu { get; set; }
-        public decimal? TongTien { get; set; }
+        public decimal TongTien { get; set; }
         public string? HinhThucThanhToan { get; set; }
         public string? TrangThai { get; set; }
         public bool? IsKhachVangLai { get; set; }

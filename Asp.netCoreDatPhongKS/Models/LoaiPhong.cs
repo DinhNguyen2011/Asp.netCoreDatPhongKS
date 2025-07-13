@@ -11,10 +11,10 @@ namespace Asp.netCoreDatPhongKS.Models
         }
 
         public int LoaiPhongId { get; set; }
-        public string? TenLoai { get; set; }
+        public string TenLoai { get; set; } = null!;
         public string? MoTa { get; set; }
-        public decimal? GiaCoBan { get; set; }
-        public int? SoluongNguoi { get; set; }
+        public decimal GiaCoBan { get; set; }
+        public int SoluongNguoi { get; set; }
         public string? AnhDemo { get; set; }
         public DateTime? NgayTao { get; set; }
 

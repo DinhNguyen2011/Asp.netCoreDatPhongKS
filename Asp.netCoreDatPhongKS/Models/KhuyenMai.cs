@@ -11,11 +11,11 @@ namespace Asp.netCoreDatPhongKS.Models
         }
 
         public int KhuyenMaiId { get; set; }
-        public string? MaKhuyenMai { get; set; }
+        public string MaKhuyenMai { get; set; } = null!;
         public string? MoTa { get; set; }
-        public int? PhanTramGiam { get; set; }
-        public DateTime? NgayBatDau { get; set; }
-        public DateTime? NgayKetThuc { get; set; }
+        public int PhanTramGiam { get; set; }
+        public DateTime NgayBatDau { get; set; }
+        public DateTime NgayKetThuc { get; set; }
         public DateTime? NgayTao { get; set; }
         public bool? TrangThai { get; set; }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Asp.netCoreDatPhongKS.Models
 {
@@ -15,11 +14,11 @@ namespace Asp.netCoreDatPhongKS.Models
         }
 
         public int KhachHangId { get; set; }
-        public string? HoTen { get; set; }
-        public string? Email { get; set; }
-        public string? SoDienThoai { get; set; }
+        public string HoTen { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string SoDienThoai { get; set; } = null!;
         public string? DiaChi { get; set; }
-        public string? Cccd { get; set; }
+        public string Cccd { get; set; } = null!;
         public string? GhiChu { get; set; }
         public DateTime? NgayTao { get; set; }
         public int? TaiKhoanId { get; set; }

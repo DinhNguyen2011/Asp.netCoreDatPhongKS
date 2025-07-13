@@ -159,7 +159,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     {
                         KhachHangId = isKhachVangLai ? null : khachHangId,
                         NgayDat = DateTime.Now,
-                        TrangThai = thanhToanNgay || isKhachVangLai ? "Hoàn thành" : "Chờ thanh toán",
+                        TrangThai = thanhToanNgay || isKhachVangLai ? "Đã thanh toán" : "Chờ thanh toán",
                         GhiChu = isKhachVangLai ? "Khách vãng lai" : $"Nhân viên lập: {userName}"
                     };
 

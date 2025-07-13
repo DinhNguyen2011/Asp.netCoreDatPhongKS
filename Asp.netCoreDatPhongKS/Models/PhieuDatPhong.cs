@@ -8,6 +8,7 @@ namespace Asp.netCoreDatPhongKS.Models
         public PhieuDatPhong()
         {
             ChiTietPhieuPhongs = new HashSet<ChiTietPhieuPhong>();
+            DanhGia = new HashSet<DanhGium>();
         }
 
         public int PhieuDatPhongId { get; set; }
@@ -17,7 +18,7 @@ namespace Asp.netCoreDatPhongKS.Models
         public DateTime? NgayNhan { get; set; }
         public DateTime? NgayTra { get; set; }
         public int? KhuyenMaiId { get; set; }
-        public decimal? TongTien { get; set; }
+        public decimal TongTien { get; set; }
         public string? TrangThai { get; set; }
         public string? VnpTransactionId { get; set; }
         public decimal? SoTienCoc { get; set; }
@@ -29,5 +30,6 @@ namespace Asp.netCoreDatPhongKS.Models
         public virtual KhuyenMai? KhuyenMai { get; set; }
         public virtual HoaDonPdp? HoaDonPdp { get; set; }
         public virtual ICollection<ChiTietPhieuPhong> ChiTietPhieuPhongs { get; set; }
+        public virtual ICollection<DanhGium> DanhGia { get; set; }
     }
 }

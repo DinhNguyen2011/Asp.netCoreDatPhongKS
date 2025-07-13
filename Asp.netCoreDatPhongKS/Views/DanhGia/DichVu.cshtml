@@ -1,0 +1,131 @@
+﻿@model Asp.netCoreDatPhongKS.Models.ViewModels.DanhGiaDichVuViewModel
+@{
+    ViewData["Title"] = "Đánh giá dịch vụ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/xulypdp.css" />
+<div class="container-fluid td-padding-side" data-aos="fade-up">
+    <h2 class="display-4 text-center fw-normal mb-5">@ViewData["Title"]</h2>
+
+    @if (Model == null || !Model.DichVus.Any())
+    {
+        <div class="alert alert-info" data-aos="fade-up">
+            Không có dịch vụ nào để đánh giá.
+        </div>
+    }
+    else
+    {
+        <div class="card profile-container">
+            <div class="card-body">
+                <h5 class="card-title">Đơn hàng dịch vụ: @Model.MaDonHangDv</h5>
+                <p class="mb-3">Ngày đặt: @Model.NgayDat?.ToString("dd/MM/yyyy")</p>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Dịch vụ</th>
+                            <th>Số lượng</th>
+                            <th>Điểm</th>
+                            <th>Nội dung</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dichVu in Model.DichVus)
+                        {
+                            <tr>
+                                <td>@dichVu.TenDichVu</td>
+                                <td>@dichVu.SoLuong</td>
+                                <td>
+                                    @if (dichVu.DanhGiaId == 0)
+                                    {
+                                        <input type="number" min="1" max="5" class="diem-input w-full border rounded-md" data-dichvu-id="@dichVu.DichVuId" data-donhang-id="@dichVu.MaDonHangDv" />
+                                    }
+                                    else
+                                    {
+                                        <span>@dichVu.Diem</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (dichVu.DanhGiaId == 0)
+                                    {
+                                        <textarea class="noidung-input w-full border rounded-md" data-dichvu-id="@dichVu.DichVuId" data-donhang-id="@dichVu.MaDonHangDv"></textarea>
+                                    }
+                                    else
+                                    {
+                                        <span>@dichVu.NoiDung</span>
+                                    }
+                                </td>
+                                <td>
+                                    @if (dichVu.DanhGiaId == 0)
+                                    {
+                                        <button class="submit-danhgia btn btn-primary btn-sm" data-dichvu-id="@dichVu.DichVuId" data-donhang-id="@dichVu.MaDonHangDv">Gửi đánh giá</button>
+                                    }
+                                    else
+                                    {
+                                        <span>Đã đánh giá</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a asp-controller="XuLyTaiKhoanKH" asp-action="XemDichVu" class="btn btn-outline-secondary mt-3">Quay lại</a>
+            </div>
+        </div>
+    }
+</div>
+
+<link href="~/css/profile-user.css" rel="stylesheet" />
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    document.querySelectorAll('.submit-danhgia').forEach(button => {
+        button.addEventListener('click', function () {
+            const dichVuId = this.getAttribute('data-dichvu-id');
+            const donHangId = this.getAttribute('data-donhang-id');
+            const diem = document.querySelector(`.diem-input[data-dichvu-id="${dichVuId}"][data-donhang-id="${donHangId}"]`).value;
+            const noiDung = document.querySelector(`.noidung-input[data-dichvu-id="${dichVuId}"][data-donhang-id="${donHangId}"]`).value;
+
+            if (!diem || diem < 1 || diem > 5) {
+                alert('Vui lòng nhập điểm từ 1 đến 5.');
+                return;
+            }
+
+            fetch('/DanhGia/SubmitDichVu', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    MaDonHangDv: donHangId,
+                    DichVuId: dichVuId,
+                    Diem: diem,
+                    NoiDung: noiDung
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Đánh giá đã được gửi thành công!');
+                    location.reload();
+                } else {
+                    alert('Có lỗi xảy ra: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+<script>AOS.init({ duration: 800 });</script>
+<style>
+    .diem-input, .noidung-input {
+        padding: 0.5rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.375rem;
+    }
+
+    .noidung-input {
+        min-height: 80px;
+    }
+</style>
