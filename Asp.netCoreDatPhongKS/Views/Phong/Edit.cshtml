@@ -8,89 +8,89 @@
 <h2>Sửa thông tin phòng</h2>
 
 <form asp-action="Edit" method="post" enctype="multipart/form-data">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
     <input type="hidden" asp-for="PhongId" />
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="SoPhong" class="control-label"></label>
         <input asp-for="SoPhong" class="form-control" />
         <span asp-validation-for="SoPhong" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="LoaiPhongId" class="control-label"></label>
         <select asp-for="LoaiPhongId" class="form-control" asp-items="@(new SelectList(ViewBag.LoaiPhongs, "LoaiPhongId", "TenLoai"))">
             <option value="">Chọn loại phòng</option>
         </select>
         <span asp-validation-for="LoaiPhongId" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="MoTa" class="control-label"></label>
         <textarea asp-for="MoTa" class="form-control"></textarea>
         <span asp-validation-for="MoTa" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="TinhTrang" class="control-label"></label>
         <input asp-for="TinhTrang" class="form-control" />
         <span asp-validation-for="TinhTrang" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="GiaPhong1Dem" class="control-label"></label>
         <input asp-for="GiaPhong1Dem" class="form-control" type="number" step="0.01" />
         <span asp-validation-for="GiaPhong1Dem" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="SoLuongKhach" class="control-label"></label>
         <input asp-for="SoLuongKhach" class="form-control" type="number" />
         <span asp-validation-for="SoLuongKhach" class="text-danger"></span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="hinhAnhFile" class="control-label">Hình ảnh chính</label>
         @if (!string.IsNullOrEmpty(Model.HinhAnh) && Model.HinhAnh != "/images/phong/default.png")
         {
-            <div>
-                <img src="@Model.HinhAnh" alt="Hình ảnh hiện tại" style="max-width: 100px;" />
+            <div class="mb-2">
+                <img src="@Model.HinhAnh" alt="Hình ảnh hiện tại" style="max-width: 100px;" class="img-fluid rounded" />
             </div>
         }
         <input type="file" name="hinhAnhFile" class="form-control-file" accept="image/*" />
         <span class="text-danger">@ViewData.ModelState["hinhAnhFile"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="hinhAnh1File" class="control-label">Hình ảnh 1</label>
         @if (!string.IsNullOrEmpty(Model.HinhAnh1) && Model.HinhAnh1 != "/images/phong/default.png")
         {
-            <div>
-                <img src="@Model.HinhAnh1" alt="Hình ảnh 1 hiện tại" style="max-width: 100px;" />
+            <div class="mb-2">
+                <img src="@Model.HinhAnh1" alt="Hình ảnh 1 hiện tại" style="max-width: 100px;" class="img-fluid rounded" />
             </div>
         }
         <input type="file" name="hinhAnh1File" class="form-control-file" accept="image/*" />
         <span class="text-danger">@ViewData.ModelState["hinhAnh1File"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="hinhAnh2File" class="control-label">Hình ảnh 2</label>
         @if (!string.IsNullOrEmpty(Model.HinhAnh2) && Model.HinhAnh2 != "/images/phong/default.png")
         {
-            <div>
-                <img src="@Model.HinhAnh2" alt="Hình ảnh 2 hiện tại" style="max-width: 100px;" />
+            <div class="mb-2">
+                <img src="@Model.HinhAnh2" alt="Hình ảnh 2 hiện tại" style="max-width: 100px;" class="img-fluid rounded" />
             </div>
         }
         <input type="file" name="hinhAnh2File" class="form-control-file" accept="image/*" />
         <span class="text-danger">@ViewData.ModelState["hinhAnh2File"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label for="hinhAnh3File" class="control-label">Hình ảnh 3</label>
         @if (!string.IsNullOrEmpty(Model.HinhAnh3) && Model.HinhAnh3 != "/images/phong/default.png")
         {
-            <div>
-                <img src="@Model.HinhAnh3" alt="Hình ảnh 3 hiện tại" style="max-width: 100px;" />
+            <div class="mb-2">
+                <img src="@Model.HinhAnh3" alt="Hình ảnh 3 hiện tại" style="max-width: 100px;" class="img-fluid rounded" />
             </div>
         }
         <input type="file" name="hinhAnh3File" class="form-control-file" accept="image/*" />
         <span class="text-danger">@ViewData.ModelState["hinhAnh3File"]?.Errors.FirstOrDefault()?.ErrorMessage</span>
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3">
         <label asp-for="NgayTao" class="control-label"></label>
         <input asp-for="NgayTao" class="form-control" readonly value="@Model.NgayTao?.ToString("dd/MM/yyyy")" />
     </div>
-    <div class="form-group">
+    <div class="form-group mb-3 d-flex gap-2">
         <input type="submit" value="Lưu" class="btn btn-primary" />
         <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
     </div>

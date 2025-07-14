@@ -60,6 +60,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Phong phong, IFormFile? hinhAnhFile, IFormFile? hinhAnh1File, IFormFile? hinhAnh2File, IFormFile? hinhAnh3File)
         {
+            if (phong.LoaiPhongId == -1)
+            {
+                ModelState.AddModelError("LoaiPhongId", "Vui lòng chọn loại phòng.");
+            }
+
             // Xử lý các file hình ảnh
             if (hinhAnhFile != null && hinhAnhFile.Length > 0)
             {
@@ -126,6 +131,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 phong.NgayTao = DateTime.Now;
                 _context.Add(phong);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thêm phòng mới thành công!";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -250,6 +256,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     }
                     throw;
                 }
+                TempData["SuccessMessage"] = "Sửa thành công!";
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -292,6 +300,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 _context.Phongs.Remove(phong);
                 await _context.SaveChangesAsync();
             }
+            TempData["SuccessMessage"] = "Xóa phòng thành công!";
+
             return RedirectToAction(nameof(Index));
         }
 

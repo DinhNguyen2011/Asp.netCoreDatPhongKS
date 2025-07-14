@@ -177,7 +177,7 @@
                             @{
                                 var hasManageDanhGia = quyen.Contains("ManageDanhGia");
                             }
-                            <a class="nav-link" href="@(hasManageDanhGia ? Url.Action("Index", "DanhGium") : "#")" onclick="@(!hasManageDanhGia ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <a class="nav-link" href="@(hasManageDanhGia ? Url.Action("Index", "DanhGia") : "#")" onclick="@(!hasManageDanhGia ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
                                 <span class="menu-title">Quản lý đánh giá</span>
                                 <i class="mdi mdi-home-variant menu-icon"></i>
                             </a>
@@ -307,7 +307,7 @@
 
     <!-- Kaiadmin JS -->
     <script src="~/assets/js/kaiadmin.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
     <script>

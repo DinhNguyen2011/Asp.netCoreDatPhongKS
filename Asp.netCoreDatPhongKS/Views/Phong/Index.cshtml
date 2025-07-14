@@ -5,73 +5,87 @@
     Layout = "~/Views/Shared/_layoutAdmin.cshtml";
 }
 
-<h2>Quản lý phòng</h2>
+<div class="container-fluid py-4">
+    <h2 class="text-dark mb-4">Quản lý phòng</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Thêm phòng mới</a>
-</p>
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
 
-<div class="table-responsive">
-    <table class="table table-bordered table-sm">
-        <thead>
-            <tr>
-                <th>Số phòng</th>
-                <th>Loại phòng</th>
-                <th class="d-none d-md-table-cell">Mô tả</th>
-                <th>Tình trạng</th>
-                <th>Giá/đêm</th>
-                <th>Số khách</th>
-                <th>Hình ảnh</th>
-                <th class="d-none d-lg-table-cell">Hình ảnh 1</th>
-                <th class="d-none d-lg-table-cell">Hình ảnh 2</th>
-                <th class="d-none d-lg-table-cell">Hình ảnh 3</th>
-                <th class="d-none d-md-table-cell">Ngày tạo</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.SoPhong</td>
-                    <td>@item.LoaiPhong?.TenLoai</td>
-                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.MoTa">@item.MoTa</td>
-                    <td>@item.TinhTrang</td>
-                    <td>@item.GiaPhong1Dem?.ToString("C")</td>
-                    <td>@item.SoLuongKhach</td>
-                    <td>
-                        @if (!string.IsNullOrEmpty(item.HinhAnh) && item.HinhAnh != "/images/phong/default.png")
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Thêm phòng mới</a>
+    </p>
+
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered table-sm mb-0">
+                    <thead class="bg-warning text-dark">
+                        <tr>
+                            <th>Số phòng</th>
+                            <th>Loại phòng</th>
+                            <th class="d-none d-md-table-cell">Mô tả</th>
+                            <th>Tình trạng</th>
+                            <th>Giá/đêm</th>
+                            <th>Số khách</th>
+                            <th>Hình ảnh</th>
+                            <th class="d-none d-lg-table-cell">Hình ảnh 1</th>
+                            <th class="d-none d-lg-table-cell">Hình ảnh 2</th>
+                            <th class="d-none d-lg-table-cell">Hình ảnh 3</th>
+                            <th class="d-none d-md-table-cell">Ngày tạo</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
                         {
-                            <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh phòng" style="max-width: 50px;" />
+                            <tr>
+                                <td>@item.SoPhong</td>
+                                <td>@item.LoaiPhong?.TenLoai</td>
+                                <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.MoTa">@item.MoTa</td>
+                                <td>@item.TinhTrang</td>
+                                <td>@item.GiaPhong1Dem?.ToString("C")</td>
+                                <td>@item.SoLuongKhach</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(item.HinhAnh) && item.HinhAnh != "/images/phong/default.png")
+                                    {
+                                        <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh phòng" class="img-fluid rounded" style="max-width: 50px;" />
+                                    }
+                                </td>
+                                <td class="d-none d-lg-table-cell">
+                                    @if (!string.IsNullOrEmpty(item.HinhAnh1) && item.HinhAnh1 != "/images/phong/default.png")
+                                    {
+                                        <img src="@Url.Content(item.HinhAnh1)" alt="Hình ảnh 1" class="img-fluid rounded" style="max-width: 50px;" />
+                                    }
+                                </td>
+                                <td class="d-none d-lg-table-cell">
+                                    @if (!string.IsNullOrEmpty(item.HinhAnh2) && item.HinhAnh2 != "/images/phong/default.png")
+                                    {
+                                        <img src="@Url.Content(item.HinhAnh2)" alt="Hình ảnh 2" class="img-fluid rounded" style="max-width: 50px;" />
+                                    }
+                                </td>
+                                <td class="d-none d-lg-table-cell">
+                                    @if (!string.IsNullOrEmpty(item.HinhAnh3) && item.HinhAnh3 != "/images/phong/default.png")
+                                    {
+                                        <img src="@Url.Content(item.HinhAnh3)" alt="Hình ảnh 3" class="img-fluid rounded" style="max-width: 50px;" />
+                                    }
+                                </td>
+                                <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
+                                <td class="action-column">
+                                    <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1">Sửa</a>
+                                    <a asp-action="Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm">Xóa</a>
+                                </td>
+                            </tr>
                         }
-                    </td>
-                    <td class="d-none d-lg-table-cell">
-                        @if (!string.IsNullOrEmpty(item.HinhAnh1) && item.HinhAnh1 != "/images/phong/default.png")
-                        {
-                            <img src="@Url.Content(item.HinhAnh1)" alt="Hình ảnh 1" style="max-width: 50px;" />
-                        }
-                    </td>
-                    <td class="d-none d-lg-table-cell">
-                        @if (!string.IsNullOrEmpty(item.HinhAnh2) && item.HinhAnh2 != "/images/phong/default.png")
-                        {
-                            <img src="@Url.Content(item.HinhAnh2)" alt="Hình ảnh 2" style="max-width: 50px;" />
-                        }
-                    </td>
-                    <td class="d-none d-lg-table-cell">
-                        @if (!string.IsNullOrEmpty(item.HinhAnh3) && item.HinhAnh3 != "/images/phong/default.png")
-                        {
-                            <img src="@Url.Content(item.HinhAnh3)" alt="Hình ảnh 3" style="max-width: 50px;" />
-                        }
-                    </td>
-                    <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm">Xóa</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -80,8 +94,9 @@
     }
 
     .table-sm th, .table-sm td {
-        padding: 0.5rem;
-        font-size: 0.875rem;
+        padding: 0.75rem;
+        font-size: 0.9rem;
+        vertical-align: middle;
     }
 
     .text-truncate {
@@ -89,4 +104,39 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
+    .btn-warning {
+        background-color: #FFC107;
+        border-color: #856404;
+        transition: all 0.3s ease;
+    }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #664d03;
+        }
+
+    .card {
+        border: 1px solid #856404;
+        border-radius: 0.5rem;
+    }
+
+    .alert-success {
+        background-color: #D4EDDA;
+        border-color: #C3E6CB;
+        color: #155724;
+
+    }
+
+    .action-column {
+        white-space: nowrap; /* Ngăn xuống dòng */
+        min-width: 150px; /* Đặt chiều rộng tối thiểu cho cột Hành động */
+    }
+
+        /* Giảm khoảng cách giữa các nút */
+        .action-column .btn-sm {
+            margin-right: 0.25rem; /* Giảm margin */
+            padding: 0.25rem 0.5rem; /* Giảm padding */
+            font-size: 0.85rem; /* Giảm kích thước chữ */
+        }
 </style>

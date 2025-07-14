@@ -110,6 +110,18 @@
         .create-link:hover {
             background-color: #45a049;
         }
+
+    .action-column {
+        white-space: nowrap; /* Ngăn xuống dòng */
+        min-width: 150px; /* Đặt chiều rộng tối thiểu cho cột Hành động */
+    }
+
+        /* Giảm khoảng cách giữa các nút */
+        .action-column .btn-sm {
+            margin-right: 0.25rem; /* Giảm margin */
+            padding: 0.25rem 0.5rem; /* Giảm padding */
+            font-size: 0.85rem; /* Giảm kích thước chữ */
+        }
 </style>
 
 <div class="container">
@@ -136,8 +148,7 @@
                     <th>Đơn giá</th>
                     <th>Hình ảnh</th>
                     <th>Trạng thái</th>
-                    <th>Ngày tạo</th>
-                    <th>Ngày cập nhật</th>
+                 
                     <th>Hành động</th>
                 </tr>
             </thead>
@@ -161,9 +172,8 @@
                                 }
                             </td>
                             <td>@(dichVu.TrangThai == true ? "Kích hoạt" : "Vô hiệu")</td>
-                            <td>@(dichVu.NgayTao?.ToString("dd/MM/yyyy") ?? "Chưa xác định")</td>
-                            <td>@(dichVu.NgayCapNhat?.ToString("dd/MM/yyyy") ?? "Chưa cập nhật")</td>
-                            <td>
+
+                            <td class="action-column">
                                 <a href="@Url.Action("Edit", "DichVu", new { id = dichVu.DichVuId })" class="action-link edit-link">Sửa</a>
                                 <a href="@Url.Action("Delete", "DichVu", new { id = dichVu.DichVuId })" class="action-link delete-link">Xóa</a>
                             </td>

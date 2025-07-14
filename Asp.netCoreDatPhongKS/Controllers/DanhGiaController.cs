@@ -2,6 +2,7 @@
 using Asp.netCoreDatPhongKS.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Claims;
 
@@ -16,6 +17,17 @@ namespace Asp.netCoreDatPhongKS.Controllers
         public DanhGiaController(HotelPlaceVipContext context)
         {
             _context = context;
+        }
+        public async Task<IActionResult> Index()
+        {
+            var danhGias = await _context.DanhGia
+                .Include(d => d.Phong)
+                .Include(d => d.DichVu)
+                .Include(d => d.PhieuDatPhong)
+                .Include(d => d.DonHangDichVu)
+                .Include(d => d.TaiKhoan)
+                .ToListAsync();
+            return View(danhGias);
         }
 
         public IActionResult Phong(int phieuDatPhongId)

@@ -101,12 +101,12 @@
                             @TempData["SuccessMessage"]
                         </div>
                     }
-                    @if (TempData["ErrorMessage"] != null)
+                  @*   @if (TempData["ErrorMessage"] != null)
                     {
                         <div class="alert alert-danger border-start border-4 border-danger p-3 mb-4" role="alert">
                             @TempData["ErrorMessage"]
                         </div>
-                    }
+                    } *@
 
                     <form asp-action="KhachHangLienHe" method="post" class="lienhe-form bg-light p-4 rounded shadow-sm">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>

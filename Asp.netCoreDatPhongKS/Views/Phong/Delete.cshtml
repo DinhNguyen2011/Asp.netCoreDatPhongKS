@@ -5,60 +5,80 @@
     Layout = "~/Views/Shared/_layoutAdmin.cshtml";
 }
 
-<h2>Xóa phòng</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">Xóa phòng</h2>
 
-<h3>Bạn có chắc chắn muốn xóa phòng này?</h3>
-<div>
-    <h4>Thông tin phòng</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">Số phòng</dt>
-        <dd class="col-sm-10">@Model.SoPhong</dd>
-        <dt class="col-sm-2">Loại phòng</dt>
-        <dd class="col-sm-10">@Model.LoaiPhong?.TenLoai</dd>
-        <dt class="col-sm-2">Mô tả</dt>
-        <dd class="col-sm-10">@Model.MoTa</dd>
-        <dt class="col-sm-2">Tình trạng</dt>
-        <dd class="col-sm-10">@Model.TinhTrang</dd>
-        <dt class="col-sm-2">Giá phòng/đêm</dt>
-        <dd class="col-sm-10">@Model.GiaPhong1Dem?.ToString("C")</dd>
-        <dt class="col-sm-2">Số lượng khách</dt>
-        <dd class="col-sm-10">@Model.SoLuongKhach</dd>
-        <dt class="col-sm-2">Hình ảnh</dt>
-        <dd class="col-sm-10">
-            @if (!string.IsNullOrEmpty(Model.HinhAnh))
-            {
-                <img src="@Model.HinhAnh" alt="Hình ảnh phòng" style="max-width: 100px;" />
-            }
-        </dd>
-        <dt class="col-sm-2">Hình ảnh 1</dt>
-        <dd class="col-sm-10">
-            @if (!string.IsNullOrEmpty(Model.HinhAnh1))
-            {
-                <img src="@Model.HinhAnh1" alt="Hình ảnh 1" style="max-width: 100px;" />
-            }
-        </dd>
-        <dt class="col-sm-2">Hình ảnh 2</dt>
-        <dd class="col-sm-10">
-            @if (!string.IsNullOrEmpty(Model.HinhAnh2))
-            {
-                <img src="@Model.HinhAnh2" alt="Hình ảnh 2" style="max-width: 100px;" />
-            }
-        </dd>
-        <dt class="col-sm-2">Hình ảnh 3</dt>
-        <dd class="col-sm-10">
-            @if (!string.IsNullOrEmpty(Model.HinhAnh3))
-            {
-                <img src="@Model.HinhAnh3" alt="Hình ảnh 3" style="max-width: 100px;" />
-            }
-        </dd>
-        <dt class="col-sm-2">Ngày tạo</dt>
-        <dd class="col-sm-10">@Model.NgayTao?.ToString("dd/MM/yyyy")</dd>
-    </dl>
+    <div class="alert alert-warning" role="alert">
+        <h4 class="alert-heading">Xác nhận xóa</h4>
+        <p>Bạn có chắc chắn muốn xóa phòng này?</p>
+    </div>
 
-    <form asp-action="Delete" method="post">
-        <input type="hidden" asp-for="PhongId" />
-        <input type="submit" value="Xóa" class="btn btn-danger" />
-        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
-    </form>
+    <div class="card">
+        <div class="card-header">
+            <h4>Thông tin phòng</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-3 col-md-2 fw-bold">Số phòng</dt>
+                <dd class="col-sm-9 col-md-10">@Model.SoPhong</dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Loại phòng</dt>
+                <dd class="col-sm-9 col-md-10">@Model.LoaiPhong?.TenLoai</dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Mô tả</dt>
+                <dd class="col-sm-9 col-md-10">@Model.MoTa</dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Tình trạng</dt>
+                <dd class="col-sm-9 col-md-10">@Model.TinhTrang</dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Giá phòng/đêm</dt>
+                <dd class="col-sm-9 col-md-10">@Model.GiaPhong1Dem?.ToString("C")</dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Số lượng khách</dt>
+                <dd class="col-sm-9 col-md-10">@Model.SoLuongKhach</dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Hình ảnh</dt>
+                <dd class="col-sm-9 col-md-10">
+                    @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                    {
+                        <img src="@Model.HinhAnh" alt="Hình ảnh phòng" class="img-fluid rounded" style="max-width: 100px;" />
+                    }
+                </dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Hình ảnh 1</dt>
+                <dd class="col-sm-9 col-md-10">
+                    @if (!string.IsNullOrEmpty(Model.HinhAnh1))
+                    {
+                        <img src="@Model.HinhAnh1" alt="Hình ảnh 1" class="img-fluid rounded" style="max-width: 100px;" />
+                    }
+                </dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Hình ảnh 2</dt>
+                <dd class="col-sm-9 col-md-10">
+                    @if (!string.IsNullOrEmpty(Model.HinhAnh2))
+                    {
+                        <img src="@Model.HinhAnh2" alt="Hình ảnh 2" class="img-fluid rounded" style="max-width: 100px;" />
+                    }
+                </dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Hình ảnh 3</dt>
+                <dd class="col-sm-9 col-md-10">
+                    @if (!string.IsNullOrEmpty(Model.HinhAnh3))
+                    {
+                        <img src="@Model.HinhAnh3" alt="Hình ảnh 3" class="img-fluid rounded" style="max-width: 100px;" />
+                    }
+                </dd>
+
+                <dt class="col-sm-3 col-md-2 fw-bold">Ngày tạo</dt>
+                <dd class="col-sm-9 col-md-10">@Model.NgayTao?.ToString("dd/MM/yyyy")</dd>
+            </dl>
+        </div>
+        <div class="card-footer">
+            <form asp-action="Delete" method="post" class="d-flex gap-2">
+                <input type="hidden" asp-for="PhongId" />
+                <button type="submit" class="btn btn-danger">Xóa</button>
+                <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+            </form>
+        </div>
+    </div>
 </div>
