@@ -32,11 +32,11 @@
                             <th>Tình trạng</th>
                             <th>Giá/đêm</th>
                             <th>Số khách</th>
-                            <th>Hình ảnh</th>
+                   @*          <th>Hình ảnh</th>
                             <th class="d-none d-lg-table-cell">Hình ảnh 1</th>
                             <th class="d-none d-lg-table-cell">Hình ảnh 2</th>
                             <th class="d-none d-lg-table-cell">Hình ảnh 3</th>
-                            <th class="d-none d-md-table-cell">Ngày tạo</th>
+                            <th class="d-none d-md-table-cell">Ngày tạo</th> *@
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -50,7 +50,7 @@
                                 <td>@item.TinhTrang</td>
                                 <td>@item.GiaPhong1Dem?.ToString("C")</td>
                                 <td>@item.SoLuongKhach</td>
-                                <td>
+                              @*   <td>
                                     @if (!string.IsNullOrEmpty(item.HinhAnh) && item.HinhAnh != "/images/phong/default.png")
                                     {
                                         <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh phòng" class="img-fluid rounded" style="max-width: 50px;" />
@@ -74,9 +74,11 @@
                                         <img src="@Url.Content(item.HinhAnh3)" alt="Hình ảnh 3" class="img-fluid rounded" style="max-width: 50px;" />
                                     }
                                 </td>
-                                <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
+                                <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td> *@
                                 <td class="action-column">
                                     <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1">Sửa</a>
+                                    <a asp-action="Details" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1">Chi Tiết</a>
+
                                     <a asp-action="Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm">Xóa</a>
                                 </td>
                             </tr>

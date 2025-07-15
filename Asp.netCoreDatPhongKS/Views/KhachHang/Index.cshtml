@@ -5,68 +5,63 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Quản lý khách hàng</h2>
+<div class="container py-4">
+    <h2 class="mb-4 text-primary"><i class="bi bi-people-fill"></i> Quản lý khách hàng</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Thêm khách hàng mới</a>
-</p>
+    <div class="mb-3 d-flex justify-content-between flex-wrap">
+        <a asp-action="Create" class="btn btn-success mb-2">
+            <i class="bi bi-person-plus-fill"></i> Thêm khách hàng mới
+        </a>
 
-<form asp-action="Index" method="get" class="form-inline mb-3">
-    <div class="form-group mr-2">
-        <label for="searchString" class="mr-1">Tìm kiếm:</label>
-        <input type="text" name="searchString" id="searchString" class="form-control" value="@ViewBag.SearchString" placeholder="Tên, Email, SĐT" />
-    </div>  
-    <button type="submit" class="btn btn-primary">Tìm</button>
-</form>
+        <form asp-action="Index" method="get" class="d-flex align-items-center mb-2" role="search">
+            <input type="text" name="searchString" id="searchString" class="form-control me-2"
+                   placeholder="Tên, Email, SĐT..." value="@ViewBag.SearchString" />
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-search"></i> Tìm
+            </button>
+        </form>
+    </div>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-sm">
-        <thead>
-            <tr>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
-                <th class="d-none d-md-table-cell">Địa chỉ</th>
-                <th class="d-none d-md-table-cell">CCCD</th>
-                <th class="d-none d-lg-table-cell">Ghi chú</th>
-                <th>Tài khoản</th>
-                <th class="d-none d-md-table-cell">Ngày tạo</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle table-sm">
+            <thead class="table-light">
                 <tr>
-                    <td>@item.HoTen</td>
-                    <td>@item.Email</td>
-                    <td>@item.SoDienThoai</td>
-                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.DiaChi">@item.DiaChi</td>
-                    <td class="d-none d-md-table-cell">@item.Cccd</td>
-                    <td class="d-none d-lg-table-cell text-truncate" style="max-width: 150px;" title="@item.GhiChu">@item.GhiChu</td>
-                    <td>@item.TaiKhoan?.TaiKhoanId</td>
-                    <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.KhachHangId" class="btn btn-warning btn-sm">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.KhachHangId" class="btn btn-danger btn-sm">Xóa</a>
-                    </td>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>SĐT</th>
+                    <th class="d-none d-md-table-cell">Địa chỉ</th>
+                    <th class="d-none d-md-table-cell">CCCD</th>
+          @*           <th class="d-none d-lg-table-cell">Ghi chú</th> *@
+                    <th>Mã tài khoản</th>
+                    <th class="d-none d-md-table-cell">Ngày tạo</th>
+                    <th>Hành động</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.HoTen</td>
+                        <td>@item.Email</td>
+                        <td>@item.SoDienThoai</td>
+                        <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.DiaChi">@item.DiaChi</td>
+                        <td class="d-none d-md-table-cell">@item.Cccd</td>
+                      @*   <td class="d-none d-lg-table-cell text-truncate" style="max-width: 150px;" title="@item.GhiChu">@item.GhiChu</td> *@
+                        <td>@item.TaiKhoan?.TaiKhoanId</td>
+                        <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
+                        <td>
+                            <div class="btn-group btn-group-sm" role="group">
+                                <a asp-action="Edit" asp-route-id="@item.KhachHangId" class="btn btn-warning">
+                                    <i class="bi bi-pencil-square"> Sửa</i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.KhachHangId" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa khách hàng này?')">
+                                    <i class="bi bi-trash"> Xóa</i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<style>
-    .table-responsive {
-        overflow-x: auto;
-    }
-    .table-sm th, .table-sm td {
-        padding: 0.5rem;
-        font-size: 0.875rem;
-    }
-    .text-truncate {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-</style>

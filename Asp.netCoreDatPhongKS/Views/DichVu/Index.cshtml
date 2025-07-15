@@ -87,7 +87,7 @@
                 <th>Tên dịch vụ</th>
                 <th>Mô tả</th>
                 <th>Đơn giá</th>
-                <th>Trạng thái</th>
+              @*   <th>Trạng thái</th> *@
                 <th>Hình ảnh</th>
                 <th>Số lượng</th>
             </tr>
@@ -102,7 +102,7 @@
                     <td>@dichVu.TenDichVu</td>
                     <td>@dichVu.MoTa</td>
                     <td>@dichVu.DonGia.ToString("N0") VNĐ</td>
-                    <td>@(dichVu.TrangThai == true ? "Hoạt động" : "Không hoạt động")</td>
+                   @*  <td>@(dichVu.TrangThai == true ? "Hoạt động" : "Không hoạt động")</td> *@
                     <td>
                         @if (!string.IsNullOrEmpty(dichVu.HinhAnh))
                         {

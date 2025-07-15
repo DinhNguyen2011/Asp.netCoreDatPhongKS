@@ -276,7 +276,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             catch
             {
                 await transaction.RollbackAsync();
-                TempData["Error"] = "Có lỗi xảy ra khi xóa tài khoản.";
+                TempData["Error"] = "Không thể xóa vì có liên quan khóa ngoại.";
                 return RedirectToAction("Index");
             }
         }

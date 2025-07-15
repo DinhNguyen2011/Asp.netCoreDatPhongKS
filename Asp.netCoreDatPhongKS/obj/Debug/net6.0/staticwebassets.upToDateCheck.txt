@@ -491,6 +491,7 @@ wwwroot\images\loaiphong\Phòng thương gia_df48f16a-53b6-4b56-b667-ecfd4fd6c75
 wwwroot\images\loaiphong\Phòng thường_1adc85d3-b99e-45ec-b403-9494cbd609e9.jpg
 wwwroot\images\loaiphong\Phòng thường_66a91bf9-81ac-4aea-8fe8-99bb908e73a2.jpg
 wwwroot\images\loaiphong\Phòng Vip_b20ad25b-ea93-4f3d-a59f-52cba3511ff1.jpg
+wwwroot\images\loaiphong\test_04b1f73a-6207-47ee-9be5-ac17bad157fd.jpg
 wwwroot\images\loaiphong\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png
 wwwroot\images\logomain.png
 wwwroot\images\luxury1.jpg
@@ -645,3 +646,4 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\js\adminpdp.js

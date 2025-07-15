@@ -60,6 +60,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: LoaiPhong/IndexChoAdmin (Admin view)
         public IActionResult IndexChoAdmin(string loai, int? minGia, int? maxGia, int? soNguoi)
         {
+
             string userName = HttpContext.Session.GetString("Hoten");
             if (!string.IsNullOrEmpty(userName))
             {
@@ -128,6 +129,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 loaiPhong.NgayTao = DateTime.Now;
                 _context.Add(loaiPhong);
                 await _context.SaveChangesAsync();
+                TempData["Success"] = "Thêm thành công!";
                 return RedirectToAction(nameof(IndexChoAdmin));
             }
 
@@ -205,6 +207,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     }
                     throw;
                 }
+                TempData["Success"] = "Sửa thành công!";
                 return RedirectToAction(nameof(IndexChoAdmin));
             }
 
@@ -263,6 +266,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             _context.LoaiPhongs.Remove(loaiPhong);
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Xóa thành công!";
             return RedirectToAction(nameof(IndexChoAdmin));
         }
 

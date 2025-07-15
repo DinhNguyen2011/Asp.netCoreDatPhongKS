@@ -147,7 +147,7 @@
                     <th>Mô tả</th>
                     <th>Đơn giá</th>
                     <th>Hình ảnh</th>
-                    <th>Trạng thái</th>
+                    @* <th>Trạng thái</th> *@
                  
                     <th>Hành động</th>
                 </tr>
@@ -171,7 +171,7 @@
                                     <span>Không có hình</span>
                                 }
                             </td>
-                            <td>@(dichVu.TrangThai == true ? "Kích hoạt" : "Vô hiệu")</td>
+                           @*  <td>@(dichVu.TrangThai == true ? "Kích hoạt" : "Vô hiệu")</td> *@
 
                             <td class="action-column">
                                 <a href="@Url.Action("Edit", "DichVu", new { id = dichVu.DichVuId })" class="action-link edit-link">Sửa</a>

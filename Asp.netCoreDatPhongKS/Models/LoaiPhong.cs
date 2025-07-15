@@ -22,10 +22,12 @@ namespace Asp.netCoreDatPhongKS.Models
         public string? MoTa { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập giá cơ bản")]
+        [Range(1, double.MaxValue, ErrorMessage = "Giá cơ bản phải lớn hơn 0")]
         [DisplayName("Giá cơ bản")]
         public decimal GiaCoBan { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập số lượng người")]
+        [Range(1, double.MaxValue, ErrorMessage = "Số lượng người phải lớn hơn 0")]
         [DisplayName("Số lượng người")]
         public int SoluongNguoi { get; set; }
 

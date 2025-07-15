@@ -328,5 +328,28 @@ namespace Asp.netCoreDatPhongKS.Controllers
             imagePath = $"/images/phong/{fileName}";
             return true;
         }
+        public async Task<IActionResult> Details(int? id)
+        {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var phong = await _context.Phongs
+                .Include(p => p.LoaiPhong)
+                .FirstOrDefaultAsync(m => m.PhongId == id);
+
+            if (phong == null)
+            {
+                return NotFound();
+            }
+
+            return View(phong);
+        }
     }
 }

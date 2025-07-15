@@ -1,0 +1,77 @@
+﻿@model Asp.netCoreDatPhongKS.Models.Phong
+
+@{
+    ViewData["Title"] = "Chi tiết phòng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4 text-primary"><i class="bi bi-info-circle"></i> Chi tiết phòng</h2>
+
+    <div class="card shadow border-0">
+        <div class="row g-0">
+            <!-- Hình ảnh chính -->
+            <div class="col-md-5">
+                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                {
+                    <img src="@Url.Content(Model.HinhAnh)" class="img-fluid rounded-start h-100 object-fit-cover" alt="Ảnh phòng chính">
+                }
+                else
+                {
+                    <div class="d-flex align-items-center justify-content-center h-100 bg-light text-muted">
+                        <span>Không có ảnh</span>
+                    </div>
+                }
+            </div>
+
+            <!-- Thông tin chi tiết -->
+            <div class="col-md-7">
+                <div class="card-body">
+                    <h4 class="card-title mb-3 text-secondary">Phòng @Model.SoPhong</h4>
+
+                    <p><strong>Loại phòng:</strong> @Model.LoaiPhong?.TenLoai</p>
+                    <p><strong>Mô tả:</strong> @Model.MoTa</p>
+                    <p>
+                        <strong>Tình trạng:</strong>
+                        <span class="badge @(Model.TinhTrang == "Trống" ? "bg-success" : "bg-danger")">
+                            @Model.TinhTrang
+                        </span>
+                    </p>
+                    <p><strong>Giá phòng / đêm:</strong> @Model.GiaPhong1Dem?.ToString("N0") VNĐ</p>
+                    <p><strong>Số lượng khách tối đa:</strong> @Model.SoLuongKhach</p>
+                    <p><strong>Ngày tạo:</strong> @Model.NgayTao?.ToString("dd/MM/yyyy")</p>
+
+                    <!-- Hình ảnh phụ -->
+                    <div class="mt-4">
+                        <strong>Hình ảnh phụ:</strong>
+                        <div class="d-flex gap-3 mt-2">
+                            @if (!string.IsNullOrEmpty(Model.HinhAnh1))
+                            {
+                                <img src="@Url.Content(Model.HinhAnh1)" class="img-thumbnail" width="100" />
+                            }
+                            @if (!string.IsNullOrEmpty(Model.HinhAnh2))
+                            {
+                                <img src="@Url.Content(Model.HinhAnh2)" class="img-thumbnail" width="100" />
+                            }
+                            @if (!string.IsNullOrEmpty(Model.HinhAnh3))
+                            {
+                                <img src="@Url.Content(Model.HinhAnh3)" class="img-thumbnail" width="100" />
+                            }
+                            @if (string.IsNullOrEmpty(Model.HinhAnh1) && string.IsNullOrEmpty(Model.HinhAnh2) && string.IsNullOrEmpty(Model.HinhAnh3))
+                            {
+                                <span class="text-muted">Không có hình ảnh phụ</span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Nút điều hướng -->
+                    <div class="mt-4">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left-circle"></i> Quay lại danh sách
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
