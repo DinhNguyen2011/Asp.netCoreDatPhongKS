@@ -64,13 +64,17 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
             if (ModelState.IsValid)
             {
-                // Check if Email already exists in TaiKhoan
+         
                 if (_context.TaiKhoans.Any(tk => tk.Email == khachHang.Email))
                 {
                     ModelState.AddModelError("Email", "Email đã được sử dụng.");
                     return View(khachHang);
                 }
-
+                if (_context.KhachHangs.Any(kh => kh.Cccd == khachHang.Cccd))
+                {
+                    ModelState.AddModelError("Cccd", "Cccd đã có sẵn.");
+                    return View(khachHang);
+                }
                 // Create TaiKhoan
                 var taiKhoan = new TaiKhoan
                 {

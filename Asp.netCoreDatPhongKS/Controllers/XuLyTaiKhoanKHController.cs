@@ -52,8 +52,12 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .ThenInclude(p => p.LoaiPhong)
                 .Where(p => p.KhachHangId == khachHang.KhachHangId && p.TrangThai != "Hủy")
                 .ToListAsync();
+            var sapxepngay = phieuDatPhongs
+                   .OrderBy(p => Math.Abs((p.NgayDat.GetValueOrDefault() - DateTime.Now).TotalDays))
+                   //sx tăng so với datetime.now, Math.Abs giá trị tuyệt đối gần nhất 
+                   .ToList();
 
-            return View(phieuDatPhongs);
+            return View(sapxepngay);
         }
 
         [HttpGet]
@@ -84,6 +88,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var phieu = await _context.PhieuDatPhongs
                 .Include(p => p.KhachHang)
                 .Include(p => p.ChiTietPhieuPhongs)
+                
                 .ThenInclude(ct => ct.Phong)
                 .ThenInclude(p => p.LoaiPhong)
                 .FirstOrDefaultAsync(p => p.PhieuDatPhongId == id && p.KhachHangId == khachHang.KhachHangId);
@@ -134,7 +139,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return RedirectToAction("Index");
             }
 
-            decimal refundPercentage;
+            decimal refundPercentage; // f. // d 0
             var hoursDiff = (phieu.NgayNhan - DateTime.Now)?.TotalHours ?? 0;
             if (hoursDiff >= 24)
                 refundPercentage = 0.9m; // Hoàn 90%
@@ -197,7 +202,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .Where(d => d.KhachHangId == khachHang.KhachHangId)
                 .ToListAsync();
 
-            return View(donHangDichVus);
+            var ngaygannhat = donHangDichVus
+                .OrderBy(d => Math.Abs((d.NgayDat.GetValueOrDefault() - DateTime.Now).TotalDays))
+               .ToList();
+
+            return View(ngaygannhat);
         }
 
         [HttpGet]

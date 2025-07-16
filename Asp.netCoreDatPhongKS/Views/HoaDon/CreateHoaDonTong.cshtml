@@ -76,12 +76,21 @@
                     $('#hoaDonDichVuContainer').empty();
                     if (data.length > 0) {
                         data.forEach(function (hdv) {
-                            $('#hoaDonDichVuContainer').append(
-                                '<div class="form-check">' +
-                                '<input type="checkbox" name="hoaDonDichVuIds" value="' + hdv.id + '" class="form-check-input" id="hdv_' + hdv.id + '">' +
-                                '<label class="form-check-label" for="hdv_' + hdv.id + '">' +
-                                'Mã đơn hàng: #' + hdv.maDonHangDv + ', Tổng tiền: ' + hdv.tongTien.toLocaleString('vi-VN') + ' VNĐ' +
-                                '</label></div>'
+                        // Tạo HTML cho danh sách dịch vụ
+                        let dichVuList = '<ul>';
+                        hdv.tendichvu.forEach(function (dv) {
+                            dichVuList += `<li>${dv.tendv}: ${dv.giaDV.toLocaleString('vi-VN')} VNĐ</li>`;
+                        });
+                        dichVuList += '</ul>';
+
+                        $('#hoaDonDichVuContainer').append(
+                            '<div class="form-check">' +
+                            '<input type="checkbox" name="hoaDonDichVuIds" value="' + hdv.id + '" class="form-check-input" id="hdv_' + hdv.id + '">' +
+                            '<label class="form-check-label" for="hdv_' + hdv.id + '">' +
+                            'Mã đơn hàng: #' + hdv.maDonHangDv + '<br>' +
+                            'Tổng tiền: ' + hdv.tongTien.toLocaleString('vi-VN') + ' VNĐ' +
+                            '<br>Dịch vụ:<br>' + dichVuList +
+                            '</label></div>'
                             );
                         });
                     } else {
@@ -94,12 +103,19 @@
                     $('#phieuDatPhongContainer').empty();
                     if (data.length > 0) {
                         data.forEach(function (phieu) {
+                              const ngayNhan = new Date(phieu.ngaynhanphong);
+    const formattedDate = ngayNhan.toLocaleDateString('vi-VN'); // dd/MM/yyyy
+
                             $('#phieuDatPhongContainer').append(
                                 '<div class="form-check">' +
                                 '<input type="checkbox" name="phieuDatPhongIds" value="' + phieu.phieuDatPhongId + '" class="form-check-input" id="phieu_' + phieu.phieuDatPhongId + '">' +
-                                '<label class="form-check-label" for="phieu_' + phieu.phieuDatPhongId + '">' +
-                                'Mã phiếu: ' + phieu.maPhieu + ', Phòng: ' + phieu.soPhong + ', Tổng tiền: ' + phieu.tongsotien.toLocaleString('vi-VN') + ' VNĐ' +
-                                '</label></div>'
+                                   '<label class="form-check-label" for="phieu_' + phieu.phieuDatPhongId + '">' +
+                                  'Mã phiếu: ' + phieu.maPhieu + '<br>' +
+                                 'Phòng: ' + phieu.soPhong + '<br>' +
+                                 'Ngày nhận phòng: ' + formattedDate + '<br>' +
+                                 'Tổng tiền: ' + phieu.tongsotien.toLocaleString('vi-VN') + ' VNĐ' +
+                                 '</label></div>'
+
                             );
                         });
                     } else {

@@ -26,7 +26,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Mã đơn hàng</th>
+                       @*  <th>Mã đơn hàng</th> *@
                         <th>Ngày đặt</th>
                         <th>Dịch vụ</th>
                         <th>Tổng tiền</th>
@@ -38,7 +38,7 @@
                     @foreach (var donHang in Model)
                     {
                         <tr>
-                            <td>@donHang.MaDonHangDv</td>
+                            @* <td>@donHang.MaDonHangDv</td> *@
                             <td>@donHang.NgayDat?.ToString("dd/MM/yyyy")</td>
                             <td>
                                 @foreach (var chiTiet in donHang.ChiTietDonHangDichVus)

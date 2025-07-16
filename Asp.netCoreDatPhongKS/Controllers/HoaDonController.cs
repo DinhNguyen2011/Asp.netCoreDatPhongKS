@@ -1,6 +1,7 @@
 ﻿using Asp.netCoreDatPhongKS.Filters;
 using Asp.netCoreDatPhongKS.Models;
 using Asp.netCoreDatPhongKS.Models.ViewModels;
+using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
         }
 
-        // Action Index: Hiển thị danh sách hóa đơn tổng với bộ lọc và tìm kiếm
+   
         public async Task<IActionResult> Index(string trangThai, string searchString)
         {
             var userName = HttpContext.Session.GetString("Hoten");
@@ -83,7 +84,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     KhachHangTen = hoaDon.KhachHang?.HoTen ?? "Khách vãng lai",
                     KhachHangCCCD = hoaDon.KhachHang?.Cccd ?? "Không có",
                     NhanVienTen = hoaDon.NguoiLapDh ?? "Không xác định",
-                    TongTien = hoaDon.TongTien,
+                    TongTien = hoaDon.TongTien = (hoaDon.TongTienDichVu?? 0 + hoaDon.TongTienPhong ?? 0),
                     TrangThai = hoaDon.TrangThai,
                     HoaDon = hoaDon,
                     HoaDonDichVu = null
@@ -414,13 +415,22 @@ namespace Asp.netCoreDatPhongKS.Controllers
         {
             var hoaDonDichVus = await _context.HoaDonDichVus
                 .Include(h => h.MaDonHangDvNavigation)
+
                 .ThenInclude(d => d.ChiTietDonHangDichVus)
                 .Where(h => h.MaDonHangDvNavigation.KhachHangId == khachHangId && h.TrangThaiThanhToan == "Chưa thanh toán")
                 .Select(h => new
                 {
                     id = h.Id,
                     maDonHangDv = h.MaDonHangDv,
-                    tongTien = h.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0)
+                    tongTien = h.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0),
+                    tendichvu = h.MaDonHangDvNavigation.ChiTietDonHangDichVus.Select(
+                        dv => new
+                        {
+                          tendv =  dv.DichVu.TenDichVu,
+                       
+                          giaDV = dv.DichVu.DonGia,
+                        }
+                        )
                 })
                 .ToListAsync();
 
@@ -444,7 +454,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     loaiPhong = p.ChiTietPhieuPhongs.FirstOrDefault().Phong.LoaiPhong.TenLoai ?? "Không xác định",
                     tongsotien = (p.TongTien) - ((p.SoTienCoc ?? 0) + (p.SoTienDaThanhToan ?? 0)),
                     soTienCoc = p.SoTienCoc ?? 0,
-                    soTienDaThanhToan = p.SoTienDaThanhToan ?? 0
+                    soTienDaThanhToan = p.SoTienDaThanhToan ?? 0,
+                    ngaynhanphong = p.NgayNhan
                 })
                 .ToListAsync();
 
