@@ -229,6 +229,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                     _context.PhieuDatPhongs.Add(phieu);
                     phong.TinhTrang = "Đã đặt";
+
                     _context.Phongs.Update(phong);
                 }
 

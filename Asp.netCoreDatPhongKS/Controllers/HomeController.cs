@@ -406,7 +406,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     MoMoTransactionId = paymentMethod == "MoMo" ? response.TransactionId : null,
                     SoTienDaThanhToan = pendingBooking.TongTien
                 };
-
+                phong.TinhTrang = "Đã đặt";
                 _context.PhieuDatPhongs.Add(phieu);
 
                 // Tạo ChiTietPhieuPhong

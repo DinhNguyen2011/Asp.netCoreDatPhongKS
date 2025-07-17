@@ -67,7 +67,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     (h.MaDonHangDvNavigation.KhachHang.HoTen.Contains(searchString) || h.MaDonHangDvNavigation.KhachHang.Cccd.Contains(searchString)));
             }
 
-           
+
             var hoaDons = await hoaDonsQuery.ToListAsync();
             var hoaDonDichVus = await hoaDonDichVusQuery.ToListAsync();
 
@@ -76,6 +76,16 @@ namespace Asp.netCoreDatPhongKS.Controllers
             // Thêm hóa đơn tổng
             foreach (var hoaDon in hoaDons)
             {
+                // Tính tổng tiền dịch vụ từ các HoaDonDichVu liên quan
+                decimal tongTienDichVu = hoaDon.HoaDonDichVus.Sum(hdv =>
+                    hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0));
+
+                // Tính tổng tiền phòng từ các HoaDonPdp liên quan
+                decimal tongTienPhong = hoaDon.HoaDonPdps.Sum(hdp => hdp.ThanhTien);
+
+                // Tổng tiền hóa đơn
+                decimal tongTien = tongTienDichVu + tongTienPhong;
+
                 hoaDonViewModels.Add(new HoaDonViewModel
                 {
                     Id = hoaDon.MaHoaDon,
@@ -84,7 +94,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     KhachHangTen = hoaDon.KhachHang?.HoTen ?? "Khách vãng lai",
                     KhachHangCCCD = hoaDon.KhachHang?.Cccd ?? "Không có",
                     NhanVienTen = hoaDon.NguoiLapDh ?? "Không xác định",
-                    TongTien = hoaDon.TongTien = (hoaDon.TongTienDichVu?? 0 + hoaDon.TongTienPhong ?? 0),
+                    TongTien = tongTien, // Sử dụng tổng tiền tính toán
                     TrangThai = hoaDon.TrangThai,
                     HoaDon = hoaDon,
                     HoaDonDichVu = null
@@ -165,26 +175,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 using (var transaction = await _context.Database.BeginTransactionAsync())
                 {
-                    // Tạo hóa đơn tổng
-                    var hoaDon = new HoaDon
-                    {
-                        KhachHangId = khachHangId,
-                        NgayLap = DateTime.Now,
-                        NguoiLapDh = $"Tên: {userName}",
-                        TongTienPhong = 0,
-                        TongTienDichVu = 0,
-                        TongTien = 0,
-                        HinhThucThanhToan = hinhThucThanhToan,
-                        TrangThai = "Đã thanh toán",
-                        IsKhachVangLai = false,
-                        GhiChu = null,
-                        SoTienConNo = 0
-                    };
+                    // Khởi tạo biến để tính tổng tiền
+                    decimal tongTienDichVu = 0;
+                    decimal tongTienPhong = 0;
 
-                    _context.HoaDons.Add(hoaDon);
-                    await _context.SaveChangesAsync();
-
-                    // Gộp hóa đơn dịch vụ
+                    // Xử lý hóa đơn dịch vụ
                     if (hoaDonDichVuIds.Any())
                     {
                         var hoaDonDichVus = await _context.HoaDonDichVus
@@ -195,18 +190,17 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                         foreach (var hdv in hoaDonDichVus)
                         {
-                            hdv.MaHoaDonTong = hoaDon.MaHoaDon;
+                            var thanhTienDichVu = hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0);
+                            tongTienDichVu += thanhTienDichVu;
+
                             hdv.TrangThaiThanhToan = "Đã thanh toán";
                             hdv.NgayThanhToan = DateTime.Now;
                             hdv.HinhThucThanhToan = hinhThucThanhToan;
                             hdv.MaDonHangDvNavigation.TrangThai = "Đã thanh toán";
-
-                            var tongTienDichVu = hdv.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0);
-                            hoaDon.TongTienDichVu += tongTienDichVu;
                         }
                     }
 
-                    // Gộp phiếu đặt phòng
+                    // Xử lý phiếu đặt phòng
                     if (phieuDatPhongIds.Any())
                     {
                         var phieuDatPhongs = await _context.PhieuDatPhongs
@@ -222,8 +216,61 @@ namespace Asp.netCoreDatPhongKS.Controllers
                             {
                                 // Tính ThanhTien = TongTien - (SoTienCoc + SoTienDaThanhToan)
                                 decimal thanhTien = (phieu.TongTien) - ((phieu.SoTienCoc ?? 0) + (phieu.SoTienDaThanhToan ?? 0));
-                                hoaDon.TongTienPhong += thanhTien;
+                                tongTienPhong += thanhTien;
 
+                                phieu.TinhTrangSuDung = "Đã check-out";
+                                phieu.TrangThai = "Đã thanh toán";
+                                chiTietPhieu.Phong.TinhTrang = "Trống";
+                            }
+                        }
+                    }
+
+                    // Tạo hóa đơn tổng sau khi tính toán
+                    var hoaDon = new HoaDon
+                    {
+                        KhachHangId = khachHangId,
+                        NgayLap = DateTime.Now,
+                        NguoiLapDh = $"Tên: {userName}",
+                        TongTienPhong = tongTienPhong,
+                        TongTienDichVu = tongTienDichVu,
+                        TongTien = tongTienPhong + tongTienDichVu,
+                        HinhThucThanhToan = hinhThucThanhToan,
+                        TrangThai = "Đã thanh toán",
+                        IsKhachVangLai = false,
+                        GhiChu = null,
+                        SoTienConNo = 0
+                    };
+
+                    _context.HoaDons.Add(hoaDon);
+                    await _context.SaveChangesAsync();
+
+                    // Cập nhật MaHoaDonTong cho hóa đơn dịch vụ
+                    if (hoaDonDichVuIds.Any())
+                    {
+                        var hoaDonDichVus = await _context.HoaDonDichVus
+                            .Where(h => hoaDonDichVuIds.Contains(h.Id))
+                            .ToListAsync();
+
+                        foreach (var hdv in hoaDonDichVus)
+                        {
+                            hdv.MaHoaDonTong = hoaDon.MaHoaDon;
+                        }
+                    }
+
+                    // Thêm HoaDonPdp cho phiếu đặt phòng
+                    if (phieuDatPhongIds.Any())
+                    {
+                        var phieuDatPhongs = await _context.PhieuDatPhongs
+                            .Include(p => p.ChiTietPhieuPhongs)
+                            .Where(p => phieuDatPhongIds.Contains(p.PhieuDatPhongId))
+                            .ToListAsync();
+
+                        foreach (var phieu in phieuDatPhongs)
+                        {
+                            var chiTietPhieu = phieu.ChiTietPhieuPhongs.FirstOrDefault();
+                            if (chiTietPhieu != null)
+                            {
+                                decimal thanhTien = (phieu.TongTien) - ((phieu.SoTienCoc ?? 0) + (phieu.SoTienDaThanhToan ?? 0));
                                 var hoaDonPdp = new HoaDonPdp
                                 {
                                     MaHoaDon = hoaDon.MaHoaDon,
@@ -232,17 +279,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
                                     TrangThai = "Đã thanh toán"
                                 };
                                 _context.HoaDonPdps.Add(hoaDonPdp);
-
-                                phieu.TinhTrangSuDung = "Đã check-out";
-                                phieu.TrangThai = "Đã thanh toán";
-                                chiTietPhieu.Phong.TinhTrang = "Trống";
-
                             }
                         }
                     }
-
-                    // Tính tổng tiền hóa đơn
-                    hoaDon.TongTien = hoaDon.TongTienPhong ?? 0 + hoaDon.TongTienDichVu ?? 0;
 
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
