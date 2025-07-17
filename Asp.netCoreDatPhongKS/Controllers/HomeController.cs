@@ -28,7 +28,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
   
         private IActionResult RestrictAccessByVaiTro()
         {
-            string userName = HttpContext.Session.GetString("Hoten");
+            string userName = HttpContext.Session.GetString("Email");
 
             // Nếu có Hoten trong session, kiểm tra VaiTroId
             if (!string.IsNullOrEmpty(userName))
@@ -467,7 +467,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         <p><strong>Thông tin tài khoản:</strong></p>
                         <ul>
                             <li><strong>Email đăng nhập:</strong> {taiKhoan.Email}</li>
-                            <li><strong>Mật khẩu mặc định:</strong> {(taiKhoan.MatKhau == "1" ? "1 (Vui lòng đổi mật khẩu sau khi đăng nhập lần đầu)" : "Đã được thiết lập trước đó")}</li>
+                            <li><strong>Mật khẩu mặc định: '1', Vui lòng đăng nhập và đổi mật khẩu nếu lần đăng nhập lần đầu(*Bỏ qua nếu đã có tài khoản*) </strong></li>
                         </ul>
                         <p>Vui lòng liên hệ chúng tôi nếu có bất kỳ câu hỏi nào. Hotline: 0853461030</p>
                         <p>Trân trọng,<br>Khách sạn Thiềm Định</p>";

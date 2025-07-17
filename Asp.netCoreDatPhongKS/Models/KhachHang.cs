@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Asp.netCoreDatPhongKS.Models
 {
@@ -21,9 +22,10 @@ namespace Asp.netCoreDatPhongKS.Models
         [Display(Name = "Họ tên")]
         public string HoTen { get; set; } = null!;
 
-        [Required(ErrorMessage = "Email không được để trống")]
-        [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
-        [Display(Name = "Email")]
+
+        [Required(ErrorMessage = "Vui lòng nhập Email.")]
+        [RegularExpression(@"^[\w\.\-]+@([\w\-]+\.)+[a-zA-Z]{2,4}$", ErrorMessage = "Email không hợp lệ.")]
+        [DisplayName("Email")]
         public string Email { get; set; } = null!;
 
         [Required(ErrorMessage = "Số điện thoại không được để trống")]

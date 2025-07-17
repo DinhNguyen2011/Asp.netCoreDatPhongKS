@@ -4,7 +4,19 @@
     ViewData["Title"] = "Quản lý nhân viên";
     Layout = "~/Views/Shared/_layoutAdmin.cshtml";
 }
+<style>
+    .action-column {
+        white-space: nowrap; /* Ngăn xuống dòng */
+        min-width: 150px; /* Đặt chiều rộng tối thiểu cho cột Hành động */
+    }
 
+        /* Giảm khoảng cách giữa các nút */
+        .action-column .btn-sm {
+            margin-right: 0.25rem; /* Giảm margin */
+            padding: 0.25rem 0.5rem; /* Giảm padding */
+            font-size: 0.85rem; /* Giảm kích thước chữ */
+        }
+</style>
 <h2>Quản lý nhân viên</h2>
 
 <p>
@@ -30,7 +42,7 @@
                 <th class="d-none d-md-table-cell">CCCD</th>
                 <th class="d-none d-lg-table-cell">Hình ảnh</th>
                 <th>Tài khoản</th>
-                <th class="d-none d-md-table-cell">Ngày tạo</th>
+           @*      <th class="d-none d-md-table-cell">Ngày tạo</th> *@
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -50,8 +62,8 @@
                         }
                     </td>
                     <td>@item.TaiKhoan?.Email</td>
-                    <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
-                    <td>
+@*                     <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td> *@
+                    <td class="action-column">
                         <a asp-action="Edit" asp-route-id="@item.NhanVienId" class="btn btn-warning btn-sm">Sửa</a>
                         <a asp-action="Delete" asp-route-id="@item.NhanVienId" class="btn btn-danger btn-sm">Xóa</a>
                     </td>

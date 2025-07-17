@@ -16,7 +16,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
         }
         private IActionResult RestrictAccessByVaiTro()
         {
-            string userName = HttpContext.Session.GetString("Hoten");
+            string userName = HttpContext.Session.GetString("Email");
 
             // Nếu có Hoten trong session, kiểm tra VaiTroId
             if (!string.IsNullOrEmpty(userName))

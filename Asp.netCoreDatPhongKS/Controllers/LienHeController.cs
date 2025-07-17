@@ -24,7 +24,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
         public async Task<IActionResult> Index()
         {
 
-            string userName = HttpContext.Session.GetString("Hoten");
+            string userName = HttpContext.Session.GetString("Email");
             if (!string.IsNullOrEmpty(userName))
             {
                 ViewData["Hoten"] = userName;

@@ -30,7 +30,7 @@
             border-color: #d168065e;
             outline: none;
         }
-
+/* 
     .lienhe-floating-label {
         position: absolute;
         pointer-events: none;
@@ -40,7 +40,7 @@
         color: #999;
         font-size: 16px;
     }
-
+ */
   
 
     .lienhe-map-container {
@@ -112,26 +112,26 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <div class="mb-4 position-relative">
-                            <input asp-for="HoTen" class="form-control px-3 py-2" placeholder=" " aria-labelledby="hoten-label" />
                             <label for="HoTen" id="hoten-label" class="lienhe-floating-label">Họ và Tên</label>
+                            <input asp-for="HoTen" class="form-control px-3 py-2" placeholder=" " aria-labelledby="hoten-label" />
                             <span asp-validation-for="HoTen" class="text-danger"></span>
                         </div>
 
                         <div class="mb-4 position-relative">
-                            <input asp-for="Email" class="form-control px-3 py-2" placeholder=" " aria-labelledby="email-label" />
                             <label for="Email" id="email-label" class="lienhe-floating-label">Email</label>
+                            <input asp-for="Email" class="form-control px-3 py-2" placeholder=" " aria-labelledby="email-label" />
                             <span asp-validation-for="Email" class="text-danger"></span>
                         </div>
 
                         <div class="mb-4 position-relative">
-                            <input asp-for="SoDienThoai" class="form-control px-3 py-2" placeholder=" " aria-labelledby="sodienthoai-label" />
                             <label for="SoDienThoai" id="sodienthoai-label" class="lienhe-floating-label">Số Điện Thoại (Tùy chọn)</label>
+                            <input asp-for="SoDienThoai" class="form-control px-3 py-2" placeholder=" " aria-labelledby="sodienthoai-label" />
                             <span asp-validation-for="SoDienThoai" class="text-danger"></span>
                         </div>
 
                         <div class="mb-4 position-relative">
-                            <textarea asp-for="NoiDung" rows="6" class="form-control px-3 py-2" placeholder=" " aria-labelledby="noidung-label"></textarea>
                             <label for="NoiDung" id="noidung-label" class="lienhe-floating-label">Nội Dung Liên Hệ</label>
+                            <textarea asp-for="NoiDung" rows="6" class="form-control px-3 py-2" placeholder=" " aria-labelledby="noidung-label"></textarea>
                             <span asp-validation-for="NoiDung" class="text-danger"></span>
                         </div>
 

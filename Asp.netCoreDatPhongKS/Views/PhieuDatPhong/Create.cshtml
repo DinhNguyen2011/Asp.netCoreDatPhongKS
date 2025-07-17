@@ -63,13 +63,13 @@
 
         <div class="form-group">
             <label>Ngày nhận phòng <span class="text-danger">*</span></label>
-            <input asp-for="NgayNhan" type="date" class="form-control" required id="ngayNhan"
+            <input asp-for="NgayNhan" type="date" class="form-control" id="ngayNhan" required
                    min="@DateTime.Now.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="NgayNhan" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label>Ngày trả phòng <span class="text-danger">*</span></label>
-            <input asp-for="NgayTra" type="date" class="form-control" required id="ngayTra"
+            <input asp-for="NgayTra" type="date" class="form-control" id="ngayTra" required
                    min="@DateTime.Now.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="NgayTra" class="text-danger"></span>
         </div>

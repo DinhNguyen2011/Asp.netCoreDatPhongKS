@@ -413,20 +413,27 @@ wwwroot\css\ajax-loader.gif
 wwwroot\css\bootstrap.min.css
 wwwroot\css\datphong.css
 wwwroot\css\dichvu.css
+wwwroot\css\dn-dk.css
+wwwroot\css\DoanhThu.css
 wwwroot\css\dsLPhong.css
 wwwroot\css\gioithieu.css
+wwwroot\css\hoadontong.css
+wwwroot\css\hoithao.css
 wwwroot\css\home-hotel.css
+wwwroot\css\KhachHangLienHe.css
+wwwroot\css\LienHe.css
 wwwroot\css\PhieuDatPhongAdmin.css
 wwwroot\css\phong-timkiem.css
 wwwroot\css\profile-admin.css
 wwwroot\css\profile-user.css
 wwwroot\css\reponPhoneLayout.css
 wwwroot\css\site.css
-wwwroot\css\dn-dk.css
+wwwroot\css\style.css
 wwwroot\css\vendor.css
 wwwroot\css\xulypdp.css
 wwwroot\favicon.ico
 wwwroot\images\233c082e-611b-40e9-9d58-49c56db70544.png
+wwwroot\images\7133e263-aa7d-40e3-a820-ea4f2cd3eaca.jpg
 wwwroot\images\7up.jpg
 wwwroot\images\about-img1.jpg
 wwwroot\images\about-img2.jpg
@@ -460,6 +467,7 @@ wwwroot\images\com-ga-hai-nam.jpg
 wwwroot\images\com-tam-suon-nuong.jpg
 wwwroot\images\dichvu\e3063cc8-35a5-4dcb-b939-10bfd1483e6a.png
 wwwroot\images\don-phong.jpg
+wwwroot\images\ef215c5c-f149-4a6b-b7d0-47f5ca5de6cd.png
 wwwroot\images\espresso.jpg
 wwwroot\images\f67a04f3-14cd-4882-943f-38ddc23415e7.png
 wwwroot\images\giat-la.jpg
@@ -479,6 +487,11 @@ wwwroot\images\lau-bo-nhung-giam.jpg
 wwwroot\images\lau-thai-hai-san.jpg
 wwwroot\images\lgmain.png
 wwwroot\images\lgogt.jpg
+wwwroot\images\loaiphong\Phòng thương gia_df48f16a-53b6-4b56-b667-ecfd4fd6c759.jpg
+wwwroot\images\loaiphong\Phòng thường_1adc85d3-b99e-45ec-b403-9494cbd609e9.jpg
+wwwroot\images\loaiphong\Phòng thường_66a91bf9-81ac-4aea-8fe8-99bb908e73a2.jpg
+wwwroot\images\loaiphong\Phòng Vip_b20ad25b-ea93-4f3d-a59f-52cba3511ff1.jpg
+wwwroot\images\loaiphong\test_04b1f73a-6207-47ee-9be5-ac17bad157fd.jpg
 wwwroot\images\loaiphong\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png
 wwwroot\images\logomain.png
 wwwroot\images\luxury1.jpg
@@ -488,6 +501,7 @@ wwwroot\images\main-logo-footer.png
 wwwroot\images\mi-quang.jpg
 wwwroot\images\mi-y-bolognese.jpg
 wwwroot\images\nhanvien\DINH NGUYEN_c5e4673e-b23c-4c55-8c48-1f260debbb50.png
+wwwroot\images\nhanvien\DINH NGUYEN_f61827b8-a383-4e50-820b-4143ed2c5a13.png
 wwwroot\images\nhanvien\Dinh oi di lam di huhu _0b26353e-9e17-48a3-bd67-ecdf540d7fd7.png
 wwwroot\images\nhanvien\Dinh oi di lam di huhu _27fd42c3-1a5f-4a6a-a24b-5764d757338f.png
 wwwroot\images\nhanvien\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f3555d7.png
@@ -503,7 +517,36 @@ wwwroot\images\pepsi.jpg
 wwwroot\images\pho-bo.jpg
 wwwroot\images\pho-ga.jpg
 wwwroot\images\phong-gym.jpg
+wwwroot\images\phong-hop.png
+wwwroot\images\phong-hop1.png
+wwwroot\images\phong\001_042dd321-4ccc-473d-8460-993ef8e47ec7.jpg
+wwwroot\images\phong\001_0f0ba1af-86db-4d95-841d-c02565c33476.jpg
+wwwroot\images\phong\001_17164b27-907a-4c57-8780-2a8c622a3dd0.jpg
+wwwroot\images\phong\001_50bbf9b3-52d5-4d39-b779-c132ae55e197.png
+wwwroot\images\phong\001_ae2c28ce-7c5f-447a-bcfe-81902d09adea.jpg
+wwwroot\images\phong\001_c5872ef3-be0d-4469-99a1-840dc7425900.png
+wwwroot\images\phong\001_de442574-5099-47c5-89e4-3ea0f55a8f63.jpg
+wwwroot\images\phong\001_df5fcf26-be57-4a21-a4e7-d9cc411c9a99.jpg
+wwwroot\images\phong\001_e48598f3-3fe4-4788-b86f-f4ba15c329dc.jpg
+wwwroot\images\phong\001_f568f29a-88b8-438b-93b8-b5231b2aab67.png
+wwwroot\images\phong\001_ff05bfd9-fc2a-4fc7-a0a3-18273e6b4607.jpg
+wwwroot\images\phong\002_1f5bf98c-c793-46ab-9dc2-379ba6a89fa7.jpg
+wwwroot\images\phong\002_a12781ca-1037-4058-9570-a60b2b86a028.jpg
+wwwroot\images\phong\002_a181dbc0-71b0-44dc-a7f9-d1712a739922.jpg
+wwwroot\images\phong\002_ab715d3e-80cd-4db4-ae05-bf9f8863f08f.jpg
+wwwroot\images\phong\002_b69b9661-fe50-4b54-8dba-566c5eb3fefe.jpg
+wwwroot\images\phong\002_cbb8145b-9442-4bf4-b9b7-33371e1d4a7d.jpg
+wwwroot\images\phong\002_dec12865-6459-48b5-8c49-8008c9a3b641.jpg
+wwwroot\images\phong\002_f50c8d2b-9f53-4645-9882-560f870302de.jpg
+wwwroot\images\phong\004_0cc49cf4-c213-4b9a-9599-50d2acdcf60c.jpg
+wwwroot\images\phong\004_25fcffa3-c8b2-4d36-b0dd-c561afca6b4f.jpg
+wwwroot\images\phong\004_777b0019-c9a8-440c-8d61-d483abe48577.jpg
+wwwroot\images\phong\004_d355b21c-e9a7-4b01-b158-d4e7d02345e7.jpg
 wwwroot\images\phong\102_193c2b53-0a2d-4319-a7c2-4205e17b06ce.png
+wwwroot\images\phong\105_6ac529b7-578c-4408-9fb5-225512a93f74.jpg
+wwwroot\images\phong\105_792de1dd-e138-4ba3-ac9c-1d742fe98a00.jpg
+wwwroot\images\phong\105_7b7a884e-0f67-457a-a103-97fe3bbc78ba.jpg
+wwwroot\images\phong\105_e8af2e3c-2958-40e7-be0c-d06cb67b3a24.jpg
 wwwroot\images\phong\111_4f8d67f5-d8fe-4485-8edd-48358aa64060.png
 wwwroot\images\phong\111_68bb50ad-aab5-4e36-93b3-b896858fb253.png
 wwwroot\images\phong\111_a99942eb-bd65-445e-9377-7c664f5bfb29.png
@@ -537,7 +580,6 @@ wwwroot\images\tra-sua.jpg
 wwwroot\images\video.jpg
 wwwroot\images\vip1.jpg
 wwwroot\images\xoi-ga.jpg
-wwwroot\images\yoga.jpg
 wwwroot\js\ajax-loader.gif
 wwwroot\js\bootstrap.bundle.min.js
 wwwroot\js\jquery-1.11.0.min.js
@@ -603,46 +645,3 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\css\hoadontong.css
-wwwroot\css\DoanhThu.css
-wwwroot\css\LienHe.css
-wwwroot\css\KhachHangLienHe.css
-wwwroot\css\hoithao.css
-wwwroot\images\phong-hop.png
-wwwroot\images\phong-hop1.png
-wwwroot\css\style.css
-wwwroot\images\ef215c5c-f149-4a6b-b7d0-47f5ca5de6cd.png
-wwwroot\images\loaiphong\Phòng thường_66a91bf9-81ac-4aea-8fe8-99bb908e73a2.jpg
-wwwroot\images\phong\001_e48598f3-3fe4-4788-b86f-f4ba15c329dc.jpg
-wwwroot\images\phong\001_ae2c28ce-7c5f-447a-bcfe-81902d09adea.jpg
-wwwroot\images\7133e263-aa7d-40e3-a820-ea4f2cd3eaca.jpg
-wwwroot\images\loaiphong\Phòng thường_1adc85d3-b99e-45ec-b403-9494cbd609e9.jpg
-wwwroot\images\phong\001_17164b27-907a-4c57-8780-2a8c622a3dd0.jpg
-wwwroot\images\phong\001_50bbf9b3-52d5-4d39-b779-c132ae55e197.png
-wwwroot\images\phong\001_c5872ef3-be0d-4469-99a1-840dc7425900.png
-wwwroot\images\phong\001_f568f29a-88b8-438b-93b8-b5231b2aab67.png
-wwwroot\images\phong\001_ff05bfd9-fc2a-4fc7-a0a3-18273e6b4607.jpg
-wwwroot\images\nhanvien\DINH NGUYEN_f61827b8-a383-4e50-820b-4143ed2c5a13.png
-wwwroot\images\phong\001_042dd321-4ccc-473d-8460-993ef8e47ec7.jpg
-wwwroot\images\phong\001_0f0ba1af-86db-4d95-841d-c02565c33476.jpg
-wwwroot\images\phong\001_de442574-5099-47c5-89e4-3ea0f55a8f63.jpg
-wwwroot\images\phong\001_df5fcf26-be57-4a21-a4e7-d9cc411c9a99.jpg
-wwwroot\images\loaiphong\Phòng Vip_b20ad25b-ea93-4f3d-a59f-52cba3511ff1.jpg
-wwwroot\images\loaiphong\Phòng thương gia_df48f16a-53b6-4b56-b667-ecfd4fd6c759.jpg
-wwwroot\images\phong\002_a181dbc0-71b0-44dc-a7f9-d1712a739922.jpg
-wwwroot\images\phong\002_ab715d3e-80cd-4db4-ae05-bf9f8863f08f.jpg
-wwwroot\images\phong\002_b69b9661-fe50-4b54-8dba-566c5eb3fefe.jpg
-wwwroot\images\phong\002_f50c8d2b-9f53-4645-9882-560f870302de.jpg
-wwwroot\images\phong\002_1f5bf98c-c793-46ab-9dc2-379ba6a89fa7.jpg
-wwwroot\images\phong\002_a12781ca-1037-4058-9570-a60b2b86a028.jpg
-wwwroot\images\phong\002_cbb8145b-9442-4bf4-b9b7-33371e1d4a7d.jpg
-wwwroot\images\phong\002_dec12865-6459-48b5-8c49-8008c9a3b641.jpg
-wwwroot\images\phong\004_0cc49cf4-c213-4b9a-9599-50d2acdcf60c.jpg
-wwwroot\images\phong\004_25fcffa3-c8b2-4d36-b0dd-c561afca6b4f.jpg
-wwwroot\images\phong\004_777b0019-c9a8-440c-8d61-d483abe48577.jpg
-wwwroot\images\phong\004_d355b21c-e9a7-4b01-b158-d4e7d02345e7.jpg
-wwwroot\images\phong\105_6ac529b7-578c-4408-9fb5-225512a93f74.jpg
-wwwroot\images\phong\105_792de1dd-e138-4ba3-ac9c-1d742fe98a00.jpg
-wwwroot\images\phong\105_7b7a884e-0f67-457a-a103-97fe3bbc78ba.jpg
-wwwroot\images\phong\105_e8af2e3c-2958-40e7-be0c-d06cb67b3a24.jpg
-wwwroot\images\loaiphong\test_04b1f73a-6207-47ee-9be5-ac17bad157fd.jpg

@@ -20,6 +20,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         }
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var danhGias = await _context.DanhGia
                 .Include(d => d.Phong)
                 .Include(d => d.DichVu)

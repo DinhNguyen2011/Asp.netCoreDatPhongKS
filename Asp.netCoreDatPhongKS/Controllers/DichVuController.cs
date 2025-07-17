@@ -19,7 +19,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         private IActionResult RestrictAccessByVaiTro()
         {
-            string userName = HttpContext.Session.GetString("Hoten");
+            string userName = HttpContext.Session.GetString("Email");
 
             // Nếu có Hoten trong session, kiểm tra VaiTroId
             if (!string.IsNullOrEmpty(userName))
@@ -428,9 +428,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
         }
         [RestrictToAdmin]
 
-        // POST: DichVu/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [RestrictToAdmin]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             string userName = HttpContext.Session.GetString("Hoten");
@@ -438,19 +438,44 @@ namespace Asp.netCoreDatPhongKS.Controllers
             {
                 ViewData["Hoten"] = userName;
             }
-            var dichVu = await _context.DichVus.FindAsync(id);
+
+            var dichVu = await _context.DichVus
+                .Include(d => d.DanhGia) // Include related DanhGia
+                .Include(d => d.ChiTietDonHangDichVus) // Include related DonHangDichVu
+                .FirstOrDefaultAsync(d => d.DichVuId == id);
+
             if (dichVu == null)
-                return NotFound();
+            {
+                TempData["Error"] = "Dịch vụ không tồn tại!";
+                return RedirectToAction(nameof(IndexQLDichVu));
+            }
+
+            // Check for foreign key constraints
+            if (dichVu.DanhGia.Any())
+            {
+                TempData["Error"] = "Không thể xóa dịch vụ vì đã có đánh giá liên quan!";
+                return RedirectToAction(nameof(IndexQLDichVu));
+            }
+
+            if (dichVu.ChiTietDonHangDichVus.Any())
+            {
+                TempData["Error"] = "Không thể xóa dịch vụ vì đã có dịch vụ liên quan!";
+                return RedirectToAction(nameof(IndexQLDichVu));
+            }
 
             try
             {
+                // Delete associated image file
                 if (!string.IsNullOrEmpty(dichVu.HinhAnh))
                 {
                     var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", dichVu.HinhAnh.TrimStart('/'));
                     if (System.IO.File.Exists(filePath))
+                    {
                         System.IO.File.Delete(filePath);
+                    }
                 }
 
+                // Proceed with deletion
                 _context.DichVus.Remove(dichVu);
                 await _context.SaveChangesAsync();
                 TempData["Success"] = "Xóa dịch vụ thành công.";

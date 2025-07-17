@@ -289,17 +289,37 @@ namespace Asp.netCoreDatPhongKS.Controllers
             return View(phong);
         }
 
-        // POST: Phong/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var phong = await _context.Phongs.FindAsync(id);
-            if (phong != null)
+            var phong = await _context.Phongs
+                .Include(p => p.ChiTietPhieuPhongs) // Include related ChiTietPhieuPhong
+                .Include(p => p.DanhGia) // Include related DanhGia
+                .FirstOrDefaultAsync(p => p.PhongId == id);
+
+            if (phong == null)
             {
-                _context.Phongs.Remove(phong);
-                await _context.SaveChangesAsync();
+                TempData["ErrorMessage"] = "Phòng không tồn tại!";
+                return RedirectToAction(nameof(Index));
             }
+
+            // Check for foreign key constraints
+            if (phong.ChiTietPhieuPhongs.Any())
+            {
+                TempData["ErrorMessage"] = "Không thể xóa phòng vì đã có phiếu đặt phòng liên quan!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            if (phong.DanhGia.Any())
+            {
+                TempData["ErrorMessage"] = "Không thể xóa phòng vì đã có đánh giá liên quan!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // If no constraints, proceed with deletion
+            _context.Phongs.Remove(phong);
+            await _context.SaveChangesAsync();
             TempData["SuccessMessage"] = "Xóa phòng thành công!";
 
             return RedirectToAction(nameof(Index));

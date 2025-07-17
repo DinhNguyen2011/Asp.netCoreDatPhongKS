@@ -48,12 +48,12 @@
                             </td>
                             <td>@donHang.ChiTietDonHangDichVus.Sum(ct => ct.ThanhTien)?.ToString("N0") VNĐ</td>
                             <td>@donHang.TrangThai</td>
-                            @* <td>
+                            <td>
                                 @if (donHang.TrangThai == "Đã thanh toán")
                                 {
                                     <a asp-controller="DanhGia" asp-action="DichVu" asp-route-donHangDichVuId="@donHang.MaDonHangDv" class="btn btn-primary btn-sm">Đánh giá</a>
                                 }
-                            </td> *@
+                            </td>
                         </tr>
                     }
                 </tbody>

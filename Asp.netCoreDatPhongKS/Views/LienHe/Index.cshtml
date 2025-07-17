@@ -5,39 +5,72 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 <link href="~/css/LienHe.css" rel="stylesheet" />
-<h1>Quản lý liên hệ</h1>
+<style>
+    .action-column {
+        white-space: nowrap; /* Ngăn xuống dòng */
+        min-width: 150px; /* Đặt chiều rộng tối thiểu cho cột Hành động */
+    }
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Tạo mới</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.HoTen)</th>
-            <th>@Html.DisplayNameFor(model => model.Email)</th>
-            <th>SĐT</th>
-            <th>@Html.DisplayNameFor(model => model.NoiDung)</th>
-            <th>@Html.DisplayNameFor(model => model.NgayGui)</th>
-            <th>@Html.DisplayNameFor(model => model.TrangThai)</th>
-            <th>Thao tác</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
-                <td>@Html.DisplayFor(modelItem => item.NoiDung)</td>
-                <td>@Html.DisplayFor(modelItem => item.NgayGui)</td>
-                <td>@Html.DisplayFor(modelItem => item.TrangThai)</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.LienHeId" class="btn btn-primary" >Sửa</a>
-                  @*   <a asp-action="Details" asp-route-id="@item.LienHeId" class="btn btn-primary">Chi tiết</a> *@
-                    <a asp-action="Delete" asp-route-id="@item.LienHeId" class="btn btn-danger" >Xóa</a>
-                </td>
-            </tr>
+        /* Giảm khoảng cách giữa các nút */
+        .action-column .btn-sm {
+            margin-right: 0.25rem; /* Giảm margin */
+            padding: 0.25rem 0.5rem; /* Giảm padding */
+            font-size: 0.85rem; /* Giảm kích thước chữ */
         }
-    </tbody>
-</table>
+</style>
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">Quản lý liên hệ</h2>
+
+    <div class="mb-3">
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Tạo mới
+        </a>
+    </div>
+
+    <div class="table-responsive shadow rounded">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.HoTen)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>SĐT</th>
+                    <th>@Html.DisplayNameFor(model => model.NoiDung)</th>
+                    <th>@Html.DisplayNameFor(model => model.NgayGui)</th>
+                    <th>@Html.DisplayNameFor(model => model.TrangThai)</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.HoTen)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoDienThoai)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NoiDung)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NgayGui)</td>
+                        <td>
+                            @if (item.TrangThai == "Đã xử lý")
+                            {
+                                <span class="badge bg-success">Đã xử lý</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-warning text-dark">Chưa xử lý</span>
+                            }
+                        </td>
+                        <td class="action-column">
+                            <a asp-action="Edit" asp-route-id="@item.LienHeId" class="btn btn-sm btn-warning me-1">
+                                <i class="bi bi-pencil-square"></i> Sửa
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.LienHeId" class="btn btn-sm btn-danger"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa?');">
+                                <i class="bi bi-trash3-fill"></i> Xóa
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

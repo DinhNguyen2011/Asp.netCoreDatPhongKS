@@ -92,11 +92,16 @@
 
     @if (TempData["Success"] != null)
     {
-        <div class="notification success">@TempData["Success"]</div>
+        <div class="alert alert-success" role="alert">
+            @TempData["Success"]
+        </div>
     }
+
     @if (TempData["Error"] != null)
     {
-        <div class="notification error">@TempData["Error"]</div>
+        <div class="alert alert-danger" role="alert">
+            @TempData["Error"]
+        </div>
     }
 
     <div class="form-container">

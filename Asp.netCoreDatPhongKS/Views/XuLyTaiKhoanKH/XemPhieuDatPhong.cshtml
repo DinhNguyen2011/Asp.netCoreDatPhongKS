@@ -75,10 +75,10 @@
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn hủy phiếu này?')">Hủy phiếu</button>
                         </form>
                     }
-                    @* @if (Model.TinhTrangSuDung != null && Model.TinhTrangSuDung == "Đã check-out")
+                    @if (Model.TinhTrangSuDung != null && Model.TinhTrangSuDung == "Đã check-out")
                     {
                         <a asp-controller="DanhGia" asp-action="Phong" asp-route-phieuDatPhongId="@Model.PhieuDatPhongId" class="btn btn-primary">Đánh giá</a>
-                    } *@
+                    }
                 </div>
             </div>
         </div>

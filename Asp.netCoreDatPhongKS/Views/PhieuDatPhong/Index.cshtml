@@ -24,6 +24,10 @@
         <br />
         <strong class="text-danger">* Chú ý:</strong> Khi khách đặt phòng qua website và đã check-out, cần cập nhật trạng thái "Đã check-out".
     </div>
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-warning">@TempData["Success"]</div>
+    }
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead>

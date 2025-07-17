@@ -21,6 +21,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         // GET: ChiTietPDP/Index
         public async Task<IActionResult> Index()
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var chiTietPhieuPhongs = await _context.ChiTietPhieuPhongs
                 .Include(c => c.PhieuDatPhong)
                 .Include(c => c.Phong)

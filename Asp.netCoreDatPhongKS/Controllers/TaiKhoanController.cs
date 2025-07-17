@@ -92,8 +92,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                         if (taiKhoan.VaiTroId == 1 || taiKhoan.VaiTroId == 2)
                             return RedirectToAction("Index", "HomeAdmin");
-                        else
+                        else if (taiKhoan.VaiTroId == 3)
                             return RedirectToAction("Index", "Home");
+                        else return RedirectToAction("Error", "Home");
                     }
                 }
                 TempData["LoginError"] = "Thông tin đăng nhập hoặc mật khẩu không đúng.";
