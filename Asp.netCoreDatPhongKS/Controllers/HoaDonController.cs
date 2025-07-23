@@ -121,8 +121,10 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentTrangThai"] = trangThai;
-
-            return View(hoaDonViewModels);
+            var sapxepngay = hoaDonViewModels
+             .OrderBy(hd => Math.Abs((hd.NgayLap.GetValueOrDefault(DateTime.Now) - DateTime.Now).TotalDays))
+              .ToList();
+            return View(sapxepngay);
         }
 
         // Action CreateHoaDonTong: Form tạo hóa đơn tổng khi check-out

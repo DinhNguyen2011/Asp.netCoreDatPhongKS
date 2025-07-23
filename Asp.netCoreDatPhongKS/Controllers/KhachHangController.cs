@@ -95,6 +95,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                 _context.Add(khachHang);
                 await _context.SaveChangesAsync();
+                TempData["Success"] = "Thêm thành công!";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -186,6 +187,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     }
                     throw;
                 }
+                TempData["Success"] = "Sửa thành công!";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -275,6 +277,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             _context.KhachHangs.Remove(khachHang);
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Xóa thành công!";
             return RedirectToAction(nameof(Index));
         }
     }

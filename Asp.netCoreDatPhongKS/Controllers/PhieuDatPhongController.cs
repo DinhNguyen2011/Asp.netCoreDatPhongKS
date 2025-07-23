@@ -37,7 +37,12 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     .ThenInclude(c => c.Phong)
                     .ThenInclude(p => p.LoaiPhong)
                     .ToListAsync();
-                return View(phieuDatPhongs);
+                var sapxepngay = phieuDatPhongs
+                    .OrderBy(p => Math.Abs((p.NgayDat.GetValueOrDefault() - DateTime.Now).TotalDays))
+                   //sx tăng so với datetime.now, Math.Abs giá trị tuyệt đối gần nhất 
+                   .ToList();
+                return View(sapxepngay);
+
             }
             catch (Exception ex)
             {
@@ -76,7 +81,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             ViewBag.TrangThaiOptions = new List<SelectListItem>
             {
                 new SelectListItem { Value = "Chưa thanh toán", Text = "Chưa thanh toán" },
-                new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
+              //  new SelectListItem { Value = "Đã thanh toán", Text = "Đã thanh toán" },
                 new SelectListItem { Value = "Hủy", Text = "Hủy" },
             };
                // new SelectListItem { Value = "Hoàn thành", Text = "Hoàn thành" }

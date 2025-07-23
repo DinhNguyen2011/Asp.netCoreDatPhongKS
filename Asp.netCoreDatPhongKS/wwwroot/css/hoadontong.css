@@ -2,7 +2,8 @@
 body {
     font-family: 'Segoe UI', sans-serif;
     background-color: #f5f9ff;
-    color: #333;
+   
+    margin:10px;
 }
 
 /* Tiêu đề */
@@ -36,9 +37,9 @@ h2 {
     }
 
     /* Header bảng */
-    .table thead.table-dark th {
-        background-color: #1d4ed8; /* Màu xanh dương đậm */
-        color: #fff;
+    .table thead.table-light th {
+       
+        color: #333;
     }
 
     /* Hàng chẵn/lẻ */
@@ -54,6 +55,7 @@ h2 {
 /* Button */
 .btn {
     border-radius: 4px;
+
 }
 
 .btn-info {

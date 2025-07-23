@@ -489,6 +489,7 @@ wwwroot\images\lgmain.png
 wwwroot\images\lgogt.jpg
 wwwroot\images\loaiphong\Phòng thương gia_df48f16a-53b6-4b56-b667-ecfd4fd6c759.jpg
 wwwroot\images\loaiphong\Phòng thường_1adc85d3-b99e-45ec-b403-9494cbd609e9.jpg
+wwwroot\images\loaiphong\Phòng thường_4346030e-ad76-4e66-9fc6-a811b77d7f9e.jpg
 wwwroot\images\loaiphong\Phòng thường_66a91bf9-81ac-4aea-8fe8-99bb908e73a2.jpg
 wwwroot\images\loaiphong\Phòng Vip_b20ad25b-ea93-4f3d-a59f-52cba3511ff1.jpg
 wwwroot\images\loaiphong\test_04b1f73a-6207-47ee-9be5-ac17bad157fd.jpg
@@ -542,6 +543,10 @@ wwwroot\images\phong\004_0cc49cf4-c213-4b9a-9599-50d2acdcf60c.jpg
 wwwroot\images\phong\004_25fcffa3-c8b2-4d36-b0dd-c561afca6b4f.jpg
 wwwroot\images\phong\004_777b0019-c9a8-440c-8d61-d483abe48577.jpg
 wwwroot\images\phong\004_d355b21c-e9a7-4b01-b158-d4e7d02345e7.jpg
+wwwroot\images\phong\008_337afc64-31eb-45aa-9912-016edc4d12c5.jpg
+wwwroot\images\phong\008_77f10bd5-fd78-4582-8756-63bfade295c4.jpg
+wwwroot\images\phong\008_9362ceb0-bf25-4ce2-8721-647816ae7619.jpg
+wwwroot\images\phong\008_a9ac373c-00c3-4bf5-8acd-bde4fc16e8c1.jpg
 wwwroot\images\phong\102_193c2b53-0a2d-4319-a7c2-4205e17b06ce.png
 wwwroot\images\phong\105_6ac529b7-578c-4408-9fb5-225512a93f74.jpg
 wwwroot\images\phong\105_792de1dd-e138-4ba3-ac9c-1d742fe98a00.jpg

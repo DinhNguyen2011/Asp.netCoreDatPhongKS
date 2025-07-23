@@ -23,7 +23,7 @@
                     <option value="">Chọn khách hàng</option>
                     @foreach (var khachHang in ViewBag.KhachHangs ?? new List<Asp.netCoreDatPhongKS.Models.KhachHang>())
                     {
-                        <option value="@khachHang.KhachHangId">@khachHang.HoTen (@khachHang.Email)</option>
+                        <option value="@khachHang.KhachHangId">@khachHang.HoTen (@khachHang.Email - @khachHang.Cccd)</option>
                     }
                 </select>
                 <button type="button" class="btn btn-primary ml-2" onclick="showAddKhachHangForm()">Thêm khách hàng mới</button>

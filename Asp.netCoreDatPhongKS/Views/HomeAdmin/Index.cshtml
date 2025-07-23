@@ -1,91 +1,99 @@
 ﻿@{
+    ViewData["Title"] = "Tổng quan hệ thống quản lý khách sạn";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background-color: #f4f4f4;
-    }
 
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
+<script src="https://cdn.tailwindcss.com"></script>
 
-    h1 {
-        color: #333;
-        text-align: center;
-        margin-bottom: 20px;
-    }
+<div class="p-6 bg-gray-100 min-h-screen">
+    <h1 class="text-2xl font-bold mb-1">Tổng quan hệ thống quản lý khách sạn 🏨</h1>
+    <p class="text-gray-600 mb-6">Nền tảng giúp quản lý phòng, khách hàng, đặt phòng và doanh thu một cách dễ dàng, trực quan và hiệu quả.</p>
 
-    .rule-container {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    .rule-item {
-        margin-bottom: 15px;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }
-
-        .rule-item:last-child {
-            border-bottom: none;
-        }
-
-    .rule-title {
-        font-weight: bold;
-        color: #2c3e50;
-        margin-bottom: 5px;
-    }
-
-    .rule-content {
-        color: #555;
-    }
-
-    .back-button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #ccc;
-        color: #333;
-        text-decoration: none;
-        border-radius: 4px;
-        margin-top: 20px;
-        text-align: center;
-    }
-
-        .back-button:hover {
-            background-color: #bbb;
-        }
-</style>
-<h1 style="color:red">Xin chào  @ViewData["Hoten"]</h1>
-<div class="container">
-    <h1>Nội quy khách sạn</h1>
-    <div class="rule-container">
-        <div class="rule-item">
-            <div class="rule-title">1. Quy định quan trọng</div>
-            <div class="rule-content">Luôn tươi cười, lễ phép lịch sự với khách hàng, vui lòng khách đến hài lòng khách đi.</div>
+    <!-- Thống kê dạng ô -->
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-blue-500">
+            <p class="text-gray-500">Tổng số phòng</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.TotalRooms</h2>
         </div>
-        <div class="rule-item">
-            <div class="rule-title">2. Quy tắc ứng xử</div>
-            <div class="rule-content">Khách hàng phải giữ gìn trật tự, không gây ồn ào sau 22:00 để đảm bảo sự thoải mái cho các khách hàng khác.</div>
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-green-500">
+            <p class="text-gray-500">Phòng đang sử dụng</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.OccupiedRooms</h2>
         </div>
-        <div class="rule-item">
-            <div class="rule-title">3. Giữ gìn vệ sinh</div>
-            <div class="rule-content">Khách hàng vui lòng giữ gìn vệ sinh chung, không vứt rác bừa bãi trong khuôn viên khách sạn.</div>
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-yellow-500">
+            <p class="text-gray-500">Phòng đã đặt</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.BookedRooms</h2>
         </div>
-        <div class="rule-item">
-            <div class="rule-title">4. Hút thuốc</div>
-            <div class="rule-content">Hút thuốc chỉ được phép ở khu vực được chỉ định. Vi phạm sẽ bị phạt theo quy định của khách sạn.</div>
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-red-500">
+            <p class="text-gray-500">Phòng trống</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.AvailableRooms</h2>
         </div>
-        <div class="rule-item">
-            <div class="rule-title">5. Thanh toán</div>
-            <div class="rule-content">Khách hàng cần thanh toán đầy đủ chi phí trước khi rời khách sạn. Mọi chi phí phát sinh sẽ được thông báo trước.</div>
+
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-purple-500">
+            <p class="text-gray-500">Tổng số khách</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.TotalCustomers</h2>
+        </div>
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-indigo-500">
+            <p class="text-gray-500">Tổng đơn đặt</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.TotalBookings</h2>
+        </div>
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-pink-500">
+            <p class="text-gray-500">Doanh thu tháng này</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.MonthlyRevenue.ToString("N0")đ</h2>
+        </div>
+        <div class="bg-white p-5 rounded-lg shadow border-l-4 border-gray-500">
+            <p class="text-gray-500">Nhân viên</p>
+            <h2 class="text-2xl font-bold mt-1">@ViewBag.TotalStaff</h2>
         </div>
     </div>
 
+    <!-- Biểu đồ -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Biểu đồ cột -->
+        <div class="bg-white rounded-lg shadow p-5">
+            <h3 class="text-lg font-semibold mb-3">Phân Loại Phòng</h3>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <!-- Biểu đồ tròn -->
+        <div class="bg-white rounded-lg shadow p-5">
+            <h3 class="text-lg font-semibold mb-3">Tỉ lệ Đặt Phòng Theo Loại</h3>
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const barChart = new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(ViewBag.RoomTypeLabels)),
+            datasets: [{
+                label: 'Số lượng',
+                data: @Html.Raw(Json.Serialize(ViewBag.RoomTypeData)),
+                backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    const pieChart = new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: @Html.Raw(Json.Serialize(ViewBag.BookingRatioLabels)),
+            datasets: [{
+                label: 'Tỉ lệ đặt phòng',
+                data: @Html.Raw(Json.Serialize(ViewBag.BookingRatioData)),
+                backgroundColor: ['#60A5FA', '#34D399', '#F87171']
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+</script>

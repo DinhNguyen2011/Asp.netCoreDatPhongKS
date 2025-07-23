@@ -7,7 +7,10 @@
 
 <div class="container mt-4">
     <h2>Quản lý tài khoản</h2>
-
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-warning">@TempData["Success"]</div>
+    }
         <a href="@Url.Action("Create", "QuanLyTaiKhoan")" class="btn btn-primary mb-3">Thêm tài khoản mới</a>
     <div class="d-flex justify-content-between mb-3">
 
