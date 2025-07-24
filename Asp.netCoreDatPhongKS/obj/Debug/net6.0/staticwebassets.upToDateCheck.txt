@@ -509,6 +509,7 @@ wwwroot\images\nhanvien\Dinh oi di lam di huhu _e4462e0c-c512-40df-ac42-43447f35
 wwwroot\images\nhanvien\Dinh oi di lam di huhu _ee235be8-2fb9-4ccc-9aec-b172f57dc895.png
 wwwroot\images\nhanvien\NGUYEN VAN DAT _9a70b99e-42f5-4890-be4b-bde583eb4387.png
 wwwroot\images\nhanvien\NGUYEN VAN DAT _e92ca45d-d00a-411c-908e-bfb135d05c2e.png
+wwwroot\images\nhanvien\Đoàn Việt Hoàn_1ad480a3-1595-4cea-ac23-3ae5dcd96ab5.jpg
 wwwroot\images\nuoc-cam.jpg
 wwwroot\images\nuoc-chanh.jpg
 wwwroot\images\nuoc-suoi.jpg

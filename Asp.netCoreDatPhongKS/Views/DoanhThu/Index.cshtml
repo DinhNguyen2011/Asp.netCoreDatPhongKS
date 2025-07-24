@@ -1,12 +1,10 @@
-﻿@model IEnumerable<Asp.netCoreDatPhongKS.Models.ViewModels.DoanhThuViewModel>
-
-@{
+﻿@{
     ViewData["Title"] = "Thống kê doanh thu";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <!-- Container chính với Tailwind CSS -->
-<div class="doanhthu-container max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg" style="height: 800px !important; ">
+<div class="doanhthu-container max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-lg" style="height: 800px !important;">
     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Thống kê doanh thu</h2>
 
     <!-- Form lọc -->
@@ -22,17 +20,30 @@
         <button type="submit" class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition duration-200">Lọc</button>
     </form>
 
-    @if (Model != null && Model.Any())
+    @if (ViewBag.ThongKe != null && ((System.Collections.IEnumerable)ViewBag.ThongKe).GetEnumerator().MoveNext())
     {
+        var thongKeList = ViewBag.ThongKe as System.Collections.IEnumerable;
+        decimal totalTongTien = 0;
+        decimal totalTongTienPhong = 0;
+        decimal totalTongTienDichVu = 0;
+
+        foreach (var item in thongKeList)
+        {
+            var dynamicItem = item as dynamic;
+            totalTongTien += dynamicItem.TongTien;
+            totalTongTienPhong += dynamicItem.TongTienPhong;
+            totalTongTienDichVu += dynamicItem.TongTienDichVu;
+        }
+
         <!-- Container chia 2 cột: Biểu đồ & Bảng -->
         <div class="flex flex-col md:flex-row gap-8">
             <!-- Biểu đồ -->
             <div class="w-full md:w-1/2">
                 <div class="chart-container mb-8">
                     <canvas id="doanhThuChart" class="w-full h-96"></canvas>
-                    <p class="text-center mt-4 text-lg font-semibold text-gray-800">Tổng doanh thu: @Model.Sum(x => x.DoanhThu).ToString("N0") VNĐ</p>
-                    <p class="text-center mt-2 text-lg font-semibold text-gray-800">Tổng doanh thu dịch vụ: @Model.Sum(x => x.DoanhThuDichVu).ToString("N0") VNĐ</p>
-                    <p class="text-center mt-2 text-lg font-semibold text-gray-800">Tổng doanh thu phiếu đặt phòng: @Model.Sum(x => x.DoanhThuPdp).ToString("N0") VNĐ</p>
+                    <p class="text-center mt-4 text-lg font-semibold text-gray-800">Tổng doanh thu: @totalTongTien.ToString("N0") VNĐ</p>
+                    <p class="text-center mt-2 text-lg font-semibold text-gray-800">Tổng tiền dịch vụ: @totalTongTienDichVu.ToString("N0") VNĐ</p>
+                    <p class="text-center mt-2 text-lg font-semibold text-gray-800">Tổng tiền phòng: @totalTongTienPhong.ToString("N0") VNĐ</p>
                 </div>
             </div>
 
@@ -43,19 +54,20 @@
                         <thead class="bg-gray-100 text-gray-800">
                             <tr>
                                 <th class="px-4 py-3">Ngày</th>
-                                <th class="px-4 py-3">Doanh thu (VNĐ)</th>
-                                <th class="px-4 py-3">Doanh thu dịch vụ (VNĐ)</th>
-                                <th class="px-4 py-3">Doanh thu PĐP (VNĐ)</th>
+                                <th class="px-4 py-3">Tổng tiền (VNĐ)</th>
+                                <th class="px-4 py-3">Tổng tiền dịch vụ (VNĐ)</th>
+                                <th class="px-4 py-3">Tổng tiền phòng (VNĐ)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in thongKeList)
                             {
+                                var dynamicItem = item as dynamic;
                                 <tr class="border-t">
-                                    <td class="px-4 py-3">@item.Ngay.ToString("dd/MM/yyyy")</td>
-                                    <td class="px-4 py-3">@item.DoanhThu.ToString("N0")</td>
-                                    <td class="px-4 py-3">@item.DoanhThuDichVu.ToString("N0")</td>
-                                    <td class="px-4 py-3">@item.DoanhThuPdp.ToString("N0")</td>
+                                    <td class="px-4 py-3">@dynamicItem.Ngay.ToString("dd/MM/yyyy")</td>
+                                    <td class="px-4 py-3">@dynamicItem.TongTien.ToString("N0")</td>
+                                    <td class="px-4 py-3">@dynamicItem.TongTienDichVu.ToString("N0")</td>
+                                    <td class="px-4 py-3">@dynamicItem.TongTienPhong.ToString("N0")</td>
                                 </tr>
                             }
                         </tbody>
@@ -76,64 +88,68 @@
 
                 var ctx = document.getElementById('doanhThuChart').getContext('2d');
                 doanhThuChart = new Chart(ctx, {
-                    type: 'pie', // Có thể đổi 'bar' nếu muốn
+                    type: 'pie',
                     data: {
                         labels: [
-                            @foreach (var item in Model)
+                            @foreach (var item in thongKeList)
                             {
-                                    @Html.Raw($"\"{item.Ngay.ToString("dd/MM/yyyy")}\"")@if (!item.Equals(Model.Last())) {
-                                        <text>,</text>
-                                }
-                        }
-                    ],
-                    datasets: [{
-                        label: 'Doanh Thu',
-                        data: [
-                            @foreach (var item in Model)
-                            {
-                                    @Html.Raw($"{item.DoanhThu}")@if (!item.Equals(Model.Last())) {
-                                        <text>,</text>
-                                }
-                                                        }
+                                    var dynamicItem = item as dynamic;
+                                    @Html.Raw($"\"{dynamicItem.Ngay.ToString("dd/MM/yyyy")}\"")@if (!item.Equals(thongKeList.Cast<object>().Last()))
+                                    {
+                                            <text>,</text>
+                                    }
+                            }
                         ],
-                        backgroundColor: [
-                            '#FF6384', '#36A2EB', '#FFCE56', '#8e44ad', '#e67e22', '#2ecc71',
-                            '#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e74c3c', '#95a5a6'
-                        ],
-                        hoverOffset: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    aspectRatio: 1,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                boxWidth: 20,
-                                padding: 10
+                        datasets: [{
+                            label: 'Doanh Thu',
+                            data: [
+                                @foreach (var item in thongKeList)
+                                {
+                                        var dynamicItem = item as dynamic;
+                                        @Html.Raw($"{dynamicItem.TongTien}")@if (!item.Equals(thongKeList.Cast<object>().Last()))
+                                        {
+                                                <text>,</text>
+                                        }
+                                }
+                            ],
+                            backgroundColor: [
+                                '#FF6384', '#36A2EB', '#FFCE56', '#8e44ad', '#e67e22', '#2ecc71',
+                                '#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e74c3c', '#95a5a6'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 1,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 20,
+                                    padding: 10
+                                }
                             }
                         }
                     }
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', renderChart);
+
+            // Validation ngày
+            document.getElementById('filterForm').addEventListener('submit', function (e) {
+                var fromDate = document.getElementById('fromDate').value;
+                var toDate = document.getElementById('toDate').value;
+                if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+                    e.preventDefault();
+                    alert('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
                 }
             });
-        }
-
-        document.addEventListener('DOMContentLoaded', renderChart);
-
-        // Validation ngày
-        document.getElementById('filterForm').addEventListener('submit', function (e) {
-            var fromDate = document.getElementById('fromDate').value;
-            var toDate = document.getElementById('toDate').value;
-            if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
-                e.preventDefault();
-                alert('Ngày bắt đầu không được lớn hơn ngày kết thúc.');
-            }
-        });
-    </script>
-        }
-        else
+        </script>
+    }
+    else
     {
         <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded text-center">
             Không có dữ liệu thống kê trong khoảng thời gian này.

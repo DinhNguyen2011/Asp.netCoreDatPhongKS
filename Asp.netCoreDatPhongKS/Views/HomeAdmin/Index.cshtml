@@ -24,7 +24,7 @@
             <h2 class="text-2xl font-bold mt-1">@ViewBag.BookedRooms</h2>
         </div>
         <div class="bg-white p-5 rounded-lg shadow border-l-4 border-red-500">
-            <p class="text-gray-500">Phòng trống</p>
+            <p class="text-gray-500">Phòng còn trống</p>
             <h2 class="text-2xl font-bold mt-1">@ViewBag.AvailableRooms</h2>
         </div>
 
@@ -38,7 +38,7 @@
         </div>
         <div class="bg-white p-5 rounded-lg shadow border-l-4 border-pink-500">
             <p class="text-gray-500">Doanh thu tháng này</p>
-            <h2 class="text-2xl font-bold mt-1">@ViewBag.MonthlyRevenue.ToString("N0")đ</h2>
+            <h2 class="text-2xl font-bold mt-1">@((ViewBag.MonthlyRevenue ?? 0).ToString("N0"))đ</h2>
         </div>
         <div class="bg-white p-5 rounded-lg shadow border-l-4 border-gray-500">
             <p class="text-gray-500">Nhân viên</p>
@@ -56,7 +56,7 @@
 
         <!-- Biểu đồ tròn -->
         <div class="bg-white rounded-lg shadow p-5">
-            <h3 class="text-lg font-semibold mb-3">Tỉ lệ Đặt Phòng Theo Loại</h3>
+            <h3 class="text-lg font-semibold mb-3">Tổng Doanh Thu</h3>
             <canvas id="pieChart"></canvas>
         </div>
     </div>
@@ -85,15 +85,26 @@
     const pieChart = new Chart(document.getElementById('pieChart'), {
         type: 'pie',
         data: {
-            labels: @Html.Raw(Json.Serialize(ViewBag.BookingRatioLabels)),
+            labels: @Html.Raw(Json.Serialize(ViewBag.RevenueLabels)),
             datasets: [{
-                label: 'Tỉ lệ đặt phòng',
-                data: @Html.Raw(Json.Serialize(ViewBag.BookingRatioData)),
-                backgroundColor: ['#60A5FA', '#34D399', '#F87171']
+                label: 'Doanh thu',
+                data: @Html.Raw(Json.Serialize(ViewBag.RevenueData)),
+                backgroundColor: ['#60A5FA', '#34D399']
             }]
         },
         options: {
-            responsive: true
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.label || '';
+                            let value = context.raw || 0;
+                            return `${label}: ${value.toLocaleString()}đ`;
+                        }
+                    }
+                }
+            }
         }
     });
 </script>
