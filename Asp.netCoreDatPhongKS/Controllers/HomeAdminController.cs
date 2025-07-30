@@ -41,10 +41,14 @@ namespace Asp.netCoreDatPhongKS.Controllers
             ViewBag.AvailableRooms = _context.Phongs
                 .Where(p => p.TinhTrang == "Trống")
                 .Count(); // Phòng trống
-            ViewBag.BookedRooms = _context.PhieuDatPhongs
-                .Where(p => p.TinhTrangSuDung == "Đã đặt" && p.NgayNhan <= DateTime.Now && p.NgayTra >= DateTime.Now)
-                .SelectMany(p => p.ChiTietPhieuPhongs)
-                .Select(ct => ct.PhongId).Distinct().Count(); // Phòng đã đặt nhưng chưa check-in
+
+            //ViewBag.BookedRooms = _context.PhieuDatPhongs
+            //    .Where(p => p.TinhTrangSuDung == "Đã đặt" && p.NgayNhan <= DateTime.Now && p.NgayTra >= DateTime.Now)
+            //    .SelectMany(p => p.ChiTietPhieuPhongs)
+            //    .Select(ct => ct.PhongId).Distinct().Count(); // Phòng đã đặt nhưng chưa check-in
+            ViewBag.BookedRooms = _context.Phongs
+              .Where(p => p.TinhTrang == "Đã đặt")
+              .Count(); // Phòng trống
 
             // Thống kê khách hàng
             ViewBag.TotalCustomers = _context.KhachHangs.Count(); // Tổng số khách

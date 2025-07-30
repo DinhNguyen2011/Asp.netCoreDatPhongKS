@@ -333,9 +333,9 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.Property(e => e.MaKhuyenMai).HasMaxLength(50);
 
-                entity.Property(e => e.NgayBatDau).HasColumnType("date");
+                entity.Property(e => e.NgayBatDau).HasColumnType("datetime");
 
-                entity.Property(e => e.NgayKetThuc).HasColumnType("date");
+                entity.Property(e => e.NgayKetThuc).HasColumnType("datetime");
 
                 entity.Property(e => e.NgayTao)
                     .HasColumnType("datetime")
@@ -447,9 +447,9 @@ namespace Asp.netCoreDatPhongKS.Models
 
                 entity.Property(e => e.NgayDat).HasColumnType("datetime");
 
-                entity.Property(e => e.NgayNhan).HasColumnType("date");
+                entity.Property(e => e.NgayNhan).HasColumnType("datetime");
 
-                entity.Property(e => e.NgayTra).HasColumnType("date");
+                entity.Property(e => e.NgayTra).HasColumnType("datetime");
 
                 entity.Property(e => e.SoTienCoc).HasColumnType("decimal(18, 2)");
 

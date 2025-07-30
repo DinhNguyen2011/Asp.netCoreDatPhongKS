@@ -32,7 +32,7 @@ namespace Asp.netCoreDatPhongKS.Models
 
       //  [Required(ErrorMessage = "Ngày trả không được để trống")]
         [Display(Name = "Ngày trả")]
-        [DataType(DataType.Date)]
+       // [DataType(DataType.DateTime)]
         public DateTime? NgayTra { get; set; }
 
         [Display(Name = "Khuyến mãi")]

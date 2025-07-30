@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
- 
+
     public class HomeController : Controller
     {
         private readonly HotelPlaceVipContext _context;
@@ -25,7 +25,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _moMoService = moMoService;
             _emailService = emailService;
         }
-  
+
         private IActionResult RestrictAccessByVaiTro()
         {
             string userName = HttpContext.Session.GetString("Email");
@@ -41,7 +41,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 // Nếu tìm thấy tài khoản và VaiTroId là 1 hoặc 2, từ chối truy cập
                 if (taiKhoan != null && (taiKhoan.VaiTroId == 1 || taiKhoan.VaiTroId == 2))
                 {
-                  //  TempData["Error"] = "Tài khoản admin không được phép truy cập trang này.";
+                    //  TempData["Error"] = "Tài khoản admin không được phép truy cập trang này.";
                     return RedirectToAction("Erro", "Home");
                 }
             }
@@ -101,8 +101,6 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View("Index"); // Trả về view chứa form
             }
 
-
-
             var allRooms = _context.Phongs
                 .Include(p => p.LoaiPhong)
                 .Where(p => (p.SoLuongKhach ?? 0) >= soKhach)
@@ -111,7 +109,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(c => c.Phong)
-                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TinhTrangSuDung != "Đã check-out" && p.TinhTrangSuDung !="Đã hủy")
+                .Where(p => p.NgayNhan != null && p.NgayTra != null && p.TinhTrangSuDung != "Đã check-out" && p.TinhTrangSuDung != "Đã hủy")
                 .SelectMany(p => p.ChiTietPhieuPhongs.Select(c => new { c.PhongId, p.NgayNhan, p.NgayTra }))
                 .ToList();
 
@@ -243,14 +241,15 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 _context.SaveChanges();
             }
 
-            int soDem = model.SoDem;
+            // Sửa cách tính soDem để bao gồm giờ/phút
+            int soDem = (int)(model.Checkout - model.Checkin).TotalDays; // Sử dụng TotalDays để tính chính xác
             decimal tongTien = (phong.GiaPhong1Dem ?? 0) * soDem;
 
             var pendingBooking = new PendingBookingModel
             {
                 PhongId = model.PhongId,
-                Checkin = model.Checkin,
-                Checkout = model.Checkout,
+                Checkin = model.Checkin, // Giữ nguyên giá trị đầy đủ (bao gồm giờ/phút)
+                Checkout = model.Checkout, // Giữ nguyên giá trị đầy đủ (bao gồm giờ/phút)
                 SoDem = soDem,
                 TongTien = tongTien,
                 HoTen = model.HoTen,
@@ -266,7 +265,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var paymentModel = new PaymentInformationModel
             {
                 Amount = tongTien,
-                OrderDescription = $"Thanh toan don hang cho phong {phong.SoPhong} tu {model.Checkin:dd/MM/yyyy} den {model.Checkout:dd/MM/yyyy}",
+                OrderDescription = $"Thanh toan don hang cho phong {phong.SoPhong} tu {model.Checkin:dd/MM/yyyy HH:mm} den {model.Checkout:dd/MM/yyyy HH:mm}", // Thêm giờ/phút
                 Name = khach.HoTen,
                 PhieuDatPhongId = 0
             };
@@ -329,7 +328,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             var isRoomBooked = _context.ChiTietPhieuPhongs.Any(c =>
                 c.PhongId == pendingBooking.PhongId &&
                 c.PhieuDatPhong.TinhTrangSuDung != "Đã check-out" && c.PhieuDatPhong.TinhTrangSuDung != "Đã hủy" &&
-                ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra) 
+                ((pendingBooking.Checkin < c.PhieuDatPhong.NgayTra)
                 && (pendingBooking.Checkout > c.PhieuDatPhong.NgayNhan)));
 
             if (isRoomBooked)
@@ -353,7 +352,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         TrangThai = true,
                         Hoten = pendingBooking.HoTen,
                         NgayTao = DateTime.Now,
-                        
+
                     };
                     _context.TaiKhoans.Add(taiKhoan);
                     await _context.SaveChangesAsync();
@@ -391,13 +390,13 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                 await _context.SaveChangesAsync();
 
-                // Tạo PhieuDatPhong
+                // Tạo PhieuDatPhong với giờ/phút
                 var phieu = new PhieuDatPhong
                 {
                     MaPhieu = $"PD{DateTime.Now.Ticks}",
                     NgayDat = DateTime.Now,
-                    NgayNhan = pendingBooking.Checkin,
-                    NgayTra = pendingBooking.Checkout,
+                    NgayNhan = pendingBooking.Checkin, // Sử dụng giá trị đầy đủ (bao gồm giờ/phút)
+                    NgayTra = pendingBooking.Checkout, // Sử dụng giá trị đầy đủ (bao gồm giờ/phút)
                     KhachHangId = khach.KhachHangId,
                     TrangThai = "Đã thanh toán",
                     TinhTrangSuDung = "Chờ xử lý",
@@ -447,7 +446,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                 await _context.SaveChangesAsync();
 
-                // Gửi email xác nhận
+                // Gửi email xác nhận với giờ/phút
                 try
                 {
                     var emailBody = $@"
@@ -457,8 +456,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         <ul>
                             <li><strong>Mã phiếu:</strong> {phieu.MaPhieu}</li>
                             <li><strong>Phòng:</strong> {phong.SoPhong} ({phong.LoaiPhong?.TenLoai})</li>
-                            <li><strong>Ngày nhận:</strong> {phieu.NgayNhan?.ToString("dd/MM/yyyy")}</li>
-                            <li><strong>Ngày trả:</strong> {phieu.NgayTra?.ToString("dd/MM/yyyy")}</li>
+                            <li><strong>Ngày nhận:</strong> {phieu.NgayNhan?.ToString("dd/MM/yyyy HH:mm")}</li>
+                            <li><strong>Ngày trả:</strong> {phieu.NgayTra?.ToString("dd/MM/yyyy HH:mm")}</li>
                             <li><strong>Số đêm:</strong> {pendingBooking.SoDem}</li>
                             <li><strong>Tổng tiền:</strong> {phieu.TongTien.ToString("N0")} VNĐ</li>
                             <li><strong>Mã giao dịch:</strong> {(paymentMethod == "VNPay" ? phieu.VnpTransactionId : phieu.MoMoTransactionId)}</li>
