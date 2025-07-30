@@ -91,32 +91,71 @@
 </style>
 
 <div class="container phongtk-wrapper mt-4">
-<div class="card mb-4 phongtk-summary">
-    <div class="card-header text-white bg-dark">
-        <h5 class="mb-0">Thông tin tìm kiếm</h5>
+    <div class="card mb-4 phongtk-summary">
+        <div class="card-header text-white bg-dark">
+            <h5 class="mb-0">Thông tin tìm kiếm</h5>
+        </div>
+        <div class="card-body">
+            <p>
+                <strong>Ngày nhận phòng:</strong> @checkin.ToString("dd/MM/yyyy ")<br />
+                <span class="text-muted">Đây là thời gian bạn sẽ bắt đầu kỳ nghỉ tại khách sạn.</span>
+            </p>
+            <p>
+                <strong>Ngày trả phòng:</strong> @checkout.ToString("dd/MM/yyyy ")<br />
+                <span class="text-muted">Thời gian bạn dự kiến rời khỏi khách sạn.</span>
+            </p>
+            <p>
+                <strong>Số đêm lưu trú:</strong> @soDem<br />
+                <span class="text-muted">Tổng số đêm bạn sẽ ở lại khách sạn.</span>
+            </p>
+            <p>
+                <strong>Số khách:</strong> @soKhach<br />
+                <span class="text-muted">Tổng số người sẽ cùng lưu trú với bạn.</span>
+            </p>
+            <hr />
+            <p class="mb-2"><em>Nếu bạn muốn thay đổi thông tin tìm kiếm như thời gian nhận/trả phòng hoặc số lượng khách, hãy bấm nút bên dưới để quay lại trang tìm kiếm.</em></p>
+            <a class="btn btn-outline-dark mt-2" href="@Url.Action("Index", "Home")">🔄 Thay đổi tìm kiếm</a>
+        </div>
     </div>
-    <div class="card-body">
-        <p>
-            <strong>Ngày nhận phòng:</strong> @checkin.ToString("dd/MM/yyyy HH:mm")<br />
-            <span class="text-muted">Đây là thời gian bạn sẽ bắt đầu kỳ nghỉ tại khách sạn.</span>
-        </p>
-        <p>
-            <strong>Ngày trả phòng:</strong> @checkout.ToString("dd/MM/yyyy HH:mm")<br />
-            <span class="text-muted">Thời gian bạn dự kiến rời khỏi khách sạn.</span>
-        </p>
-        <p>
-            <strong>Số đêm lưu trú:</strong> @soDem<br />
-            <span class="text-muted">Tổng số đêm bạn sẽ ở lại khách sạn.</span>
-        </p>
-        <p>
-            <strong>Số khách:</strong> @soKhach<br />
-            <span class="text-muted">Tổng số người sẽ cùng lưu trú với bạn.</span>
-        </p>
-        <hr />
-        <p class="mb-2"><em>Nếu bạn muốn thay đổi thông tin tìm kiếm như thời gian nhận/trả phòng hoặc số lượng khách, hãy bấm nút bên dưới để quay lại trang tìm kiếm.</em></p>
-        <a class="btn btn-outline-dark mt-2" href="@Url.Action("Index", "Home")">🔄 Thay đổi tìm kiếm</a>
+
+    <!-- Bộ lọc bổ sung -->
+    <div class="card mb-4">
+        <div class="card-header bg-light">
+            <h6 class="mb-0">🔎 Bộ lọc kết quả</h6>
+        </div>
+        <div class="card-body">
+            <form asp-action="TimKiemPhong" method="post" class="row g-3">
+                <input type="hidden" name="checkin" value="@checkin.ToString("yyyy-MM-ddTHH:mm")" />
+                <input type="hidden" name="checkout" value="@checkout.ToString("yyyy-MM-ddTHH:mm")" />
+                <input type="hidden" name="soKhach" value="@soKhach" />
+                <input type="hidden" name="rooms" value="1" />
+
+                <div class="col-md-4">
+                    <label for="loaiPhong" class="form-label">Loại phòng</label>
+                    <select name="loaiPhong" class="form-select">
+                        <option value="">Tất cả</option>
+                        <option value="Phòng Thường">Phòng Thường</option>
+                        <option value="Phòng VIP">Phòng VIP</option>
+                        <option value="Phòng Thương Gia">Phòng Thương Gia</option>
+                    </select>
+                </div>
+
+               @*  <div class="col-md-3">
+                    <label for="giaTu" class="form-label">Giá từ (VNĐ)</label>
+                    <input type="number" class="form-control" name="giaTu" placeholder="VD: 1000000" min="0" />
+                </div>
+
+                <div class="col-md-3">
+                    <label for="giaDen" class="form-label">Giá đến (VNĐ)</label>
+                    <input type="number" class="form-control" name="giaDen" placeholder="VD: 5000000" min="0" />
+                </div>
+ *@
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-outline-primary w-100">Lọc kết quả</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     <h3 class="mb-4 text-center text-secondary">Danh sách phòng khả dụng</h3>
 
@@ -131,7 +170,7 @@
             <div class="card mb-4 shadow-sm d-flex flex-row phongtk-room-item">
                 <!-- Hình ảnh -->
                 <div class="phongtk-img-slider position-relative" style="flex: 1; max-width: 50%;">
-             <div id="carouselPhong@(item.Phong.PhongId)" class="carousel slide h-100" data-bs-interval="false">
+                    <div id="carouselPhong@(item.Phong.PhongId)" class="carousel slide h-100" data-bs-interval="false">
                         <div class="carousel-inner h-100">
                             <div class="carousel-item active">
                                 <img src="@Url.Content(item.Phong.HinhAnh ?? "~/images/default.jpg")" class="d-block w-100 h-100" />
@@ -155,7 +194,6 @@
                                 </div>
                             }
                         </div>
-
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselPhong@(item.Phong.PhongId)" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon"></span>
                         </button>
@@ -163,9 +201,6 @@
                             <span class="carousel-control-next-icon"></span>
                         </button>
                     </div>
-
-
-
                 </div>
 
                 <!-- Thông tin -->
@@ -175,11 +210,9 @@
                         <p class="text-muted mb-2">Sức chứa: @item.Phong.SoLuongKhach người</p>
                         <p class="mb-2">
                             <strong>Giá linh hoạt: @String.Format("{0:N0}", item.Phong.GiaPhong1Dem * soDem ?? 0) VNĐ / @soDem đêm</strong><br />
-                          @*   <span class="fw-bold"></span>
-                            <small class="text-muted"></small> *@
                         </p>
                         <strong class="text-muted mo-ta-text">@item.Phong.MoTa</strong><br />
-                       <strong>Tiện ích:</strong> Wi-Fi, TV, Điều hòa, Nước nóng
+                        <strong>Tiện ích:</strong> Wi-Fi, TV, Điều hòa, Nước nóng
                     </div>
                     <div class="d-flex justify-content-end mt-2">
                         <a href="@Url.Action("DatPhong", "Home", new {

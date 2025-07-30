@@ -64,47 +64,56 @@ namespace Asp.netCoreDatPhongKS.Controllers
             }
             return View();
         }
-
         [HttpPost]
-        public IActionResult TimKiemPhong(DateTime? checkin, DateTime? checkout, int soKhach = 1, int rooms = 1)
+        public IActionResult TimKiemPhong(DateTime? checkin, DateTime? checkout, int soKhach = 1, int rooms = 1, string? loaiPhong = null, decimal? giaTu = null, decimal? giaDen = null)
         {
-            //DateTime checkinDate = checkin ?? DateTime.Today;
-            //DateTime checkoutDate = checkout ?? DateTime.Today.AddDays(1);
-
-            //int soDem = (checkoutDate - checkinDate).Days;
-            //if (soDem <= 0)
-            //{
-            //    TempData["ThongBao"] = "Ngày trả phải lớn hơn ngày nhận. Vui lòng kiểm tra lại!";
-            //    return View("TimKiemPhong", new List<PhongViewModel>());
-            //}
-
             if (!checkin.HasValue || !checkout.HasValue)
             {
                 TempData["ThongBao"] = "Vui lòng chọn cả ngày nhận phòng và ngày trả phòng!";
-                return View("Index"); // Trả về view chứa form
+                return View("Index");
             }
 
             if (rooms < 1 || soKhach < 1)
             {
                 TempData["ThongBao"] = "Số phòng và số lượng khách phải lớn hơn hoặc bằng 1!";
-                return View("Index"); // Trả về view chứa form
+                return View("Index");
             }
 
             DateTime checkinDate = checkin.Value;
             DateTime checkoutDate = checkout.Value;
 
-            // Kiểm tra ngày trả có lớn hơn ngày nhận không
             int soDem = (checkoutDate - checkinDate).Days;
             if (soDem <= 0)
             {
                 TempData["ThongBao"] = "Ngày trả phòng phải lớn hơn ngày nhận phòng. Vui lòng kiểm tra lại!";
-                return View("Index"); // Trả về view chứa form
+                return View("Index");
             }
 
             var allRooms = _context.Phongs
                 .Include(p => p.LoaiPhong)
                 .Where(p => (p.SoLuongKhach ?? 0) >= soKhach)
                 .ToList();
+
+            // Áp dụng bộ lọc loại phòng
+            if (!string.IsNullOrEmpty(loaiPhong))
+            {
+                allRooms = allRooms.Where(p => p.LoaiPhong.TenLoai == loaiPhong).ToList();
+            }
+
+            //// Áp dụng bộ lọc giá phòng
+            //if (giaTu.HasValue)
+            //{
+            //    allRooms = allRooms.Where(p => (p.GiaPhong1Dem ?? 0) >= giaTu.Value).ToList();
+            //}
+            //if (giaDen.HasValue)
+            //{
+            //    allRooms = allRooms.Where(p => (p.GiaPhong1Dem ?? 0) <= giaDen.Value).ToList();
+            //}
+            //// Thêm điều kiện giá phòng > 1 triệu nếu không có giaTu
+            //else if (!giaTu.HasValue)
+            //{
+            //    allRooms = allRooms.Where(p => (p.GiaPhong1Dem ?? 0) > 1000000).ToList();
+            //}
 
             var bookedRooms = _context.PhieuDatPhongs
                 .Include(p => p.ChiTietPhieuPhongs)
@@ -124,7 +133,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         DateTime bookingStart = (DateTime)booking.NgayNhan;
                         DateTime bookingEnd = (DateTime)booking.NgayTra;
 
-                        if (!(checkoutDate < bookingStart || checkinDate > bookingEnd))
+                        if (!(checkoutDate <= bookingStart || checkinDate >= bookingEnd))
                         {
                             isAvailable = false;
                             break;
@@ -147,7 +156,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             if (!availableRooms.Any())
             {
                 TempData["ThongBao"] = "Không tìm thấy phòng khả dụng phù hợp với yêu cầu của bạn. Vui lòng thử lại với khoảng thời gian hoặc số khách khác!";
-                return View("Index"); // Trả về view chứa form
+                return View("Index");
             }
 
             return View("TimKiemPhong", availableRooms);
@@ -450,26 +459,83 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 try
                 {
                     var emailBody = $@"
-                        <h2>Xác nhận đặt phòng và tài khoản thành công</h2>
-                        <p>Kính gửi {khach.HoTen},</p>
-                        <p>Cảm ơn bạn đã đặt phòng tại Khách sạn Thiềm Định. Dưới đây là thông tin đặt phòng của bạn:</p>
-                        <ul>
-                            <li><strong>Mã phiếu:</strong> {phieu.MaPhieu}</li>
-                            <li><strong>Phòng:</strong> {phong.SoPhong} ({phong.LoaiPhong?.TenLoai})</li>
-                            <li><strong>Ngày nhận:</strong> {phieu.NgayNhan?.ToString("dd/MM/yyyy HH:mm")}</li>
-                            <li><strong>Ngày trả:</strong> {phieu.NgayTra?.ToString("dd/MM/yyyy HH:mm")}</li>
-                            <li><strong>Số đêm:</strong> {pendingBooking.SoDem}</li>
-                            <li><strong>Tổng tiền:</strong> {phieu.TongTien.ToString("N0")} VNĐ</li>
-                            <li><strong>Mã giao dịch:</strong> {(paymentMethod == "VNPay" ? phieu.VnpTransactionId : phieu.MoMoTransactionId)}</li>
-                            <li><strong>Ghi chú:</strong> {pendingBooking.GhiChu ?? "Không có"}</li>
-                        </ul>
-                        <p><strong>Thông tin tài khoản:</strong></p>
-                        <ul>
-                            <li><strong>Email đăng nhập:</strong> {taiKhoan.Email}</li>
-                            <li><strong>Mật khẩu mặc định: '1', Vui lòng đăng nhập và đổi mật khẩu nếu lần đăng nhập lần đầu(*Bỏ qua nếu đã có tài khoản*) </strong></li>
-                        </ul>
-                        <p>Vui lòng liên hệ chúng tôi nếu có bất kỳ câu hỏi nào. Hotline: 0853461030</p>
-                        <p>Trân trọng,<br>Khách sạn Thiềm Định</p>";
+                        <html>
+                        <head>
+                            <style>
+                                body {{
+                                    font-family: Arial, sans-serif;
+                                    color: #333;
+                                    line-height: 1.6;
+                                }}
+                                .section-title {{
+                                    font-size: 18px;
+                                    font-weight: bold;
+                                    margin-top: 20px;
+                                    color: #005f99;
+                                }}
+                                .info-table {{
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                    margin-top: 10px;
+                                }}
+                                .info-table td {{
+                                    padding: 10px 8px;
+                                    border-bottom: 1px solid #ddd;
+                                    vertical-align: top;
+                                }}
+                                .info-table tr:last-child td {{
+                                    border-bottom: none;
+                                }}
+                                .info-table td:first-child {{
+                                    font-weight: bold;
+                                    width: 40%;
+                                    color: #333;
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <h2>Xác nhận đặt phòng và tài khoản thành công</h2>
+                            <p>Kính gửi {khach.HoTen},</p>
+                            <p>Cảm ơn bạn đã đặt phòng tại <strong>Khách sạn Thiềm Định</strong>. Dưới đây là thông tin đặt phòng của bạn:</p>
+
+                            <div class='section-title'>Chi tiết đặt phòng</div>
+                            <table class='info-table'>
+                                <tr><td>Mã phiếu:</td><td>{phieu.MaPhieu}</td></tr>
+                                <tr><td>Phòng:</td><td>{phong.SoPhong} ({phong.LoaiPhong?.TenLoai})</td></tr>
+                                <tr><td>Ngày nhận:</td><td>{phieu.NgayNhan?.ToString("dd/MM/yyyy")}</td></tr>
+                                <tr><td>Ngày trả:</td><td>{phieu.NgayTra?.ToString("dd/MM/yyyy ")}</td></tr>
+                                <tr><td>Số đêm:</td><td>{pendingBooking.SoDem}</td></tr>
+                                <tr><td>Tổng tiền:</td><td>{phieu.TongTien.ToString("N0")} VNĐ</td></tr>
+                                <tr><td>Mã giao dịch:</td><td>{(paymentMethod == "VNPay" ? phieu.VnpTransactionId : phieu.MoMoTransactionId)}</td></tr>
+                                <tr><td>Ghi chú:</td><td>{pendingBooking.GhiChu ?? "Không có"}</td></tr>
+                            </table>
+
+                            <div class='section-title'>Thông tin tài khoản</div>
+                            <table class='info-table'>
+                                <tr><td>Email đăng nhập:</td><td>{taiKhoan.Email}</td></tr>
+                                <tr><td>Mật khẩu mặc định:</td><td>1</td></tr>
+                                <tr><td>Ghi chú:</td><td>Vui lòng đổi mật khẩu nếu đây là lần đăng nhập đầu tiên (bỏ qua nếu đã có tài khoản).</td></tr>
+                            </table>
+
+                            <div class='section-title'>Chính sách hủy</div>
+                            <div class='highlight-box'>  
+                                <p><span class='red'>Lưu ý:</span> Việc hoàn tiền phụ thuộc vào thời điểm hủy kể từ thời gian nhận phòng:</p>
+                                <ul>
+                                    <li>✅ Trước 24 giờ: hoàn 90%</li>
+                                    <li>⚠️ Dưới 12 giờ: hoàn 70%</li>
+                                    <li>🕒 12–24 giờ: hoàn 50%</li>
+                                </ul>
+                            </div>
+
+                            <p>Nếu cần hỗ trợ, xin vui lòng liên hệ hotline: <strong>0853461030</strong></p>
+
+                            <div class='footer'>
+                                &copy; 2025 Khách sạn Thiềm Định. Mọi quyền được bảo lưu.
+                            </div>
+                        </div>
+                    </body>
+                    </html>";
+
 
                     await _emailService.SendEmailAsync(khach.Email, "Xác nhận đặt phòng và tài khoản - Khách sạn Thiềm Định", emailBody);
                 }
