@@ -46,16 +46,16 @@
             }
 
             <div class="form-group">
-                <label for="checkin">Ngày nhận phòng</label>
-                <input type="date" name="checkin" id="checkin" class="form-control"
-                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <label for="checkin">Ngày & giờ nhận phòng</label>
+                <input type="datetime-local" name="checkin" id="checkin" class="form-control"
+                       min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
                 <span class="text-red-500 text-xs error-message" style="display: none;"></span>
             </div>
 
             <div class="form-group">
-                <label for="checkout">Ngày trả phòng</label>
-                <input type="date" name="checkout" id="checkout" class="form-control"
-                       min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <label for="checkout">Ngày & giờ trả phòng</label>
+                <input type="datetime-local" name="checkout" id="checkout" class="form-control"
+                       min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
                 <span class="text-red-500 text-xs error-message" style="display: none;"></span>
             </div>
 

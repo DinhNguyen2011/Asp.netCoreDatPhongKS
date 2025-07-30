@@ -10,13 +10,14 @@
     }
 </style>
 <h2>Quản lý loại phòng</h2>
+
 @if (TempData["Success"] != null)
 {
-    <h4 style="color:chartreuse;">@TempData["Success"]</h4>
+    <div class="alert alert-warning" style="color:chartreuse;">@TempData["Success"]</div>
 }
 @if (TempData["Error"] != null)
 {
-    <h4 style="color:red;">@TempData["Error"]</h4>
+    <div class="alert alert-warning"style="color:red;">@TempData["Error"]</div>
 }
 
 <p>
@@ -25,19 +26,19 @@
 
 <form asp-action="IndexChoAdmin" method="get" class="form-inline mb-3">
     <div class="form-group mr-2">
-        <label for="loai" class="mr-1">Tên loại:</label>
+        <label for="loai" class="mr-1">Tên loại</label>
         <input type="text" name="loai" id="loai" class="form-control" value="@ViewBag.Loai" />
     </div>
     <div class="form-group mr-2">
-        <label for="minGia" class="mr-1">Giá tối thiểu:</label>
+        <label for="minGia" class="mr-1">Giá tối thiểu</label>
         <input type="number" name="minGia" id="minGia" class="form-control" value="@ViewBag.MinGia" />
     </div>
     <div class="form-group mr-2">
-        <label for="maxGia" class="mr-1">Giá tối đa:</label>
+        <label for="maxGia" class="mr-1">Giá tối đa</label>
         <input type="number" name="maxGia" id="maxGia" class="form-control" value="@ViewBag.MaxGia" />
     </div>
     <div class="form-group mr-2">
-        <label for="soNguoi" class="mr-1">Số người:</label>
+        <label for="soNguoi" class="mr-1">Số người</label>
         <input type="number" name="soNguoi" id="soNguoi" class="form-control" value="@ViewBag.SoNguoi" />
     </div>
     <button type="submit" class="btn btn-primary">Lọc</button>
@@ -72,9 +73,15 @@
                     </td>
                     <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.LoaiPhongId" class="btn btn-warning btn-sm">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.LoaiPhongId" class="btn btn-danger btn-sm">Xóa</a>
+                        <a asp-action="Edit" asp-route-id="@item.LoaiPhongId" class="btn btn-warning btn-sm" title="Sửa">
+                            <i class="fa fa-edit"></i>
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.LoaiPhongId" class="btn btn-danger btn-sm" title="Xóa">
+                            <i class="fa fa-trash"></i>
+                        </a>
                     </td>
+
                 </tr>
             }
         </tbody>

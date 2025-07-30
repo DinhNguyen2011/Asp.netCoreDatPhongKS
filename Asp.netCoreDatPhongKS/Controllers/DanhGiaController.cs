@@ -37,6 +37,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         public IActionResult Phong(int phieuDatPhongId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int parsedUserId))
             {
@@ -95,6 +100,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
         public IActionResult DichVu(int donHangDichVuId)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId) || !int.TryParse(userId, out int parsedUserId))
             {
@@ -153,6 +163,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [HttpPost]
         public IActionResult SubmitPhong([FromBody] PhongDanhGia model)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (model.Diem < 1 || model.Diem > 5)
             {
                 return Json(new { success = false, message = "Điểm phải từ 1 đến 5." });
@@ -193,6 +208,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
         [HttpPost]
         public IActionResult SubmitDichVu([FromBody] DichVuDanhGia model)
         {
+            string userName = HttpContext.Session.GetString("Hoten");
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ViewData["Hoten"] = userName;
+            }
             if (model.Diem < 1 || model.Diem > 5)
             {
                 return Json(new { success = false, message = "Điểm phải từ 1 đến 5." });

@@ -714,7 +714,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     khachHang = new
                     {
                         hoTen = phieu.KhachHang?.HoTen ?? "Không xác định",
-                        email = phieu.KhachHang?.SoDienThoai ?? "Không có"
+                        cccd = phieu.KhachHang?.Cccd ?? "Không có"
                     },
                     chiTiet = new
                     {
@@ -723,7 +723,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         donGia = chiTiet.DonGia ?? 0
                     },
                     ngayNhan = phieu.NgayNhan,
+                    ngayNhanStr = phieu.NgayNhan?.ToString("dd/MM/yyyy HH:mm"),
                     ngayTra = phieu.NgayTra,
+                    ngayTraStr = phieu.NgayTra?.ToString("dd/MM/yyyy HH:mm"),
                     soNgay = soNgay,
                     tongTien = phieu.TongTien,
                     soTienCoc = phieu.SoTienCoc ?? 0,

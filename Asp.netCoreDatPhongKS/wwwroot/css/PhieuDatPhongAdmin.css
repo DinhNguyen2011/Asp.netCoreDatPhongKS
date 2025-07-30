@@ -178,7 +178,7 @@ h1, h2, h3, h4, h5 {
     }
 
 .action-column {
-    width: 350px; /* Fixed width for action column */
+    width: 200px; /* Fixed width for action column */
     text-align: center;
 }
 
@@ -286,7 +286,7 @@ select[multiple] {
     }
 
     .action-column {
-        width: 150px; /* Adjust action column width for smaller screens */
+        width: 110px; /* Adjust action column width for smaller screens */
     }
 
     .btn {

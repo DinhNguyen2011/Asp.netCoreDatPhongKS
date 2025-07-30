@@ -43,7 +43,7 @@
                  @*    <th>Đã thanh toán</th> *@
                  @*    <th>Trạng thái</th> *@
                     <th>Tình trạng</th>
-                    <th class="action-column">Thao tác phiếu đặt phòng</th>
+                    <th class="action-column">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,15 +63,24 @@
                         <td>@item.TinhTrangSuDung</td>
                         <td class="action-column">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-info btn-sm" onclick="showPhieuDatPhongDetails(@item.PhieuDatPhongId)">Chi tiết</button>
+                                <button class="btn btn-info btn-sm" onclick="showPhieuDatPhongDetails(@item.PhieuDatPhongId)" title="Chi tiết">
+                                    <i class="fa fa-eye"></i>
+                                </button>
                                 @if (item.TinhTrangSuDung != "Đã check-out")
                                 {
-                                    <a asp-action="Edit" asp-route-id="@item.PhieuDatPhongId" class="btn btn-warning btn-sm">Sửa</a>
+                                    <a asp-action="Edit" asp-route-id="@item.PhieuDatPhongId" class="btn btn-warning btn-sm" title="Sửa">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
                                 }
-                                <a asp-action="Delete" asp-route-id="@item.PhieuDatPhongId" class="btn btn-danger btn-sm">Xóa</a>
-                                <a asp-action="PrintPhieuDatPhong" asp-route-id="@item.PhieuDatPhongId" class="btn btn-success btn-sm" target="_blank">In</a>
+                                <a asp-action="Delete" asp-route-id="@item.PhieuDatPhongId" class="btn btn-danger btn-sm" title="Xóa">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                                <a asp-action="PrintPhieuDatPhong" asp-route-id="@item.PhieuDatPhongId" class="btn btn-success btn-sm" target="_blank" title="In">
+                                    <i class="fa fa-print"></i>
+                                </a>
                             </div>
                         </td>
+
                     </tr>
                 }
             </tbody>
@@ -111,18 +120,19 @@
                     const phieu = data.phieu;
                     const content = `
                         <h4>Phiếu đặt phòng: ${phieu.maPhieu}</h4>
-                        <p><strong>Khách hàng:</strong> ${phieu.khachHang.hoTen} (${phieu.khachHang.email})</p>
+                        <p><strong>Khách hàng:</strong> ${phieu.khachHang.hoTen} (${phieu.khachHang.cccd})</p>
                         <p><strong>Phòng:</strong> ${phieu.chiTiet.soPhong} (${phieu.chiTiet.loaiPhong})</p>
                         <p><strong>Giá/đêm:</strong> ${phieu.chiTiet.donGia.toLocaleString()} VNĐ</p>
-                        <p><strong>Ngày nhận:</strong> ${new Date(phieu.ngayNhan).toLocaleDateString('vi-VN')}</p>
-                        <p><strong>Ngày trả:</strong> ${new Date(phieu.ngayTra).toLocaleDateString('vi-VN')}</p>
+                       <p><strong>Ngày nhận:</strong> ${phieu.ngayNhanStr}</p>
+                        <p><strong>Ngày trả:</strong> ${phieu.ngayTraStr}</p>
+
                         <p><strong>Số ngày:</strong> ${phieu.soNgay}</p>
                         <p><strong>Tổng tiền:</strong> ${phieu.tongTien.toLocaleString()} VNĐ</p>
                         <p><strong>Tiền cọc:</strong> ${phieu.soTienCoc.toLocaleString()} VNĐ</p>
                         <p><strong>Tiền đã thanh toán:</strong> ${phieu.soTienDaThanhToan.toLocaleString()} VNĐ</p>
                         <p><strong>Trạng thái:</strong> ${phieu.trangThai}</p>
                         <p><strong>Tình trạng sử dụng:</strong> ${phieu.tinhTrangSuDung}</p>
-                        <p><strong>VNPay:</strong> ${phieu.idvnpay}</p>
+                        <p><strong>VNPay:</strong> ${phieu.idvnpay}</p> 
                         <p><strong>MoMo:</strong> ${phieu.idmomo}</p>
                     `;
                     document.getElementById('phieuDatPhongDetailsContent').innerHTML = content;

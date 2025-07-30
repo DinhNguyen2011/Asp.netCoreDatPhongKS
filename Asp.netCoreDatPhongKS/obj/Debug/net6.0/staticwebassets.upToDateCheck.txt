@@ -487,10 +487,13 @@ wwwroot\images\lau-bo-nhung-giam.jpg
 wwwroot\images\lau-thai-hai-san.jpg
 wwwroot\images\lgmain.png
 wwwroot\images\lgogt.jpg
+wwwroot\images\loaiphong\Phòng thương gia_c7926817-bf43-4631-af06-a45f83bf10d9.jpg
 wwwroot\images\loaiphong\Phòng thương gia_df48f16a-53b6-4b56-b667-ecfd4fd6c759.jpg
 wwwroot\images\loaiphong\Phòng thường_1adc85d3-b99e-45ec-b403-9494cbd609e9.jpg
 wwwroot\images\loaiphong\Phòng thường_4346030e-ad76-4e66-9fc6-a811b77d7f9e.jpg
 wwwroot\images\loaiphong\Phòng thường_66a91bf9-81ac-4aea-8fe8-99bb908e73a2.jpg
+wwwroot\images\loaiphong\Phòng thường_73d73c44-08b9-41ed-a835-93d4e1945e00.jpg
+wwwroot\images\loaiphong\Phòng Vip_5e222108-e5e4-4736-bb39-a0d75a3db4b9.jpg
 wwwroot\images\loaiphong\Phòng Vip_b20ad25b-ea93-4f3d-a59f-52cba3511ff1.jpg
 wwwroot\images\loaiphong\test_04b1f73a-6207-47ee-9be5-ac17bad157fd.jpg
 wwwroot\images\loaiphong\VIPRO_c4a42c40-e72d-47ca-8c2f-fb6715c81954.png

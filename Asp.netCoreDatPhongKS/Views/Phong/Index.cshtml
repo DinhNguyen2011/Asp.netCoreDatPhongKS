@@ -80,11 +80,19 @@
                                 </td>
                                 <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td> *@
                                 <td class="action-column">
-                                    <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1">Sửa</a>
-                                    <a asp-action="Details" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1">Chi Tiết</a>
+                                    <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1" title="Sửa">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
 
-                                    <a asp-action="Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm">Xóa</a>
+                                    <a asp-action="Details" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1" title="Chi tiết">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    <a asp-action="Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm" title="Xóa">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
                                 </td>
+
                             </tr>
                         }
                     </tbody>

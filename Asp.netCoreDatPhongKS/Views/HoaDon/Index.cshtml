@@ -34,14 +34,14 @@
                 <th>Loại</th>
                 <th>Khách hàng</th>
                 <th>CCCD</th>
-                <th>Người lập HĐ</th>
+                @* <th>Người lập HĐ</th> *@
                 @* <th>Ngày lập</th> *@
                 <th>Tổng tiền</th>
              @*    <th>Tiền cọc</th>
                 <th>Đã thanh toán</th> *@
                 <th>Hình thức</th>
                 <th>Trạng thái</th>
-                <th>Thao tác hóa đơn</th>
+                <th>Thao tác </th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +60,7 @@
                         <td>@item.Loai</td>
                         <td>@item.KhachHangTen</td>
                         <td>@item.KhachHangCCCD</td>
-                        <td>@item.NhanVienTen</td>
+                        @* <td>@item.NhanVienTen</td> *@
                      @*    <td>@(item.NgayLap?.ToString("dd/MM/yyyy HH:mm") ?? "")</td> *@
                         <td>@item.TongTien.ToString("N0") VNĐ</td>
                       @*   <td>@(item.HoaDon?.HoaDonPdps.Sum(hdp => hdp.PhieuDatPhong?.SoTienCoc ?? 0).ToString("N0") ?? "0") VNĐ</td>
@@ -68,12 +68,15 @@
                         <td>@(item.HoaDon?.HinhThucThanhToan ?? "Chưa xác định")</td>
                         <td>@item.TrangThai</td>
                         <td>
-                            <button class="btn btn-info btn-sm toggle-details" data-id="@item.Id">Xem chi tiết</button>
+                            <button class="btn btn-info btn-sm toggle-details" data-id="@item.Id" title="Xem chi tiết">
+                                <i class="fa fa-eye"></i>
+                            </button>
                             @if (item.HoaDon != null)
                             {
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Sửa</a>
-                                <a asp-action="PrintHoaDonTong" asp-route-id="@item.Id" class="btn btn-success btn-sm" target="_blank">In</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Xóa</a>
+                               // <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Sửa</a>
+                                <a asp-action="PrintHoaDonTong" asp-route-id="@item.Id" class="btn btn-success btn-sm" target="_blank" title="In hóa đơn">
+                                    <i class="fa fa-print"></i>
+                                </a>    @* <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Xóa</a> *@
                             }
                         </td>
                     </tr>
