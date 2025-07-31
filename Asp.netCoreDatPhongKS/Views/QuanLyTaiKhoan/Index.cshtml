@@ -5,14 +5,26 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+@* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" /> *@
+
 <div class="container mt-4">
-    <h2>Quản lý tài khoản</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary mb-0"><i class="fas fa-user-cog"></i> Quản lý tài khoản</h2>
+        @* <a href="@Url.Action("Create", "QuanLyTaiKhoan")" class="btn btn-success">
+            <i class="fas fa-plus"></i> Thêm tài khoản mới
+        </a> *@
+    </div>
+
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-warning">@TempData["Success"]</div>
+        <div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>@TempData["Success"]</div>
     }
-        <a href="@Url.Action("Create", "QuanLyTaiKhoan")" class="btn btn-primary mb-3">Thêm tài khoản mới</a>
-    <div class="d-flex justify-content-between mb-3">
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger"><i class="fas fa-exclamation-circle me-2"></i>@TempData["Error"]</div>
+    }
+
+    <div class="row g-3 align-items-center mb-4">
 
         <div class="form-group">
             <label for="vaiTroFilter">Lọc theo vai trò:</label>
@@ -47,41 +59,47 @@
         </div>
     </div>
 
-    @if (TempData["Success"] != null)
-    {
-        <div class="alert alert-success">@TempData["Success"]</div>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger">@TempData["Error"]</div>
-    }
-
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Vai trò</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var taiKhoan in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center shadow-sm">
+            <thead class="table-light">
                 <tr>
-                    <td>@taiKhoan.Hoten</td>
-                    <td>@taiKhoan.Email</td>
-                    <td>@taiKhoan.VaiTro?.TenVaiTro</td>
-                    <td>@(taiKhoan.TrangThai ==true ? "Kích hoạt" : "Vô hiệu")</td>
-                    <td>
-                        <a href="@Url.Action("Edit", "QuanLyTaiKhoan", new { taiKhoanId = taiKhoan.TaiKhoanId })" class="btn btn-primary btn-sm">Sửa</a>
-                        <a href="@Url.Action("Delete", "QuanLyTaiKhoan", new { taiKhoanId = taiKhoan.TaiKhoanId })" class="btn btn-danger btn-sm">Xóa</a>
-                    </td>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Vai trò</th>
+                    @* <th>Trạng thái</th> *@
+                    <th>Hành động</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var taiKhoan in Model)
+                {
+                    <tr>
+                        <td>@taiKhoan.Hoten</td>
+                        <td>@taiKhoan.Email</td>
+                        <td>@taiKhoan.VaiTro?.TenVaiTro</td>
+                       @*  <td>
+                            @if (taiKhoan.TrangThai == true)
+                            {
+                                <span class="badge bg-success">Kích hoạt</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Vô hiệu</span>
+                            }
+                        </td> *@
+                        <td>
+                            <a href="@Url.Action("Edit", "QuanLyTaiKhoan", new { taiKhoanId = taiKhoan.TaiKhoanId })" class="btn btn-outline-warning btn-sm me-1" title="Sửa">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="@Url.Action("Delete", "QuanLyTaiKhoan", new { taiKhoanId = taiKhoan.TaiKhoanId })" class="btn btn-outline-danger btn-sm" title="Xóa" onclick="return confirm('Bạn có chắc muốn xóa tài khoản này?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>

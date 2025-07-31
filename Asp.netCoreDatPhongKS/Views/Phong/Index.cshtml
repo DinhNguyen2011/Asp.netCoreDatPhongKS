@@ -7,40 +7,36 @@
 
 <div class="container-fluid py-4">
     <h2 class="text-dark mb-4">Quản lý phòng</h2>
+
     @if (TempData["SuccessMessage"] != null)
     {
-        <div class="alert alert-success" role="alert">
-            @TempData["SuccessMessage"]
-        </div>
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
     }
-
     @if (TempData["ErrorMessage"] != null)
     {
-        <div class="alert alert-danger" role="alert">
-            @TempData["ErrorMessage"]
-        </div>
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
     }
+
     <p>
-        <a asp-action="Create" class="btn btn-primary">Thêm phòng mới</a>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fa fa-plus-circle"></i> Thêm phòng mới
+        </a>
     </p>
 
     <div class="card shadow-sm">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered table-sm mb-0">
-                    <thead class="bg-warning text-dark">
+                    <thead class="bg-warning text-dark text-center">
                         <tr>
                             <th>Số phòng</th>
                             <th>Loại phòng</th>
                             <th class="d-none d-md-table-cell">Mô tả</th>
-                            <th>Tình trạng</th>
+                            @* <th>Tình trạng</th> *@
                             <th>Giá/đêm</th>
                             <th>Số khách</th>
-                   @*          <th>Hình ảnh</th>
-                            <th class="d-none d-lg-table-cell">Hình ảnh 1</th>
-                            <th class="d-none d-lg-table-cell">Hình ảnh 2</th>
-                            <th class="d-none d-lg-table-cell">Hình ảnh 3</th>
-                            <th class="d-none d-md-table-cell">Ngày tạo</th> *@
+                            <th>Hình ảnh</th>
+                            <th class="d-none d-md-table-cell">Ngày tạo</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -48,51 +44,36 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.SoPhong</td>
+                                <td class="text-center">@item.SoPhong</td>
                                 <td>@item.LoaiPhong?.TenLoai</td>
                                 <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.MoTa">@item.MoTa</td>
-                                <td>@item.TinhTrang</td>
-                                <td>@item.GiaPhong1Dem?.ToString("C")</td>
-                                <td>@item.SoLuongKhach</td>
-                              @*   <td>
-                                    @if (!string.IsNullOrEmpty(item.HinhAnh) && item.HinhAnh != "/images/phong/default.png")
+                                @* <td class="text-center">@item.TinhTrang</td> *@
+                                <td class="text-end">@item.GiaPhong1Dem?.ToString("C")</td>
+                                <td class="text-center">@item.SoLuongKhach</td>
+                                <td class="text-center">
+                                    @if (!string.IsNullOrEmpty(item.HinhAnh))
                                     {
-                                        <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh phòng" class="img-fluid rounded" style="max-width: 50px;" />
+                                        <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh" class="img-thumbnail" style="max-width: 60px;" />
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">Không có</span>
                                     }
                                 </td>
-                                <td class="d-none d-lg-table-cell">
-                                    @if (!string.IsNullOrEmpty(item.HinhAnh1) && item.HinhAnh1 != "/images/phong/default.png")
-                                    {
-                                        <img src="@Url.Content(item.HinhAnh1)" alt="Hình ảnh 1" class="img-fluid rounded" style="max-width: 50px;" />
-                                    }
+                                <td class="d-none d-md-table-cell text-center">
+                                    @item.NgayTao?.ToString("dd/MM/yyyy")
                                 </td>
-                                <td class="d-none d-lg-table-cell">
-                                    @if (!string.IsNullOrEmpty(item.HinhAnh2) && item.HinhAnh2 != "/images/phong/default.png")
-                                    {
-                                        <img src="@Url.Content(item.HinhAnh2)" alt="Hình ảnh 2" class="img-fluid rounded" style="max-width: 50px;" />
-                                    }
-                                </td>
-                                <td class="d-none d-lg-table-cell">
-                                    @if (!string.IsNullOrEmpty(item.HinhAnh3) && item.HinhAnh3 != "/images/phong/default.png")
-                                    {
-                                        <img src="@Url.Content(item.HinhAnh3)" alt="Hình ảnh 3" class="img-fluid rounded" style="max-width: 50px;" />
-                                    }
-                                </td>
-                                <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td> *@
-                                <td class="action-column">
-                                    <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1" title="Sửa">
+                                <td class="text-center action-column">
+                                    <a asp-action="Edit" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm" title="Sửa">
                                         <i class="fa fa-edit"></i>
                                     </a>
-
-                                    <a asp-action="Details" asp-route-id="@item.PhongId" class="btn btn-warning btn-sm text-dark me-1" title="Chi tiết">
+                                    <a asp-action="Details" asp-route-id="@item.PhongId" class="btn btn-info btn-sm text-white" title="Chi tiết">
                                         <i class="fa fa-eye"></i>
                                     </a>
-
                                     <a asp-action="Delete" asp-route-id="@item.PhongId" class="btn btn-danger btn-sm" title="Xóa">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
-
                             </tr>
                         }
                     </tbody>
@@ -103,12 +84,8 @@
 </div>
 
 <style>
-    .table-responsive {
-        overflow-x: auto;
-    }
-
     .table-sm th, .table-sm td {
-        padding: 0.75rem;
+        padding: 0.65rem;
         font-size: 0.9rem;
         vertical-align: middle;
     }
@@ -119,38 +96,31 @@
         white-space: nowrap;
     }
 
+    .btn-sm i {
+        margin-right: 4px;
+    }
+
     .btn-warning {
-        background-color: #FFC107;
-        border-color: #856404;
-        transition: all 0.3s ease;
+        background-color: #ffc107;
+        border-color: #ffc107;
     }
 
-        .btn-warning:hover {
-            background-color: #e0a800;
-            border-color: #664d03;
-        }
-
-    .card {
-        border: 1px solid #856404;
-        border-radius: 0.5rem;
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
     }
 
-    .alert-success {
-        background-color: #D4EDDA;
-        border-color: #C3E6CB;
-        color: #155724;
-
+    .btn:hover {
+        opacity: 0.9;
     }
 
     .action-column {
-        white-space: nowrap; /* Ngăn xuống dòng */
-        min-width: 150px; /* Đặt chiều rộng tối thiểu cho cột Hành động */
+        white-space: nowrap;
+        min-width: 140px;
     }
 
-        /* Giảm khoảng cách giữa các nút */
-        .action-column .btn-sm {
-            margin-right: 0.25rem; /* Giảm margin */
-            padding: 0.25rem 0.5rem; /* Giảm padding */
-            font-size: 0.85rem; /* Giảm kích thước chữ */
-        }
+    img.img-thumbnail {
+        border-radius: 0.4rem;
+        box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    }
 </style>

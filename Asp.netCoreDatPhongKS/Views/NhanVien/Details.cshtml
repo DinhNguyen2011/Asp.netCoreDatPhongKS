@@ -1,0 +1,53 @@
+﻿@model Asp.netCoreDatPhongKS.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Chi tiết nhân viên";
+    Layout = "~/Views/Shared/_layoutAdmin.cshtml";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card">
+    <div class="card-header bg-info text-white">
+        Thông tin nhân viên
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Họ tên</dt>
+            <dd class="col-sm-9">@Model.HoTen</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Số điện thoại</dt>
+            <dd class="col-sm-9">@Model.SoDienThoai</dd>
+
+            <dt class="col-sm-3">CCCD</dt>
+            <dd class="col-sm-9">@Model.Cccd</dd>
+
+            <dt class="col-sm-3">Địa chỉ</dt>
+            <dd class="col-sm-9">@Model.DiaChi</dd>
+
+            <dt class="col-sm-3">Ngày tạo</dt>
+            <dd class="col-sm-9">@Model.NgayTao?.ToString("dd/MM/yyyy")</dd>
+
+            <dt class="col-sm-3">Tài khoản</dt>
+            <dd class="col-sm-9">@Model.TaiKhoan?.Email</dd>
+
+            <dt class="col-sm-3">Hình ảnh</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.HinhAnh))
+                {
+                    <img src="@Url.Content(Model.HinhAnh)" alt="Hình ảnh nhân viên" class="img-thumbnail" style="max-width:150px;" />
+                }
+                else
+                {
+                    <span>Không có hình ảnh</span>
+                }
+            </dd>
+        </dl>
+    </div>
+    <div class="card-footer">
+        <a asp-action="Index" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Trở về danh sách</a>
+    </div>
+</div>

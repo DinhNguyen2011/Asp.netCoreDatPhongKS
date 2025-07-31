@@ -4,11 +4,15 @@
     ViewData["Title"] = "Quản lý loại phòng";
     Layout = "~/Views/Shared/_layoutAdmin.cshtml";
 }
+<!-- Font Awesome nếu bạn chưa thêm -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <style>
-    body{
-        margin:10px !important;
+    body {
+        margin: 10px !important;
     }
 </style>
+
 <h2>Quản lý loại phòng</h2>
 
 @if (TempData["Success"] != null)
@@ -17,11 +21,13 @@
 }
 @if (TempData["Error"] != null)
 {
-    <div class="alert alert-warning"style="color:red;">@TempData["Error"]</div>
+    <div class="alert alert-warning" style="color:red;">@TempData["Error"]</div>
 }
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Thêm loại phòng mới</a>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Thêm loại phòng mới
+    </a>
 </p>
 
 <form asp-action="IndexChoAdmin" method="get" class="form-inline mb-3">
@@ -41,7 +47,9 @@
         <label for="soNguoi" class="mr-1">Số người</label>
         <input type="number" name="soNguoi" id="soNguoi" class="form-control" value="@ViewBag.SoNguoi" />
     </div>
-    <button type="submit" class="btn btn-primary">Lọc</button>
+    <button type="submit" class="btn btn-primary">
+        <i class="fas fa-filter"></i> Lọc
+    </button>
 </form>
 
 <div class="table-responsive">
@@ -73,15 +81,13 @@
                     </td>
                     <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.LoaiPhongId" class="btn btn-warning btn-sm" title="Sửa">
-                            <i class="fa fa-edit"></i>
+                        <a asp-action="Edit" asp-route-id="@item.LoaiPhongId" class="btn btn-sm btn-warning" title="Sửa">
+                            <i class="fas fa-pen"></i>
                         </a>
-
-                        <a asp-action="Delete" asp-route-id="@item.LoaiPhongId" class="btn btn-danger btn-sm" title="Xóa">
-                            <i class="fa fa-trash"></i>
+                        <a asp-action="Delete" asp-route-id="@item.LoaiPhongId" class="btn btn-sm btn-danger" title="Xóa" onclick="return confirm('Bạn có chắc muốn xóa loại phòng này?')">
+                            <i class="fas fa-trash"></i>
                         </a>
                     </td>
-
                 </tr>
             }
         </tbody>

@@ -105,6 +105,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
                 _context.NhanViens.Add(nhanVien);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Thêm mới thành công!";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -200,6 +201,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     }
                     throw;
                 }
+                TempData["SuccessMessage"] = "Sửa thành công!";
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -312,5 +315,24 @@ namespace Asp.netCoreDatPhongKS.Controllers
             imagePath = $"/images/nhanvien/{fileName}";
             return true;
         }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null || _context.NhanViens == null)
+            {
+                return NotFound();
+            }
+
+            var nhanVien = await _context.NhanViens
+                .Include(n => n.TaiKhoan)
+                .FirstOrDefaultAsync(m => m.NhanVienId == id);
+
+            if (nhanVien == null)
+            {
+                return NotFound();
+            }
+
+            return View(nhanVien);
+        }
+
     }
 }

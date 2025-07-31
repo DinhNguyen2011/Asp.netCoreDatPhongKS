@@ -26,6 +26,51 @@
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/assets/css/plugins.min.css" />
     <link rel="stylesheet" href="~/assets/css/kaiadmin.min.css" />
+
+    <style>
+        /* CSS cho các danh mục có thể đóng mở */
+        .nav-section {
+            position: relative;
+            cursor: pointer;
+            padding: 10px 15px;
+            margin: 5px 0;
+            color: #fff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+            .nav-section .text-section {
+                display: inline-block;
+                margin-left: 10px;
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            .nav-section .sidebar-mini-icon {
+                display: inline-block;
+                width: 20px;
+                text-align: center;
+            }
+
+            .nav-section .toggle-icon {
+                position: absolute;
+                right: 15px;
+                top: 12px;
+                transition: transform 0.3s ease;
+            }
+
+            .nav-section.collapsed .toggle-icon {
+                transform: rotate(-90deg);
+            }
+
+        .nav-group {
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+            .nav-group.collapsed {
+                max-height: 0 !important;
+            }
+    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -52,243 +97,319 @@
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "HomeAdmin")">
                                 <span class="menu-title">Trang chủ</span>
-                                <i class="mdi mdi-home menu-icon"></i>
+                                <i class="fas fa-home menu-icon"></i>
                             </a>
                         </li>
+
+                        <!-- Nhóm Quản lý Phòng -->
+                        <li class="nav-section" data-target="#roomManagementGroup">
+                            <span class="sidebar-mini-icon">
+                                <i class="fas fa-door-open"></i>
+                            </span>
+                            <h4 class="text-section">Quản lý Phòng</h4>
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </li>
+                        <div id="roomManagementGroup" class="nav-group">
                         <li class="nav-item">
                             @{
                                 var quyen = Context.Session.GetString("Quyen") != null ? System.Text.Json.JsonSerializer.Deserialize<List<string>>(Context.Session.GetString("Quyen")) : new List<string>();
                                 var hasManageRoom = quyen.Contains("ManageRoom");
                             }
-                            <a class="nav-link" href="@(hasManageRoom ? Url.Action("Index", "Phong") : "#")" onclick="@(!hasManageRoom ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <a class="nav-link" href="@(hasManageRoom? Url.Action("Index", "Phong") : "#")" onclick="@(!hasManageRoom ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
                                 <span class="menu-title">Quản lý phòng</span>
-                                <i class="mdi mdi-bed menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageDichVu = quyen.Contains("ManageDichVu");
-                            }
-                            <a class="nav-link" href="@(hasManageDichVu ? Url.Action("Index", "DichVu") : "#")" onclick="@(!hasManageDichVu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý dịch vụ</span>
-                                <i class="mdi mdi-television menu-icon"></i>
+                                <i class="fas fa-bed menu-icon"></i>
                             </a>
                         </li>
                         <li class="nav-item">
                             @{
                                 var hasManageLoaiPhong = quyen.Contains("ManageLoaiPhong");
                             }
-                            <a class="nav-link" href="@(hasManageLoaiPhong ? Url.Action("IndexChoAdmin", "LoaiPhong") : "#")" onclick="@(!hasManageLoaiPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý loại Phòng </span>
-                                <i class="mdi mdi-television menu-icon"></i>
+                            <a class="nav-link" href="@(hasManageLoaiPhong? Url.Action("IndexChoAdmin", "LoaiPhong") : "#")" onclick="@(!hasManageLoaiPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                                <span class="menu-title">Quản lý loại Phòng</span>
+                                <i class="fas fa-list-alt menu-icon"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageDatPhong = quyen.Contains("ManagePhieuDatPhong");
-                            }
-                            <a class="nav-link" href="@(hasManageDatPhong ? Url.Action("Index", "PhieuDatPhong") : "#")" onclick="@(!hasManageDatPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý phiếu đặt phòng</span>
-                                <i class="mdi mdi-bookmark-check menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageChiTietPDP = quyen.Contains("ManageChiTietPDP");
-                            }
-                            <a class="nav-link" href="@(hasManageChiTietPDP? Url.Action("Index", "ChiTietPDP") : "#")" onclick="@(!hasManageChiTietPDP ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý chi tiết phiếu đặt phòng</span>
-                                <i class="mdi mdi-bookmark-check menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageKhachHang = quyen.Contains("ManageKhachHang");
-                            }
-                            <a class="nav-link" href="@(hasManageKhachHang ? Url.Action("Index", "KhachHang") : "#")" onclick="@(!hasManageKhachHang ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý khách hàng</span>
-                                <i class="mdi mdi-account menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasNhanVien = quyen.Contains("ManageNhanVien");
-                            }
-                            <a class="nav-link" href="@(hasNhanVien ? Url.Action("Index", "NhanVien") : "#")" onclick="@(!hasNhanVien ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý nhân viên</span>
-                                <i class="mdi mdi-account menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageTaiKhoan = quyen.Contains("ManageTaiKhoan");
-                            }
-                            <a class="nav-link" href="@(hasManageTaiKhoan ? Url.Action("Index", "QuanLyTaiKhoan") : "#")" onclick="@(!hasManageTaiKhoan ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý tài khoản</span>
-                                <i class="mdi mdi-account-circle menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageHoaDon = quyen.Contains("ManageHoaDon");
-                            }
-                            <a class="nav-link" href="@(hasManageHoaDon ? Url.Action("Index", "HoaDon") : "#")" onclick="@(!hasManageHoaDon ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý hóa đơn</span>
-                                <i class="mdi mdi-file-check menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageHoaDonDV = quyen.Contains("ManageHoaDonDichVu");
-                            }
-                            <a class="nav-link" href="@(hasManageHoaDonDV ? Url.Action("Index", "HoaDonDichVu") : "#")" onclick="@(!hasManageHoaDonDV ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý hóa đơn dịch vụ</span>
-                                <i class="mdi mdi-home-variant menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageHoaDonPDP = quyen.Contains("ManageHoaDonDatPhong");
-                            }
-                            <a class="nav-link" href="@(hasManageHoaDonPDP ? Url.Action("Index", "HoaDonDatPhong") : "#")" onclick="@(!hasManageHoaDonPDP ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý hóa đơn đặt phòng</span>
-                                <i class="mdi mdi-home-variant menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageDoanhThu = quyen.Contains("ManageDoanhThu");
-                            }
-                            <a class="nav-link" href="@(hasManageDoanhThu ? Url.Action("Index", "DoanhThu") : "#")" onclick="@(!hasManageDoanhThu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý doanh thu</span>
-                                <i class="mdi mdi-home-variant menu-icon"></i>
-                            </a>
-                        </li>
-                      
-                        <li class="nav-item">
-                            @{
-                                var hasManageKhuyenMai = quyen.Contains("ManageKhuyenMai");
-                            }
-                            <a class="nav-link" href="@(hasManageKhuyenMai ? Url.Action("Index", "KhuyenMai") : "#")" onclick="@(!hasManageKhuyenMai ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý khuyến mãi</span>
-                                <i class="mdi mdi-home-variant menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageDanhGia = quyen.Contains("ManageDanhGia");
-                            }
-                            <a class="nav-link" href="@(hasManageDanhGia ? Url.Action("Index", "DanhGia") : "#")" onclick="@(!hasManageDanhGia ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý đánh giá</span>
-                                <i class="mdi mdi-home-variant menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManageLienHe = quyen.Contains("ManageLienHe");
-                            }
-                            <a class="nav-link" href="@(hasManageLienHe? Url.Action("Index", "LienHe") : "#")" onclick="@(!hasManageLienHe ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý liên hệ</span>
-                                <i class="mdi mdi-home-variant menu-icon"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            @{
-                                var hasManagePhanQuyen = quyen.Contains("ManagePhanQuyen");
-                            }
-                            <a class="nav-link" href="@(hasManagePhanQuyen ? Url.Action("Index", "PhanQuyen") : "#")" onclick="@(!hasManagePhanQuyen ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
-                                <span class="menu-title">Quản lý phân quyền</span>
-                                <i class="mdi mdi-account-key menu-icon"></i>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
-            </div>
-        </div>
-        <!-- End Sidebar -->
 
-        <div class="main-panel">
-            <div class="main-header">
-                <div class="main-header-logo">
-                    <div class="logo-header" data-background-color="dark">
-                        <a href="@Url.Action("Index", "HomeAdmin")" class="logo">
-                            <img src="~/assets/img/hotel-logo.svg" alt="Hotel Logo" class="navbar-brand" height="20" />
+                <!-- Nhóm Quản lý Đặt phòng -->
+                <li class="nav-section" data-target="#bookingManagementGroup">
+                    <span class="sidebar-mini-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </span>
+                    <h4 class="text-section">Quản lý Đặt phòng</h4>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </li>
+                <div id="bookingManagementGroup" class="nav-group">
+                    <li class="nav-item">
+                        @{
+                            var hasManageDatPhong = quyen.Contains("ManagePhieuDatPhong");
+                        }
+                        <a class="nav-link" href="@(hasManageDatPhong? Url.Action("Index", "PhieuDatPhong") : "#")" onclick="@(!hasManageDatPhong ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Phiếu đặt phòng</span>
+                            <i class="fas fa-clipboard-list menu-icon"></i>
                         </a>
-                        <div class="nav-toggle">
-                            <button class="btn btn-toggle toggle-sidebar">
-                                <i class="gg-menu-right"></i>
-                            </button>
-                            <button class="btn btn-toggle sidenav-toggler">
-                                <i class="gg-menu-left"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- Navbar Header -->
-                <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
-                    <div class="container-fluid">
-                        <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <button type="submit" class="btn btn-search pe-1">
-                                        <i class="fa fa-search search-icon"></i>
-                                    </button>
-                                </div>
-                                <input type="text" placeholder="Tìm kiếm..." class="form-control" />
-                            </div>
-                        </nav>
-
-                        <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
-                            <li class="nav-item topbar-user dropdown hidden-caret">
-                                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
-                                    <div class="avatar-sm">
-                                       @* thay bằng ảnh trong tài khoản /> *@
-                                    </div>
-                                    <span class="profile-username">
-                                        <span class="op-7">Xin chào,</span>
-                                        <span class="fw-bold">  @ViewData["Hoten"]</span>
-                                    </span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user animated fadeIn">
-                                    <div class="dropdown-user-scroll scrollbar-outer">
-                                    <li>
-                                        <div class="user-box">
-                                         
-                                            <div class="u-text">
-                                                <h4>@ViewData["Hoten"]</h4>
-                                                <p class="text-muted">@ViewData["Email"]</p>
-                                                <a href="@Url.Action("Profile", "TaiKhoan")" class="btn btn-xs btn-secondary btn-sm">Xem hồ sơ</a>
-                                                <a href="@Url.Action("ChangePassword", "TaiKhoan")" class="btn btn-xs btn-secondary btn-sm">Đổi mật khẩu</a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="@Url.Action("Profile", "TaiKhoan")">Hồ sơ của tôi</a>
-                                        <a class="dropdown-item" href="@Url.Action("Logout", "TaiKhoan")">Đăng xuất</a>
-                                    </li>
-                    </div>
-                    </ul>
                     </li>
-                    </ul>
-            </div>
-            </nav>
-            <!-- End Navbar -->
-        </div>
+                    <li class="nav-item">
+                        @{
+                            var hasManageChiTietPDP = quyen.Contains("ManageChiTietPDP");
+                        }
+                        <a class="nav-link" href="@(hasManageChiTietPDP? Url.Action("Index", "ChiTietPDP") : "#")" onclick="@(!hasManageChiTietPDP ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Chi tiết đặt phòng</span>
+                            <i class="fas fa-info-circle menu-icon"></i>
+                        </a>
+                    </li>
+                </div>
 
-        <div class="container">
-            <div class="content-wrapper">
-                    @RenderBody()
+                <!-- Nhóm Quản lý Hóa đơn -->
+                <li class="nav-section" data-target="#invoiceManagementGroup">
+                    <span class="sidebar-mini-icon">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                    </span>
+                    <h4 class="text-section">Quản lý Hóa đơn</h4>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </li>
+                <div id="invoiceManagementGroup" class="nav-group">
+                    <li class="nav-item">
+                        @{
+                            var hasManageHoaDon = quyen.Contains("ManageHoaDon");
+                        }
+                        <a class="nav-link" href="@(hasManageHoaDon? Url.Action("Index", "HoaDon") : "#")" onclick="@(!hasManageHoaDon ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Hóa đơn tổng</span>
+                            <i class="fas fa-file-invoice menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @{
+                            var hasManageHoaDonDV = quyen.Contains("ManageHoaDonDichVu");
+                        }
+                        <a class="nav-link" href="@(hasManageHoaDonDV? Url.Action("Index", "HoaDonDichVu") : "#")" onclick="@(!hasManageHoaDonDV ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Hóa đơn dịch vụ</span>
+                            <i class="fas fa-concierge-bell menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @{
+                            var hasManageHoaDonPDP = quyen.Contains("ManageHoaDonDatPhong");
+                        }
+                        <a class="nav-link" href="@(hasManageHoaDonPDP? Url.Action("Index", "HoaDonDatPhong") : "#")" onclick="@(!hasManageHoaDonPDP ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Hóa đơn đặt phòng</span>
+                            <i class="fas fa-key menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @{
+                            var hasManageDoanhThu = quyen.Contains("ManageDoanhThu");
+                        }
+                        <a class="nav-link" href="@(hasManageDoanhThu? Url.Action("Index", "DoanhThu") : "#")" onclick="@(!hasManageDoanhThu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Doanh thu</span>
+                            <i class="fas fa-chart-line menu-icon"></i>
+                        </a>
+                    </li>
+                </div>
+
+                <!-- Nhóm Quản lý Dịch vụ -->
+                <li class="nav-section" data-target="#serviceManagementGroup">
+                    <span class="sidebar-mini-icon">
+                        <i class="fas fa-concierge-bell"></i>
+                    </span>
+                    <h4 class="text-section">Quản lý Dịch vụ</h4>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </li>
+                <div id="serviceManagementGroup" class="nav-group">
+                    <li class="nav-item">
+                        @{
+                            var hasManageDichVu = quyen.Contains("ManageDichVu");
+                        }
+                        <a class="nav-link" href="@(hasManageDichVu? Url.Action("Index", "DichVu") : "#")" onclick="@(!hasManageDichVu ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Danh sách dịch vụ</span>
+                            <i class="fas fa-utensils menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @{
+                            var hasManageKhuyenMai = quyen.Contains("ManageKhuyenMai");
+                        }
+                        <a class="nav-link" href="@(hasManageKhuyenMai? Url.Action("Index", "KhuyenMai") : "#")" onclick="@(!hasManageKhuyenMai ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Khuyến mãi</span>
+                            <i class="fas fa-percent menu-icon"></i>
+                        </a>
+                    </li>
+                </div>
+
+                <!-- Nhóm Quản lý Khách hàng -->
+                <li class="nav-section" data-target="#customerManagementGroup">
+                    <span class="sidebar-mini-icon">
+                        <i class="fas fa-users"></i>
+                    </span>
+                    <h4 class="text-section">Quản lý Khách hàng</h4>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </li>
+                <div id="customerManagementGroup" class="nav-group">
+                    <li class="nav-item">
+                        @{
+                            var hasManageKhachHang = quyen.Contains("ManageKhachHang");
+                        }
+                        <a class="nav-link" href="@(hasManageKhachHang? Url.Action("Index", "KhachHang") : "#")" onclick="@(!hasManageKhachHang ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Danh sách khách hàng</span>
+                            <i class="fas fa-user-friends menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @{
+                            var hasManageDanhGia = quyen.Contains("ManageDanhGia");
+                        }
+                        <a class="nav-link" href="@(hasManageDanhGia? Url.Action("Index", "DanhGia") : "#")" onclick="@(!hasManageDanhGia ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Đánh giá</span>
+                            <i class="fas fa-star menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @{
+                            var hasManageLienHe = quyen.Contains("ManageLienHe");
+                        }
+                        <a class="nav-link" href="@(hasManageLienHe? Url.Action("Index", "LienHe") : "#")" onclick="@(!hasManageLienHe ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Liên hệ</span>
+                            <i class="fas fa-envelope menu-icon"></i>
+                        </a>
+                    </li>
+                </div>
+
+                <!-- Nhóm Quản lý Nhân sự -->
+                <li class="nav-section" data-target="#staffManagementGroup">
+                    <span class="sidebar-mini-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </span>
+                    <h4 class="text-section">Quản lý Nhân sự</h4>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </li>
+                <div id="staffManagementGroup" class="nav-group">
+                    <li class="nav-item">
+                        @{
+                            var hasNhanVien = quyen.Contains("ManageNhanVien");
+                        }
+                        <a class="nav-link" href="@(hasNhanVien? Url.Action("Index", "NhanVien") : "#")" onclick="@(!hasNhanVien ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Nhân viên</span>
+                            <i class="fas fa-user-tie menu-icon"></i>
+                        </a>
+                    </li>
+                </div>
+
+                <!-- Nhóm Quản lý Hệ thống -->
+                <li class="nav-section" data-target="#systemManagementGroup">
+                    <span class="sidebar-mini-icon">
+                        <i class="fas fa-cog"></i>
+                    </span>
+                    <h4 class="text-section">Hệ thống</h4>
+                    <i class="fas fa-chevron-down toggle-icon"></i>
+                </li>
+                <div id="systemManagementGroup" class="nav-group">
+                    <li class="nav-item">
+                        @{
+                            var hasManageTaiKhoan = quyen.Contains("ManageTaiKhoan");
+                        }
+                        <a class="nav-link" href="@(hasManageTaiKhoan? Url.Action("Index", "QuanLyTaiKhoan") : "#")" onclick="@(!hasManageTaiKhoan ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Tài khoản</span>
+                            <i class="fas fa-user-cog menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        @{
+                            var hasManagePhanQuyen = quyen.Contains("ManagePhanQuyen");
+                        }
+                        <a class="nav-link" href="@(hasManagePhanQuyen? Url.Action("Index", "PhanQuyen") : "#")" onclick="@(!hasManagePhanQuyen ? "toastr.error('Bạn không có quyền truy cập này'); return false;" : "")">
+                            <span class="menu-title">Phân quyền</span>
+                            <i class="fas fa-user-shield menu-icon"></i>
+                        </a>
+                    </li>
+                </div>
+                </ul>
             </div>
         </div>
+    </div>
+    <!-- End Sidebar -->
 
-        <footer class="footer">
-            <div class="container-fluid d-flex justify-content-center">
-                <div class="copyright">
-                    © 2025, Khách sạn Thiềm Định - Được phát triển 
+    <div class="main-panel">
+        <div class="main-header">
+            <div class="main-header-logo">
+                <div class="logo-header" data-background-color="dark">
+                    <a href="@Url.Action("Index", "HomeAdmin")" class="logo">
+                        <img src="~/assets/img/hotel-logo.svg" alt="Hotel Logo" class="navbar-brand" height="20" />
+                    </a>
+                    <div class="nav-toggle">
+                        <button class="btn btn-toggle toggle-sidebar">
+                            <i class="gg-menu-right"></i>
+                        </button>
+                        <button class="btn btn-toggle sidenav-toggler">
+                            <i class="gg-menu-left"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </footer>
+            <!-- Navbar Header -->
+            <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <button type="submit" class="btn btn-search pe-1">
+                                    <i class="fa fa-search search-icon"></i>
+                                </button>
+                            </div>
+                            <input type="text" placeholder="Tìm kiếm..." class="form-control" />
+                        </div>
+                    </nav>
+
+                    <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+                        <li class="nav-item topbar-user dropdown hidden-caret">
+                            <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                                <div class="avatar-sm">
+                                    @* thay bằng ảnh trong tài khoản /> *@
+                                </div>
+                                <span class="profile-username">
+                                    <span class="op-7">Xin chào,</span>
+                                    <span class="fw-bold">  @ViewData["Hoten"]</span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user animated fadeIn">
+                                <div class="dropdown-user-scroll scrollbar-outer">
+                                <li>
+                                    <div class="user-box">
+
+                                        <div class="u-text">
+                                            <h4>@ViewData["Hoten"]</h4>
+                                            <p class="text-muted">@ViewData["Email"]</p>
+                                            <a href="@Url.Action("Profile", "TaiKhoan")" class="btn btn-xs btn-secondary btn-sm">Xem hồ sơ</a>
+                                            <a href="@Url.Action("ChangePassword", "TaiKhoan")" class="btn btn-xs btn-secondary btn-sm">Đổi mật khẩu</a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="@Url.Action("Profile", "TaiKhoan")">Hồ sơ của tôi</a>
+                                    <a class="dropdown-item" href="@Url.Action("Logout", "TaiKhoan")">Đăng xuất</a>
+                                </li>
+                </div>
+                </ul>
+                </li>
+                </ul>
+        </div>
+        </nav>
+        <!-- End Navbar -->
+    </div>
+
+    <div class="container">
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid d-flex justify-content-center">
+            <div class="copyright">
+                © 2025, Khách sạn Thiềm Định - Được phát triển
+            </div>
+        </div>
+    </footer>
     </div>
     </div>
 
@@ -311,11 +432,47 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
     <script>
         // Đảm bảo toastr được tải nếu chưa có
         if (typeof toastr === 'undefined') {
             console.error('toastr not found. Please include toastr.js');
         }
+
+        // Xử lý đóng/mở các danh mục
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lấy tất cả các section có thể toggle
+            const navSections = document.querySelectorAll('.nav-section');
+
+            navSections.forEach(section => {
+                // Thêm sự kiện click cho mỗi section
+                section.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const targetGroup = document.querySelector(targetId);
+
+                    // Toggle class collapsed
+                    this.classList.toggle('collapsed');
+                    targetGroup.classList.toggle('collapsed');
+
+                    // Lưu trạng thái vào localStorage
+                    const isCollapsed = this.classList.contains('collapsed');
+                    localStorage.setItem(targetId, isCollapsed);
+                });
+
+                // Khôi phục trạng thái từ localStorage
+                const targetId = section.getAttribute('data-target');
+                const isCollapsed = localStorage.getItem(targetId) === 'true';
+
+                if (isCollapsed) {
+                    section.classList.add('collapsed');
+                    document.querySelector(targetId).classList.add('collapsed');
+                } else {
+                    // Thiết lập chiều cao ban đầu cho các nhóm
+                    const targetGroup = document.querySelector(targetId);
+                    targetGroup.style.maxHeight = targetGroup.scrollHeight + 'px';
+                }
+            });
+        });
     </script>
 </body>
 </html>

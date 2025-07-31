@@ -61,11 +61,11 @@
                         </td>
                         <td class="action-column">
                             <a asp-action="Edit" asp-route-id="@item.LienHeId" class="btn btn-sm btn-warning me-1">
-                                <i class="bi bi-pencil-square"></i> Sửa
+                                <i class="fas fa-edit" title="Sửa"></i>
                             </a>
                             <a asp-action="Delete" asp-route-id="@item.LienHeId" class="btn btn-sm btn-danger"
                                onclick="return confirm('Bạn có chắc chắn muốn xóa?');">
-                                <i class="bi bi-trash3-fill"></i> Xóa
+                                <i class="fas fa-trash-alt" title="Xóa"></i>
                             </a>
                         </td>
                     </tr>

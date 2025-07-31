@@ -29,7 +29,7 @@
             <th>Phiếu đặt phòng</th>
             <th>Phòng</th>
             <th>Đơn giá</th>
-            <th>Thao tác</th>
+            @* <th>Thao tác</th> *@
         </tr>
     </thead>
     <tbody>
@@ -40,12 +40,12 @@
                 <td>@(item.PhieuDatPhong?.MaPhieu ?? "N/A")</td>
                 <td>@(item.Phong?.SoPhong ?? "N/A")</td>
                 <td>@(item.DonGia?.ToString("C") ?? "N/A")</td>
-                <td>
+                @* <td>
                     <form asp-action="Delete" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa chi tiết phiếu phòng này?');">
                         <input type="hidden" name="id" value="@item.ChiTietId" />
                         <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
                     </form>
-                </td>
+                </td> *@
             </tr>
         }
     </tbody>

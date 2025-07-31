@@ -4,88 +4,73 @@
     ViewData["Title"] = "Quản lý nhân viên";
     Layout = "~/Views/Shared/_layoutAdmin.cshtml";
 }
-<style>
-    .action-column {
-        white-space: nowrap; /* Ngăn xuống dòng */
-        min-width: 150px; /* Đặt chiều rộng tối thiểu cho cột Hành động */
-    }
 
-        /* Giảm khoảng cách giữa các nút */
-        .action-column .btn-sm {
-            margin-right: 0.25rem; /* Giảm margin */
-            padding: 0.25rem 0.5rem; /* Giảm padding */
-            font-size: 0.85rem; /* Giảm kích thước chữ */
-        }
-</style>
-<h2>Quản lý nhân viên</h2>
+<!-- Bootstrap CDN cho icon FontAwesome (nếu chưa có trong layout) -->
+@* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" /> *@
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Thêm nhân viên mới</a>
-</p>
+<div class="container-fluid mt-3">
 
-<form asp-action="Index" method="get" class="form-inline mb-3">
-    <div class="form-group mr-2">
-        <label for="searchString" class="mr-1">Tìm kiếm:</label>
-        <input type="text" name="searchString" id="searchString" class="form-control" value="@ViewBag.SearchString" placeholder="Tên, Email, SĐT" />
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0 text-primary"><i class="fas fa-users-cog"></i> Quản lý nhân viên</h2>
+        <a asp-action="Create" class="btn btn-success">
+            <i class="fas fa-plus"></i> Thêm nhân viên mới
+        </a>
     </div>
-    <button type="submit" class="btn btn-primary">Tìm</button>
-</form>
 
-<div class="table-responsive">
-    <table class="table table-bordered table-sm">
-        <thead>
-            <tr>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
-                <th class="d-none d-md-table-cell">Địa chỉ</th>
-                <th class="d-none d-md-table-cell">CCCD</th>
-                <th class="d-none d-lg-table-cell">Hình ảnh</th>
-                <th>Tài khoản</th>
-           @*      <th class="d-none d-md-table-cell">Ngày tạo</th> *@
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            <i class="fas fa-check-circle me-2"></i>@TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i>@TempData["ErrorMessage"]
+        </div>
+    }
+
+    <form asp-action="Index" method="get" class="row g-2 mb-4">
+        <div class="col-auto">
+            <input type="text" name="searchString" id="searchString" class="form-control" value="@ViewBag.SearchString" placeholder="Tìm theo tên, email, SĐT..." />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Tìm kiếm</button>
+        </div>
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle text-center table-hover shadow-sm">
+            <thead class="table-light">
                 <tr>
-                    <td>@item.HoTen</td>
-                    <td>@item.Email</td>
-                    <td>@item.SoDienThoai</td>
-                    <td class="d-none d-md-table-cell text-truncate" style="max-width: 150px;" title="@item.DiaChi">@item.DiaChi</td>
-                    <td class="d-none d-md-table-cell">@item.Cccd</td>
-                    <td class="d-none d-lg-table-cell">
-                        @if (!string.IsNullOrEmpty(item.HinhAnh) && item.HinhAnh != "/images/nhanvien/default.png")
-                        {
-                            <img src="@Url.Content(item.HinhAnh)" alt="Hình ảnh" style="max-width: 50px;" />
-                        }
-                    </td>
-                    <td>@item.TaiKhoan?.Email</td>
-@*                     <td class="d-none d-md-table-cell">@item.NgayTao?.ToString("dd/MM/yyyy")</td> *@
-                    <td class="action-column">
-                        <a asp-action="Edit" asp-route-id="@item.NhanVienId" class="btn btn-warning btn-sm">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.NhanVienId" class="btn btn-danger btn-sm">Xóa</a>
-                    </td>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th class="d-none d-md-table-cell">CCCD</th>
+                    <th>Hành động</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.HoTen</td>
+                        <td>@item.Email</td>
+                        <td class="d-none d-md-table-cell">@item.Cccd</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.NhanVienId" class="btn btn-sm btn-outline-info me-1" title="Xem chi tiết">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.NhanVienId" class="btn btn-sm btn-outline-warning me-1" title="Sửa">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.NhanVienId" class="btn btn-sm btn-outline-danger" title="Xóa" onclick="return confirm('Bạn có chắc muốn xóa?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<style>
-    .table-responsive {
-        overflow-x: auto;
-    }
-
-    .table-sm th, .table-sm td {
-        padding: 0.5rem;
-        font-size: 0.875rem;
-    }
-
-    .text-truncate {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
-</style>

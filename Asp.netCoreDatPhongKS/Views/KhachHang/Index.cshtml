@@ -55,10 +55,10 @@
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
                                 <a asp-action="Edit" asp-route-id="@item.KhachHangId" class="btn btn-warning">
-                                    <i class="bi bi-pencil-square"> Sửa</i>
+                                    <i class="fas fa-edit" title="Sửa"></i>
                                 </a>
                                 <a asp-action="Delete" asp-route-id="@item.KhachHangId" class="btn btn-danger" onclick="return confirm('Bạn có chắc muốn xóa khách hàng này?')">
-                                    <i class="bi bi-trash"> Xóa</i>
+                                    <i class="fas fa-trash-alt" title="Xóa"></i>
                                 </a>
                             </div>
                         </td>
