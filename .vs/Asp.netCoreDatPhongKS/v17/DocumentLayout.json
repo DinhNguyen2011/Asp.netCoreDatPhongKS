@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\views\\loaiphong\\indexchoadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\views\\loaiphong\\indexchoadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -47,14 +47,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "IndexChoAdmin.cshtml",
-              "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml",
-              "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml",
-              "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml",
-              "RelativeToolTip": "Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAkwGYAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-31T14:28:19.529Z",
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
+              "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Asp.netCoreDatPhongKS\\Controllers\\HomeController.cs",
+              "ViewState": "AgIAAAACAAAAAAAAAAAAAH8BAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T16:32:05.503Z",
               "EditorCaption": ""
             }
           ]

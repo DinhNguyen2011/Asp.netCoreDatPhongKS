@@ -5,65 +5,68 @@
     var khachHangs = ViewBag.KhachHangs as List<Asp.netCoreDatPhongKS.Models.KhachHang>;
 }
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
 <link href="~/css/hoadontong.css" rel="stylesheet" />
 
-<h2>Tạo hóa đơn tổng (Check-out)</h2>
-<p>Nhân viên: @ViewData["Hoten"]</p>
+<div class="container-fluid py-4">
+    <h2 class="mb-4 text-primary fw-bold">Tạo hóa đơn tổng (Check-out)</h2>
+    <p class="mb-4 text-muted">Nhân viên: @ViewData["Hoten"]</p>
 
-<!-- Form tìm kiếm khách hàng -->
-<form asp-action="CreateHoaDonTong" method="get" class="mb-4">
-    <div class="input-group">
-        <input type="text" name="searchKhachHang" class="form-control" placeholder="Tìm kiếm tên hoặc CCCD khách hàng..." value="@ViewBag.SearchKhachHang" />
-        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-    </div>
-</form>
+    <!-- Form tìm kiếm khách hàng -->
+    <form asp-action="CreateHoaDonTong" method="get" class="mb-4 bg-light p-3 rounded shadow-sm">
+        <div class="input-group">
+            <input type="text" name="searchKhachHang" class="form-control" placeholder="Tìm kiếm tên hoặc CCCD khách hàng..." value="@ViewBag.SearchKhachHang" />
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+    </form>
 
-<!-- Form tạo hóa đơn tổng -->
-<form asp-action="CreateHoaDonTong" method="post" class="container mt-4">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <!-- Form tạo hóa đơn tổng -->
+    <form asp-action="CreateHoaDonTong" method="post" class="container mt-4 bg-light p-4 rounded shadow-sm">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-    <!-- Danh sách khách hàng -->
-    <div class="form-group">
-        <label class="form-label">Chọn khách hàng</label>
-        <select name="khachHangId" id="khachHangId" class="form-select" required>
-            <option value="">Chọn khách hàng</option>
-            @foreach (var khachHang in khachHangs)
-            {
-                <option value="@khachHang.KhachHangId">@khachHang.HoTen (@khachHang.Cccd)</option>
-            }
-        </select>
-    </div>
+        <!-- Danh sách khách hàng -->
+        <div class="form-group mb-4">
+            <label class="form-label fw-semibold">Chọn khách hàng <span class="text-danger">*</span></label>
+            <select name="khachHangId" id="khachHangId" class="form-select" required>
+                <option value="">Chọn khách hàng</option>
+                @foreach (var khachHang in khachHangs)
+                {
+                    <option value="@khachHang.KhachHangId">@khachHang.HoTen (@khachHang.Cccd)</option>
+                }
+            </select>
+        </div>
 
-    <!-- Hóa đơn dịch vụ chưa thanh toán -->
-    <div class="form-group" id="hoaDonDichVuList">
-        <h5>Hóa đơn dịch vụ chưa thanh toán</h5>
-        <div id="hoaDonDichVuContainer"></div>
-    </div>
+        <!-- Hóa đơn dịch vụ chưa thanh toán -->
+        <div class="form-group mb-4" id="hoaDonDichVuList">
+            <h5 class="mb-3 fw-bold text-primary">Hóa đơn dịch vụ chưa thanh toán</h5>
+            <div id="hoaDonDichVuContainer" class="border p-3 rounded bg-white"></div>
+        </div>
 
-    <!-- Phiếu đặt phòng chưa thanh toán -->
-    <div class="form-group" id="phieuDatPhongList">
-        <h5>Phiếu đặt phòng chưa thanh toán</h5>
-        <div id="phieuDatPhongContainer"></div>
-    </div>
+        <!-- Phiếu đặt phòng chưa thanh toán -->
+        <div class="form-group mb-4" id="phieuDatPhongList">
+            <h5 class="mb-3 fw-bold text-primary">Phiếu đặt phòng chưa thanh toán</h5>
+            <div id="phieuDatPhongContainer" class="border p-3 rounded bg-white"></div>
+        </div>
 
-    <!-- Hình thức thanh toán -->
-    <div class="form-group">
-        <label class="form-label">Hình thức thanh toán</label>
-        <select name="hinhThucThanhToan" class="form-select" required>
-            <option value="">Chọn hình thức</option>
-            <option value="Tiền mặt">Tiền mặt</option>
-            <option value="Chuyển khoản">Chuyển khoản</option>
-            <option value="VNPay">VNPay</option>
-            <option value="MoMo">MoMo</option>
-        </select>
-    </div>
+        <!-- Hình thức thanh toán -->
+        <div class="form-group mb-4">
+            <label class="form-label fw-semibold">Hình thức thanh toán <span class="text-danger">*</span></label>
+            <select name="hinhThucThanhToan" class="form-select" required>
+                <option value="">Chọn hình thức</option>
+                <option value="Tiền mặt">Tiền mặt</option>
+                <option value="Chuyển khoản">Chuyển khoản</option>
+                <option value="VNPay">VNPay</option>
+                <option value="MoMo">MoMo</option>
+            </select>
+        </div>
 
-    <!-- Nút submit -->
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Tạo hóa đơn tổng</button>
-        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
-    </div>
-</form>
+        <!-- Nút submit -->
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Tạo hóa đơn tổng</button>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">Quay lại</a>
+        </div>
+    </form>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -94,7 +97,7 @@
                             );
                         });
                     } else {
-                        $('#hoaDonDichVuContainer').append('<p>Không có hóa đơn dịch vụ chưa thanh toán.</p>');
+                        $('#hoaDonDichVuContainer').append('<p class="text-muted">Không có hóa đơn dịch vụ chưa thanh toán.</p>');
                     }
                 });
 
@@ -115,11 +118,10 @@
                                  'Ngày nhận phòng: ' + formattedDate + '<br>' +
                                  'Tổng tiền: ' + phieu.tongsotien.toLocaleString('vi-VN') + ' VNĐ' +
                                  '</label></div>'
-
                             );
                         });
                     } else {
-                        $('#phieuDatPhongContainer').append('<p>Không có phiếu đặt phòng chưa thanh toán.</p>');
+                        $('#phieuDatPhongContainer').append('<p class="text-muted">Không có phiếu đặt phòng chưa thanh toán.</p>');
                     }
                 });
             } else {

@@ -4,142 +4,158 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Danh sách dịch vụ</h2>
+<div class="container-fluid py-4">
+    <h2 class="mb-4 text-primary fw-bold">Danh sách dịch vụ</h2>
 
-<!-- Form tìm kiếm và lọc -->
-<form asp-action="Index" method="get" class="mb-4">
-    <div class="row">
-        <div class="col-md-4">
-            <input type="text" name="searchString" class="form-control" placeholder="Tìm theo tên dịch vụ" value="@ViewBag.SearchString" />
+    <!-- Form tìm kiếm và lọc -->
+    <form asp-action="Index" method="get" class="mb-4 bg-light p-4 rounded shadow-sm">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="searchString" class="form-label fw-semibold">Tìm kiếm dịch vụ</label>
+                <input type="text" name="searchString" class="form-control" placeholder="Nhập tên dịch vụ" value="@ViewBag.SearchString" />
+            </div>
+            <div class="col-md-3">
+                <label for="trangThai" class="form-label fw-semibold">Trạng thái</label>
+                <select name="trangThai" class="form-select">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="Hoạt động" selected="@(ViewBag.TrangThai == "Hoạt động")">Hoạt động</option>
+                    <option value="Không hoạt động" selected="@(ViewBag.TrangThai == "Không hoạt động")">Không hoạt động</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+            </div>
+            <div class="col-md-3">
+                <a asp-action="IndexQLDichVu" asp-controller="DichVu" class="btn btn-outline-secondary w-100">Danh sách dịch vụ</a>
+            </div>
         </div>
-        <div class="col-md-3">
-            <select name="trangThai" class="form-select">
-                <option value="">Tất cả trạng thái</option>
-                <option value="Hoạt động" selected="@(ViewBag.TrangThai == "Hoạt động")">Hoạt động</option>
-                <option value="Không hoạt động" selected="@(ViewBag.TrangThai == "Không hoạt động")">Không hoạt động</option>
+    </form>
+
+    <!-- Thông báo lỗi/success -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Form tạo đơn hàng dịch vụ -->
+    <form asp-action="CreateDonHangDichVu" method="post" id="createDonHangForm" class="bg-light p-4 rounded shadow-sm">
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <!-- Khách vãng lai -->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="isKhachVangLai" name="isKhachVangLai" value="true" />
+            <label class="form-check-label fw-semibold" for="isKhachVangLai">Khách vãng lai</label>
+        </div>
+
+        <!-- Chọn khách hàng -->
+        <div class="mb-3" id="khachHangGroup">
+            <label class="form-label fw-semibold">Khách hàng</label>
+            <select name="khachHangId" class="form-select" id="khachHangId">
+                <option value="">Chọn khách hàng</option>
+                @foreach (var khach in ViewBag.KhachHangId)
+                {
+                    <option value="@khach.Value">@khach.Text</option>
+                }
             </select>
+            <span class="text-danger" id="khachHangError"></span>
         </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+
+        <!-- Thanh toán ngay -->
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="thanhToanNgay" name="thanhToanNgay" value="true" />
+            <label class="form-check-label fw-semibold" for="thanhToanNgay">Thanh toán ngay</label>
         </div>
-    </div>
-</form>
-<a asp-action="IndexQLDichVu" asp-controller="DichVu" class="btn btn-secondary">Danh sách dịch vụ</a>
 
-<!-- Thông báo lỗi/success -->
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">@TempData["Error"]</div>
-}
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">@TempData["Success"]</div>
-}
+        <!-- Hình thức thanh toán -->
+        <div class="mb-3" id="hinhThucThanhToanGroup" style="display:none;">
+            <label class="form-label fw-semibold">Hình thức thanh toán</label>
+            <select name="hinhThucThanhToan" class="form-select" id="hinhThucThanhToan">
+                <option value="">Chọn hình thức</option>
+                <option value="Tiền mặt">Tiền mặt</option>
+                <option value="Chuyển khoản">Chuyển khoản</option>
+                <option value="VNPay">VNPay</option>
+                <option value="MoMo">MoMo</option>
+            </select>
+            <span class="text-danger" id="hinhThucThanhToanError"></span>
+        </div>
 
-<!-- Form tạo đơn hàng dịch vụ -->
-<form asp-action="CreateDonHangDichVu" method="post" id="createDonHangForm">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <!-- Bảng danh sách dịch vụ -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Chọn</th>
+                        <th scope="col">Tên dịch vụ</th>
+                        <th scope="col">Mô tả</th>
+                        <th scope="col">Đơn giá</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Số lượng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dichVu in Model)
+                    {
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="form-check-input dich-vu-checkbox" name="dichVuIds" value="@dichVu.DichVuId" id="dichVu_@dichVu.DichVuId" />
+                            </td>
+                            <td>@dichVu.TenDichVu</td>
+                            <td>@dichVu.MoTa</td>
+                            <td>@dichVu.DonGia.ToString("N0") VNĐ</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(dichVu.HinhAnh))
+                                {
+                                    <img src="@dichVu.HinhAnh" alt="@dichVu.TenDichVu" class="img-fluid rounded" style="max-width: 80px;" />
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Không có</span>
+                                }
+                            </td>
+                            <td>
+                                <input type="number" class="form-control so-luong" name="soLuongs" min="1" style="display:none; width: 100px;" data-dichvu-id="@dichVu.DichVuId" />
+                                <span class="text-danger so-luong-error"></span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-    <!-- Khách vãng lai -->
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="isKhachVangLai" name="isKhachVangLai" value="true" />
-        <label class="form-check-label" for="isKhachVangLai">Khách vãng lai</label>
-    </div>
+        <!-- Nút điều khiển -->
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-success">Tạo đơn hàng dịch vụ</button>
+            <a asp-action="Index" asp-controller="HoaDon" class="btn btn-outline-secondary">Quay lại</a>
+        </div>
+    </form>
+</div>
 
-    <!-- Chọn khách hàng -->
-    <div class="mb-3" id="khachHangGroup">
-        <label class="form-label">Khách hàng</label>
-        <select name="khachHangId" class="form-select" id="khachHangId">
-            <option value="">Chọn khách hàng</option>
-            @foreach (var khach in ViewBag.KhachHangId)
-            {
-                <option value="@khach.Value">@khach.Text</option>
-            }
-        </select>
-        <span class="text-danger" id="khachHangError"></span>
-    </div>
-
-    <!-- Thanh toán ngay -->
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="thanhToanNgay" name="thanhToanNgay" value="true" />
-        <label class="form-check-label" for="thanhToanNgay">Thanh toán ngay</label>
-    </div>
-
-    <!-- Hình thức thanh toán -->
-    <div class="mb-3" id="hinhThucThanhToanGroup" style="display:none;">
-        <label class="form-label">Hình thức thanh toán</label>
-        <select name="hinhThucThanhToan" class="form-select" id="hinhThucThanhToan">
-            <option value="">Chọn hình thức</option>
-            <option value="Tiền mặt">Tiền mặt</option>
-            <option value="Chuyển khoản">Chuyển khoản</option>
-            <option value="VNPay">VNPay</option>
-            <option value="MoMo">MoMo</option>
-
-        </select>
-        <span class="text-danger" id="hinhThucThanhToanError"></span>
-    </div>
-
-    <!-- Bảng danh sách dịch vụ với checkbox và số lượng -->
-    <table class="table table-bordered table-hover">
-        <thead class="table-light">
-            <tr>
-                <th>Chọn</th>
-                <th>Tên dịch vụ</th>
-                <th>Mô tả</th>
-                <th>Đơn giá</th>
-              @*   <th>Trạng thái</th> *@
-                <th>Hình ảnh</th>
-                <th>Số lượng</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var dichVu in Model)
-            {
-                <tr>
-                    <td>
-                        <input type="checkbox" class="form-check-input dich-vu-checkbox" name="dichVuIds" value="@dichVu.DichVuId" id="dichVu_@dichVu.DichVuId" />
-                    </td>
-                    <td>@dichVu.TenDichVu</td>
-                    <td>@dichVu.MoTa</td>
-                    <td>@dichVu.DonGia.ToString("N0") VNĐ</td>
-                   @*  <td>@(dichVu.TrangThai == true ? "Hoạt động" : "Không hoạt động")</td> *@
-                    <td>
-                        @if (!string.IsNullOrEmpty(dichVu.HinhAnh))
-                        {
-                            <img src="@dichVu.HinhAnh" alt="@dichVu.TenDichVu" style="max-width: 100px;" />
-                        }
-                        else
-                        {
-                            <span>Không có</span>
-                        }
-                    </td>
-                    <td>
-                        <input type="number" class="form-control so-luong" name="soLuongs" min="1" style="display:none;" data-dichvu-id="@dichVu.DichVuId" />
-                        <span class="text-danger so-luong-error"></span>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <!-- Nút tạo đơn hàng dịch vụ -->
-    <button type="submit" class="btn btn-success">Tạo đơn hàng dịch vụ</button>
-    <a asp-action="Index" asp-controller="HoaDon" class="btn btn-secondary">Quay lại</a>
-</form>
-
+<!-- Thêm Bootstrap 5 và jQuery -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
         // Ẩn/hiện khách hàng khi chọn vãng lai
         $('#isKhachVangLai').change(function () {
             if ($(this).is(':checked')) {
-                $('#khachHangGroup').hide();
+                $('#khachHangGroup').slideUp();
                 $('#khachHangId').val('');
                 $('#thanhToanNgay').prop('checked', true).prop('disabled', true);
-                $('#hinhThucThanhToanGroup').show();
+                $('#hinhThucThanhToanGroup').slideDown();
                 $('#hinhThucThanhToan').prop('required', true);
             } else {
-                $('#khachHangGroup').show();
+                $('#khachHangGroup').slideDown();
                 $('#thanhToanNgay').prop('disabled', false);
                 $('#hinhThucThanhToanGroup').toggle($('#thanhToanNgay').is(':checked'));
                 $('#hinhThucThanhToan').prop('required', $('#thanhToanNgay').is(':checked'));
@@ -148,14 +164,14 @@
 
         // Ẩn/hiện hình thức thanh toán
         $('#thanhToanNgay').change(function () {
-            $('#hinhThucThanhToanGroup').toggle($(this).is(':checked'));
+            $('#hinhThucThanhToanGroup').slideToggle($(this).is(':checked'));
             $('#hinhThucThanhToan').prop('required', $(this).is(':checked'));
         });
 
         // Hiển thị ô số lượng khi checkbox được chọn
         $('.dich-vu-checkbox').change(function () {
             var soLuongInput = $(this).closest('tr').find('.so-luong');
-            soLuongInput.toggle(this.checked);
+            soLuongInput.slideToggle(this.checked);
             if (!this.checked) {
                 soLuongInput.val('');
                 soLuongInput.next('.so-luong-error').text('');

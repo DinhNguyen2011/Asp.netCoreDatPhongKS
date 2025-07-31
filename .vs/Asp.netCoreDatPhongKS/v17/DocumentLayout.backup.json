@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|d:\\luanvantotnghiep\\asp.netcoredatphongks\\asp.netcoredatphongks\\views\\loaiphong\\indexchoadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{96C60289-0629-4DAA-9240-E25301EDD697}|Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS.csproj|solutionrelative:asp.netcoredatphongks\\views\\loaiphong\\indexchoadmin.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -43,19 +38,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:1:0:{e8b06f52-6d01-11d2-aa7d-00c04f990343}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IndexChoAdmin.cshtml",
-              "DocumentMoniker": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml",
-              "RelativeDocumentMoniker": "Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml",
-              "ToolTip": "D:\\LuanVanTotNghiep\\Asp.netCoreDatPhongKS\\Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml*",
-              "RelativeToolTip": "Asp.netCoreDatPhongKS\\Views\\LoaiPhong\\IndexChoAdmin.cshtml*",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAkwHAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-31T14:28:19.529Z",
-              "EditorCaption": ""
             }
           ]
         },

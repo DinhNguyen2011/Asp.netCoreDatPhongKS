@@ -125,8 +125,9 @@
         </div>
         <div class="card-body">
             <form asp-action="TimKiemPhong" method="post" class="row g-3">
-                <input type="hidden" name="checkin" value="@checkin.ToString("yyyy-MM-ddTHH:mm")" />
-                <input type="hidden" name="checkout" value="@checkout.ToString("yyyy-MM-ddTHH:mm")" />
+                <input type="hidden" name="checkin" value="@checkin.ToString("yyyy-MM-dd")" />
+                @*   value="@checkin.ToString("yyyy-MM-ddTHH:mm")"  *@
+                <input type="hidden" name="checkout" value="@checkout.ToString("yyyy-MM-dd")" />
                 <input type="hidden" name="soKhach" value="@soKhach" />
                 <input type="hidden" name="rooms" value="1" />
 
@@ -217,8 +218,9 @@
                     <div class="d-flex justify-content-end mt-2">
                         <a href="@Url.Action("DatPhong", "Home", new {
                             phongId = item.Phong.PhongId,
-                            checkin = item.Checkin.ToString("yyyy-MM-ddTHH:mm"),
-                            checkout = item.Checkout.ToString("yyyy-MM-ddTHH:mm")
+                            checkin = item.Checkin.ToString("yyyy-MM-dd"),
+                            checkout = item.Checkout.ToString("yyyy-MM-dd")
+                            // checkout = item.Checkout.ToString("yyyy-MM-ddTHH:mm")
                         })"
                            class="btn btn-dark rounded-pill px-4">
                             Chọn phòng
