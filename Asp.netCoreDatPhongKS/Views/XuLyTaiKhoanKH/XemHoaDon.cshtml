@@ -4,103 +4,123 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="~/css/xulypdp.css" rel="stylesheet" />
+@* <link href="~/css/xulypdp.css" rel="stylesheet" /> *@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+<style>
+    .user-invoice-container {
+        padding: 20px;
+    }
 
-<div class="container-fluid td-padding-side" data-aos="fade-up">
-    <h2 class="display-4 text-center fw-normal mb-5">@ViewData["Title"]</h2>
+    .user-invoice-table-wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .user-invoice-table td,
+    .user-invoice-table th {
+        vertical-align: top;
+        padding: 12px;
+    }
+
+    .user-invoice-alert {
+        max-width: 800px;
+        margin: 0 auto 20px auto;
+    }
+
+</style>
+<div class="container-fluid user-invoice-container mt-4 mb-5" data-aos="fade-up">
+    @* <h2 class="text-center text-primary mb-4">@ViewData["Title"]</h2> *@
 
     @if (TempData["Success"] != null)
     {
-        <div class="alert alert-success" data-aos="fade-up">
-            @TempData["Success"]
+        <div class="alert alert-success alert-dismissible fade show user-invoice-alert" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>@TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
+
     @if (TempData["Error"] != null)
     {
-        <div class="alert alert-danger" data-aos="fade-up">
-            @TempData["Error"]
+        <div class="alert alert-danger alert-dismissible fade show user-invoice-alert" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     }
 
     @if (!Model.Any())
     {
-        <div class="alert alert-info" data-aos="fade-up">
-            Bạn chưa có hóa đơn nào.
+        <div class="alert alert-info user-invoice-alert" data-aos="fade-up">
+            <i class="bi bi-info-circle me-2"></i>Bạn chưa có hóa đơn nào.
         </div>
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Mã hóa đơn</th>
-                        <th>Ngày lập</th>
-                        <th>Phòng</th>
-                        <th>Dịch vụ</th>
-                        <th>Tổng tiền</th>
-                        <th>Trạng thái</th>
-                        <th>Hình thức thanh toán</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var hoaDon in Model)
-                    {
+        <div class="user-invoice-table-wrapper">
+            <div class="table-responsive" data-aos="fade-up">
+                <table class="table table-striped table-bordered align-middle user-invoice-table text-center">
+                    <thead class="table-light">
                         <tr>
-                            <td>@hoaDon.MaHoaDon</td>
-                            <td>@hoaDon.NgayLap?.ToString("dd/MM/yyyy")</td>
-                            <td>
-                                @if (hoaDon.HoaDonPdps != null && hoaDon.HoaDonPdps.Any())
-                                {
-                                    foreach (var hdp in hoaDon.HoaDonPdps)
-                                    {
-                                        if (hdp.PhieuDatPhong?.ChiTietPhieuPhongs != null)
-                                        {
-                                            foreach (var chiTiet in hdp.PhieuDatPhong.ChiTietPhieuPhongs)
-                                            {
-                                                <div>@chiTiet.Phong?.SoPhong (@chiTiet.Phong?.LoaiPhong?.TenLoai)</div>
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    <div>Không có phòng</div>
-                                }
-                            </td>
-                            <td>
-                                @if (hoaDon.HoaDonDichVus != null && hoaDon.HoaDonDichVus.Any())
-                                {
-                                    foreach (var hddv in hoaDon.HoaDonDichVus)
-                                    {
-                                        if (hddv.MaDonHangDvNavigation?.ChiTietDonHangDichVus != null)
-                                        {
-                                            foreach (var chiTiet in hddv.MaDonHangDvNavigation.ChiTietDonHangDichVus)
-                                            {
-                                                <div>@chiTiet.DichVu?.TenDichVu (@chiTiet.SoLuong) - @chiTiet.ThanhTien?.ToString("N0") VNĐ</div>
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    <div>Không có dịch vụ</div>
-                                }
-                            </td>
-                            <td>@hoaDon.TongTien.ToString("N0") VNĐ</td>
-                            <td>@hoaDon.TrangThai</td>
-                            <td>@hoaDon.HinhThucThanhToan</td>
+                            <th>Mã hóa đơn</th>
+                            <th>Ngày lập</th>
+                            <th class="text-start">Phòng</th>
+                            <th class="text-start">Dịch vụ</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var hoaDon in Model)
+                        {
+                            <tr>
+                                <td>@hoaDon.MaHoaDon</td>
+                                <td>@hoaDon.NgayLap?.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td class="text-start">
+                                    @if (hoaDon.HoaDonPdps != null && hoaDon.HoaDonPdps.Any())
+                                    {
+                                        foreach (var hdp in hoaDon.HoaDonPdps)
+                                        {
+                                            if (hdp.PhieuDatPhong?.ChiTietPhieuPhongs != null)
+                                            {
+                                                foreach (var chiTiet in hdp.PhieuDatPhong.ChiTietPhieuPhongs)
+                                                {
+                                                    <div>- Phòng @chiTiet.Phong?.SoPhong (@chiTiet.Phong?.LoaiPhong?.TenLoai)</div>
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div>Không có phòng</div>
+                                    }
+                                </td>
+                                <td class="text-start">
+                                    @if (hoaDon.HoaDonDichVus != null && hoaDon.HoaDonDichVus.Any())
+                                    {
+                                        foreach (var hddv in hoaDon.HoaDonDichVus)
+                                        {
+                                            if (hddv.MaDonHangDvNavigation?.ChiTietDonHangDichVus != null)
+                                            {
+                                                foreach (var chiTiet in hddv.MaDonHangDvNavigation.ChiTietDonHangDichVus)
+                                                {
+                                                    <div>- @chiTiet.DichVu?.TenDichVu x @chiTiet.SoLuong: <span class="text-success">@chiTiet.ThanhTien?.ToString("N0") VNĐ</span></div>
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div>Không có dịch vụ</div>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     }
 </div>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-<script>AOS.init({ duration: 800 });</script>
+<script>
+    AOS.init({ duration: 800 });
+</script>
