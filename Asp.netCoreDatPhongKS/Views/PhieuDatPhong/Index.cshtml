@@ -24,6 +24,19 @@
         <br />
         <strong class="text-danger">* Chú ý:</strong> Khi khách đặt phòng qua website và đã check-out, cần cập nhật trạng thái "Đã check-out".
     </div>
+    <form method="get" asp-action="Index" class="mb-3">
+        <div class="input-group w-50">
+            <input type="text" name="search" class="form-control" placeholder="Tìm theo tên hoặc số điện thoại"
+                   value="@ViewData["CurrentFilter"]" />
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="bi bi-search"></i> Tìm
+            </button>
+            <a href="@Url.Action("Index", "PhieuDatPhong")" class="btn btn-outline-secondary">
+                <i class="bi bi-x-circle"></i> Xóa lọc
+            </a>
+        </div>
+    </form>
+
     @if (TempData["Success"] != null)
     {
         <div class="alert alert-warning">@TempData["Success"]</div>

@@ -21,28 +21,38 @@ namespace Asp.netCoreDatPhongKS.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search)
         {
             string userName = HttpContext.Session.GetString("Hoten");
             if (!string.IsNullOrEmpty(userName))
             {
                 ViewData["Hoten"] = userName;
             }
+
             try
             {
-                var phieuDatPhongs = await _context.PhieuDatPhongs
-                    .Where(p=>p.TinhTrangSuDung != "Đã hủy")
+                var query = _context.PhieuDatPhongs
                     .Include(p => p.KhachHang)
                     .Include(p => p.ChiTietPhieuPhongs)
-                    .ThenInclude(c => c.Phong)
-                    .ThenInclude(p => p.LoaiPhong)
-                    .ToListAsync();
+                        .ThenInclude(c => c.Phong)
+                            .ThenInclude(p => p.LoaiPhong)
+                    .Where(p => p.TinhTrangSuDung != "Đã hủy");
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    query = query.Where(p =>
+                        (p.KhachHang.HoTen != null && p.KhachHang.HoTen.Contains(search)) ||
+                        (p.KhachHang.SoDienThoai != null && p.KhachHang.SoDienThoai.Contains(search)));
+                }
+
+                var phieuDatPhongs = await query.ToListAsync();
+
                 var sapxepngay = phieuDatPhongs
                     .OrderBy(p => Math.Abs((p.NgayDat.GetValueOrDefault() - DateTime.Now).TotalDays))
-                   //sx tăng so với datetime.now, Math.Abs giá trị tuyệt đối gần nhất 
-                   .ToList();
-                return View(sapxepngay);
+                    .ToList();
 
+                ViewData["CurrentFilter"] = search;
+                return View(sapxepngay);
             }
             catch (Exception ex)
             {

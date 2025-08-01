@@ -3,50 +3,59 @@
 @{
     ViewData["Title"] = "Danh sách chi tiết phiếu phòng";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
-    
 }
 
-<h2>Danh sách chi tiết phiếu phòng</h2>
+<div class="container mt-4">
+    <h2 class="text-primary mb-3">
+        <i class="bi bi-card-list"></i> Danh sách chi tiết phiếu phòng
+    </h2>
 
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Success"]
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Mã phiếu</th>
+                    <th>Số phòng</th>
+                    <th>Đơn giá</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-muted">Không có dữ liệu</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.ChiTietId</td>
+                            <td>@(item.PhieuDatPhong?.MaPhieu ?? "N/A")</td>
+                            <td>@(item.Phong?.SoPhong ?? "N/A")</td>
+                            <td>@(item.DonGia?.ToString("N0") ?? "N/A") VNĐ</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
     </div>
-}
-
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["Error"]
-    </div>
-}
-
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Phiếu đặt phòng</th>
-            <th>Phòng</th>
-            <th>Đơn giá</th>
-            @* <th>Thao tác</th> *@
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.ChiTietId</td>
-                <td>@(item.PhieuDatPhong?.MaPhieu ?? "N/A")</td>
-                <td>@(item.Phong?.SoPhong ?? "N/A")</td>
-                <td>@(item.DonGia?.ToString("C") ?? "N/A")</td>
-                @* <td>
-                    <form asp-action="Delete" method="post" onsubmit="return confirm('Bạn có chắc muốn xóa chi tiết phiếu phòng này?');">
-                        <input type="hidden" name="id" value="@item.ChiTietId" />
-                        <button type="submit" class="btn btn-danger btn-sm">Xóa</button>
-                    </form>
-                </td> *@
-            </tr>
-        }
-    </tbody>
-</table>
+</div>
