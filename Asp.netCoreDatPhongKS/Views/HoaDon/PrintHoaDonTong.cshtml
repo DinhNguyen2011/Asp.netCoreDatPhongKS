@@ -1,21 +1,61 @@
 ﻿@model Asp.netCoreDatPhongKS.Models.HoaDon
 @{
     ViewData["Title"] = "In hóa đơn tổng";
+    decimal tyGiaUSD = ViewData["TyGiaUSD"] is decimal value && value > 0 ? value : 26220m;
+   
+    string ToUSD(decimal vnd)
+    {
+        return tyGiaUSD > 0 ? (vnd / tyGiaUSD).ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("en-US")) : "N/A (Tỷ giá không hợp lệ)";
+    }
+
     decimal tongTienDichVu = Model.HoaDonDichVus?.Sum(h => h.MaDonHangDvNavigation.ChiTietDonHangDichVus.Sum(c => c.ThanhTien ?? 0)) ?? 0;
-    // Tính tổng tiền phòng theo công thức yêu cầu
     decimal tongTienPhong = Model.HoaDonPdps.Sum(h => (h.PhieuDatPhong.TongTien) - ((h.PhieuDatPhong.SoTienCoc ?? 0) + (h.PhieuDatPhong.SoTienDaThanhToan ?? 0)));
     decimal tongTienCoc = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienCoc ?? 0);
     decimal tongTienDaThanhToan = Model.HoaDonPdps.Sum(h => h.PhieuDatPhong.SoTienDaThanhToan ?? 0);
     decimal tongCong = tongTienDichVu + tongTienPhong;
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <title>In hóa đơn #@Model.MaHoaDon</title>
     <link rel="stylesheet" href="/assets/css/hoadontong.css" />
+    <style>
+        .invoice {
+            width: 80%;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+        }
+        .invoice-header, .invoice-details, .invoice-total, .signature-section {
+            margin-bottom: 20px;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .invoice-table th, .invoice-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .invoice-table th {
+            background-color: #f2f2f2;
+        }
+        .no-print {
+            margin-top: 20px;
+        }
+        .signature-box {
+            width: 45%;
+            float: left;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-right: 10px;
+        }
+       
+    </style>
 </head>
 <body onload="window.print()">
     <div class="invoice">
@@ -33,6 +73,10 @@
             <p><strong>Nhân viên lập:</strong> @Model.NguoiLapDh</p>
             <p><strong>Hình thức thanh toán:</strong> @Model.HinhThucThanhToan</p>
             <p><strong>Trạng thái:</strong> @Model.TrangThai</p>
+            @if (tyGiaUSD == 26220m)
+            {
+                <p class="text-danger">Lưu ý: Tỷ giá từ API không hợp lệ, sử dụng tỷ giá mặc định 26,220 VND/USD.</p>
+            }
         </div>
 
         @if (Model.HoaDonDichVus.Any())
@@ -59,8 +103,8 @@
                                     <td>@stt</td>
                                     <td>@chiTiet.DichVu.TenDichVu</td>
                                     <td>@chiTiet.SoLuong</td>
-                                    <td>@chiTiet.DonGia.ToString("N0") VNĐ</td>
-                                    <td>@chiTiet.ThanhTien?.ToString("N0") VNĐ</td>
+                                    <td>@chiTiet.DonGia.ToString("N0") VNĐ (@ToUSD(chiTiet.DonGia))</td>
+                                    <td>@chiTiet.ThanhTien?.ToString("N0") VNĐ (@ToUSD(chiTiet.ThanhTien ?? 0))</td>
                                 </tr>
                                 stt++;
                             }
@@ -68,7 +112,7 @@
                     }
                     <tr>
                         <td colspan="4" class="text-end"><strong>Tổng tiền dịch vụ:</strong></td>
-                        <td><strong>@tongTienDichVu.ToString("N0") VNĐ</strong></td>
+                        <td><strong>@tongTienDichVu.ToString("N0") VNĐ (@ToUSD(tongTienDichVu))</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -102,7 +146,6 @@
                             {
                                 var soNgayO = ((hdp.PhieuDatPhong.NgayTra ?? DateTime.Now) - (hdp.PhieuDatPhong.NgayNhan ?? DateTime.Now)).Days;
                                 soNgayO = soNgayO < 1 ? 1 : soNgayO;
-                                // Tính ThanhTien cho mỗi phiếu
                                 decimal thanhTien = (hdp.PhieuDatPhong.TongTien) - ((hdp.PhieuDatPhong.SoTienCoc ?? 0) + (hdp.PhieuDatPhong.SoTienDaThanhToan ?? 0));
 
                                 <tr>
@@ -111,11 +154,11 @@
                                     <td>@chiTiet.Phong.SoPhong</td>
                                     <td>@(chiTiet.Phong.LoaiPhong?.TenLoai ?? "Không xác định")</td>
                                     <td>@soNgayO ngày</td>
-                                    <td>@chiTiet.DonGia?.ToString("N0") VNĐ</td>
-                                    <td>@hdp.PhieuDatPhong.TongTien.ToString("N0") VNĐ</td>
+                                    <td>@chiTiet.DonGia?.ToString("N0") VNĐ (@ToUSD(chiTiet.DonGia ?? 0))</td>
+                                    <td>@hdp.PhieuDatPhong.TongTien.ToString("N0") VNĐ (@ToUSD(hdp.PhieuDatPhong.TongTien))</td>
                                     <td>@hdp.PhieuDatPhong.SoTienCoc?.ToString("N0") VNĐ</td>
                                     <td>@hdp.PhieuDatPhong.SoTienDaThanhToan?.ToString("N0") VNĐ</td>
-                                    <td>@thanhTien.ToString("N0") VNĐ</td>
+                                    <td>@thanhTien.ToString("N0") VNĐ (@ToUSD(thanhTien))</td>
                                 </tr>
                                 sttP++;
                             }
@@ -123,7 +166,7 @@
                     }
                     <tr>
                         <td colspan="9" class="text-end"><strong>Tổng tiền phòng:</strong></td>
-                        <td><strong>@tongTienPhong.ToString("N0") VNĐ</strong></td>
+                        <td><strong>@tongTienPhong.ToString("N0") VNĐ (@ToUSD(tongTienPhong))</strong></td>
                     </tr>
                     <tr>
                         <td colspan="9" class="text-end"><strong>Tổng tiền cọc:</strong></td>
@@ -138,10 +181,10 @@
         }
 
         <div class="invoice-total">
-            <p><strong>Tổng cộng:</strong> @tongCong.ToString("N0") VNĐ</p>
+            <p><strong>Tổng cộng:</strong> @tongCong.ToString("N0") VNĐ (@ToUSD(tongCong))</p>
             @if (Model.SoTienConNo > 0)
             {
-                <p><strong>Số tiền còn nợ:</strong> @Model.SoTienConNo?.ToString("N0") VNĐ</p>
+                <p><strong>Số tiền còn nợ:</strong> @Model.SoTienConNo?.ToString("N0") VNĐ (@ToUSD(Model.SoTienConNo ?? 0))</p>
             }
         </div>
 
@@ -157,8 +200,8 @@
         </div>
 
         <div class="no-print">
-            <button onclick="window.print()" class="btn-primary">In lại</button>
-            <a href="@Url.Action("Index", "HoaDon")" class="btn-secondary">Quay lại</a>
+            <button onclick="window.print()" class="btn btn-primary">In lại</button>
+            <a href="@Url.Action("Index", "HoaDon")" class="btn btn-secondary">Quay lại</a>
         </div>
     </div>
 </body>

@@ -1,6 +1,7 @@
 ﻿using Asp.netCoreDatPhongKS.Filters;
 using Asp.netCoreDatPhongKS.Models;
 using Asp.netCoreDatPhongKS.Models.ViewModels;
+using Asp.netCoreDatPhongKS.Services;
 using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +17,14 @@ namespace Asp.netCoreDatPhongKS.Controllers
     public class HoaDonController : Controller
     {
         private readonly HotelPlaceVipContext _context;
+        private readonly ExchangeService _exchangeService;
 
-        public HoaDonController(HotelPlaceVipContext context)
+        public HoaDonController(HotelPlaceVipContext context, ExchangeService exchangeService)
         {
             _context = context;
+            _exchangeService = exchangeService;
         }
 
-   
         public async Task<IActionResult> Index(string trangThai, string searchString)
         {
             var userName = HttpContext.Session.GetString("Hoten");
@@ -298,13 +300,11 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View();
             }
         }
-
-        // Action PrintHoaDonTong: In hóa đơn tổng
         public async Task<IActionResult> PrintHoaDonTong(int id)
         {
             var taiKhoanId = HttpContext.Session.GetInt32("TaiKhoanId");
             var userName = HttpContext.Session.GetString("Hoten");
-            
+
             ViewData["Hoten"] = !string.IsNullOrEmpty(userName) ? userName : "Chưa đăng nhập";
             ViewData["HotelName"] = "Khách sạn THIỀM ĐỊNH";
             ViewData["HotelAddress"] = "180 Cao Lỗ, Quận 8, TP. Hồ Chí Minh";
@@ -319,13 +319,22 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 .ThenInclude(hdp => hdp.PhieuDatPhong)
                 .ThenInclude(p => p.ChiTietPhieuPhongs)
                 .ThenInclude(c => c.Phong)
-                  .ThenInclude(p => p.LoaiPhong)
+                .ThenInclude(p => p.LoaiPhong)
                 .FirstOrDefaultAsync(h => h.MaHoaDon == id);
 
             if (hoaDon == null)
                 return NotFound();
 
-            return View(hoaDon);
+            var tyGiaUSD = await _exchangeService.LayTyGiaUSDToVNDAsync();
+            if (tyGiaUSD <= 0)
+            {
+                Console.WriteLine("Tỷ giá từ API không hợp lệ, sử dụng tỷ giá mặc định: 26,220 VND/USD.");
+                tyGiaUSD = 26220m; // Gán mặc định chỉ khi API thất bại
+            }
+            ViewData["TyGiaUSD"] = tyGiaUSD;
+            Console.WriteLine($"Tỷ giá truyền vào ViewData: {tyGiaUSD}");
+
+            return View("PrintHoaDonTong", hoaDon);
         }
         public async Task<IActionResult> Edit(int id)
         {

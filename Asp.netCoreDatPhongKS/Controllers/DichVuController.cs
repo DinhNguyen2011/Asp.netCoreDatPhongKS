@@ -1,5 +1,6 @@
 ﻿using Asp.netCoreDatPhongKS.Filters;
 using Asp.netCoreDatPhongKS.Models;
+using Asp.netCoreDatPhongKS.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +12,12 @@ namespace Asp.netCoreDatPhongKS.Controllers
     public class DichVuController : Controller
     {
         private readonly HotelPlaceVipContext _context;
+        private readonly ExchangeService _exchangeService;
 
-        public DichVuController(HotelPlaceVipContext context)
+        public DichVuController(HotelPlaceVipContext context, ExchangeService exchangeService)
         {
             _context = context;
+            _exchangeService = exchangeService;
         }
 
         private IActionResult RestrictAccessByVaiTro()
@@ -259,6 +262,16 @@ namespace Asp.netCoreDatPhongKS.Controllers
 
             var userName = HttpContext.Session.GetString("Hoten");
             ViewData["Hoten"] = !string.IsNullOrEmpty(userName) ? userName : "Chưa đăng nhập";
+
+            // Lấy tỷ giá từ ExchangeService
+            var tyGiaUSD = await _exchangeService.LayTyGiaUSDToVNDAsync();
+            if (tyGiaUSD <= 0)
+            {
+                Console.WriteLine("Tỷ giá từ API không hợp lệ, sử dụng tỷ giá mặc định: 26,220 VND/USD.");
+                tyGiaUSD = 26220m; // Gán mặc định nếu API thất bại
+            }
+            ViewData["TyGiaUSD"] = tyGiaUSD;
+            Console.WriteLine($"Tỷ giá truyền vào ViewData: {tyGiaUSD}");
 
             return View(hoaDonDichVu);
         }

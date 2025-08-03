@@ -9,6 +9,11 @@
     var tienDaThanhToan = Model?.SoTienDaThanhToan ?? 0;
     var thanhTien = tongTien - (tienCoc + tienDaThanhToan);
     var khuyenMai = Model?.KhuyenMai?.PhanTramGiam ?? 0;
+    decimal tyGiaUSD = ViewData["TyGiaUSD"] is decimal value && value > 0 ? value : 26220m; // Lấy tỷ giá từ ViewData
+    string ToUSD(decimal vnd)
+    {
+        return tyGiaUSD > 0 ? (vnd / tyGiaUSD).ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("en-US")) : "N/A (Tỷ giá không hợp lệ)";
+    }
 }
 
 <!DOCTYPE html>
@@ -45,10 +50,15 @@
                 <th>Phòng</th>
                 <th>Loại phòng</th>
                 <th>Đơn giá (1 đêm)</th>
+
                 <th>Tổng tiền</th>
-                <th>Tiền cọc</th>
+
+                @* <th>Tiền cọc</th> *@
+
                 <th>Đã thanh toán</th>
-                <th>Thành tiền</th>
+
+                @* <th>Thành tiền</th> *@
+
             </tr>
         </thead>
         <tbody>
@@ -58,11 +68,16 @@
                 <tr>
                     <td>@(chiTiet.Phong?.SoPhong ?? "Không xác định")</td>
                     <td>@(chiTiet.Phong?.LoaiPhong?.TenLoai ?? "Không xác định")</td>
-                    <td>@donGia.ToString("N0") VNĐ</td>
-                    <td>@tongTien.ToString("N0") VNĐ</td>
-                    <td>@tienCoc.ToString("N0") VNĐ</td>
-                    <td>@tienDaThanhToan.ToString("N0") VNĐ</td>
-                    <td>@thanhTien.ToString("N0") VNĐ</td>
+                    <td>@donGia.ToString("N0") VNĐ - @ToUSD(donGia)</td>
+
+                    <td>@tongTien.ToString("N0") VNĐ - @ToUSD(tongTien)</td>
+
+                    @* <td>@tienCoc.ToString("N0") VNĐ - @ToUSD(tienCoc)</td> *@
+
+                    <td>@tienDaThanhToan.ToString("N0") VNĐ - @ToUSD(tienDaThanhToan)</td>
+
+                    @* <td>@thanhTien.ToString("N0") VNĐ - @ToUSD(thanhTien)</td> *@
+
                 </tr>
             }
         </tbody>
@@ -72,5 +87,6 @@
         <button type="button" onclick="window.print()">In phiếu</button>
         <a href="@Url.Action("Index")">Quay lại</a>
     </div>
+
 </body>
 </html>

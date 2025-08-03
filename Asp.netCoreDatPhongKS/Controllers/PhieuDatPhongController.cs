@@ -1,26 +1,29 @@
 ﻿using Asp.netCoreDatPhongKS.Filters;
 using Asp.netCoreDatPhongKS.Models;
+using Asp.netCoreDatPhongKS.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Asp.netCoreDatPhongKS.Controllers
 {
     [RestrictToAdmin]
     public class PhieuDatPhongController : Controller
     {
-        private readonly HotelPlaceVipContext _context;
 
-        public PhieuDatPhongController(HotelPlaceVipContext context)
+        private readonly HotelPlaceVipContext _context;
+        private readonly ExchangeService _exchangeService;
+
+        public PhieuDatPhongController(HotelPlaceVipContext context, ExchangeService exchangeService)
         {
             _context = context;
+            _exchangeService = exchangeService;
         }
-
         public async Task<IActionResult> Index(string search)
         {
             string userName = HttpContext.Session.GetString("Hoten");
@@ -590,6 +593,16 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 TempData["Error"] = "Phiếu đặt phòng không tồn tại.";
                 return RedirectToAction("Index");
             }
+
+            // Lấy tỷ giá từ ExchangeService
+            var tyGiaUSD = await _exchangeService.LayTyGiaUSDToVNDAsync();
+            if (tyGiaUSD <= 0)
+            {
+                Console.WriteLine("Tỷ giá từ API không hợp lệ, sử dụng tỷ giá mặc định: 26,220 VND/USD.");
+                tyGiaUSD = 26220m; // Gán mặc định nếu API thất bại
+            }
+            ViewData["TyGiaUSD"] = tyGiaUSD;
+            Console.WriteLine($"Tỷ giá truyền vào ViewData: {tyGiaUSD}");
 
             return View(phieu);
         }
