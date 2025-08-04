@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Asp.netCoreDatPhongKS.Migrations
 {
-    public partial class dinh : Migration
+    public partial class ThiemDinh : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

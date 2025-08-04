@@ -144,9 +144,9 @@ namespace Asp.netCoreDatPhongKS.Controllers
             if (hoursDiff >= 24)
                 refundPercentage = 0.9m; // Hoàn 90%
             else if (hoursDiff >= 12)
-                refundPercentage = 0.5m; // Hoàn 50%
-            else
                 refundPercentage = 0.7m; // Hoàn 70%
+            else
+                refundPercentage = 0.5m; // Hoàn 50%
 
             decimal refundAmount = phieu.TongTien * refundPercentage;
 

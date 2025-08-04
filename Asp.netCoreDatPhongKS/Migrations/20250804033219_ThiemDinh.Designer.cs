@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Asp.netCoreDatPhongKS.Migrations
 {
     [DbContext(typeof(HotelPlaceVipContext))]
-    [Migration("20250730071251_dinh")]
-    partial class dinh
+    [Migration("20250804033219_ThiemDinh")]
+    partial class ThiemDinh
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

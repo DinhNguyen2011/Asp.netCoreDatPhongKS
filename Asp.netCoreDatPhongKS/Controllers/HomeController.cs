@@ -513,8 +513,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                             <div class='section-title'>Thông tin tài khoản</div>
                             <table class='info-table'>
                                 <tr><td>Email đăng nhập:</td><td>{taiKhoan.Email}</td></tr>
-                                <tr><td>Mật khẩu mặc định:</td><td>1</td></tr>
-                                <tr><td>Ghi chú:</td><td>Vui lòng đổi mật khẩu nếu đây là lần đăng nhập đầu tiên (bỏ qua nếu đã có tài khoản).</td></tr>
+                                <tr><td>Mật khẩu mặc định:</td><td>1(Vui lòng đổi mật khẩu nếu đây là lần đăng nhập đầu tiên (bỏ qua nếu đã có tài khoản).)</td></tr>
+                              
                             </table>
 
                             <div class='section-title'>Chính sách hủy</div>
