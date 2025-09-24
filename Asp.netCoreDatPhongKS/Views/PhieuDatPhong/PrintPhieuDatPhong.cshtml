@@ -9,7 +9,7 @@
     var tienDaThanhToan = Model?.SoTienDaThanhToan ?? 0;
     var thanhTien = tongTien - (tienCoc + tienDaThanhToan);
     var khuyenMai = Model?.KhuyenMai?.PhanTramGiam ?? 0;
-    decimal tyGiaUSD = ViewData["TyGiaUSD"] is decimal value && value > 0 ? value : 26220m; // Lấy tỷ giá từ ViewData
+    decimal tyGiaUSD = ViewData["TyGiaUSD"] is decimal value && value > 0 ? value : 26176m; // Lấy tỷ giá từ ViewData
     string ToUSD(decimal vnd)
     {
         return tyGiaUSD > 0 ? (vnd / tyGiaUSD).ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("en-US")) : "N/A (Tỷ giá không hợp lệ)";

@@ -329,7 +329,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
             if (tyGiaUSD <= 0)
             {
                 Console.WriteLine("Tỷ giá từ API không hợp lệ, sử dụng tỷ giá mặc định: 26,220 VND/USD.");
-                tyGiaUSD = 26220m; // Gán mặc định chỉ khi API thất bại
+                tyGiaUSD = 26176m; // Gán mặc định chỉ khi API thất bại
             }
             ViewData["TyGiaUSD"] = tyGiaUSD;
             Console.WriteLine($"Tỷ giá truyền vào ViewData: {tyGiaUSD}");

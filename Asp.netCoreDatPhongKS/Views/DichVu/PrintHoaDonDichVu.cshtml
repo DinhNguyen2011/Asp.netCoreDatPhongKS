@@ -5,7 +5,7 @@
     var donHang = Model.MaDonHangDvNavigation;
     var khachHang = donHang.KhachHang;
     decimal tongTien = donHang.ChiTietDonHangDichVus?.Sum(c => c.ThanhTien ?? 0) ?? 0;
-    decimal tyGiaUSD = ViewData["TyGiaUSD"] is decimal value && value > 0 ? value : 26220m; // Lấy tỷ giá từ ViewData
+    decimal tyGiaUSD = ViewData["TyGiaUSD"] is decimal value && value > 0 ? value : 26176m; // Lấy tỷ giá từ ViewData
     string ToUSD(decimal vnd)
     {
         return tyGiaUSD > 0 ? (vnd / tyGiaUSD).ToString("C2", System.Globalization.CultureInfo.GetCultureInfo("en-US")) : "N/A (Tỷ giá không hợp lệ)";

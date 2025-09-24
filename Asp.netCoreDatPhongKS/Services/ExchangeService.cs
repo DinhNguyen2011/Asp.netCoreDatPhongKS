@@ -25,7 +25,7 @@ namespace Asp.netCoreDatPhongKS.Services
                 response.EnsureSuccessStatusCode();
 
                 var json = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"API Response: {json}"); // Log toàn bộ phản hồi
+            
                 var data = JsonSerializer.Deserialize<ExchangeRateResponse>(json);
 
                 if (data != null && data.Rates != null && data.Rates.TryGetValue("VND", out decimal tyGia) && tyGia > 0)
