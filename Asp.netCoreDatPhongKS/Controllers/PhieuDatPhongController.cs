@@ -120,14 +120,13 @@ namespace Asp.netCoreDatPhongKS.Controllers
         public async Task<IActionResult> Create(PhieuDatPhong model, List<int> phongIds, decimal soTienCoc, decimal? soTienDaThanhToan, string trangThai, string tinhTrangSuDung, int? khuyenMaiId)
         {
             var validTrangThai = new List<string> { "Chưa thanh toán", "Đã thanh toán", "Hủy", "Hoàn thành" };
-           // var validTrangThai = new List<string> { "Chưa thanh toán", "Đã thanh toán", "Hủy", "Hoàn thành" };
-
             var validTinhTrangSuDung = new List<string> { "Chưa sử dụng", "Đã check-in", "Đã check-out", "Chờ xử lý" };
 
             // Validation
             if (!ModelState.IsValid || phongIds == null || !phongIds.Any())
             {
                 TempData["Error"] = "Vui lòng nhập đầy đủ thông tin và chọn ít nhất một phòng.";
+                ModelState.AddModelError("", "Vui lòng nhập đầy đủ thông tin và chọn ít nhất một phòng.");
             }
             if (soTienCoc < 0)
             {
@@ -178,6 +177,13 @@ namespace Asp.netCoreDatPhongKS.Controllers
             try
             {
                 transaction = await _context.Database.BeginTransactionAsync();
+
+                // Tính tổng tiền và kiểm tra tính khả dụng của các phòng
+                decimal tongTien = 0;
+                var soNgay = (model.NgayTra - model.NgayNhan)?.Days ?? 1;
+                soNgay = soNgay < 1 ? 1 : soNgay;
+                var chiTietPhieuPhongs = new List<ChiTietPhieuPhong>();
+
                 foreach (var phongId in phongIds)
                 {
                     var phong = await _context.Phongs.FindAsync(phongId);
@@ -200,54 +206,59 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         throw new Exception($"Phòng {phong.SoPhong} có giá không hợp lệ.");
                     }
 
-                    var soNgay = (model.NgayTra - model.NgayNhan)?.Days ?? 1;
-                    soNgay = soNgay < 1 ? 1 : soNgay;
-                    var tongTien = donGia * soNgay;
+                    tongTien += donGia * soNgay;
 
-                    // Áp dụng khuyến mãi
-                    if (khuyenMaiId.HasValue)
+                    // Thêm chi tiết phiếu phòng
+                    chiTietPhieuPhongs.Add(new ChiTietPhieuPhong
                     {
-                        var khuyenMai = await _context.KhuyenMais.FindAsync(khuyenMaiId);
-                        if (khuyenMai != null)
-                        {
-                            var phanTramGiam = khuyenMai.PhanTramGiam;
-                            tongTien *= (1 - phanTramGiam / 100.0m);
-                        }
+                        PhongId = phongId,
+                        DonGia = donGia
+                    });
+                }
+
+                // Áp dụng khuyến mãi
+                if (khuyenMaiId.HasValue)
+                {
+                    var khuyenMai = await _context.KhuyenMais.FindAsync(khuyenMaiId);
+                    if (khuyenMai != null)
+                    {
+                        var phanTramGiam = khuyenMai.PhanTramGiam;
+                        tongTien *= (1 - phanTramGiam / 100.0m);
                     }
+                }
 
-                    var soTienDaThanhToanPerRoom = soTienDaThanhToan.HasValue ? soTienDaThanhToan.Value / phongIds.Count : 0;
-                    if (soTienDaThanhToanPerRoom > tongTien)
-                    {
-                        TempData["Error"] = $"Số tiền đã thanh toán cho phòng {phong.SoPhong} vượt quá tổng tiền.";
-                        throw new Exception($"Số tiền đã thanh toán vượt quá tổng tiền.");
-                    }
+                // Kiểm tra số tiền đã thanh toán
+                if (soTienDaThanhToan.HasValue && soTienDaThanhToan > tongTien)
+                {
+                    TempData["Error"] = "Số tiền đã thanh toán vượt quá tổng tiền.";
+                    throw new Exception("Số tiền đã thanh toán vượt quá tổng tiền.");
+                }
 
-                    var phieu = new PhieuDatPhong
-                    {
-                        MaPhieu = $"PDP-{DateTime.Now:yyyyMMddHHmmss}-{phongId}",
-                        KhachHangId = model.KhachHangId,
-                        NgayDat = DateTime.Now,
-                        NgayNhan = model.NgayNhan,
-                        NgayTra = model.NgayTra,
-                        TongTien = tongTien,
-                        SoTienCoc = soTienCoc / phongIds.Count,
-                        SoTienDaThanhToan = soTienDaThanhToanPerRoom,
-                        TrangThai = soTienDaThanhToanPerRoom >= tongTien ? "Đã thanh toán" : (string.IsNullOrEmpty(trangThai) ? "Chưa thanh toán" : trangThai),
-                        TinhTrangSuDung = string.IsNullOrEmpty(tinhTrangSuDung) ? "Chưa sử dụng" : tinhTrangSuDung,
-                        KhuyenMaiId = khuyenMaiId,
-                        ChiTietPhieuPhongs = new List<ChiTietPhieuPhong>
-                        {
-                            new ChiTietPhieuPhong
-                            {
-                                PhongId = phongId,
-                                DonGia = donGia
-                            }
-                        }
-                    };
+                // Tạo phiếu đặt phòng
+                var phieu = new PhieuDatPhong
+                {
+                    MaPhieu = $"PDP-{DateTime.Now:yyyyMMddHHmmss}",
+                    KhachHangId = model.KhachHangId,
+                    NgayDat = DateTime.Now,
+                    NgayNhan = model.NgayNhan,
+                    NgayTra = model.NgayTra,
+                    TongTien = tongTien,
+                    SoTienCoc = soTienCoc,
+                    SoTienDaThanhToan = soTienDaThanhToan ?? 0,
+                    TrangThai = soTienDaThanhToan >= tongTien ? "Đã thanh toán" : (string.IsNullOrEmpty(trangThai) ? "Chưa thanh toán" : trangThai),
+                    TinhTrangSuDung = string.IsNullOrEmpty(tinhTrangSuDung) ? "Chưa sử dụng" : tinhTrangSuDung,
+                    KhuyenMaiId = khuyenMaiId,
+                    ChiTietPhieuPhongs = chiTietPhieuPhongs
+                };
 
-                    _context.PhieuDatPhongs.Add(phieu);
+                // Thêm phiếu vào cơ sở dữ liệu
+                _context.PhieuDatPhongs.Add(phieu);
+
+                // Cập nhật trạng thái các phòng
+                foreach (var phongId in phongIds)
+                {
+                    var phong = await _context.Phongs.FindAsync(phongId);
                     phong.TinhTrang = "Đã đặt";
-
                     _context.Phongs.Update(phong);
                 }
 
@@ -279,7 +290,7 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return View(model);
             }
         }
-      //trar về ds phòng  trống
+        //trar về ds phòng  trống
         private List<Phong> GetAvailableRooms(DateTime? newNgayNhan, DateTime? newNgayTra, int? soLuongKhach)
         {
             var query = _context.Phongs
@@ -720,13 +731,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                 return Json(new { success = false, message = "Phiếu đặt phòng không tồn tại." });
             }
 
-            var chiTiet = phieu.ChiTietPhieuPhongs.FirstOrDefault();
-            if (chiTiet == null)
-            {
-                return Json(new { success = false, message = "Không tìm thấy thông tin phòng." });
-            }
-
             var soNgay = (phieu.NgayTra - phieu.NgayNhan)?.Days ?? 1;
+            soNgay = soNgay < 1 ? 1 : soNgay;
 
             return Json(new
             {
@@ -739,12 +745,12 @@ namespace Asp.netCoreDatPhongKS.Controllers
                         hoTen = phieu.KhachHang?.HoTen ?? "Không xác định",
                         cccd = phieu.KhachHang?.Cccd ?? "Không có"
                     },
-                    chiTiet = new
+                    chiTiet = phieu.ChiTietPhieuPhongs.Select(c => new
                     {
-                        soPhong = chiTiet.Phong?.SoPhong ?? "Không xác định",
-                        loaiPhong = chiTiet.Phong?.LoaiPhong?.TenLoai ?? "Không xác định",
-                        donGia = chiTiet.DonGia ?? 0
-                    },
+                        soPhong = c.Phong?.SoPhong ?? "Không xác định",
+                        loaiPhong = c.Phong?.LoaiPhong?.TenLoai ?? "Không xác định",
+                        donGia = c.DonGia ?? 0
+                    }).ToList(),
                     ngayNhan = phieu.NgayNhan,
                     ngayNhanStr = phieu.NgayNhan?.ToString("dd/MM/yyyy HH:mm"),
                     ngayTra = phieu.NgayTra,
@@ -755,8 +761,8 @@ namespace Asp.netCoreDatPhongKS.Controllers
                     soTienDaThanhToan = phieu.SoTienDaThanhToan ?? 0,
                     trangThai = phieu.TrangThai,
                     tinhTrangSuDung = phieu.TinhTrangSuDung,
-                    idvnpay = phieu.VnpTransactionId,
-                    idmomo = phieu.MoMoTransactionId
+                    idvnpay = phieu.VnpTransactionId ?? "Không có",
+                    idmomo = phieu.MoMoTransactionId ?? "Không có"
                 }
             });
         }

@@ -125,28 +125,31 @@
         @:toastr.error('@TempData["Error"]');
     }
 
-    function showPhieuDatPhongDetails(phieuDatPhongId) {
+        function showPhieuDatPhongDetails(phieuDatPhongId) {
         fetch(`/PhieuDatPhong/GetPhieuDatPhongDetails?phieuDatPhongId=${phieuDatPhongId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     const phieu = data.phieu;
+                    // Tạo HTML cho danh sách phòng
+                    const roomsHtml = phieu.chiTiet.map((chiTiet, index) => `
+                        <p><strong>Phòng ${index + 1}:</strong> ${chiTiet.soPhong} (${chiTiet.loaiPhong}) - Giá/đêm: ${chiTiet.donGia.toLocaleString()} VNĐ</p>
+                    `).join('');
+
                     const content = `
                         <h4>Phiếu đặt phòng: ${phieu.maPhieu}</h4>
                         <p><strong>Khách hàng:</strong> ${phieu.khachHang.hoTen} (${phieu.khachHang.cccd})</p>
-                        <p><strong>Phòng:</strong> ${phieu.chiTiet.soPhong} (${phieu.chiTiet.loaiPhong})</p>
-                        <p><strong>Giá/đêm:</strong> ${phieu.chiTiet.donGia.toLocaleString()} VNĐ</p>
-                       <p><strong>Ngày nhận:</strong> ${phieu.ngayNhanStr}</p>
+                        ${roomsHtml}
+                        <p><strong>Ngày nhận:</strong> ${phieu.ngayNhanStr}</p>
                         <p><strong>Ngày trả:</strong> ${phieu.ngayTraStr}</p>
-
                         <p><strong>Số ngày:</strong> ${phieu.soNgay}</p>
                         <p><strong>Tổng tiền:</strong> ${phieu.tongTien.toLocaleString()} VNĐ</p>
                         <p><strong>Tiền cọc:</strong> ${phieu.soTienCoc.toLocaleString()} VNĐ</p>
                         <p><strong>Tiền đã thanh toán:</strong> ${phieu.soTienDaThanhToan.toLocaleString()} VNĐ</p>
                         <p><strong>Trạng thái:</strong> ${phieu.trangThai}</p>
                         <p><strong>Tình trạng sử dụng:</strong> ${phieu.tinhTrangSuDung}</p>
-                        <p><strong>VNPay:</strong> ${phieu.idvnpay}</p> 
-                        <p><strong>MoMo:</strong> ${phieu.idmomo}</p>
+                        <p><strong>Mã giao dịch VNPay:</strong> ${phieu.idvnpay}</p>
+                        <p><strong>Mã giao dịch MoMo:</strong> ${phieu.idmomo}</p>
                     `;
                     document.getElementById('phieuDatPhongDetailsContent').innerHTML = content;
                     $('#phieuDatPhongDetailsModal').modal('show');
